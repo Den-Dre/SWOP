@@ -86,7 +86,7 @@ bg=red</panel_attributes>
       <x>1040</x>
       <y>960</y>
       <w>40</w>
-      <h>900</h>
+      <h>1040</h>
     </coordinates>
     <panel_attributes>
 bg=yellow</panel_attributes>
@@ -98,7 +98,7 @@ bg=yellow</panel_attributes>
       <x>1940</x>
       <y>1000</y>
       <w>40</w>
-      <h>760</h>
+      <h>840</h>
     </coordinates>
     <panel_attributes>
 bg=red</panel_attributes>
@@ -142,7 +142,7 @@ bg=red</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1040</x>
-      <y>1840</y>
+      <y>1980</y>
       <w>60</w>
       <h>160</h>
     </coordinates>
@@ -153,12 +153,12 @@ bg=red</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1940</x>
-      <y>1900</y>
+      <y>1820</y>
       <w>60</w>
-      <h>80</h>
+      <h>280</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;20.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
