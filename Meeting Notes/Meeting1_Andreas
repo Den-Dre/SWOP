@@ -1,0 +1,10 @@
+Domain model, ui interface, high level, how you handle communication between the two 
+make domain model of url bar, document section, 
+
+GRASP: read up on them before lecture, most inmportantly: avoid unnessecary coupling (unnessecary connection between objects); high cohesion.
+
+UI represents logic that exists in the domain model. One entire domain model 
+domain model: represents logic
+UI layer: represents practical information that you can get from domain model
+
+Recapitulate: how would you communicate between objects (document area and address bar) which kind of classes would you make, communication between domain model and UI model. 
