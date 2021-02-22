@@ -4,8 +4,8 @@
   <element>
     <id>UMLActor</id>
     <coordinates>
-      <x>1140</x>
-      <y>680</y>
+      <x>560</x>
+      <y>520</y>
       <w>120</w>
       <h>200</h>
     </coordinates>
@@ -15,8 +15,8 @@
   <element>
     <id>Text</id>
     <coordinates>
-      <x>1760</x>
-      <y>700</y>
+      <x>1180</x>
+      <y>540</y>
       <w>500</w>
       <h>60</h>
     </coordinates>
@@ -24,43 +24,10 @@
     <additional_attributes/>
   </element>
   <element>
-    <id>UMLNote</id>
-    <coordinates>
-      <x>20</x>
-      <y>260</y>
-      <w>280</w>
-      <h>140</h>
-    </coordinates>
-    <panel_attributes>User external to the system</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>280</x>
-      <y>320</y>
-      <w>180</w>
-      <h>60</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;.</panel_attributes>
-    <additional_attributes>70.0;10.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>0</x>
-      <y>0</y>
-      <w>200</w>
-      <h>60</h>
-    </coordinates>
-    <panel_attributes>:User</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1120</x>
-      <y>840</y>
+      <x>540</x>
+      <y>680</y>
       <w>200</w>
       <h>60</h>
     </coordinates>
@@ -71,8 +38,8 @@ bg=yellow</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1860</x>
-      <y>840</y>
+      <x>1280</x>
+      <y>680</y>
       <w>200</w>
       <h>60</h>
     </coordinates>
@@ -83,8 +50,8 @@ bg=red</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1200</x>
-      <y>960</y>
+      <x>620</x>
+      <y>800</y>
       <w>40</w>
       <h>640</h>
     </coordinates>
@@ -95,8 +62,8 @@ bg=yellow</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1940</x>
-      <y>1000</y>
+      <x>1360</x>
+      <y>840</y>
       <w>40</w>
       <h>520</h>
     </coordinates>
@@ -107,8 +74,8 @@ bg=red</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1200</x>
-      <y>880</y>
+      <x>620</x>
+      <y>720</y>
       <w>60</w>
       <h>120</h>
     </coordinates>
@@ -118,8 +85,8 @@ bg=red</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1940</x>
-      <y>880</y>
+      <x>1360</x>
+      <y>720</y>
       <w>60</w>
       <h>160</h>
     </coordinates>
@@ -129,8 +96,8 @@ bg=red</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1220</x>
-      <y>960</y>
+      <x>640</x>
+      <y>800</y>
       <w>760</w>
       <h>80</h>
     </coordinates>
@@ -141,8 +108,8 @@ bg=red</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1220</x>
-      <y>1480</y>
+      <x>640</x>
+      <y>1320</y>
       <w>760</w>
       <h>80</h>
     </coordinates>
@@ -153,8 +120,8 @@ Return viewable document, update address bar</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1960</x>
-      <y>980</y>
+      <x>1380</x>
+      <y>820</y>
       <w>600</w>
       <h>80</h>
     </coordinates>
@@ -165,8 +132,8 @@ Obtain full URL</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>2400</x>
-      <y>840</y>
+      <x>1820</x>
+      <y>680</y>
       <w>260</w>
       <h>60</h>
     </coordinates>
@@ -177,8 +144,8 @@ bg=green</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2520</x>
-      <y>880</y>
+      <x>1940</x>
+      <y>720</y>
       <w>60</w>
       <h>180</h>
     </coordinates>
@@ -188,8 +155,8 @@ bg=green</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>2520</x>
-      <y>1020</y>
+      <x>1940</x>
+      <y>860</y>
       <w>40</w>
       <h>120</h>
     </coordinates>
@@ -200,8 +167,8 @@ bg=green</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1960</x>
-      <y>1100</y>
+      <x>1380</x>
+      <y>940</y>
       <w>600</w>
       <h>80</h>
     </coordinates>
@@ -212,8 +179,8 @@ Return full URL</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1200</x>
-      <y>1580</y>
+      <x>620</x>
+      <y>1420</y>
       <w>60</w>
       <h>160</h>
     </coordinates>
@@ -223,8 +190,8 @@ Return full URL</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1940</x>
-      <y>1500</y>
+      <x>1360</x>
+      <y>1340</y>
       <w>60</w>
       <h>200</h>
     </coordinates>
@@ -234,8 +201,8 @@ Return full URL</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>1840</x>
-      <y>940</y>
+      <x>1260</x>
+      <y>780</y>
       <w>840</w>
       <h>460</h>
     </coordinates>

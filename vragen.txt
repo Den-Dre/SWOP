@@ -1,0 +1,5 @@
+- TableCell: bijhouden of verwijderen voor information model?
+- Minuut 51 in collaborate video: Hoe zijn UI Layer en domain model verbonden?
+- Hoe weten we waarop geklikt wordt? Via de tabel zijn rijen en kolommen hun coördinaten 
+- Klikken op address bar: Browser detecteert of dit op address bar of document area is, als dit op address bar is, dan laten afhandelen door address bar (knoppen doorsturen, ...). Is dit een correcte manier van werken?
+- 
