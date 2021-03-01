@@ -13,5 +13,7 @@
 - Composite pattern: is het (verplicht) om voor elke (leaf) node een association te hebben naar het composite object. 
 - Is contentspan al geen toepassing van het composite design principe? 
 - Mogen we contentSpan abstract maken om de coördinaten te toe te voegen?
-- Beter om listener aan contentrSpan toe te voegen of aan aparte PageElement klasse te koppelen?
+    -> Neen, coördinaten niet in domein laag
+- Beter om listener aan contentSpan toe te voegen of aan aparte PageElement klasse te koppelen?
 
+- Moet er een link zijn tussen UI en Domain klasse om de centrale klasse van de domeinlaag te initialiseren?
