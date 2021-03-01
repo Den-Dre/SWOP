@@ -39,14 +39,14 @@
 
 // This text will be stored with each diagram;  use it for notes.
 	</help_text>
-  <zoom_level>14</zoom_level>
+  <zoom_level>16</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1064</x>
-      <y>1148</y>
-      <w>182</w>
-      <h>42</h>
+      <x>864</x>
+      <y>1168</y>
+      <w>208</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>/ContentSpan/
 </panel_attributes>
@@ -55,10 +55,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1078</x>
-      <y>1372</y>
-      <w>140</w>
-      <h>70</h>
+      <x>880</x>
+      <y>1424</y>
+      <w>160</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>Hyperlink
 --
@@ -68,10 +68,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>854</x>
-      <y>1372</y>
-      <w>140</w>
-      <h>70</h>
+      <x>624</x>
+      <y>1424</y>
+      <w>160</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>Table
 --
@@ -81,10 +81,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1372</x>
-      <y>1372</y>
-      <w>140</w>
-      <h>70</h>
+      <x>1216</x>
+      <y>1424</y>
+      <w>160</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>TextSpan
 --
@@ -94,10 +94,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>854</x>
-      <y>1568</y>
-      <w>140</w>
-      <h>70</h>
+      <x>624</x>
+      <y>1648</y>
+      <w>160</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>TableRow
 --
@@ -107,10 +107,10 @@
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>854</x>
-      <y>1764</y>
-      <w>140</w>
-      <h>70</h>
+      <x>624</x>
+      <y>1872</y>
+      <w>160</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>TableCell
 --
@@ -120,10 +120,10 @@
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>742</x>
-      <y>1162</y>
-      <w>350</w>
-      <h>672</h>
+      <x>496</x>
+      <y>1184</y>
+      <w>400</w>
+      <h>768</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 contains
@@ -134,10 +134,10 @@ m2=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>910</x>
-      <y>1428</y>
-      <w>126</w>
-      <h>168</h>
+      <x>688</x>
+      <y>1488</y>
+      <w>144</w>
+      <h>192</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 contains
@@ -148,10 +148,10 @@ m2=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>910</x>
-      <y>1624</y>
-      <w>126</w>
-      <h>168</h>
+      <x>688</x>
+      <y>1712</y>
+      <w>144</w>
+      <h>192</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 contains
@@ -162,10 +162,10 @@ m2=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1204</x>
-      <y>1372</y>
-      <w>196</w>
-      <h>70</h>
+      <x>1024</x>
+      <y>1424</y>
+      <w>224</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 contains &gt;
@@ -176,10 +176,10 @@ m2=0..1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1134</x>
-      <y>1176</y>
-      <w>42</w>
-      <h>224</h>
+      <x>944</x>
+      <y>1200</y>
+      <w>48</w>
+      <h>256</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;140.0</additional_attributes>
@@ -187,10 +187,10 @@ m2=0..1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>910</x>
-      <y>1288</y>
-      <w>560</w>
-      <h>112</h>
+      <x>688</x>
+      <y>1328</y>
+      <w>640</w>
+      <h>128</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes>380.0;60.0;380.0;20.0;10.0;20.0;10.0;60.0</additional_attributes>
@@ -198,10 +198,10 @@ m2=0..1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1694</x>
-      <y>770</y>
-      <w>154</w>
-      <h>42</h>
+      <x>1584</x>
+      <y>736</y>
+      <w>176</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>AddressBar
 </panel_attributes>
@@ -210,10 +210,10 @@ m2=0..1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1302</x>
-      <y>686</y>
-      <w>420</w>
-      <h>140</h>
+      <x>1136</x>
+      <y>640</y>
+      <w>480</w>
+      <h>160</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>10.0;10.0;280.0;80.0</additional_attributes>
@@ -221,10 +221,10 @@ m2=0..1</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>350</x>
-      <y>630</y>
-      <w>266</w>
-      <h>84</h>
+      <x>48</x>
+      <y>576</y>
+      <w>304</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>Associations neccessary to implement loadDocument()</panel_attributes>
     <additional_attributes/>
@@ -232,10 +232,10 @@ m2=0..1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1008</x>
-      <y>812</y>
-      <w>336</w>
-      <h>140</h>
+      <x>800</x>
+      <y>784</y>
+      <w>384</w>
+      <h>160</h>
     </coordinates>
     <panel_attributes>Document
 --
@@ -250,10 +250,10 @@ m2=0..1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1134</x>
-      <y>938</y>
-      <w>126</w>
-      <h>238</h>
+      <x>944</x>
+      <y>928</y>
+      <w>144</w>
+      <h>272</h>
     </coordinates>
     <panel_attributes>contains
 lt=-&gt;
@@ -264,10 +264,10 @@ m2=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1148</x>
-      <y>686</y>
-      <w>42</w>
-      <h>154</h>
+      <x>960</x>
+      <y>640</y>
+      <w>48</w>
+      <h>176</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;90.0</additional_attributes>
@@ -275,10 +275,10 @@ m2=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1666</x>
-      <y>462</y>
-      <w>196</w>
-      <h>42</h>
+      <x>1552</x>
+      <y>384</y>
+      <w>224</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>DocumentArea
 </panel_attributes>
@@ -287,10 +287,10 @@ m2=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1302</x>
-      <y>476</y>
-      <w>392</w>
-      <h>140</h>
+      <x>1136</x>
+      <y>400</y>
+      <w>448</w>
+      <h>160</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>10.0;80.0;260.0;10.0</additional_attributes>
@@ -298,15 +298,14 @@ m2=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2212</x>
-      <y>588</y>
-      <w>210</w>
-      <h>224</h>
+      <x>2176</x>
+      <y>528</y>
+      <w>240</w>
+      <h>240</h>
     </coordinates>
     <panel_attributes>/Frame/
 --
 -coordinates
--subFrames
 --
 +hasFocus()
 +mouseClicked()
@@ -319,10 +318,10 @@ m2=1</panel_attributes>
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>1456</x>
-      <y>924</y>
-      <w>266</w>
-      <h>112</h>
+      <x>1312</x>
+      <y>912</y>
+      <w>304</w>
+      <h>128</h>
     </coordinates>
     <panel_attributes>Information flow from UI to domain layer
 (Reuired to know when a hyperlink is clicked)</panel_attributes>
@@ -331,10 +330,10 @@ m2=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1022</x>
-      <y>588</y>
-      <w>294</w>
-      <h>112</h>
+      <x>816</x>
+      <y>528</y>
+      <w>336</w>
+      <h>128</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Interface&gt;&gt;
 DocumentListener
@@ -346,10 +345,10 @@ DocumentListener
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1834</x>
-      <y>700</y>
-      <w>406</w>
-      <h>126</h>
+      <x>1744</x>
+      <y>656</y>
+      <w>464</w>
+      <h>144</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;</panel_attributes>
     <additional_attributes>10.0;70.0;270.0;10.0</additional_attributes>
@@ -357,10 +356,10 @@ DocumentListener
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1848</x>
-      <y>476</y>
-      <w>392</w>
-      <h>210</h>
+      <x>1760</x>
+      <y>400</y>
+      <w>448</w>
+      <h>240</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;</panel_attributes>
     <additional_attributes>10.0;10.0;260.0;130.0</additional_attributes>
@@ -368,10 +367,10 @@ DocumentListener
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1568</x>
-      <y>756</y>
-      <w>42</w>
-      <h>196</h>
+      <x>1440</x>
+      <y>720</y>
+      <w>48</w>
+      <h>224</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
     <additional_attributes>10.0;120.0;10.0;10.0</additional_attributes>
@@ -379,10 +378,10 @@ DocumentListener
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2618</x>
-      <y>658</y>
-      <w>154</w>
-      <h>70</h>
+      <x>2640</x>
+      <y>608</y>
+      <w>176</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>Browsr
 --
@@ -392,10 +391,10 @@ DocumentListener
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2408</x>
-      <y>672</y>
-      <w>238</w>
-      <h>56</h>
+      <x>2400</x>
+      <y>624</y>
+      <w>272</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 m1=2
@@ -405,10 +404,10 @@ m2=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2590</x>
-      <y>546</y>
-      <w>196</w>
-      <h>42</h>
+      <x>2608</x>
+      <y>480</y>
+      <w>224</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>CanvasWindow</panel_attributes>
     <additional_attributes/>
@@ -416,10 +415,10 @@ m2=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2674</x>
-      <y>574</y>
-      <w>42</w>
-      <h>112</h>
+      <x>2704</x>
+      <y>512</y>
+      <w>48</w>
+      <h>128</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;</panel_attributes>
     <additional_attributes>10.0;60.0;10.0;10.0</additional_attributes>
@@ -427,21 +426,22 @@ m2=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1666</x>
-      <y>658</y>
-      <w>196</w>
-      <h>42</h>
+      <x>1552</x>
+      <y>608</y>
+      <w>224</w>
+      <h>64</h>
     </coordinates>
-    <panel_attributes>DocumentCell</panel_attributes>
+    <panel_attributes>DocumentCell
+valign=center</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1750</x>
-      <y>490</y>
-      <w>42</w>
-      <h>196</h>
+      <x>1648</x>
+      <y>416</y>
+      <w>48</w>
+      <h>224</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;&lt;&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
@@ -449,10 +449,10 @@ m2=1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1848</x>
-      <y>672</y>
-      <w>392</w>
-      <h>42</h>
+      <x>1760</x>
+      <y>640</y>
+      <w>448</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;</panel_attributes>
     <additional_attributes>10.0;10.0;260.0;10.0</additional_attributes>
@@ -460,10 +460,10 @@ m2=1</panel_attributes>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>2170</x>
-      <y>1120</y>
-      <w>294</w>
-      <h>98</h>
+      <x>2128</x>
+      <y>1136</y>
+      <w>336</w>
+      <h>112</h>
     </coordinates>
     <panel_attributes>&lt;&lt;Interface&gt;&gt;
 ActionListener
@@ -474,10 +474,10 @@ ActionListener
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1232</x>
-      <y>1162</y>
-      <w>966</w>
-      <h>42</h>
+      <x>1056</x>
+      <y>1184</y>
+      <w>1104</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;.</panel_attributes>
     <additional_attributes>670.0;10.0;10.0;10.0</additional_attributes>
@@ -485,21 +485,21 @@ ActionListener
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2296</x>
-      <y>798</y>
-      <w>42</w>
-      <h>350</h>
+      <x>2272</x>
+      <y>752</y>
+      <w>48</w>
+      <h>416</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;230.0;10.0;10.0</additional_attributes>
+    <additional_attributes>10.0;240.0;10.0;10.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>714</x>
-      <y>980</y>
-      <w>140</w>
-      <h>42</h>
+      <x>464</x>
+      <y>976</y>
+      <w>160</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>Lexer</panel_attributes>
     <additional_attributes/>
@@ -507,10 +507,10 @@ ActionListener
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>714</x>
-      <y>784</y>
-      <w>140</w>
-      <h>42</h>
+      <x>464</x>
+      <y>752</y>
+      <w>160</w>
+      <h>48</h>
     </coordinates>
     <panel_attributes>Validator</panel_attributes>
     <additional_attributes/>
@@ -518,10 +518,10 @@ ActionListener
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>840</x>
-      <y>910</y>
-      <w>196</w>
-      <h>126</h>
+      <x>608</x>
+      <y>896</y>
+      <w>224</w>
+      <h>144</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;70.0;120.0;10.0</additional_attributes>
@@ -529,10 +529,10 @@ ActionListener
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>840</x>
-      <y>798</y>
-      <w>196</w>
-      <h>112</h>
+      <x>608</x>
+      <y>768</y>
+      <w>224</w>
+      <h>128</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;10.0;120.0;60.0</additional_attributes>
@@ -540,10 +540,10 @@ ActionListener
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>336</x>
-      <y>812</y>
-      <w>280</w>
-      <h>126</h>
+      <x>32</x>
+      <y>784</y>
+      <w>320</w>
+      <h>144</h>
     </coordinates>
     <panel_attributes>Add a listener to detect when the URL in the address bar has changed. (Possibly extend existing URL class?)
 
@@ -553,10 +553,10 @@ First part of URL of a document + href attribute of hyperlink combined result in
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>602</x>
-      <y>658</y>
-      <w>308</w>
-      <h>364</h>
+      <x>336</x>
+      <y>608</y>
+      <w>352</w>
+      <h>416</h>
     </coordinates>
     <panel_attributes>lt=.
 </panel_attributes>
@@ -565,10 +565,10 @@ First part of URL of a document + href attribute of hyperlink combined result in
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>2016</x>
-      <y>196</y>
-      <w>686</w>
-      <h>224</h>
+      <x>1952</x>
+      <y>80</y>
+      <w>784</w>
+      <h>256</h>
     </coordinates>
     <panel_attributes>Document loading &amp; URL clicking
 
@@ -578,10 +578,10 @@ Every time a new document is loaded, documentAre is notified via contentChanged(
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1722</x>
-      <y>336</y>
-      <w>70</w>
-      <h>154</h>
+      <x>1616</x>
+      <y>240</y>
+      <w>80</w>
+      <h>176</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
     <additional_attributes>30.0;90.0;10.0;10.0</additional_attributes>
@@ -589,10 +589,10 @@ Every time a new document is loaded, documentAre is notified via contentChanged(
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1274</x>
-      <y>448</y>
-      <w>420</w>
-      <h>56</h>
+      <x>1104</x>
+      <y>368</y>
+      <w>480</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 ?</panel_attributes>
@@ -601,10 +601,10 @@ Every time a new document is loaded, documentAre is notified via contentChanged(
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1022</x>
-      <y>392</y>
-      <w>266</w>
-      <h>112</h>
+      <x>816</x>
+      <y>304</y>
+      <w>304</w>
+      <h>128</h>
     </coordinates>
     <panel_attributes>UIController
 --
@@ -616,10 +616,10 @@ Every time a new document is loaded, documentAre is notified via contentChanged(
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>924</x>
-      <y>462</y>
-      <w>126</w>
-      <h>392</h>
+      <x>704</x>
+      <y>384</y>
+      <w>144</w>
+      <h>448</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 ?</panel_attributes>
@@ -628,10 +628,10 @@ Every time a new document is loaded, documentAre is notified via contentChanged(
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>840</x>
-      <y>196</y>
-      <w>294</w>
-      <h>126</h>
+      <x>608</x>
+      <y>80</y>
+      <w>336</w>
+      <h>144</h>
     </coordinates>
     <panel_attributes>UIController is our controller to redirect the calls from the UI layer to the correct domain layer classes.</panel_attributes>
     <additional_attributes/>
@@ -639,10 +639,10 @@ Every time a new document is loaded, documentAre is notified via contentChanged(
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1064</x>
-      <y>308</y>
-      <w>70</w>
-      <h>112</h>
+      <x>864</x>
+      <y>208</y>
+      <w>80</w>
+      <h>128</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
     <additional_attributes>30.0;60.0;10.0;10.0</additional_attributes>
@@ -650,10 +650,10 @@ Every time a new document is loaded, documentAre is notified via contentChanged(
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>1414</x>
-      <y>196</y>
-      <w>392</w>
-      <h>154</h>
+      <x>1264</x>
+      <y>80</y>
+      <w>448</w>
+      <h>176</h>
     </coordinates>
     <panel_attributes>DocumentArea has all the information required to paint the associated frames by calling document.getContent() for example. 
 Then, the documentContent needs to be mapped onto DocumentCells. This is our tempory </panel_attributes>
@@ -662,10 +662,10 @@ Then, the documentContent needs to be mapped onto DocumentCells. This is our tem
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1274</x>
-      <y>490</y>
-      <w>448</w>
-      <h>308</h>
+      <x>1104</x>
+      <y>416</y>
+      <w>512</w>
+      <h>352</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 ?</panel_attributes>
@@ -674,12 +674,26 @@ Then, the documentContent needs to be mapped onto DocumentCells. This is our tem
   <element>
     <id>UMLNote</id>
     <coordinates>
-      <x>2184</x>
-      <y>1274</y>
-      <w>266</w>
-      <h>56</h>
+      <x>2144</x>
+      <y>1312</y>
+      <w>304</w>
+      <h>64</h>
     </coordinates>
     <panel_attributes>Redundant with these design choices?r</panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1728</x>
+      <y>560</y>
+      <w>256</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+Contains &gt;
+m1=n
+m2=0</panel_attributes>
+    <additional_attributes>30.0;40.0;70.0;40.0;70.0;10.0;10.0;10.0;10.0;30.0</additional_attributes>
   </element>
 </diagram>

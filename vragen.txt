@@ -17,3 +17,4 @@
 - Beter om listener aan contentSpan toe te voegen of aan aparte PageElement klasse te koppelen?
 
 - Moet er een link zijn tussen UI en Domain klasse om de centrale klasse van de domeinlaag te initialiseren?
+- Structuur van documentCell zou die van contentSpan moeten weergeven in ons huidig design. Is dit bad practice?
