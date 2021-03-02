@@ -45,17 +45,18 @@ public class Browsr extends CanvasWindow {
 
 
     @Override
-    protected void handleMouseEvent(int id, int x, int y, int clickCount) {
+    protected void handleMouseEvent(int id, int x, int y, int clickCount, int button, int modifiersEx) {
         for (Frame frame : Frames){
-            frame.handleMouse(id, x, y, clickCount);
+            frame.handleMouse(id, x, y, clickCount, button, modifiersEx);
         }
         repaint();
     }
 
+
     @Override
-    protected void handleKeyEvent(int id, int keyCode, char keyChar) {
+    protected void handleKeyEvent(int id, int keyCode, char keyChar, int modifiersEx) {
         for (Frame frame : Frames){
-            frame.handleKey(id, keyCode, keyChar);
+            frame.handleKey(id, keyCode, keyChar, modifiersEx);
         }
         repaint();
     }

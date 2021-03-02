@@ -20,11 +20,11 @@ public class Frame {
 
     public void Render(Graphics g) { }
 
-    public void handleMouse(int id, int x, int y, int clickCount){ }
+    public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx){ }
 
     // moet hier ook niet zijn geimplementeerd. In Adressbar kan er hier bvb op
     // ingegaan worden als de adressbar al dan niet focus heeft
-    public void handleKey(int id, int keyCode, char keyChar){ }
+    public void handleKey(int id, int keyCode, char keyChar, int modifiersEx){ }
 
     public void handleResize(int newWindowWidth, int newWindowHeight){ }
 

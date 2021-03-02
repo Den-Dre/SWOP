@@ -17,9 +17,7 @@ public class BrowsrDocumentValidator {
 		lexer = new HtmlLexer(reader);
 	}
 	
-	void eatToken() {
-		lexer.eatToken();
-	}
+	void eatToken() { lexer.eatToken(); }
 	
 	void fail() {
 		throw new RuntimeException("The given document is not a valid Browsr document.");
