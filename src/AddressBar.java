@@ -3,8 +3,9 @@ import java.awt.event.KeyEvent;
 import java.util.Arrays;
 
 public class AddressBar extends Frame{
-    public AddressBar(int x, int y, int width, int height) {
+    public AddressBar(int x, int y, int width, int height, int offset) {
         super(x, y, width, height);
+        this.offset = offset;
     }
 
     @Override
@@ -214,7 +215,7 @@ public class AddressBar extends Frame{
     It does not change its height (e.g. look at Firefox)
      */
     public void handleResize(int newWindowWidth, int newWindowHeight) {
-        this.setWidth(newWindowWidth-10);
+        this.setWidth(newWindowWidth-2*offset);
     }
 
     //Two URL's to be able to 'rollback' the old url if editing is cancelled.
@@ -240,6 +241,8 @@ public class AddressBar extends Frame{
     FontMetrics metrics;
     int textheight;
     private final Color textColor = Color.BLACK;
+
+    int offset = 0;
 
     /*
     Getters and setters for some variables ->
