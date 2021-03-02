@@ -1,5 +1,4 @@
 import canvaswindow.CanvasWindow;
-import canvaswindow.MyCanvasWindow;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -12,7 +11,7 @@ public class Browsr extends CanvasWindow {
      */
     protected Browsr(String title) {
         super(title);
-        this.Frames.add(this.AdressBar);
+        this.Frames.add(this.AddressBar);
         this.Frames.add(this.DocumentArea);
     }
 
@@ -31,16 +30,16 @@ public class Browsr extends CanvasWindow {
     @Override
     protected void paint(Graphics g) {
         for (Frame frame : Frames) {
-            frame.Paint(g);
+            frame.Render(g);
         }
     }
 
     @Override
     protected void handleResize() {
         //ook laten weten aan de frames om zichzelf intern aan te passen!
-        System.out.println("Resizing");
-        System.out.println(this.getWidth());
-        System.out.println(this.getHeight());
+        for (Frame frame : Frames) {
+            frame.handleResize(this.getWidth(), this.getHeight());
+        }
         repaint();
     }
 
@@ -67,7 +66,8 @@ public class Browsr extends CanvasWindow {
         });
     }
 
-    private Frame AdressBar = new Frame(0,0);
-    private Frame DocumentArea = new Frame(0,40);
+    private int adressBarHeight = 40;
+    private AddressBar AddressBar = new AddressBar(0,0, 100, adressBarHeight);
+    private Frame DocumentArea = new Frame(0,adressBarHeight, 100,100);
     private ArrayList<Frame> Frames = new ArrayList<>();
 }
