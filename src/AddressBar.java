@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.util.Arrays;
 
 public class AddressBar extends Frame{
@@ -60,6 +61,7 @@ public class AddressBar extends Frame{
     private void updateSelectStart() {
         if (this.doSelect) return;
         this.selectStart = this.cursor;
+        if (metrics == null) return;
         this.selectStartPos = new int[] {metrics.stringWidth(this.getURL().substring(0,this.selectStart))+this.getxPos()+(URLStart/2), this.getyPos()};
     }
 
@@ -88,7 +90,8 @@ public class AddressBar extends Frame{
     Handle mouseEvents. Determine if the addressBar was pressed and do the right actions.
      */
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-        if (id != 500) return;
+        if (button != MouseEvent.BUTTON1) return; // Button1 is left mouse button
+        if (id != MouseEvent.MOUSE_CLICKED) return;
         if (this.wasClicked(x,y)) {
             if (!this.hasFocus) {
                 doSelect = true;
@@ -125,7 +128,7 @@ public class AddressBar extends Frame{
     public void handleKey(int id, int keyCode, char keyChar, int modifiersEx) {
         //System.out.println(Arrays.toString(new int[]{id, keyCode, modifiersEx}));
         if (!this.hasFocus) return;
-        if (id != 401) return;
+        if (id != KeyEvent.KEY_PRESSED) return;
 
         switch (keyCode) {
             case 27 -> handleEscape();
@@ -139,6 +142,7 @@ public class AddressBar extends Frame{
             default -> handleNoSpecialKey(id, keyCode, keyChar);
         }
         this.doSelect = (keyCode == 39 || keyCode == 37 || keyCode == 35 || keyCode == 36) && modifiersEx == 64;
+        updateSelectStart();
     }
 
     // Documentation needed? It handles the Escape key!
@@ -176,7 +180,7 @@ public class AddressBar extends Frame{
         else {
             if (mode == 0) {
                 int deleteindex = cursor-1;
-                if (deleteindex < 0) deleteindex = 0;
+                if (deleteindex < 0) return;
                 newUrl.deleteCharAt(deleteindex);
                 moveCursor(-1);
             }
@@ -253,7 +257,15 @@ public class AddressBar extends Frame{
         return URL;
     }
 
-    public void setURL(String URL) {
+    // externally change the url, this moves the cursor to the right and toggles focus off.
+    public void changeURLto(String URL) {
+        this.URL = URL;
+        moveCursor(this.getURL().length());
+        updateSelectStart();
+        toggleFocus(false);
+    }
+
+    private void setURL(String URL) {
         this.URL = URL;
     }
 

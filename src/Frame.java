@@ -15,9 +15,6 @@ public class Frame {
         this.hasFocus = false;
     }
 
-    // Onderstaande functies moeten hier eigenlijk niet zijn uitgewerkt maar wel in de klasses die Frame extenden (=Addresbar en Documentarea)
-    // Dus alles wat hier staat is louter prullerij
-
     public void Render(Graphics g) { }
 
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx){ }
