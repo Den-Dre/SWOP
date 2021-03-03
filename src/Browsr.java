@@ -11,6 +11,15 @@ public class Browsr extends CanvasWindow {
      */
     protected Browsr(String title) {
         super(title);
+        
+        try {
+			AddressBar = new AddressBar(addressBarOffset,addressBarOffset, 100, addressBarHeight, addressBarOffset);
+			DocumentArea = new Frame(0,addressBarHeight, 100,100);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
         this.Frames.add(this.AddressBar);
         this.Frames.add(this.DocumentArea);
     }
@@ -69,7 +78,7 @@ public class Browsr extends CanvasWindow {
 
     private int addressBarHeight = 35;
     private int addressBarOffset = 5;
-    private AddressBar AddressBar = new AddressBar(addressBarOffset,addressBarOffset, 100, addressBarHeight, addressBarOffset);
-    private Frame DocumentArea = new Frame(0,addressBarHeight, 100,100);
+    private AddressBar AddressBar = null; 
+    private Frame DocumentArea = null; 
     private ArrayList<Frame> Frames = new ArrayList<>();
 }

@@ -6,7 +6,7 @@ class FrameTest {
 
 
     @Test
-    void correctInit() {
+    void correctInit() throws Exception {
         Frame frame = new Frame(0,0,10,10);
         assertFalse(frame.hasFocus);
         assertEquals(0, frame.getxPos());
@@ -21,13 +21,16 @@ class FrameTest {
         assertEquals(1000, frame2.getWidth());
         assertEquals(8, frame2.getHeight());
 
-        Frame frame3 = new Frame(-15,-5,-6,-12);
-        assertFalse(frame3.hasFocus);
-        assertEquals(0, frame3.getxPos());
-        assertEquals(0,frame3.getyPos());
-        assertEquals(0, frame3.getHeight());
-        assertEquals(0, frame3.getWidth());
-
+//        Frame frame3 = new Frame(-15,-5,-6,-12); // replaced with defensive test below
+//        assertFalse(frame3.hasFocus);
+//        assertEquals(0, frame3.getxPos());
+//        assertEquals(0,frame3.getyPos());
+//        assertEquals(0, frame3.getHeight());
+//        assertEquals(0, frame3.getWidth());
+        
+        Exception exception = assertThrows(Exception.class, () -> {
+        	new Frame(-15,-5,-6,-12);
+        });
     }
 
     @Test
