@@ -10,7 +10,7 @@ public class Document {
     private List<DocumentListener> urlListeners = new ArrayList<>();
     private List<DocumentListener> documentListeners = new ArrayList<>();
 
-    protected void addURLListener(URL u) {
+    protected void addURLListener(DocumentListener u) {
         this.urlListeners.add(u);
     }
 
