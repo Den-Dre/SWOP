@@ -70,6 +70,6 @@ public class Browsr extends CanvasWindow {
     private int addressBarHeight = 35;
     private int addressBarOffset = 5;
     private AddressBar AddressBar = new AddressBar(addressBarOffset,addressBarOffset, 100, addressBarHeight, addressBarOffset);
-    private Frame DocumentArea = new Frame(0,addressBarHeight, 100,100);
+    private DocumentArea DocumentArea = new DocumentArea(0,addressBarHeight, 100,100);
     private ArrayList<Frame> Frames = new ArrayList<>();
 }
