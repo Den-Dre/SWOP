@@ -25,11 +25,14 @@ public class UITable extends DocumentCell{
         resetWidthsHeights();
         setColumnWidths();
         setRowHeights();
+        setHeight(getMaxHeight());
+        setWidth(getMaxWidth());
         for (ArrayList<DocumentCell> row : grid) {
             for (DocumentCell cell : row) {
                 cell.Render(g);
             }
         }
+        // Draw a rectangle around the table for debugging purposes
         g.setColor(Color.BLACK);
         g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
     }
