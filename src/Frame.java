@@ -44,6 +44,14 @@ public class Frame {
         return yPos;
     }
 
+    public void setxPos(int xPos) {
+        this.xPos = xPos;
+    }
+
+    public void setyPos(int yPos) {
+        this.yPos = yPos;
+    }
+
     public int getWidth() {
         return width;
     }
