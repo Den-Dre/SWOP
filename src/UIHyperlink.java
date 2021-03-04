@@ -33,10 +33,10 @@ public class UIHyperlink extends DocumentCell{
         link.addAttribute(TextAttribute.FONT, hyperlinkFont);
         link.addAttribute(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
 
-        g.drawString(link.getIterator(), getxPos(), getyPos()+getHeight());
+        g.drawString(link.getIterator(), getxPos(), getyPos()+textHeight);
 
         // Draw a rectangle around the text for debugging purposes
-        g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
+        // g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
     }
 
     private void updateSizes() {

@@ -11,10 +11,10 @@ public class UITable extends DocumentCell{
         this.grid = rows;
 
         // => 2. Set the dimensions of the table contents
-        setRowHeights();
-        setColumnWidths();
         setHeight(getMaxHeight());
         setWidth(getMaxWidth());
+        setRowHeights();
+        setColumnWidths();
     }
 
     @Override
@@ -32,9 +32,14 @@ public class UITable extends DocumentCell{
                 cell.Render(g);
             }
         }
+        resetWidthsHeights();
+        setColumnWidths();
+        setRowHeights();
+        setHeight(getMaxHeight());
+        setWidth(getMaxWidth());
         // Draw a rectangle around the table for debugging purposes
         g.setColor(Color.BLACK);
-        g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
+        //g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
     }
 
     @Override

@@ -7,8 +7,8 @@ public class DocumentArea extends Frame {
         super(x, y, width, height);
 
         // => This is for debugging purposes:
-        UITextField textField3 = new UITextField(x, y, width, textSize, "teststring");
-        UITextField textField4 = new UITextField(x, y, width, textSize, "hallo");
+        UITextField textField3 = new UITextField(x, y, width, textSize, "Tabel2");
+        UITextField textField4 = new UITextField(x, y, width, textSize, "lorem-ipsum");
         UIHyperlink link2 = new UIHyperlink(x,y, width, textSize, "www.bart.com");
         ArrayList<DocumentCell> row3 = new ArrayList<>();
         ArrayList<DocumentCell> row4 = new ArrayList<>();

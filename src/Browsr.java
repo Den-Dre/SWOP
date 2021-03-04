@@ -68,8 +68,8 @@ public class Browsr extends CanvasWindow {
     }
 
     private int addressBarHeight = 35;
-    private int addressBarOffset = 5;
-    private AddressBar AddressBar = new AddressBar(addressBarOffset,addressBarOffset, 100, addressBarHeight, addressBarOffset);
-    private DocumentArea DocumentArea = new DocumentArea(0,addressBarHeight+2*addressBarOffset, 100,100);
+    private int offset = 5;
+    private AddressBar AddressBar = new AddressBar(offset, offset, 100, addressBarHeight, offset);
+    private DocumentArea DocumentArea = new DocumentArea(offset,addressBarHeight+2* offset, 100,100);
     private ArrayList<Frame> Frames = new ArrayList<>();
 }
