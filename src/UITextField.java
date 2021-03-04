@@ -10,7 +10,7 @@ public class UITextField extends DocumentCell{
         super(x, y, width, text_size);
         textField = text;
         textHeight = text_size;
-        textWidth = width;
+        updateSizes();
     }
 
     @Override
@@ -26,15 +26,18 @@ public class UITextField extends DocumentCell{
         g.setFont(textFieldFont);
         g.drawString(textField, getxPos(), getyPos()+textHeight);
         // Draw a rectangle around the text for debugging purposes
-        //g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
+        g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
     }
 
     /*
     Update the textWidth of this UITextField in the textFieldFont.
      */
     private void updateSizes() {
-        if (metrics == null) return;
-        textWidth = metrics.stringWidth(textField);
+        if (!calculateActualWidth) textWidth =  (int) (textHeight*textField.length()*heightToWidthRatio);
+        else {
+            if (metrics == null) return;
+            textWidth = metrics.stringWidth(textField);
+        }
     }
 
     @Override
@@ -61,7 +64,7 @@ public class UITextField extends DocumentCell{
     private int textWidth;
 
     // Font variables
-    private Font textFieldFont = new Font(Font.DIALOG_INPUT, Font.PLAIN, getHeight());
+    private Font textFieldFont = new Font(Font.SANS_SERIF, Font.PLAIN, getHeight());
     private Color textFieldColor = Color.BLACK;
     private FontMetrics metrics;
 

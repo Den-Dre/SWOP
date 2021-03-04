@@ -36,5 +36,13 @@ public class DocumentCell extends Frame{
         return 1;
     }
 
+    /*
+    If calculateActualWidth is false, the estimation of the width is done as follows:
+    -> textHeight*(length of the text)*heightToWidthRatio
+     */
+    protected final boolean calculateActualWidth = false; // set to true if the actual width has to be calculated, otherwise an estimation is made
+    protected final double heightToWidthRatio = 2.0/3.0;
+
+
 
 }

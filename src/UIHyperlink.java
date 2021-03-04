@@ -12,7 +12,7 @@ public class UIHyperlink extends DocumentCell{
         super(x, y, width, link_size);
         this.href = href;
         textHeight = link_size;
-        textWidth = width;
+        updateSizes();
     }
 
     @Override
@@ -36,12 +36,15 @@ public class UIHyperlink extends DocumentCell{
         g.drawString(link.getIterator(), getxPos(), getyPos()+textHeight);
 
         // Draw a rectangle around the text for debugging purposes
-        // g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
+        g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
     }
 
     private void updateSizes() {
-        if (metrics == null) return;
-        textWidth = metrics.stringWidth(href);
+        if (!calculateActualWidth) textWidth =  (int) (textHeight*href.length()*heightToWidthRatio);
+        else {
+            if (metrics == null) return;
+            textWidth = metrics.stringWidth(href);
+        }
     }
 
     @Override
@@ -63,7 +66,7 @@ public class UIHyperlink extends DocumentCell{
     The max height of a UIHyperlink is the width of the string
      */
     public int getMaxHeight() {
-        return textHeight;
+        return textHeight+3; // the +3 can be deleted but what it does is account for the extra height from the underlining.
     }
 
     @Override
@@ -83,7 +86,7 @@ public class UIHyperlink extends DocumentCell{
     private int textWidth;
 
     // Font variables
-    private Font hyperlinkFont = new Font(Font.DIALOG_INPUT, Font.ITALIC, getHeight());
+    private Font hyperlinkFont = new Font(Font.SANS_SERIF, Font.PLAIN, getHeight());
     private Color hyperlinkColor = Color.BLUE;
     private FontMetrics metrics;
 

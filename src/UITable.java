@@ -32,14 +32,16 @@ public class UITable extends DocumentCell{
                 cell.Render(g);
             }
         }
-        resetWidthsHeights();
-        setColumnWidths();
-        setRowHeights();
-        setHeight(getMaxHeight());
-        setWidth(getMaxWidth());
+        if (calculateActualWidth) {
+            resetWidthsHeights();
+            setColumnWidths();
+            setRowHeights();
+            setHeight(getMaxHeight());
+            setWidth(getMaxWidth());
+        }
         // Draw a rectangle around the table for debugging purposes
         g.setColor(Color.BLACK);
-        //g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
+        g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
     }
 
     @Override

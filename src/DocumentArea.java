@@ -9,7 +9,7 @@ public class DocumentArea extends Frame {
         // => This is for debugging purposes:
         UITextField textField3 = new UITextField(x, y, width, textSize, "Tabel2");
         UITextField textField4 = new UITextField(x, y, width, textSize, "lorem-ipsum");
-        UIHyperlink link2 = new UIHyperlink(x,y, width, textSize, "www.bart.com");
+        UIHyperlink link2 = new UIHyperlink(x,y, width, textSize, "klik hier");
         ArrayList<DocumentCell> row3 = new ArrayList<>();
         ArrayList<DocumentCell> row4 = new ArrayList<>();
         ArrayList<ArrayList<DocumentCell>> rows2 = new ArrayList<>();
@@ -19,8 +19,6 @@ public class DocumentArea extends Frame {
         rows2.add(row3);
         rows2.add(row4);
         UITable table = new UITable(x,y,width, height, rows2);
-
-
 
         UITextField textField = new UITextField(x, y, width, textSize, "teststring");
         UITextField textField2 = new UITextField(x, y, width, textSize, "hallo");
@@ -95,7 +93,7 @@ public class DocumentArea extends Frame {
 
     private String URL = "";
 
-    private final int textSize = 20;
+    private final int textSize = 14;
 
     private DocumentCell content;
 }
