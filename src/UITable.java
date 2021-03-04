@@ -13,8 +13,6 @@ public class UITable extends DocumentCell{
         // => 2. Set the dimensions of the table contents
         setHeight(getMaxHeight());
         setWidth(getMaxWidth());
-        setRowHeights();
-        setColumnWidths();
     }
 
     @Override
@@ -22,22 +20,16 @@ public class UITable extends DocumentCell{
     Render every cell in the grid.
      */
     public void Render(Graphics g) {
-        resetWidthsHeights();
         setColumnWidths();
         setRowHeights();
-        setHeight(getMaxHeight());
-        setWidth(getMaxWidth());
         for (ArrayList<DocumentCell> row : grid) {
             for (DocumentCell cell : row) {
                 cell.Render(g);
             }
         }
         if (calculateActualWidth) {
-            resetWidthsHeights();
             setColumnWidths();
             setRowHeights();
-            setHeight(getMaxHeight());
-            setWidth(getMaxWidth());
         }
         // Draw a rectangle around the table for debugging purposes
         g.setColor(Color.BLACK);
@@ -67,11 +59,8 @@ public class UITable extends DocumentCell{
     Re-calculates the necessary widths and heights of the DocumentCells
      */
     public void handleResize(int newWindowWidth, int newWindowHeight) {
-        resetWidthsHeights();
         setColumnWidths();
         setRowHeights();
-        setHeight(getMaxHeight());
-        setWidth(getMaxWidth());
     }
 
     @Override
@@ -103,6 +92,9 @@ public class UITable extends DocumentCell{
     It also sets the desired height and y-position of the cells in the table.
      */
     public void setRowHeights() {
+        // Reset the array with the heights
+        rowHeights = new ArrayList<>();
+        // Iterate over the rows to find the highest cell in each row
         int i = 0;
         for (ArrayList<DocumentCell> row : grid) {
             int max = 0;
@@ -110,15 +102,20 @@ public class UITable extends DocumentCell{
                 int height = cell.getMaxHeight();
                 if (height > max) max = height;
             }
+            // Store the height if the highest cell in the row into an array
             rowHeights.add(max);
+            // Set the height of each cell in the current row to this calculated height
             for (DocumentCell cell : row) {
+                cell.setHeight(max);
+                // Also, the y-position needs to be updated. This is the y-position of the table + the heights of all the above cells
                 int offset = 0;
                 for (int j = 0; j < i; j++) offset += rowHeights.get(j);
                 cell.setyPos(getyPos()+offset);
-                cell.setHeight(max);
             }
             i++;
         }
+        // Set the height of the table to the max height of the table
+        setHeight(getMaxHeight());
     }
 
     /*
@@ -126,34 +123,40 @@ public class UITable extends DocumentCell{
     It also sets the desired width and x-position of the cells in the table.
      */
     public void setColumnWidths() {
+        // Reset the array with the widths
+        columnWidths = new ArrayList<>();
+        // Iterate over the rows to update the array containing the widest cell per column
         for (ArrayList<DocumentCell> row : grid) {
             for (int i = 0; i < row.size(); i++) {
                 DocumentCell cell = row.get(i);
                 int width = cell.getMaxWidth();
+                // If there isn't already a max width for this column, just append it to the array
                 if (columnWidths.size() <= i)
                     columnWidths.add(width);
+                // If there is, check to see whether this new cell is wider or not
                 else {
                     if (columnWidths.get(i) < width)
+                        // If it is wider, replace with newly found (wider) width
                         columnWidths.remove(i);
                         columnWidths.add(i, width);
                 }
             }
         }
+        // Set the width of each cell to the maximum width in its column
         for (ArrayList<DocumentCell> row : grid) {
             for (int i = 0; i < row.size(); i++) {
+                DocumentCell cell = row.get(i);
+                int width = columnWidths.get(i);
+                cell.setWidth(width);
+                // The x-position needs to be updated too. This is the x-pos of the table + the widths of all the cells to this cells left
                 int offset = 0;
                 for (int j = 0; j < i; j++) offset += columnWidths.get(j);
-                int width = columnWidths.get(i);
-                DocumentCell cell = row.get(i);
                 cell.setxPos(getxPos()+offset);
-                cell.setWidth(width);
+
             }
         }
-    }
-
-    private void resetWidthsHeights() {
-        rowHeights = new ArrayList<>(); // Contains the height for each row
-        columnWidths = new ArrayList<>(); // Contains the width for each column
+        // Set the width of the table to the max width of the table
+        setWidth(getMaxWidth());
     }
 
     private ArrayList<ArrayList<DocumentCell>> grid = new ArrayList<>();
