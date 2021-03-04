@@ -6,4 +6,8 @@ public class TableCell {
     public TableCell(ContentSpan content) {
         this.content = content;
     }
+
+    public ContentSpan getContent() {
+        return content;
+    }
 }

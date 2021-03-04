@@ -9,4 +9,12 @@ public class Table extends ContentSpan {
     public Table(List<TableRow> rows) {
         this.rows = rows;
     }
+
+    public void addTableRow(TableRow row) {
+        this.rows.add(row);
+    }
+
+    public List<TableRow> getRows() {
+        return rows;
+    }
 }

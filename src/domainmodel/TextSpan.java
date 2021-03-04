@@ -6,4 +6,8 @@ public class TextSpan extends ContentSpan {
     public TextSpan(String text) {
         this.text = text;
     }
+
+    public String getText() {
+        return text;
+    }
 }
