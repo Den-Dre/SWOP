@@ -4,6 +4,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("DocumentArea:")
@@ -43,6 +45,48 @@ class DocumentAreaTest {
     }
 
     @Test
-    void handleMouse() {
+    @DisplayName("can set the width and height")
+    void initWidthHeightPos() {
+        // ====== Setup =======
+        int x = 0;
+        int y = 0;
+        int width = 20;
+        int textSize = 15;
+        String text = "oefentext";
+        String text2 = "aa";
+        String href = "/wiki/Java";
+        String hrefText = "Java";
+        DocumentArea doc = new DocumentArea(x,y,500,500);
+        // Texfields and hyperlink
+        UITextField textField3 = new UITextField(x, y, width, textSize, text);
+        UITextField textField4 = new UITextField(x, y, width, textSize, text2);
+        UIHyperlink link2 = new UIHyperlink(x,y, width, textSize, href,hrefText);
+        ArrayList<DocumentCell> row = new ArrayList<>();
+        ArrayList<DocumentCell> row2 = new ArrayList<>();
+        ArrayList<ArrayList<DocumentCell>> tablecontents = new ArrayList<>();
+        row.add(textField3);
+        row.add(textField4);
+        row2.add(link2);
+        tablecontents.add(row);
+        tablecontents.add(row2);
+        UITable table = new UITable(x,y,width, width, tablecontents);
+        /*
+        table layout:
+        ----------------
+        | text | text2 |
+        | link |       |
+        ----------------
+         */
+        doc.setContent(table);
+        // =====================
+        double ratio = doc.getContent().getHeightToWidthRatio();
+        assertEquals(2*textSize, doc.getContent().getMaxHeight());
+        assertEquals((int) ((Math.max(text.length(), hrefText.length())+text2.length())*textSize*ratio), doc.getContent().getMaxWidth());
     }
+
+    /*
+    UITextField textField = new UITextField(x, y, width, textSize, "teststring");
+        UITextField textField2 = new UITextField(x, y, width, textSize, "hallo");
+        UIHyperlink link = new UIHyperlink(x,y, width, textSize, "/spam/win-actie", "Win €1000!");
+     */
 }

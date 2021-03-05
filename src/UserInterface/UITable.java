@@ -11,8 +11,8 @@ public class UITable extends DocumentCell{
         this.grid = rows;
 
         // => 2. Set the dimensions of the table contents
-        setHeight(getMaxHeight());
-        setWidth(getMaxWidth());
+        setColumnWidths();
+        setRowHeights();
     }
 
     @Override
@@ -20,8 +20,6 @@ public class UITable extends DocumentCell{
     Render every cell in the grid.
      */
     public void Render(Graphics g) {
-        setColumnWidths();
-        setRowHeights();
         for (ArrayList<DocumentCell> row : grid) {
             for (DocumentCell cell : row) {
                 cell.Render(g);
@@ -135,10 +133,11 @@ public class UITable extends DocumentCell{
                     columnWidths.add(width);
                 // If there is, check to see whether this new cell is wider or not
                 else {
-                    if (columnWidths.get(i) < width)
+                    if (columnWidths.get(i) < width) {
                         // If it is wider, replace with newly found (wider) width
                         columnWidths.remove(i);
                         columnWidths.add(i, width);
+                    }
                 }
             }
         }

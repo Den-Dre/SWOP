@@ -69,7 +69,7 @@ public class UIHyperlink extends DocumentCell{
     The max height of a UserInterface.UIHyperlink is the width of the string
      */
     public int getMaxHeight() {
-        return textHeight+3; // the +3 can be deleted but what it does is account for the extra height from the underlining.
+        return textHeight; // the +3 can be deleted but what it does is account for the extra height from the underlining.
     }
 
     @Override

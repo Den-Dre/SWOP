@@ -17,6 +17,7 @@ public class DocumentArea extends Frame {
     public DocumentArea(int x, int y, int width, int height) {
         super(x, y, width, height);
 
+        /*
         // => This is for debugging purposes:
         UITextField textField3 = new UITextField(x, y, width, textSize, "Tabel2");
         UITextField textField4 = new UITextField(x, y, width, textSize, "lorem-ipsum");
@@ -46,6 +47,8 @@ public class DocumentArea extends Frame {
 
         content = new UITable(x,y,width, height, rows);
         // ===============================
+         */
+
     }
 
     @Override
@@ -103,6 +106,14 @@ public class DocumentArea extends Frame {
         System.out.println("hyperlink pressed!!");
         System.out.println(link);
         // controller.loadDocument(this.makeNewUrl(link))
+    }
+
+    public void setContent(DocumentCell content) {
+        this.content = content;
+    }
+
+    public DocumentCell getContent() {
+        return this.content;
     }
 
 
