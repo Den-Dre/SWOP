@@ -6,13 +6,14 @@ import java.text.AttributedString;
 
 public class UIHyperlink extends DocumentCell{
     /*
-    (int x, int y) -> position on the window
-    link_size -> the height of the text
-    String href -> The href text of the HyperLink
-    */
-    public UIHyperlink(int x, int y, int width, int link_size, String href) {
+        (int x, int y) -> position on the window
+        link_size -> the height of the text
+        String href -> The href text of the HyperLink
+        */
+    public UIHyperlink(int x, int y, int width, int link_size, String href, String text) {
         super(x, y, width, link_size);
         this.href = href;
+        this.text = text;
         textHeight = link_size;
         updateSizes();
     }
@@ -31,7 +32,7 @@ public class UIHyperlink extends DocumentCell{
         g.setColor(hyperlinkColor);
 
         // Underling the hyperlink
-        AttributedString link = new AttributedString(href);
+        AttributedString link = new AttributedString(text);
         link.addAttribute(TextAttribute.FONT, hyperlinkFont);
         link.addAttribute(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
 
@@ -42,7 +43,7 @@ public class UIHyperlink extends DocumentCell{
     }
 
     private void updateSizes() {
-        if (!calculateActualWidth) textWidth =  (int) (textHeight*href.length()*heightToWidthRatio);
+        if (!calculateActualWidth) textWidth =  (int) (textHeight*text.length()*heightToWidthRatio);
         else {
             if (metrics == null) return;
             textWidth = metrics.stringWidth(href);
@@ -81,6 +82,7 @@ public class UIHyperlink extends DocumentCell{
 
     // Content of the Hyperlink
     private String href = "";
+    private final String text;
 
 
     // Dimension variables

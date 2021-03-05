@@ -223,6 +223,9 @@ public class AddressBar extends Frame{
         this.setWidth(newWindowWidth-2*offset);
     }
 
+    // Distance between addressBar and the window edges
+    int offset;
+
     //Two URL's to be able to 'rollback' the old url if editing is cancelled.
     // URL is the variable to be edited. URLCopy gets updated after it is certain the edited url is final.
     private String URL = ""; // The url starts empty
@@ -246,8 +249,6 @@ public class AddressBar extends Frame{
     FontMetrics metrics;
     int textheight;
     private final Color textColor = Color.BLACK;
-
-    int offset = 0;
 
     /*
     Getters and setters for some variables ->

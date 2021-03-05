@@ -58,16 +58,20 @@ public class UITextField extends DocumentCell{
         return textHeight;
     }
 
+    public String getText() {
+        return this.textField;
+    }
+
     // Content of the textField
     private String textField = "";
 
     // Dimension parameters
-    private int textHeight;
+    private final int textHeight;
     private int textWidth;
 
     // Font variables
-    private Font textFieldFont = new Font(Font.SANS_SERIF, Font.PLAIN, getHeight());
-    private Color textFieldColor = Color.BLACK;
+    private final Font textFieldFont = new Font(Font.SANS_SERIF, Font.PLAIN, getHeight());
+    private final Color textFieldColor = Color.BLACK;
     private FontMetrics metrics;
 
 

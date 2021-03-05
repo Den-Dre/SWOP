@@ -4,6 +4,15 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+/*
+-> This class (and the AddressBar) will need an extra field "Controller".
+-> This var should be set in the main-Class with documentarea.setController(controller) and the same for AddressBar
+-> Initially the documentarea is empty (?). When the lister alerts the documentarea.
+It should then call this.controller.getContents(this.controller.getURL()) to fetch the document.
+-> If there is a link pressed, the document should compose a new url using this.URL and the retrieved href.
+It should then call this.controller.loadDocument(newUrl)
+ */
+
 public class DocumentArea extends Frame {
     public DocumentArea(int x, int y, int width, int height) {
         super(x, y, width, height);
@@ -11,7 +20,7 @@ public class DocumentArea extends Frame {
         // => This is for debugging purposes:
         UITextField textField3 = new UITextField(x, y, width, textSize, "Tabel2");
         UITextField textField4 = new UITextField(x, y, width, textSize, "lorem-ipsum");
-        UIHyperlink link2 = new UIHyperlink(x,y, width, textSize, "klik hier");
+        UIHyperlink link2 = new UIHyperlink(x,y, width, textSize, "/klikhier/hoofdpagina","klik hier");
         ArrayList<DocumentCell> row3 = new ArrayList<>();
         ArrayList<DocumentCell> row4 = new ArrayList<>();
         ArrayList<ArrayList<DocumentCell>> rows2 = new ArrayList<>();
@@ -24,7 +33,7 @@ public class DocumentArea extends Frame {
 
         UITextField textField = new UITextField(x, y, width, textSize, "teststring");
         UITextField textField2 = new UITextField(x, y, width, textSize, "hallo");
-        UIHyperlink link = new UIHyperlink(x,y, width, textSize, "www.internet.com");
+        UIHyperlink link = new UIHyperlink(x,y, width, textSize, "/spam/win-actie", "Win €1000!");
         ArrayList<DocumentCell> row = new ArrayList<>();
         ArrayList<DocumentCell> row2 = new ArrayList<>();
         row.add(textField2);
@@ -45,6 +54,8 @@ public class DocumentArea extends Frame {
      */
     public void Render(Graphics g) {
         content.Render(g);
+        g.setColor(Color.green);
+        g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
     }
 
     /*
@@ -54,7 +65,7 @@ public class DocumentArea extends Frame {
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
         if ((newWindowWidth - getxPos()) >= 0) setWidth(newWindowWidth - getxPos());
-        if ((newWindowHeight - getyPos()) >= 0) setWidth(newWindowHeight - getyPos());
+        if ((newWindowHeight - getyPos()) >= 0) setHeight(newWindowHeight - getyPos());
         content.handleResize(newWindowWidth, newWindowHeight);
     }
 
@@ -91,9 +102,13 @@ public class DocumentArea extends Frame {
         // What to do when a link is pressed?
         System.out.println("hyperlink pressed!!");
         System.out.println(link);
+        // controller.loadDocument(this.makeNewUrl(link))
     }
 
-    private String URL = "";
+
+    // private UIController controller;
+
+    private String Url = "";
 
     private final int textSize = 14;
 
