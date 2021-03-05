@@ -1,7 +1,7 @@
-import javax.print.Doc;
+package UserInterface;
+
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class UITable extends DocumentCell{
     public UITable(int x, int y, int width, int height, ArrayList<ArrayList<DocumentCell>> rows) {

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="13.3">
   <help_text>GUI Framework Requirements analysis:
-	- DocumentArea:
+	- UserInterface.DocumentArea:
 		-Hyperlink aan kunnen klikken: ✓
-	- AddressBar:
+	- UserInterface.AddressBar:
 		- Characters invoegen: ✓				(in Address Bar)
 		- Cursor tonen: ✓							(in Address Bar)
 		- Cursor verplaatsen met toetsen: ✓ (in Address Bar)
@@ -203,7 +203,7 @@ m2=0..1</panel_attributes>
       <w>176</w>
       <h>48</h>
     </coordinates>
-    <panel_attributes>AddressBar
+    <panel_attributes>UserInterface.AddressBar
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -280,7 +280,7 @@ m2=1</panel_attributes>
       <w>224</w>
       <h>48</h>
     </coordinates>
-    <panel_attributes>DocumentArea
+    <panel_attributes>UserInterface.DocumentArea
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -303,7 +303,7 @@ m2=1</panel_attributes>
       <w>240</w>
       <h>240</h>
     </coordinates>
-    <panel_attributes>/Frame/
+    <panel_attributes>/UserInterface.Frame/
 --
 -coordinates
 --
@@ -431,7 +431,7 @@ m2=1</panel_attributes>
       <w>224</w>
       <h>64</h>
     </coordinates>
-    <panel_attributes>DocumentCell
+    <panel_attributes>UserInterface.DocumentCell
 valign=center</panel_attributes>
     <additional_attributes/>
   </element>
@@ -572,7 +572,7 @@ First part of URL of a document + href attribute of hyperlink combined result in
     </coordinates>
     <panel_attributes>Document loading &amp; URL clicking
 
-Every time a new document is loaded, documentAre is notified via contentChanged(), then getConents() is called of which the result is added to a DocumentCell. DocumentCells are up to date, then Browsr can determine which DocumentCell was clicked and the corresponding URL, too. This URL then needs to be passed to the documentLoader() method to load the new document. Rinse and repeat.</panel_attributes>
+Every time a new document is loaded, documentAre is notified via contentChanged(), then getConents() is called of which the result is added to a UserInterface.DocumentCell. DocumentCells are up to date, then Browsr can determine which UserInterface.DocumentCell was clicked and the corresponding URL, too. This URL then needs to be passed to the documentLoader() method to load the new document. Rinse and repeat.</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -655,7 +655,7 @@ Every time a new document is loaded, documentAre is notified via contentChanged(
       <w>448</w>
       <h>176</h>
     </coordinates>
-    <panel_attributes>DocumentArea has all the information required to paint the associated frames by calling document.getContent() for example. 
+    <panel_attributes>UserInterface.DocumentArea has all the information required to paint the associated frames by calling document.getContent() for example.
 Then, the documentContent needs to be mapped onto DocumentCells. This is our tempory </panel_attributes>
     <additional_attributes/>
   </element>

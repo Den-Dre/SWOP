@@ -1,3 +1,5 @@
+package UserInterface;
+
 import java.awt.*;
 
 public class UITextField extends DocumentCell{
@@ -15,7 +17,7 @@ public class UITextField extends DocumentCell{
 
     @Override
     /*
-    Render this UITextField.
+    Render this UserInterface.UITextField.
     => Get information about the width of the text in the textFieldFont
     => Set the color, font and then draw the string on the window.
      */
@@ -30,7 +32,7 @@ public class UITextField extends DocumentCell{
     }
 
     /*
-    Update the textWidth of this UITextField in the textFieldFont.
+    Update the textWidth of this UserInterface.UITextField in the textFieldFont.
      */
     private void updateSizes() {
         if (!calculateActualWidth) textWidth =  (int) (textHeight*textField.length()*heightToWidthRatio);
@@ -42,7 +44,7 @@ public class UITextField extends DocumentCell{
 
     @Override
     /*
-    The max width of a UITextField is the width of the string
+    The max width of a UserInterface.UITextField is the width of the string
      */
     public int getMaxWidth() {
         return textWidth;
@@ -50,7 +52,7 @@ public class UITextField extends DocumentCell{
 
     @Override
     /*
-    the max height of a UITextField is the height of the string
+    the max height of a UserInterface.UITextField is the height of the string
      */
     public int getMaxHeight() {
         return textHeight;

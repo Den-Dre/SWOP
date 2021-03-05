@@ -1,3 +1,5 @@
+package UserInterface;
+
 import java.awt.*;
 
 public class Frame {
@@ -25,13 +27,13 @@ public class Frame {
 
     public void handleResize(int newWindowWidth, int newWindowHeight){ }
 
-    protected void toggleFocus(boolean newState){
+    public void toggleFocus(boolean newState){
         this.hasFocus = newState;
     }
 
     private int xPos;
     private int yPos;
-    protected boolean hasFocus;
+    public boolean hasFocus;
     private int width;
     private int height;
     private Color backgroundColor = Color.WHITE;

@@ -1,3 +1,5 @@
+package UserInterface;
+
 import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.text.AttributedString;
@@ -52,7 +54,7 @@ public class UIHyperlink extends DocumentCell{
     Input: a mouse click
     Output: String
     -> The method only checks if the click was on itself, other checks have been done upstream
-    -> Returns the href if this UIHyperlink was pressed, else "".
+    -> Returns the href if this UserInterface.UIHyperlink was pressed, else "".
      */
     public String getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
         if (wasClicked(x,y)) {
@@ -63,7 +65,7 @@ public class UIHyperlink extends DocumentCell{
 
     @Override
     /*
-    The max height of a UIHyperlink is the width of the string
+    The max height of a UserInterface.UIHyperlink is the width of the string
      */
     public int getMaxHeight() {
         return textHeight+3; // the +3 can be deleted but what it does is account for the extra height from the underlining.
@@ -71,7 +73,7 @@ public class UIHyperlink extends DocumentCell{
 
     @Override
     /*
-    the max width of a UIHyperlink is the height of the string
+    the max width of a UserInterface.UIHyperlink is the height of the string
      */
     public int getMaxWidth() {
         return textWidth;

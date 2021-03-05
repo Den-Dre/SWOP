@@ -1,3 +1,5 @@
+package UserInterface;
+
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -46,7 +48,7 @@ public class DocumentArea extends Frame {
     }
 
     /*
-    If the new window dimensions are legal, the DocumentArea gets resized.
+    If the new window dimensions are legal, the UserInterface.DocumentArea gets resized.
     It also resizes its content.
      */
     @Override
@@ -74,7 +76,7 @@ public class DocumentArea extends Frame {
     }
 
     /*
-    Returns true if and oly if (x,y) is in this DocumentArea.
+    Returns true if and oly if (x,y) is in this UserInterface.DocumentArea.
      */
     private boolean wasClicked(int x, int y) {
         return x >= this.getxPos() && x <= (this.getxPos() + this.getWidth()) && y >= this.getyPos() && y <= (this.getyPos() + this.getHeight());

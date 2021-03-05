@@ -1,3 +1,5 @@
+package UserInterface;
+
 import java.awt.*;
 
 public class DocumentCell extends Frame{

@@ -1,10 +1,10 @@
+import UserInterface.AddressBar;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.awt.event.*;
-import java.security.Key;
 
 class AddressBarTest {
 
@@ -25,7 +25,7 @@ class AddressBarTest {
     @Test
     void handleMouse() {
         assertFalse(bar.hasFocus);
-        // click inside Frame
+        // click inside UserInterface.Frame
         bar.handleMouse(mouseClick, 10,15,1, leftMouse,0);
         assertTrue(bar.hasFocus);
         // click outside addressbar

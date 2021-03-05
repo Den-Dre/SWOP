@@ -1,7 +1,8 @@
+package UserInterface;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.Arrays;
 
 public class AddressBar extends Frame{
     public AddressBar(int x, int y, int width, int height, int offset) {
