@@ -47,7 +47,7 @@ public class DocumentCell extends Frame{
     -> textHeight*(length of the text)*heightToWidthRatio
      */
     protected final boolean calculateActualWidth = false; // set to true if the actual width has to be calculated, otherwise an estimation is made
-    protected final double heightToWidthRatio = 3.0/4.0;
+    protected final double heightToWidthRatio = 2.0/3.0;
 
 
 

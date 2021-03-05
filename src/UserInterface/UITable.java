@@ -158,6 +158,18 @@ public class UITable extends DocumentCell{
         setWidth(getMaxWidth());
     }
 
+    @Override
+    public void setxPos(int xPos) {
+        super.setxPos(xPos);
+        setColumnWidths();
+    }
+
+    @Override
+    public void setyPos(int yPos) {
+        super.setyPos(yPos);
+        setRowHeights();
+    }
+
     private ArrayList<ArrayList<DocumentCell>> grid = new ArrayList<>();
     private ArrayList<Integer> rowHeights = new ArrayList<>(); // Contains the height for each row
     private ArrayList<Integer> columnWidths = new ArrayList<>(); // Contains the width for each column

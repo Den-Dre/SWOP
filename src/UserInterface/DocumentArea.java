@@ -16,8 +16,6 @@ It should then call this.controller.loadDocument(newUrl)
 public class DocumentArea extends Frame {
     public DocumentArea(int x, int y, int width, int height) {
         super(x, y, width, height);
-
-        /*
         // => This is for debugging purposes:
         UITextField textField3 = new UITextField(x, y, width, textSize, "Tabel2");
         UITextField textField4 = new UITextField(x, y, width, textSize, "lorem-ipsum");
@@ -47,8 +45,6 @@ public class DocumentArea extends Frame {
 
         content = new UITable(x,y,width, height, rows);
         // ===============================
-         */
-
     }
 
     @Override
@@ -58,7 +54,7 @@ public class DocumentArea extends Frame {
     public void Render(Graphics g) {
         content.Render(g);
         g.setColor(Color.green);
-        g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
+        //g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
     }
 
     /*
