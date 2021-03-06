@@ -79,10 +79,21 @@ class DocumentAreaTest {
          */
         doc.setContent(table);
         // =====================
+        // The width and height of the table should be the width and height of the cells combined.
+        // The height of a cell is the size of the text. The width is the
         double ratio = doc.getContent().getHeightToWidthRatio();
         assertEquals(2*textSize, doc.getContent().getMaxHeight());
         assertEquals((int) ((Math.max(text.length(), hrefText.length())+text2.length())*textSize*ratio), doc.getContent().getMaxWidth());
     }
+
+    /*
+    Some extra tests that should be added:
+    -> Are the x and y positions off the cells initialised correctly?
+    -> clicking on a link should return the href
+    -> ...
+     */
+
+
 
     /*
     UITextField textField = new UITextField(x, y, width, textSize, "teststring");
