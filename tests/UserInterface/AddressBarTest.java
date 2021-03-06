@@ -1,3 +1,6 @@
+package UserInterface;
+
+import UserInterface.AddressBar;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,7 +26,7 @@ class AddressBarTest {
     @Test
     void handleMouse() {
         assertFalse(bar.hasFocus);
-        // click inside Frame
+        // click inside UserInterface.Frame
         bar.handleMouse(mouseClick, 10,15,1, leftMouse,0);
         assertTrue(bar.hasFocus);
         // click outside addressbar

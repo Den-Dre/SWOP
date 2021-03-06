@@ -1,3 +1,5 @@
+package UserInterface;
+
 import java.awt.*;
 
 public class UITextField extends DocumentCell{
@@ -14,7 +16,8 @@ public class UITextField extends DocumentCell{
         super(x, y, width, text_size);
         textField = text;
         textHeight = text_size;
-        textWidth = width;
+        updateSizes();
+        setWidth(getMaxWidth());
     }
 
     /**
@@ -32,15 +35,18 @@ public class UITextField extends DocumentCell{
         g.setFont(textFieldFont);
         g.drawString(textField, getxPos(), getyPos()+textHeight);
         // Draw a rectangle around the text for debugging purposes
-        //g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
+        g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
     }
 
     /*
-    Update the textWidth of this UITextField in the textFieldFont.
+    Update the textWidth of this UserInterface.UITextField in the textFieldFont.
      */
     private void updateSizes() {
-        if (metrics == null) return;
-        textWidth = metrics.stringWidth(textField);
+        if (!calculateActualWidth) textWidth =  (int) (textHeight*textField.length()*heightToWidthRatio);
+        else {
+            if (metrics == null) return;
+            textWidth = metrics.stringWidth(textField);
+        }
     }
 
     /**
@@ -59,15 +65,19 @@ public class UITextField extends DocumentCell{
         return textHeight;
     }
 
+    public String getText() {
+        return this.textField;
+    }
+
     // Content of the textField
     private String textField = "";
 
     // Dimension parameters
-    private int textHeight;
+    private final int textHeight;
     private int textWidth;
 
     // Font variables
-    private Font textFieldFont = new Font(Font.DIALOG_INPUT, Font.PLAIN, getHeight());
-    private Color textFieldColor = Color.BLACK;
+    private final Font textFieldFont = new Font(Font.SANS_SERIF, Font.PLAIN, getHeight());
+    private final Color textFieldColor = Color.BLACK;
     private FontMetrics metrics;
 }

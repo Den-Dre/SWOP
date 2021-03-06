@@ -1,3 +1,9 @@
+import UserInterface.DocumentCell;
+import UserInterface.UIHyperlink;
+import UserInterface.UITable;
+import UserInterface.UITextField;
+import UserInterface.Frame;
+
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -10,7 +16,7 @@ public class DocumentArea extends Frame {
         int textSize = 20;
         UITextField textField3 = new UITextField(x, y, width, textSize, "Tabel2");
         UITextField textField4 = new UITextField(x, y, width, textSize, "lorem-ipsum");
-        UIHyperlink link2 = new UIHyperlink(x,y, width, textSize, "www.bart.com");
+        UIHyperlink link2 = new UIHyperlink(x,y, width, textSize, "www.bart.com", "Bart");
         ArrayList<DocumentCell> row3 = new ArrayList<>();
         ArrayList<DocumentCell> row4 = new ArrayList<>();
         ArrayList<ArrayList<DocumentCell>> rows2 = new ArrayList<>();
@@ -25,7 +31,7 @@ public class DocumentArea extends Frame {
 
         UITextField textField = new UITextField(x, y, width, textSize, "teststring");
         UITextField textField2 = new UITextField(x, y, width, textSize, "hallo");
-        UIHyperlink link = new UIHyperlink(x,y, width, textSize, "www.internet.com");
+        UIHyperlink link = new UIHyperlink(x,y, width, textSize, "www.internet.com", "Internet");
         ArrayList<DocumentCell> row = new ArrayList<>();
         ArrayList<DocumentCell> row2 = new ArrayList<>();
         row.add(textField2);

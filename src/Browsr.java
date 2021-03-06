@@ -1,3 +1,6 @@
+import UserInterface.AddressBar;
+import UserInterface.DocumentArea;
+import UserInterface.Frame;
 import canvaswindow.CanvasWindow;
 
 import java.awt.*;
@@ -29,7 +32,7 @@ public class Browsr extends CanvasWindow {
 
     @Override
     protected void paint(Graphics g) {
-        for (Frame frame : Frames) {
+        for (UserInterface.Frame frame : Frames) {
             frame.Render(g);
         }
     }
@@ -37,7 +40,7 @@ public class Browsr extends CanvasWindow {
     @Override
     protected void handleResize() {
         //ook laten weten aan de frames om zichzelf intern aan te passen!
-        for (Frame frame : Frames) {
+        for (UserInterface.Frame frame : Frames) {
             frame.handleResize(this.getWidth(), this.getHeight());
         }
         repaint();
@@ -55,7 +58,7 @@ public class Browsr extends CanvasWindow {
 
     @Override
     protected void handleKeyEvent(int id, int keyCode, char keyChar, int modifiersEx) {
-        for (Frame frame : Frames){
+        for (UserInterface.Frame frame : Frames){
             frame.handleKey(id, keyCode, keyChar, modifiersEx);
         }
         repaint();
@@ -69,7 +72,7 @@ public class Browsr extends CanvasWindow {
 
     private int addressBarHeight = 35;
     private int offset = 5;
-    private AddressBar AddressBar = new AddressBar(offset, offset, 100, addressBarHeight, offset);
+    private UserInterface.AddressBar AddressBar = new AddressBar(offset, offset, 100, addressBarHeight, offset);
     private DocumentArea DocumentArea = new DocumentArea(offset,addressBarHeight+2* offset, 100,100);
-    private ArrayList<Frame> Frames = new ArrayList<>();
+    private ArrayList<UserInterface.Frame> Frames = new ArrayList<>();
 }
