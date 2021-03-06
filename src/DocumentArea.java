@@ -7,6 +7,7 @@ public class DocumentArea extends Frame {
         super(x, y, width, height);
 
         // => This is for debugging purposes:
+        int textSize = 20;
         UITextField textField3 = new UITextField(x, y, width, textSize, "Tabel2");
         UITextField textField4 = new UITextField(x, y, width, textSize, "lorem-ipsum");
         UIHyperlink link2 = new UIHyperlink(x,y, width, textSize, "www.bart.com");
@@ -39,17 +40,20 @@ public class DocumentArea extends Frame {
         // ===============================
     }
 
-    @Override
-    /*
-    Renders the content. The content renders its sub-content recursively if existent
+    /**
+     * Renders the content. The content renders its sub-content recursively if existent
      */
+    @Override
     public void Render(Graphics g) {
         content.Render(g);
     }
 
-    /*
-    If the new window dimensions are legal, the DocumentArea gets resized.
-    It also resizes its content.
+    /**
+     * If the new window dimensions are legal, the DocumentArea gets resized.
+     * It also resizes its content.
+     *
+     * @param newWindowWidth: The new window width that needs to be set.
+     * @param newWindowHeight: The new window height that needs to be set.
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
@@ -58,15 +62,22 @@ public class DocumentArea extends Frame {
         content.handleResize(newWindowWidth, newWindowHeight);
     }
 
-    @Override
-    /*
-    What to do when mouse is pressed?
-    -> Was it on me?
-    -> Was it the right button?
-    -> Is it the right MouseEvent?
-    => If all yes, send the click to content. The result of this could be a href String or the Empty String.
-    => Handle the result accordingly
+    /**
+     * What to do when mouse is pressed?
+     * -> Was it on me?
+     * -> Was it the right button?
+     * -> Is it the right MouseEvent?
+     * => If all yes, send the click to content. The result of this could be a href String or the Empty String.
+     * => Handle the result accordingly
+     *
+     * @param id: The type of mouse activity
+     * @param x: The x coordinate of the mouse activity
+     * @param y: The y coordinate of the mouse activity
+     * @param clickCount: The number of clicks
+     * @param button: The mouse button that was clicked
+     * @param modifiersEx: The control keys that were held on the click
      */
+    @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
         if (!wasClicked(x, y)) return;
         if (button != MouseEvent.BUTTON1) return;
@@ -75,29 +86,30 @@ public class DocumentArea extends Frame {
         linkPressed(result);
     }
 
-    /*
-    Returns true if and oly if (x,y) is in this DocumentArea.
+    /**
+     * Returns true if and oly if (x,y) is in this DocumentArea.
+     *
+     * @param x: The x coordinate of the mouse activity.
+     * @param y  The y coordinate of the mouse activity.
+     * @return bool: True iff the click occurred inside this DocumentArea.
      */
     private boolean wasClicked(int x, int y) {
         return x >= this.getxPos() && x <= (this.getxPos() + this.getWidth()) && y >= this.getyPos() && y <= (this.getyPos() + this.getHeight());
     }
 
-    /*
-    This method looks if the given string is a valid link.
-    If so, do the right actions.
+    /**
+     * This method looks if the given string is a valid link.
+     * If so, do the right actions.
+     *
+     * @param link: String representation of the link that was pressed.
      */
     private void linkPressed(String link) {
         if (link.equals("")) return;
-        // What to do when a link is pressed?
+        // TODO: What to do when a link is pressed?
         System.out.println("hyperlink pressed!!");
         System.out.println(link);
     }
 
-    private String URL = "";
-
-    private final int textSize = 20;
-
+    private final String URL = "";
     private DocumentCell content;
 }
-
-

@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.awt.event.*;
-import java.security.Key;
 
 class AddressBarTest {
 
@@ -18,7 +17,6 @@ class AddressBarTest {
 
     @BeforeEach
     public void setUp() {
-
         bar = new AddressBar(offset,offset,500,50, offset);
     }
 
@@ -47,6 +45,7 @@ class AddressBarTest {
         for (int code : keyCodes) {
             char[] chars = KeyEvent.getKeyText(code).toCharArray();
             bar.handleKey(keyPress, code, chars[0], 0);
+            // Characters shouldn't appear in AddressBar:
             assertEquals("", bar.getURL());
         }
     }

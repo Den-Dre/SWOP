@@ -1,10 +1,14 @@
 import java.awt.*;
 
 public class UITextField extends DocumentCell{
-    /*
-    (int x, int y) -> position on the window
-    text_size -> the height of the text
-    String text -> The text of the TextField
+    /**
+     * Create a {@code UITextField} based on the given parameters.
+     *
+     * @param x: x position on this UITextField in the window.
+     * @param y: y position of this UITextField in the window.
+     * @param width: the width of this {@code UITextField}.
+     * @param text_size: The height of this {@code UITextField}.
+     * @param text: The text attribute of this {@code UITextField}.
      */
     public UITextField(int x, int y, int width, int text_size, String text) {
         super(x, y, width, text_size);
@@ -13,12 +17,14 @@ public class UITextField extends DocumentCell{
         textWidth = width;
     }
 
-    @Override
-    /*
-    Render this UITextField.
-    => Get information about the width of the text in the textFieldFont
-    => Set the color, font and then draw the string on the window.
+    /**
+     * Render this UITextField.
+     * => Get information about the width of the text in the textFieldFont.
+     * => Set the color, font and then draw the string on the window.
+     *
+     * @param g: The graphics to be updated.
      */
+    @Override
     public void Render(Graphics g) {
         metrics = g.getFontMetrics(textFieldFont);
         updateSizes();
@@ -37,18 +43,18 @@ public class UITextField extends DocumentCell{
         textWidth = metrics.stringWidth(textField);
     }
 
-    @Override
-    /*
-    The max width of a UITextField is the width of the string
+    /**
+     * The max width of a {@code UITextField} is the width of the string.
      */
+    @Override
     public int getMaxWidth() {
         return textWidth;
     }
 
-    @Override
-    /*
-    the max height of a UITextField is the height of the string
+    /**
+     * The max height of a {@code UITextField} is the height of the string.
      */
+    @Override
     public int getMaxHeight() {
         return textHeight;
     }
@@ -64,6 +70,4 @@ public class UITextField extends DocumentCell{
     private Font textFieldFont = new Font(Font.DIALOG_INPUT, Font.PLAIN, getHeight());
     private Color textFieldColor = Color.BLACK;
     private FontMetrics metrics;
-
-
 }

@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class FrameTest {
 
 
-    @Test
+    @TestKlasse
     void correctInit() {
         Frame frame = new Frame(0,0,10,10);
         assertFalse(frame.hasFocus);
@@ -30,20 +30,20 @@ class FrameTest {
 
     }
 
-    @Test
+    @TestKlasse
     void handleMouse() {
 
     }
 
-    @Test
+    @TestKlasse
     void handleKey() {
     }
 
-    @Test
+    @TestKlasse
     void handleResize() {
     }
 
-    @Test
+    @TestKlasse
     void toggleFocus() {
     }
 }
