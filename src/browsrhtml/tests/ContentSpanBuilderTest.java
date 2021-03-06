@@ -1,5 +1,6 @@
-package browsrhtml;
+package browsrhtml.tests;
 
+import browsrhtml.ContentSpanBuilder;
 import domainmodel.*;
 import org.junit.jupiter.api.Test;
 
@@ -34,18 +35,22 @@ public class ContentSpanBuilderTest {
 
         List<TableCell> firstInnerRow = innerRows.get(0).getCells();
 		assertEquals("a.html", ((HyperLink) firstInnerRow.get(0).getContent()).getHref());
+		assertEquals("a", ((HyperLink) firstInnerRow.get(0).getContent()).getTextSpan().getText());
 		assertEquals("Hyperlink anchors", ((TextSpan) firstInnerRow.get(1).getContent()).getText());
 
 		List<TableCell> secondInnerRow = innerRows.get(1).getCells();
 		assertEquals("table.html", ((HyperLink) secondInnerRow.get(0).getContent()).getHref());
+		assertEquals("table", ((HyperLink) secondInnerRow.get(0).getContent()).getTextSpan().getText());
 		assertEquals("Tables", ((TextSpan) secondInnerRow.get(1).getContent()).getText());
 
 		List<TableCell> thirdInnerRow = innerRows.get(2).getCells();
 		assertEquals("tr.html", ((HyperLink) thirdInnerRow.get(0).getContent()).getHref());
+		assertEquals("tr", ((HyperLink) thirdInnerRow.get(0).getContent()).getTextSpan().getText());
 		assertEquals("Table rows", ((TextSpan) thirdInnerRow.get(1).getContent()).getText());
 
 		List<TableCell> fourthInnerRow = innerRows.get(3).getCells();
 		assertEquals("td.html", ((HyperLink) fourthInnerRow.get(0).getContent()).getHref());
+		assertEquals("td", ((HyperLink) fourthInnerRow.get(0).getContent()).getTextSpan().getText());
 		assertEquals("Table cells containing table data", ((TextSpan) fourthInnerRow.get(1).getContent()).getText());
     }
 }

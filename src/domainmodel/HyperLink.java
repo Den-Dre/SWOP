@@ -2,18 +2,18 @@ package domainmodel;
 
 public class HyperLink extends ContentSpan {
     private String href;
-    private TextSpan text;
+    private TextSpan textSpan;
 
     public HyperLink(String href, TextSpan text) {
         this.href = href;
-        this.text = text;
+        this.textSpan = text;
     }
 
     public String getHref() {
         return href;
     }
 
-    public TextSpan getText() {
-        return text;
+    public TextSpan getTextSpan() {
+        return textSpan;
     }
 }

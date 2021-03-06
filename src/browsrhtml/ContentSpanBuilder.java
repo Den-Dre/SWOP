@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class ContentSpanBuilder extends BrowsrDocumentValidator {
 
-    ContentSpanBuilder(Reader reader) {
+    public ContentSpanBuilder(Reader reader) {
         super(reader);
     }
 
