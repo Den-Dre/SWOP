@@ -17,34 +17,38 @@ public class DocumentArea extends Frame {
     public DocumentArea(int x, int y, int width, int height) {
         super(x, y, width, height);
         // => This is for debugging purposes:
-        UITextField textField3 = new UITextField(x, y, width, textSize, "Tabel2");
-        UITextField textField4 = new UITextField(x, y, width, textSize, "lorem-ipsum");
-        UIHyperlink link2 = new UIHyperlink(x,y, width, textSize, "/klikhier/hoofdpagina","klik hier");
-        ArrayList<DocumentCell> row3 = new ArrayList<>();
-        ArrayList<DocumentCell> row4 = new ArrayList<>();
-        ArrayList<ArrayList<DocumentCell>> rows2 = new ArrayList<>();
-        row3.add(textField3);
-        row3.add(textField4);
-        row4.add(link2);
-        rows2.add(row3);
-        rows2.add(row4);
-        UITable table = new UITable(x,y,width, height, rows2);
-
-        UITextField textField = new UITextField(x, y, width, textSize, "teststring");
-        UITextField textField2 = new UITextField(x, y, width, textSize, "hallo");
-        UIHyperlink link = new UIHyperlink(x,y, width, textSize, "/spam/win-actie", "Win €1000!");
-        ArrayList<DocumentCell> row = new ArrayList<>();
-        ArrayList<DocumentCell> row2 = new ArrayList<>();
-        row.add(textField2);
-        row.add(link);
-        row2.add(textField);
-        row2.add(table);
-        ArrayList<ArrayList<DocumentCell>> rows = new ArrayList<>();
-        rows.add(row);
-        rows.add(row2);
-
-        content = new UITable(x,y,width, height, rows);
+//        UITextField textField3 = new UITextField(x, y, width, textSize, "Tabel2");
+//        UITextField textField4 = new UITextField(x, y, width, textSize, "lorem-ipsum");
+//        UIHyperlink link2 = new UIHyperlink(x,y, width, textSize, "/klikhier/hoofdpagina","klik hier");
+//        ArrayList<DocumentCell> row3 = new ArrayList<>();
+//        ArrayList<DocumentCell> row4 = new ArrayList<>();
+//        ArrayList<ArrayList<DocumentCell>> rows2 = new ArrayList<>();
+//        row3.add(textField3);
+//        row3.add(textField4);
+//        row4.add(link2);
+//        rows2.add(row3);
+//        rows2.add(row4);
+//        UITable table = new UITable(x,y,width, height, rows2);
+//
+//        UITextField textField = new UITextField(x, y, width, textSize, "teststring");
+//        UITextField textField2 = new UITextField(x, y, width, textSize, "hallo");
+//        UIHyperlink link = new UIHyperlink(x,y, width, textSize, "/spam/win-actie", "Win €1000!");
+//        ArrayList<DocumentCell> row = new ArrayList<>();
+//        ArrayList<DocumentCell> row2 = new ArrayList<>();
+//        row.add(textField2);
+//        row.add(link);
+//        row2.add(textField);
+//        row2.add(table);
+//        ArrayList<ArrayList<DocumentCell>> rows = new ArrayList<>();
+//        rows.add(row);
+//        rows.add(row2);
+//
+//        content = new UITable(x,y,width, height, rows);
         // ===============================
+        UITextField textField5 = new UITextField(x, y, width, textSize, "text");
+        content = textField5;
+
+
     }
 
     @Override

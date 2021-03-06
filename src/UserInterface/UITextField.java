@@ -13,6 +13,7 @@ public class UITextField extends DocumentCell{
         textField = text;
         textHeight = text_size;
         updateSizes();
+        setWidth(getMaxWidth());
     }
 
     @Override

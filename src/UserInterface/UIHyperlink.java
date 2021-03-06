@@ -16,6 +16,7 @@ public class UIHyperlink extends DocumentCell{
         this.text = text;
         textHeight = link_size;
         updateSizes();
+        setWidth(getMaxWidth());
     }
 
     @Override
