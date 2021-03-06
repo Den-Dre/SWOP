@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,7 +23,7 @@ class DocumentAreaTest {
     }
 
     @Test
-    @DisplayName("handles resizes")
+    @DisplayName("Handles resizes")
     void handleResize() {
         // Make doc1 smaller
         int newWidth1 = 20;
@@ -45,7 +46,7 @@ class DocumentAreaTest {
     }
 
     @Test
-    @DisplayName("can set the width and height")
+    @DisplayName("Can set the width and height")
     void initWidthHeightPos() {
         // ====== Setup =======
         int x = 0;
@@ -57,19 +58,20 @@ class DocumentAreaTest {
         String href = "/wiki/Java";
         String hrefText = "Java";
         DocumentArea doc = new DocumentArea(x,y,500,500);
+
         // Texfields and hyperlink
         UITextField textField3 = new UITextField(x, y, width, textSize, text);
         UITextField textField4 = new UITextField(x, y, width, textSize, text2);
         UIHyperlink link2 = new UIHyperlink(x,y, width, textSize, href,hrefText);
         ArrayList<DocumentCell> row = new ArrayList<>();
         ArrayList<DocumentCell> row2 = new ArrayList<>();
-        ArrayList<ArrayList<DocumentCell>> tablecontents = new ArrayList<>();
+        ArrayList<ArrayList<DocumentCell>> tableContents = new ArrayList<>();
         row.add(textField3);
         row.add(textField4);
         row2.add(link2);
-        tablecontents.add(row);
-        tablecontents.add(row2);
-        UITable table = new UITable(x,y,width, width, tablecontents);
+        tableContents.add(row);
+        tableContents.add(row2);
+        UITable table = new UITable(x,y,width, width, tableContents);
         /*
         table layout:
         ----------------
@@ -84,6 +86,11 @@ class DocumentAreaTest {
         double ratio = doc.getContent().getHeightToWidthRatio();
         assertEquals(2*textSize, doc.getContent().getMaxHeight());
         assertEquals((int) ((Math.max(text.length(), hrefText.length())+text2.length())*textSize*ratio), doc.getContent().getMaxWidth());
+
+        // Click on link and retrieve href attribute
+        assertEquals(href, doc.getContent().getHandleMouse(MouseEvent.MOUSE_CLICKED, 1,textSize+2, 1, MouseEvent.BUTTON1, 0));
+
+        // Check x and y positions: can't be accessed without adding additional getters ..
     }
 
     /*

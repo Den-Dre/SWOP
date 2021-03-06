@@ -169,7 +169,7 @@ public class UITable extends DocumentCell{
                 DocumentCell cell = row.get(i);
                 int width = columnWidths.get(i);
                 cell.setWidth(width);
-                // The x-position needs to be updated too. This is the x-pos of the table + the widths of all the cells to this cells left
+                // The x-position needs to be updated too. This is the x-pos of the table + the widths of all the cells to this cell's left
                 int offset = 0;
                 for (int j = 0; j < i; j++) offset += columnWidths.get(j);
                 cell.setxPos(getxPos()+offset);

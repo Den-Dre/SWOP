@@ -24,6 +24,7 @@ class AddressBarTest {
     }
 
     @Test
+    @DisplayName("Handles mouse events")
     void handleMouse() {
         assertFalse(bar.hasFocus);
         // click inside UserInterface.Frame
@@ -109,7 +110,7 @@ class AddressBarTest {
     }
 
     @Test
-    @DisplayName("handles simple backspace and delete operation")
+    @DisplayName("Handles simple backspace and delete operation")
     void handleBackspace(){
         String url = "helloworld.com";
         bar.changeURLto(url);
@@ -133,7 +134,7 @@ class AddressBarTest {
     }
 
     @Test
-    @DisplayName("deletes all text with Backspace after the bar gains focus from mouseclick")
+    @DisplayName("Deletes all text with Backspace after the bar gains focus from mouseclick")
     void handleBackSpaceAfterClick() {
         String url = "helloworld.com";
         bar.changeURLto(url);
@@ -146,7 +147,7 @@ class AddressBarTest {
     }
 
     @Test
-    @DisplayName("deletes all text with Delete after the bar gains focus from mouseclick")
+    @DisplayName("Deletes all text with Delete after the bar gains focus from mouseclick")
     void handleDeleteAfterClick() {
         String url = "helloworld.com";
         bar.changeURLto(url);
@@ -159,7 +160,7 @@ class AddressBarTest {
     }
 
     @Test
-    @DisplayName("can handle End, Home, Left and Right + typing at insertion point")
+    @DisplayName("Can handle End, Home, Left and Right + typing at insertion point")
     void handleEndHomeLeftRight() {
         String url = "helloworld.com";
         bar.changeURLto(url);
@@ -224,9 +225,9 @@ class AddressBarTest {
 
 
     @Test
-    @DisplayName("handles resizes")
+    @DisplayName("Handles resizes")
     void handleResize() {
-        // When the window is resized, the bar has to adjust its width... has it to adjust its height?
+        // When the window is resized, the bar has to adjust its width... Does it need to adjust its height, too?
         int newWindowWidth = 100;
         int newWindowHeight = 100;
         bar.handleResize(newWindowWidth,newWindowHeight);
@@ -239,6 +240,7 @@ class AddressBarTest {
     }
 
     @Test
+    @DisplayName("Changes URL")
     void getURL() {
         assertEquals("", bar.getURL());
         String url = "https://nieuweurl.be";

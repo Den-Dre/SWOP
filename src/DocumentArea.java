@@ -116,6 +116,7 @@ public class DocumentArea extends Frame {
         System.out.println(link);
     }
 
+
     private final String URL = "";
     private DocumentCell content;
 }
