@@ -1,6 +1,7 @@
 import domainmodel.UrlListener;
 
 import java.awt.*;
+import java.net.URL;
 
 public class AddressBar extends Frame implements UrlListener {
     public AddressBar(int x, int y, int width, int height) {
@@ -61,9 +62,9 @@ public class AddressBar extends Frame implements UrlListener {
     /**
      * Signifies when the URL of a document has changed
      */
-    public void URLChanged() {
+    public void URLChanged(java.net.URL aUrl) {
         // String newUrl = this.uiController.getUrl();
-        // this.URL = newUrl
+        this.URL = aUrl.toString(); // for testing
     }
 
     public void contentChanged() {

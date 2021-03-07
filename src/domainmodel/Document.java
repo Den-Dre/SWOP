@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Document {
-    private final URL url;
+    private URL url;
     // TODO Maybe one is enough?
     private List<UrlListener> urlListeners = new ArrayList<>();
     private List<DocumentListener> documentListeners = new ArrayList<>();
@@ -20,12 +20,30 @@ public class Document {
     }
 
     /**
+     * Set the URl of the document to the given url
+     * @param url
+     *        The url for this document
+     */
+    public void setUrl(URL url) {
+        this.url = url;
+        fireUrlChanged(url);
+    }
+
+    /**
+     * Returns the given URL of the document
+     * @return a URL object
+     */
+    public URL getUrl() {
+        return this.url;
+    }
+
+    /**
      * Adds a given URLListener to the list of urlListeners
      *
      * @param u
      *        The new UrlListener
      */
-    protected void addURLListener(UrlListener u) {
+    public void addURLListener(UrlListener u) {
         this.urlListeners.add(u);
     }
 
@@ -35,7 +53,7 @@ public class Document {
      * @param u
      *        The UrlListener to be removed
      */
-    protected void removeURLListener(UrlListener u) {
+    public void removeURLListener(UrlListener u) {
         this.urlListeners.remove(u);
     }
 
@@ -45,7 +63,7 @@ public class Document {
      * @param d
      *        The new DocumentListener
      */
-    protected void addDocumentListener(DocumentListener d) {
+    public void addDocumentListener(DocumentListener d) {
         this.documentListeners.add(d);
     }
 
@@ -55,7 +73,7 @@ public class Document {
      * @param d
      *        The DocumentListener to be removed
      */
-    protected void removeDocumentListener(DocumentListener d) {
+    public void removeDocumentListener(DocumentListener d) {
         this.documentListeners.remove(d);
     }
 
@@ -70,9 +88,9 @@ public class Document {
     /**
      * Let the urlListeners know that the URL has been changed
      */
-    private void fireUrlChanged(){
+    private void fireUrlChanged(URL aUrl){
         for(UrlListener u : urlListeners)
-            u.URLChanged();
+            u.URLChanged(aUrl);
     }
 
     /**
@@ -84,7 +102,7 @@ public class Document {
      */
     private ContentSpan composeDocument(String document) {
         // TODO: verify whether this code of the listeners should be here
-        fireUrlChanged();
+        //fireUrlChanged(); for testing
         fireContentsChanged();
 
         return ContentSpanBuilder.buildContentSpan(document);
