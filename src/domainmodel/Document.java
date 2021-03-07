@@ -1,35 +1,78 @@
 package domainmodel;
 
 import browsrhtml.ContentSpanBuilder;
+import com.sun.jdi.request.ClassUnloadRequest;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Document {
     private final URL url;
-    private List<DocumentListener> urlListeners = new ArrayList<>();
+    // TODO Maybe one is enough?
+    private List<UrlListener> urlListeners = new ArrayList<>();
     private List<DocumentListener> documentListeners = new ArrayList<>();
 
     public Document(URL url) {
         this.url = url;
     }
 
-    protected void addURLListener(DocumentListener u) {
+    /**
+     * Adds a given URLListener to the list of urlListeners
+     *
+     * @param u
+     *        The new UrlListener
+     */
+    protected void addURLListener(UrlListener u) {
         this.urlListeners.add(u);
     }
 
-    protected void removeURLListener(String u) {
+    /**
+     * Removes a given URLListener from the list of urlListeners
+     *
+     * @param u
+     *        The UrlListener to be removed
+     */
+    protected void removeURLListener(UrlListener u) {
         this.urlListeners.remove(u);
     }
 
+    /**
+     * Adds a given DocumentListener to the list of documentListeners
+     *
+     * @param d
+     *        The new DocumentListener
+     */
     protected void addDocumentListener(DocumentListener d) {
         this.documentListeners.add(d);
     }
 
+    /**
+     * Removes a given DocumentListener from the list of documentListeners
+     *
+     * @param d
+     *        The DocumentListener to be removed
+     */
     protected void removeDocumentListener(DocumentListener d) {
         this.documentListeners.remove(d);
+    }
+
+    /**
+     * Let the DocumentListeners know that the content has changed
+     */
+    private void fireContentsChanged() {
+        for(DocumentListener u : documentListeners)
+            u.contentChanged();
+    }
+
+    /**
+     * Let the urlListeners know that the URL has been changed
+     */
+    private void fireUrlChanged(){
+        for(UrlListener u : urlListeners)
+            u.URLChanged();
     }
 
     /**
@@ -41,10 +84,8 @@ public class Document {
      */
     private ContentSpan composeDocument(String document) {
         // TODO: verify whether this code of the listeners should be here
-        for (DocumentListener dl : documentListeners)
-            dl.contentChanged();
-        for (DocumentListener u: urlListeners)
-            u.urlChanged();
+        fireUrlChanged();
+        fireContentsChanged();
 
         return ContentSpanBuilder.buildContentSpan(document);
     }

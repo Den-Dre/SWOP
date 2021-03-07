@@ -1,6 +1,8 @@
+import domainmodel.UrlListener;
+
 import java.awt.*;
 
-public class AddressBar extends Frame{
+public class AddressBar extends Frame implements UrlListener {
     public AddressBar(int x, int y, int width, int height) {
         super(x, y, width, height);
     }
@@ -53,6 +55,21 @@ public class AddressBar extends Frame{
     public void handleResize(int newWindowWidth, int newWindowHeight) {
         this.setWidth(newWindowWidth);
     }
+
+    // TODO check when controller is present
+
+    /**
+     * Signifies when the URL of a document has changed
+     */
+    public void URLChanged() {
+        // String newUrl = this.uiController.getUrl();
+        // this.URL = newUrl
+    }
+
+    public void contentChanged() {
+
+    }
+
 
     //overzichtje van keys:
     /*
