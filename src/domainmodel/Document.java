@@ -15,12 +15,19 @@ public class Document {
     private List<UrlListener> urlListeners = new ArrayList<>();
     private List<DocumentListener> documentListeners = new ArrayList<>();
 
+    /**
+     * Initialize a new Document given a url
+     *
+     * @param url
+     *        The URL for this document
+     */
     public Document(URL url) {
         this.url = url;
     }
 
     /**
      * Set the URl of the document to the given url
+     *
      * @param url
      *        The url for this document
      */
@@ -31,6 +38,7 @@ public class Document {
 
     /**
      * Returns the given URL of the document
+     *
      * @return a URL object
      */
     public URL getUrl() {

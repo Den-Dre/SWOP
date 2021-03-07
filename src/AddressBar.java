@@ -57,16 +57,22 @@ public class AddressBar extends Frame implements UrlListener {
         this.setWidth(newWindowWidth);
     }
 
-    // TODO check when controller is present
-
+    // TODO reimplement when controller is ready
     /**
-     * Signifies when the URL of a document has changed
+     *  Signals that the url has been changed to a given url
+     *
+     * @param url
+     *        The new URL for the address bar
      */
-    public void URLChanged(java.net.URL aUrl) {
+    public void URLChanged(java.net.URL url) {
         // String newUrl = this.uiController.getUrl();
-        this.URL = aUrl.toString(); // for testing
+        this.URL = url.toString(); // for testing
     }
 
+    /**
+     *  Notifies the Document that the contents have been changed
+     */
+    // TODO discuss if this is the right way to do it
     public void contentChanged() {
 
     }
