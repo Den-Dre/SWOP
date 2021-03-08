@@ -1,10 +1,13 @@
 package UserInterface;
 
+import domainmodel.UrlListener;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.net.URL;
 
-public class AddressBar extends Frame{
+public class AddressBar extends Frame implements UrlListener {
     public AddressBar(int x, int y, int width, int height, int offset) {
         super(x, y, width, height);
         this.offset = offset;
@@ -305,4 +308,24 @@ public class AddressBar extends Frame{
     private int getCursorYPos() {
         return getyPos()+(getHeight()-cursorDimensions[1])/2;
     }
-}
+
+    // TODO reimplement when controller is ready
+    /**
+     *  Signals that the url has been changed to a given url
+     *
+     * @param url
+     *        The new URL for the address bar
+     */
+    @Override
+    public void URLChanged(java.net.URL url) {
+        // String newUrl = this.uiController.getUrl();
+        this.URL = url.toString(); // for testing
+    }
+
+    /**
+     *  Notifies the Document that the contents have been changed
+     */
+    // TODO discuss if this is the right way to do it
+    // This method should only be implemented in the case that the contents of a Document can chage,
+    // without affecting the URL in the AddressBar. However, in this iteration of the project this is impossible.
+    public void contentChanged() { }}

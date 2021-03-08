@@ -1,3 +1,4 @@
+import UserInterface.AddressBar;
 import domainmodel.*;
 import org.junit.jupiter.api.Test;
 import java.net.URL;
@@ -13,7 +14,7 @@ public class AddressBarTest {
             // Observable
             Document doc = new Document(url);
             // Observer
-            AddressBar bar = new AddressBar(10, 100, 50, 60);
+            AddressBar bar = new AddressBar(10, 100, 50, 60, 5);
             doc.addURLListener(bar);
 
             URL newUrl = new URL("http://www.ditiseenneiuweurl.be");
