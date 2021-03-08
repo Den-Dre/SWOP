@@ -4,9 +4,9 @@
 - Klikken op address bar: Browser detecteert of dit op address bar of document area is, als dit op address bar is, dan laten afhandelen door address bar (knoppen doorsturen, ...). Is dit een correcte manier van werken?
 - Overerving is hoge koppeling, moet overerving altijd dan vermeden worden? Dit staat precies in tegenstelling met Composite paragraaf uit design patterns document
 - Preciezere formulering van bv. ArrayList<TableCell> cells? Of volstaat attribuut naam in diagram?
-- Moeten we AddressBar en DocumentArea laten overerven van de Listener-interfaces of moeten deze Litstener-interfaces rechtsreeks geïmplementeerd worden?
+- Moeten we UserInterface.AddressBar en UserInterface.DocumentArea laten overerven van de Listener-interfaces of moeten deze Litstener-interfaces rechtsreeks geïmplementeerd worden?
 - Gegeven URLComposer geeft een URLObject terug. Wij zouden een eigen URL Class maken. Zou het een redelijk idee zijn om deze Class te extenden en onze listener toe te voegen?
-- Is het een redelijk idee om een frame toe te voegen aan ons GUI framework dat algemene eigenschappen bevat voor AddressBar en DocumentArea, zoals hasFocus()?
+- Is het een redelijk idee om een frame toe te voegen aan ons GUI framework dat algemene eigenschappen bevat voor UserInterface.AddressBar en UserInterface.DocumentArea, zoals hasFocus()?
 - Hoe moeten we ons GUI Framework weergeven in ons design-model / linken aan het domein model. Moet dit in een apart model?
 
 --- Na eerste feedback ---

@@ -1,10 +1,12 @@
+package UserInterface;
+
+import UserInterface.AddressBar;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.awt.event.*;
-import java.security.Key;
 
 class AddressBarTest {
 
@@ -18,7 +20,6 @@ class AddressBarTest {
 
     @BeforeEach
     public void setUp() throws Exception {
-
         bar = new AddressBar(offset,offset,500,50, offset);
     }
     
@@ -30,9 +31,10 @@ class AddressBarTest {
     }
     
     @Test
+    @DisplayName("Handles mouse events")
     void handleMouse() {
         assertFalse(bar.hasFocus);
-        // click inside Frame
+        // click inside UserInterface.Frame
         bar.handleMouse(mouseClick, 10,15,1, leftMouse,0);
         assertTrue(bar.hasFocus);
         // click outside addressbar
@@ -54,6 +56,7 @@ class AddressBarTest {
         for (int code : keyCodes) {
             char[] chars = KeyEvent.getKeyText(code).toCharArray();
             bar.handleKey(keyPress, code, chars[0], 0);
+            // Characters shouldn't appear in AddressBar:
             assertEquals("", bar.getURL());
         }
     }
@@ -114,7 +117,7 @@ class AddressBarTest {
     }
 
     @Test
-    @DisplayName("handles simple backspace and delete operation")
+    @DisplayName("Handles simple backspace and delete operation")
     void handleBackspace(){
         String url = "helloworld.com";
         bar.changeURLto(url);
@@ -138,7 +141,7 @@ class AddressBarTest {
     }
 
     @Test
-    @DisplayName("deletes all text with Backspace after the bar gains focus from mouseclick")
+    @DisplayName("Deletes all text with Backspace after the bar gains focus from mouseclick")
     void handleBackSpaceAfterClick() {
         String url = "helloworld.com";
         bar.changeURLto(url);
@@ -151,7 +154,7 @@ class AddressBarTest {
     }
 
     @Test
-    @DisplayName("deletes all text with Delete after the bar gains focus from mouseclick")
+    @DisplayName("Deletes all text with Delete after the bar gains focus from mouseclick")
     void handleDeleteAfterClick() {
         String url = "helloworld.com";
         bar.changeURLto(url);
@@ -164,7 +167,7 @@ class AddressBarTest {
     }
 
     @Test
-    @DisplayName("can handle End, Home, Left and Right + typing at insertion point")
+    @DisplayName("Can handle End, Home, Left and Right + typing at insertion point")
     void handleEndHomeLeftRight() {
         String url = "helloworld.com";
         bar.changeURLto(url);
@@ -229,9 +232,9 @@ class AddressBarTest {
 
 
     @Test
-    @DisplayName("handles resizes")
+    @DisplayName("Handles resizes")
     void handleResize() {
-        // When the window is resized, the bar has to adjust its width... has it to adjust its height?
+        // When the window is resized, the bar has to adjust its width... Does it need to adjust its height, too?
         int newWindowWidth = 100;
         int newWindowHeight = 100;
         bar.handleResize(newWindowWidth,newWindowHeight);
@@ -244,6 +247,7 @@ class AddressBarTest {
     }
 
     @Test
+    @DisplayName("Changes URL")
     void getURL() {
         assertEquals("", bar.getURL());
         String url = "https://nieuweurl.be";

@@ -1,3 +1,4 @@
+import UserInterface.AddressBar;
 import domainmodel.*;
 import org.junit.jupiter.api.Test;
 import java.net.URL;

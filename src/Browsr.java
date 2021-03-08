@@ -1,4 +1,8 @@
+import UserInterface.AddressBar;
+import UserInterface.DocumentArea;
+import UserInterface.Frame;
 import canvaswindow.CanvasWindow;
+import domainmodel.Document;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -9,17 +13,13 @@ public class Browsr extends CanvasWindow {
      *
      * @param title Window title
      */
-    protected Browsr(String title) {
+    protected Browsr(String title) throws Exception {
         super(title);
         
-        try {
-			AddressBar = new AddressBar(addressBarOffset,addressBarOffset, 100, addressBarHeight, addressBarOffset);
-			DocumentArea = new Frame(0,addressBarHeight, 100,100);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        
+        AddressBar = new AddressBar(addressBarOffset,addressBarOffset, 100, addressBarHeight, addressBarOffset);
+        DocumentArea = new DocumentArea(addressBarOffset,addressBarHeight+2* addressBarOffset, 100,100);
+//		DocumentArea =  new Frame(0,addressBarHeight, 100,100);
+
         this.Frames.add(this.AddressBar);
         this.Frames.add(this.DocumentArea);
     }
@@ -38,7 +38,7 @@ public class Browsr extends CanvasWindow {
 
     @Override
     protected void paint(Graphics g) {
-        for (Frame frame : Frames) {
+        for (UserInterface.Frame frame : Frames) {
             frame.Render(g);
         }
     }
@@ -46,7 +46,7 @@ public class Browsr extends CanvasWindow {
     @Override
     protected void handleResize() {
         //ook laten weten aan de frames om zichzelf intern aan te passen!
-        for (Frame frame : Frames) {
+        for (UserInterface.Frame frame : Frames) {
             frame.handleResize(this.getWidth(), this.getHeight());
         }
         repaint();
@@ -64,7 +64,7 @@ public class Browsr extends CanvasWindow {
 
     @Override
     protected void handleKeyEvent(int id, int keyCode, char keyChar, int modifiersEx) {
-        for (Frame frame : Frames){
+        for (UserInterface.Frame frame : Frames){
             frame.handleKey(id, keyCode, keyChar, modifiersEx);
         }
         repaint();
@@ -72,13 +72,19 @@ public class Browsr extends CanvasWindow {
 
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(() -> {
-            new Browsr("Browsr").show();
+            try {
+                new Browsr("Browsr").show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
     }
 
     private int addressBarHeight = 35;
     private int addressBarOffset = 5;
-    private AddressBar AddressBar = null; 
-    private Frame DocumentArea = null; 
-    private ArrayList<Frame> Frames = new ArrayList<>();
+//    private UserInterface.AddressBar AddressBar = new AddressBar(addressBarOffset, addressBarOffset, 100, addressBarHeight, addressBarOffset);
+    private UserInterface.AddressBar AddressBar;
+//    private DocumentArea DocumentArea = new DocumentArea(addressBarOffset,addressBarHeight+2* addressBarOffset, 100,100);
+    private DocumentArea DocumentArea;
+    private ArrayList<UserInterface.Frame> Frames = new ArrayList<>();
 }

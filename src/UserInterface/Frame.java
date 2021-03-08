@@ -1,3 +1,5 @@
+package UserInterface;
+
 import java.awt.*;
 
 public class Frame {
@@ -16,21 +18,21 @@ public class Frame {
 
     public void Render(Graphics g) { }
 
-    public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx){ }
+    public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) { }
 
     // moet hier ook niet zijn geimplementeerd. In Adressbar kan er hier bvb op
     // ingegaan worden als de adressbar al dan niet focus heeft
-    public void handleKey(int id, int keyCode, char keyChar, int modifiersEx){ }
+    public void handleKey(int id, int keyCode, char keyChar, int modifiersEx) { }
 
-    public void handleResize(int newWindowWidth, int newWindowHeight){ }
+    public void handleResize(int newWindowWidth, int newWindowHeight) { }
 
-    protected void toggleFocus(boolean newState){
+    public void toggleFocus(boolean newState){
         this.hasFocus = newState;
     }
 
     private int xPos;
     private int yPos;
-    protected boolean hasFocus;
+    public boolean hasFocus;
     private int width;
     private int height;
     private Color backgroundColor = Color.WHITE;
@@ -41,6 +43,14 @@ public class Frame {
 
     public int getyPos() {
         return yPos;
+    }
+
+    public void setxPos(int xPos) {
+        this.xPos = xPos;
+    }
+
+    public void setyPos(int yPos) {
+        this.yPos = yPos;
     }
 
     public int getWidth() {
