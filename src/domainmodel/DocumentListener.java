@@ -6,7 +6,8 @@ package domainmodel;
 public interface DocumentListener {
 
     /**
-     * Let the object know that the contents have been changed
+     * Define what the class that implements this {@link DocumentListener}
+     * Interface should do when the contents of the {@link Document} change.
      */
     void contentChanged();
 }

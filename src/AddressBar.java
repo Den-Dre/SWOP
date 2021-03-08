@@ -73,9 +73,9 @@ public class AddressBar extends Frame implements UrlListener {
      *  Notifies the Document that the contents have been changed
      */
     // TODO discuss if this is the right way to do it
-    public void contentChanged() {
-
-    }
+    // This method should only be implemented in the case that the contents of a Document can chage,
+    // without affecting the URL in the AddressBar. However, in this iteration of the project this is impossible.
+    public void contentChanged() { }
 
 
     //overzichtje van keys:
@@ -94,6 +94,7 @@ public class AddressBar extends Frame implements UrlListener {
     // URL is the variable to be edited. URLCopy gets updated after it is certain the edited url is final.
     private String URL = "https://helloworld.com";
     private String URLCopy = URL;
+    // TODO: link this to the UIController object
 
     private Color highlightColor = Color.BLUE;
     private Color textColor = Color.BLACK;

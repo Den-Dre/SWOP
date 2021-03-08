@@ -106,7 +106,7 @@ public class Document {
      * and update the listeners accordingly
      *
      * @param document: the HTML code of the document that is to be composed
-     * @return a ContentSpan of the given { @link document }
+     * @return a ContentSpan of the given {@code document}.
      */
     private ContentSpan composeDocument(String document) {
         // TODO: verify whether this code of the listeners should be here

@@ -21,8 +21,6 @@ public class AddressBarTest {
 
             assertEquals(newUrl.toString(),bar.getURL());
         }
-        catch(Exception e){
-
-        }
+        catch(Exception ignored) { }
     }
 }

@@ -8,7 +8,8 @@ import java.net.URL;
 public interface UrlListener extends DocumentListener {
 
     /**
-     * Let the object know that the Url has been changed
+     * Define what the class that implements this {@link UrlListener}
+     * Interface should do when the contents of the {@code AddressBar} change.
      */
     void URLChanged(URL url);
 }
