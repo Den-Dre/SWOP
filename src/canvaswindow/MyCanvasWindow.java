@@ -10,12 +10,12 @@ import java.awt.Graphics;
 public class MyCanvasWindow extends CanvasWindow {
 	
 	String text = "Example Text";
-	Font font = new Font(Font.DIALOG, Font.PLAIN, 40);
+	Font font = new Font(Font.DIALOG_INPUT, Font.BOLD, 40);
 	FontMetrics metrics;
 	int textWidth;
 	
 	public MyCanvasWindow() {
-		super("My Canvas Window");
+		super("Dit is een window");
 	}
 	
 	@Override
@@ -28,9 +28,9 @@ public class MyCanvasWindow extends CanvasWindow {
 	@Override
 	protected void paint(Graphics g) {
 		g.setFont(font);
-		g.drawString(text, (getWidth() - textWidth) / 2, (getHeight() - metrics.getHeight()) / 2 + metrics.getLeading() + metrics.getAscent());
+		g.drawString(text, (getWidth() - textWidth) / 4, (getHeight() - metrics.getHeight()) / 2 + metrics.getLeading() + metrics.getAscent());
 	}
-	
+
 	@Override
 	protected void handleResize() {
 		repaint();
