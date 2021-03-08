@@ -1,10 +1,11 @@
-package browsrhtml;
+package browsrhtml.tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.IOException;
 import java.io.StringReader;
 
+import browsrhtml.HtmlLexer;
 import org.junit.jupiter.api.Test;
 
 import browsrhtml.HtmlLexer.TokenType;

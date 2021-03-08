@@ -1,9 +1,10 @@
+import domainmodel.UrlListener;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.Arrays;
 
-public class AddressBar extends Frame{
+public class AddressBar extends Frame implements UrlListener {
     public AddressBar(int x, int y, int width, int height, int offset) throws Exception {
         super(x, y, width, height);
         this.offset = offset;
@@ -51,7 +52,7 @@ public class AddressBar extends Frame{
     private void setFontMetrics(Graphics g) {
         this.metrics = g.getFontMetrics(font);
         this.cursorPos = new int[] {metrics.stringWidth(this.getURL().substring(0,this.cursor))+this.getxPos()+(URLStart/2), getCursorYPos()};
-        this.textheight = metrics.getHeight();
+        this.textHeight = metrics.getHeight();
     }
 
     /*
@@ -73,7 +74,7 @@ public class AddressBar extends Frame{
             g.setColor(this.highlightColor);
             int start = Math.min(this.cursorPos[0], this.selectStartPos[0]);
             int stop = Math.max(this.cursorPos[0], this.selectStartPos[0])-start;
-            g.fillRect(start, this.getyPos(), stop, textheight);
+            g.fillRect(start, this.getyPos(), stop, textHeight);
         }
     }
 
@@ -160,6 +161,28 @@ public class AddressBar extends Frame{
         // navigate to this.getURL()
     }
 
+    // TODO reimplement when controller is ready
+    /**
+     *  Signals that the url has been changed to a given url
+     *
+     * @param url
+     *        The new URL for the address bar
+     */
+    public void URLChanged(java.net.URL url) {
+        // String newUrl = this.uiController.getUrl();
+        this.URL = url.toString(); // for testing
+    }
+
+    /**
+     *  Notifies the Document that the contents have been changed
+     */
+    // TODO discuss if this is the right way to do it
+    // This method should only be implemented in the case that the contents of a Document can chage,
+    // without affecting the URL in the AddressBar. However, in this iteration of the project this is impossible.
+    public void contentChanged() { }
+
+
+    //overzichtje van keys:
     /*
     => If backspace is pressed, zero, one or more characters need to be removed.
     => If no characters are selected. The character before the cursor is removed.
@@ -233,6 +256,7 @@ public class AddressBar extends Frame{
     private final int[] cursorDimensions = new int[] {3, this.getHeight()*3/4};
     private int[] cursorPos = new int[] {this.getxPos() + (URLStart/2), getCursorYPos()};
     private final Color cursorColor = Color.BLACK;
+    // TODO: link this to the UIController object
 
     // Selection variables
     private boolean doSelect = false;
@@ -243,10 +267,10 @@ public class AddressBar extends Frame{
     // Font variables
     Font font = new Font(Font.DIALOG_INPUT, Font.PLAIN, this.getHeight()*3/4);
     FontMetrics metrics;
-    int textheight;
+    int textHeight;
     private final Color textColor = Color.BLACK;
 
-    int offset = 0;
+    int offset;
 
     /*
     Getters and setters for some variables ->
@@ -280,14 +304,14 @@ public class AddressBar extends Frame{
     // move the cursor delta index positions in the url
     // it cannot move further than the length of the url (both left and right)
     private void moveCursor(int delta) {
-        int urllength = this.getURL().length();
+        int urlLength = this.getURL().length();
         int newCursor = this.cursor + delta;
-        if (newCursor > urllength) newCursor = urllength;
+        if (newCursor > urlLength) newCursor = urlLength;
         if (newCursor < 0) newCursor = 0;
         this.cursor = newCursor;
     }
 
-    // Retururs the y-position of the cursor, in a way that the cursor is vertically centered in the addressbar.
+    // Returns the y-position of the cursor, in a way that the cursor is vertically centered in the addressbar.
     private int getCursorYPos() {
         return getyPos()+(getHeight()-cursorDimensions[1])/2;
     }
