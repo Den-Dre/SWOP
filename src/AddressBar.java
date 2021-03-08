@@ -1,6 +1,9 @@
-import java.awt.*;
+import domainmodel.UrlListener;
 
-public class AddressBar extends Frame{
+import java.awt.*;
+import java.net.URL;
+
+public class AddressBar extends Frame implements UrlListener {
     public AddressBar(int x, int y, int width, int height) {
         super(x, y, width, height);
     }
@@ -54,6 +57,27 @@ public class AddressBar extends Frame{
         this.setWidth(newWindowWidth);
     }
 
+    // TODO reimplement when controller is ready
+    /**
+     *  Signals that the url has been changed to a given url
+     *
+     * @param url
+     *        The new URL for the address bar
+     */
+    public void URLChanged(java.net.URL url) {
+        // String newUrl = this.uiController.getUrl();
+        this.URL = url.toString(); // for testing
+    }
+
+    /**
+     *  Notifies the Document that the contents have been changed
+     */
+    // TODO discuss if this is the right way to do it
+    // This method should only be implemented in the case that the contents of a Document can chage,
+    // without affecting the URL in the AddressBar. However, in this iteration of the project this is impossible.
+    public void contentChanged() { }
+
+
     //overzichtje van keys:
     /*
     id: 400==key_typed,401==key_pressed
@@ -70,6 +94,7 @@ public class AddressBar extends Frame{
     // URL is the variable to be edited. URLCopy gets updated after it is certain the edited url is final.
     private String URL = "https://helloworld.com";
     private String URLCopy = URL;
+    // TODO: link this to the UIController object
 
     private Color highlightColor = Color.BLUE;
     private Color textColor = Color.BLACK;

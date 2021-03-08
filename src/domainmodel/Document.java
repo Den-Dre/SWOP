@@ -1,35 +1,104 @@
 package domainmodel;
 
 import browsrhtml.ContentSpanBuilder;
+import com.sun.jdi.request.ClassUnloadRequest;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Document {
-    private final URL url;
-    private List<DocumentListener> urlListeners = new ArrayList<>();
+    private URL url;
+    // TODO Maybe one is enough?
+    private List<UrlListener> urlListeners = new ArrayList<>();
     private List<DocumentListener> documentListeners = new ArrayList<>();
 
+    /**
+     * Initialize a new Document given a url
+     *
+     * @param url
+     *        The URL for this document
+     */
     public Document(URL url) {
         this.url = url;
     }
 
-    protected void addURLListener(DocumentListener u) {
+    /**
+     * Set the URl of the document to the given url
+     *
+     * @param url
+     *        The url for this document
+     */
+    public void setUrl(URL url) {
+        this.url = url;
+        fireUrlChanged(url);
+    }
+
+    /**
+     * Returns the given URL of the document
+     *
+     * @return a URL object
+     */
+    public URL getUrl() {
+        return this.url;
+    }
+
+    /**
+     * Adds a given URLListener to the list of urlListeners
+     *
+     * @param u
+     *        The new UrlListener
+     */
+    public void addURLListener(UrlListener u) {
         this.urlListeners.add(u);
     }
 
-    protected void removeURLListener(String u) {
+    /**
+     * Removes a given URLListener from the list of urlListeners
+     *
+     * @param u
+     *        The UrlListener to be removed
+     */
+    public void removeURLListener(UrlListener u) {
         this.urlListeners.remove(u);
     }
 
-    protected void addDocumentListener(DocumentListener d) {
+    /**
+     * Adds a given DocumentListener to the list of documentListeners
+     *
+     * @param d
+     *        The new DocumentListener
+     */
+    public void addDocumentListener(DocumentListener d) {
         this.documentListeners.add(d);
     }
 
-    protected void removeDocumentListener(DocumentListener d) {
+    /**
+     * Removes a given DocumentListener from the list of documentListeners
+     *
+     * @param d
+     *        The DocumentListener to be removed
+     */
+    public void removeDocumentListener(DocumentListener d) {
         this.documentListeners.remove(d);
+    }
+
+    /**
+     * Let the DocumentListeners know that the content has changed
+     */
+    private void fireContentsChanged() {
+        for(DocumentListener u : documentListeners)
+            u.contentChanged();
+    }
+
+    /**
+     * Let the urlListeners know that the URL has been changed
+     */
+    private void fireUrlChanged(URL aUrl){
+        for(UrlListener u : urlListeners)
+            u.URLChanged(aUrl);
     }
 
     /**
@@ -37,14 +106,12 @@ public class Document {
      * and update the listeners accordingly
      *
      * @param document: the HTML code of the document that is to be composed
-     * @return a ContentSpan of the given { @link document }
+     * @return a ContentSpan of the given {@code document}.
      */
     private ContentSpan composeDocument(String document) {
         // TODO: verify whether this code of the listeners should be here
-        for (DocumentListener dl : documentListeners)
-            dl.contentChanged();
-        for (DocumentListener u: urlListeners)
-            u.urlChanged();
+        //fireUrlChanged(); for testing
+        fireContentsChanged();
 
         return ContentSpanBuilder.buildContentSpan(document);
     }
