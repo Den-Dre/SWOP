@@ -1,5 +1,7 @@
 package UserInterface;
 
+import domainmodel.DocumentListener;
+
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -13,7 +15,7 @@ It should then call this.controller.getContents(this.controller.getURL()) to fet
 It should then call this.controller.loadDocument(newUrl)
  */
 
-public class DocumentArea extends Frame {
+public class DocumentArea extends Frame implements DocumentListener {
     public DocumentArea(int x, int y, int width, int height) {
         super(x, y, width, height);
         // => This is for debugging purposes:
@@ -106,6 +108,13 @@ public class DocumentArea extends Frame {
         System.out.println("hyperlink pressed!!");
         System.out.println(link);
         // controller.loadDocument(this.makeNewUrl(link))
+    }
+
+    /**
+     * Notify the DocumentArea that the contents have been changed
+     */
+    public void contentChanged(){
+        // TODO implement
     }
 
     public void setContent(DocumentCell content) {

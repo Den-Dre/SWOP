@@ -1,13 +1,13 @@
 package UserInterface;
 
-import domainmodel.UrlListener;
+import domainmodel.DocumentListener;
+import domainmodel.UIController;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.net.URL;
 
-public class AddressBar extends Frame implements UrlListener {
+public class AddressBar extends Frame implements DocumentListener {
     public AddressBar(int x, int y, int width, int height, int offset) {
         super(x, y, width, height);
         this.offset = offset;
@@ -238,11 +238,15 @@ public class AddressBar extends Frame implements UrlListener {
     // Distance between addressBar and the window edges
     int offset;
 
+    // TODO Switch the URL from a string to a URL-object
     //Two URL's to be able to 'rollback' the old url if editing is cancelled.
     // URL is the variable to be edited. URLCopy gets updated after it is certain the edited url is final.
     private String URL = ""; // The url starts empty
     private String URLCopy = URL;
     private final int URLStart = this.getxPos()+5;
+
+    // The UIController for the addressbar
+    private UIController uiController;
 
     // Cursor variables
     private int cursor = 0;
@@ -262,14 +266,28 @@ public class AddressBar extends Frame implements UrlListener {
     int textHeight;
     private final Color textColor = Color.BLACK;
 
-    /*
-    Getters and setters for some variables:
+    /**
+     * Get the current url of the addressbar
+     * @return A String representation of the addressBar url
      */
     public String getURL() {
         return URL;
     }
 
-    // externally change the url, this moves the cursor to the right and toggles focus off.
+    /**
+     * Set the URL of the addressBar to a given URL
+     * @param URL
+     *        The new URL for this Document
+     */
+    public void setURL(String URL) {
+        this.URL = URL;
+    }
+
+    /**
+     * Externally change the url, this moves the cursor to the right and toggles focus off.
+     * @param URL
+     *        The String representation of the url to be set
+     */
     public void changeURLto(String URL) {
         this.URL = URL;
         moveCursor(this.getURL().length());
@@ -277,14 +295,26 @@ public class AddressBar extends Frame implements UrlListener {
         toggleFocus(false);
     }
 
-    private void setURL(String URL) {
-        this.URL = URL;
+    /**
+     * Set the uiController of the AddressBar to the given uiController
+     *
+     * @param uiController
+     *        The uiController to be set
+     */
+    public void setUiController(UIController uiController) {
+        this.uiController = uiController;
     }
 
-    private String getOldUrl() {
+    /**
+     * Retrurn the old URL of the adressBar
+     */
+    public String getOldUrl() {
         return this.URLCopy;
     }
 
+    /**
+     * Updates the URLCopy to the new URL
+     */
     private void updateCopyUrl() {
         this.URLCopy = this.URL;
     }
@@ -292,7 +322,8 @@ public class AddressBar extends Frame implements UrlListener {
     /**
      * Move the cursor delta index positions in the url.
      * It cannot move further than the length of the url (both left and right)
-     * @param delta: The amomunt that the cursor should be moved.
+     *
+     * @param delta: The amount that the cursor should be moved.
      */
     private void moveCursor(int delta) {
         int urlLength = this.getURL().length();
@@ -309,23 +340,12 @@ public class AddressBar extends Frame implements UrlListener {
         return getyPos()+(getHeight()-cursorDimensions[1])/2;
     }
 
-    // TODO reimplement when controller is ready
+    // TODO drop the toString()
     /**
      *  Signals that the url has been changed to a given url
-     *
-     * @param url
-     *        The new URL for the address bar
      */
     @Override
-    public void URLChanged(java.net.URL url) {
-        // String newUrl = this.uiController.getUrl();
-        this.URL = url.toString(); // for testing
+    public void contentChanged() {
+        this.URL = this.uiController.getUrl().toString();
     }
-
-    /**
-     *  Notifies the Document that the contents have been changed
-     */
-    // TODO discuss if this is the right way to do it
-    // This method should only be implemented in the case that the contents of a Document can chage,
-    // without affecting the URL in the AddressBar. However, in this iteration of the project this is impossible.
-    public void contentChanged() { }}
+}

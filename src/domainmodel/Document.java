@@ -11,8 +11,7 @@ import java.util.List;
 
 public class Document {
     private URL url;
-    // TODO Maybe one is enough?
-    private List<UrlListener> urlListeners = new ArrayList<>();
+    private List<DocumentListener> urlListeners = new ArrayList<>();
     private List<DocumentListener> documentListeners = new ArrayList<>();
 
     /**
@@ -26,6 +25,22 @@ public class Document {
     }
 
     /**
+     * Initialize a new Document given a url, and two DocumentListeners representing the DocumentArea and AddressBar
+     *
+     * @param url
+     *        The url for this document
+     * @param doc
+     *        The DocumentListener for this document
+     * @param bar
+     *        The addressbar listener for this document
+     */
+    public Document(URL url, DocumentListener doc, DocumentListener bar) {
+        this.url = url;
+        this.urlListeners.add(bar);
+        this.documentListeners.add(doc);
+    }
+
+    /**
      * Set the URl of the document to the given url
      *
      * @param url
@@ -33,7 +48,7 @@ public class Document {
      */
     public void setUrl(URL url) {
         this.url = url;
-        fireUrlChanged(url);
+        fireUrlChanged();
     }
 
     /**
@@ -51,7 +66,7 @@ public class Document {
      * @param u
      *        The new UrlListener
      */
-    public void addURLListener(UrlListener u) {
+    public void addURLListener(DocumentListener u) {
         this.urlListeners.add(u);
     }
 
@@ -61,7 +76,7 @@ public class Document {
      * @param u
      *        The UrlListener to be removed
      */
-    public void removeURLListener(UrlListener u) {
+    public void removeURLListener(DocumentListener u) {
         this.urlListeners.remove(u);
     }
 
@@ -96,9 +111,9 @@ public class Document {
     /**
      * Let the urlListeners know that the URL has been changed
      */
-    private void fireUrlChanged(URL aUrl){
-        for(UrlListener u : urlListeners)
-            u.URLChanged(aUrl);
+    private void fireUrlChanged(){
+        for(DocumentListener u : urlListeners)
+            u.contentChanged();
     }
 
     /**
