@@ -1,5 +1,6 @@
 package UserInterface;
 
+import domainmodel.ContentSpan;
 import domainmodel.Document;
 import domainmodel.DocumentListener;
 import domainmodel.UIController;
@@ -127,8 +128,10 @@ public class DocumentArea extends Frame implements DocumentListener {
      */
     public void contentChanged(){
         try{
-            //Document newDoc = this.controller.getContents();
-            //this.content = mapToDocumentcells(newDoc);
+            System.out.println("The documentarea was notified of a url change");
+            System.out.println(this.controller.getContentSpan());
+            ContentSpan newContent = this.controller.getContentSpan();
+            //mapToDocumentcells(newContent);
         }
         catch(Exception e){
             System.out.print(e);

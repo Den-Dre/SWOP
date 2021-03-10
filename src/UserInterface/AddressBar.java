@@ -6,6 +6,8 @@ import domainmodel.UIController;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 public class AddressBar extends Frame implements DocumentListener {
     public AddressBar(int x, int y, int width, int height, int offset) throws Exception {
@@ -114,7 +116,10 @@ public class AddressBar extends Frame implements DocumentListener {
         }
         else {
             // clicking out is the same as pressing enter
-            handleEnter();
+            try { handleEnter();
+            } catch (MalformedURLException e) {
+                System.out.println(e);
+            }
 //            this.toggleFocus(false);
 //            this.moveCursor(this.getURL().length()); // Put cursor at the end of AddressBar
 //            // go to this.getURL()
@@ -146,7 +151,11 @@ public class AddressBar extends Frame implements DocumentListener {
 
         switch (keyCode) {
             case 27 -> handleEscape();
-            case 10 -> handleEnter();
+            case 10 -> {try { handleEnter();
+                        } catch (MalformedURLException e) {
+                                System.out.println(e);
+                            }
+                        }
             case 8 -> handleRemoveCharacters(0); //act as backspace
             case 127 -> handleRemoveCharacters(1); //act as delete
             case 35 -> moveCursor(this.getURL().length());
@@ -167,11 +176,13 @@ public class AddressBar extends Frame implements DocumentListener {
     }
 
     // Documentation needed? It handles the Enter key!
-    private void handleEnter() {
+    private void handleEnter() throws MalformedURLException {
         this.toggleFocus(false);
         this.updateCopyUrl();
         this.moveCursor(this.getURL().length());
-        // navigate to this.getURL()
+        System.out.println("Enter pressed");
+        System.out.println(this.getURL());
+        this.uiController.loadDocument2(this.getURL());
     }
 
     /**
@@ -346,6 +357,7 @@ public class AddressBar extends Frame implements DocumentListener {
      */
     @Override
     public void contentChanged() {
-        this.URL = this.uiController.getUrl().toString();
+        if (this.uiController.getUrl() != null)
+            this.changeURLto(this.uiController.getUrl().toString());
     }
 }

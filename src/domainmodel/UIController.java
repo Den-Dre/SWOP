@@ -21,21 +21,22 @@ public class UIController {
      * We try to form a URL object, if this fails, the constructor
      * is given a dummy URL to signify that a error page should be shown.
      *
-     * @param urlString: The string of the URL that the user has inputted.
+     * //@param urlString: The string of the URL that the user has inputted.
      */
-    public UIController(String urlString) {
-        try {
-            URL url = new URL(urlString);
-            this.document = new Document(url);
-        } catch (MalformedURLException e) {
-            URL errorUrl = null;
-            String path = "src" + File.separator + "domainmodel" + File.separator + "errorPage.html";
-            try {
-                errorUrl = new File(path).toURI().toURL();
-            } catch (MalformedURLException ignored) {}
-//            URL errorUrl = getClass().getResource("errorPage.html");
-            this.document = new Document(errorUrl);
-        }
+    public UIController() {
+//        try {
+//            URL url = new URL(urlString);
+//            this.document = new Document(url);
+//        } catch (MalformedURLException e) {
+//            URL errorUrl = null;
+//            String path = "src" + File.separator + "domainmodel" + File.separator + "errorPage.html";
+//            try {
+//                errorUrl = new File(path).toURI().toURL();
+//            } catch (MalformedURLException ignored) {}
+////            URL errorUrl = getClass().getResource("errorPage.html");
+//            this.document = new Document(errorUrl);
+//        }
+        this.document = new Document();
     }
 
     /**
@@ -52,6 +53,21 @@ public class UIController {
             return new TextSpan("Error: malformed URL.");
         }
     }
+
+
+    public void loadDocument2(String urlString) {
+        try {
+            document.changeContentSpan(this.document.composeDocument(new URL(urlString)));
+        } catch (IOException e) {
+            System.out.println("malformed in loaddocuemnt2 in uicontroller");
+            document.changeContentSpan(new TextSpan("Error: malformed URL."));
+        }
+    }
+
+    public ContentSpan getContentSpan() {
+        return this.document.getContentSpan();
+    }
+
 
     /**
      * Sets the document to a given document
@@ -103,4 +119,5 @@ public class UIController {
     public void changeURL(URL url){
         this.document.setUrl(url);
     }
+
 }

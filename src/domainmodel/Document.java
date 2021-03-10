@@ -15,15 +15,15 @@ public class Document {
     private URL url;
     private List<DocumentListener> urlListeners = new ArrayList<>();
     private List<DocumentListener> documentListeners = new ArrayList<>();
+    private ContentSpan contentSpan = new TextSpan("Welkom in Browsr!");
 
     /**
      * Initialize a new Document given a url
      *
-     * @param url
+     * //@param url
      *        The URL for this document
      */
-    public Document(URL url) {
-        this.url = url;
+    public Document() {
     }
 
     /**
@@ -51,6 +51,16 @@ public class Document {
     public void setUrl(URL url) {
         this.url = url;
         fireUrlChanged();
+        fireContentsChanged();
+    }
+
+    public void changeContentSpan(ContentSpan span) {
+        this.contentSpan = span;
+        this.fireContentsChanged();
+    }
+
+    public ContentSpan getContentSpan() {
+        return this.contentSpan;
     }
 
     /**

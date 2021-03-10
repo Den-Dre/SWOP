@@ -12,13 +12,14 @@ public class AddressBarTest {
         try {
             URL url = new URL("http://www.ditiseentest.com");
             AddressBar bar = new AddressBar(10, 100, 50, 60, 5);
-            UIController contr = new UIController(url.toString());
+            UIController contr = new UIController();
+            contr.changeURL(url);
             contr.addUrlListener(bar);
             URL newUrl = new URL("http://www.ditiseenneiuweurl.be");
             contr.changeURL(url);
 
             assertEquals(newUrl.toString(),bar.getURL());
         }
-        catch(Exception ignored) { }
+        catch(Exception e) { System.out.println(e);}
     }
 }
