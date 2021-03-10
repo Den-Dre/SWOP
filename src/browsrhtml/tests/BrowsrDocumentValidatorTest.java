@@ -31,7 +31,6 @@ class BrowsrDocumentValidatorTest {
 	
 	@Test
 	void testWithURL() throws MalformedURLException, IOException {
-		System.out.println("Test");
 		BrowsrDocumentValidator.assertIsValidBrowsrDocument(new URL(new URL("https://people.cs.kuleuven.be/~bart.jacobs/index.html"), "browsrtest.html"));
 	}
 
