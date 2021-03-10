@@ -8,7 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
 public class AddressBar extends Frame implements DocumentListener {
-    public AddressBar(int x, int y, int width, int height, int offset) {
+    public AddressBar(int x, int y, int width, int height, int offset) throws Exception {
         super(x, y, width, height);
         this.offset = offset;
     }
