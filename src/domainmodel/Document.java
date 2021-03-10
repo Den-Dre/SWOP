@@ -14,6 +14,8 @@ public class Document {
     // TODO Maybe one is enough?
     private List<UrlListener> urlListeners = new ArrayList<>();
     private List<DocumentListener> documentListeners = new ArrayList<>();
+    
+    private ContentSpan content;
 
     /**
      * Initialize a new Document given a url
@@ -22,9 +24,30 @@ public class Document {
      *        The URL for this document
      */
     public Document(URL url) {
+    	System.out.println("Document obj made...");
         this.url = url;
+        
+        // fill in the content
+        // placeholder for now
+        content = ContentSpanBuilder.buildContentSpan("""
+				<table>
+				  <tr><td>HTML elements partially supported by Browsr:
+				  <tr><td>
+				    <table>
+				      <tr><td><a href="a.html">a</a><td>Hyperlink anchors
+				      <tr><td><a href="table.html">table</a><td>Tables
+				      <tr><td><a href="tr.html">tr</a><td>Table rows
+				      <tr><td><a href="td.html">td</a><td>Table cells containing table data
+				    </table>
+				</table>
+				""");
     }
-
+    
+    // TODO doc
+    public ContentSpan getContent() {
+    	return this.content;
+    }
+    
     /**
      * Set the URl of the document to the given url
      *

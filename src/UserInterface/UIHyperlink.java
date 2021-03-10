@@ -14,7 +14,7 @@ public class UIHyperlink extends DocumentCell{
      * @param link_size: The height of this {@code UIHyperlink}
      * @param href: The value of the href attribute of this {@code UIHyperlink}
      */
-    public UIHyperlink(int x, int y, int width, int link_size, String href, String text) throws Exception {
+    public UIHyperlink(int x, int y, int width, int link_size, String href, String text) {
         super(x, y, width, link_size);
         this.href = href;
         this.text = text;

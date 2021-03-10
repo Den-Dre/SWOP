@@ -17,7 +17,7 @@ class DocumentAreaTest {
     private final int doc2Ypos = 15;
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
         documentArea1 = new DocumentArea(0,0,100,100);
         documentArea2 = new DocumentArea(doc2Xpos,doc2Ypos,150,500);
     }
@@ -47,7 +47,7 @@ class DocumentAreaTest {
 
     @Test
     @DisplayName("Can set the width and height")
-    void initWidthHeightPos() throws Exception {
+    void initWidthHeightPos() {
         // ====== Setup =======
         int x = 0;
         int y = 0;

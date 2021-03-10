@@ -4,10 +4,11 @@ import java.awt.*;
 
 public class Frame {
 
-    public Frame(int x, int y, int width, int height) throws Exception {   
-        // defensively throw exception to caller
-        if (x < 0 || y < 0 || width < 0 || height < 0)
-        	throw new Exception("Illegal dimensions ...");
+    public Frame(int x, int y, int width, int height){
+        if (x < 0) x = 0;
+        if (y < 0) y = 0;
+        if (width < 0) width = 0;
+        if (height < 0) height = 0;
 
         this.xPos = x;
         this.yPos = y;

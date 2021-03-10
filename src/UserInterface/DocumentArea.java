@@ -2,7 +2,21 @@ package UserInterface;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.lang.ModuleLayer.Controller;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
+
+import domainmodel.ContentSpan;
+import domainmodel.Document;
+import domainmodel.HyperLink;
+import domainmodel.Table;
+import domainmodel.TableCell;
+import domainmodel.TableRow;
+import domainmodel.TextSpan;
+import domainmodel.UIController;
 
 /*
 -> This class (and the AddressBar) will need an extra field "Controller".
@@ -14,8 +28,10 @@ It should then call this.controller.loadDocument(newUrl)
  */
 
 public class DocumentArea extends Frame {
-    public DocumentArea(int x, int y, int width, int height) throws Exception {
+    public DocumentArea(int x, int y, int width, int height) {
         super(x, y, width, height);
+    	System.out.println("DocumentArea obj made...");
+
         // => This is for debugging purposes:
 //        UITextField textField3 = new UITextField(x, y, width, textSize, "Tabel2");
 //        UITextField textField4 = new UITextField(x, y, width, textSize, "lorem-ipsum");
@@ -45,12 +61,125 @@ public class DocumentArea extends Frame {
 //
 //        content = new UITable(x,y,width, height, rows);
         // ===============================
-        UITextField textField5 = new UITextField(x, y, width, textSize, "text");
+        
+        UITextField textField5 = new UITextField(x, y, width, textSize, "");
         content = textField5;
-
-
+        
+        try {
+			this.controller = new UIController(new URL(new URL("https://people.cs.kuleuven.be/~bart.jacobs/index.html"), "browsrtest.html"));
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			System.out.println("DocArea: malformed URL");
+		}
+        
+        ContentSpan content = this.controller.getContent();
+        
+        System.out.println(content);
+        
+        this.content = translateToUIElements(content); // here we need to feed the 'real' content once implemented
     }
-
+    
+    /**
+     * Translates the contentSpan from the domainmodel into the simplified UI-representation objects.
+     * Distinction is made between domain-classes Table, HyperLink and TextSpan
+     * @param contents
+     * @return a DocumentCell derived class that can be rendered on screen
+     */
+    private DocumentCell translateToUIElements(ContentSpan contents) {    	
+    	final String packageName = "domainmodel";
+   	
+//    	System.out.println("translating class: " + contents.getClass().getName());
+    	
+    	DocumentCell newUIContents = null;
+    	
+    	switch (contents.getClass().getCanonicalName()) {
+    	case (packageName+".Table") -> { newUIContents = translateTable((Table) contents);} 
+    	case (packageName+".HyperLink") -> { newUIContents = translateHL((HyperLink) contents);}
+    	case (packageName+".TextSpan") -> { newUIContents = translateTextSpan((TextSpan) contents);}
+    	default -> { 
+//    		System.out.println("something else that does not exist");
+    		System.out.println("being: "+contents.getClass().getCanonicalName());
+    	}
+    	}
+    	
+//    	System.out.println("new ui contents are: " + newUIContents);
+    	return newUIContents;
+    }
+    
+    /**
+     * Translates a Table from the domainmodel into the simplified UI-representation
+     * @param content
+     * @return a UITable with the translated elements
+     */
+    private UITable translateTable(Table content) {
+    	// get sub elements
+    	ArrayList<ArrayList <DocumentCell>> UIrows = new ArrayList<ArrayList <DocumentCell>>();
+    	// draw the table
+    	List<TableRow> rows = content.getRows();
+    	for (TableRow row : rows)
+    		UIrows.add(translateRow(row));
+    	
+    	return new UITable(this.getxPos(), this.getyPos(), this.getWidth(), this.getHeight(), UIrows);
+    }
+    
+    /**
+     * Translates a Cell from the domainmodel into the simplified UI-representation
+     * @param content
+     * @return a DocumentCell with translated elements
+     */
+    private DocumentCell translateCell(TableCell content) {
+//    	System.out.println("TranslateCell: " + content);
+    	// get sub-elements    	
+    	ContentSpan cellContent = content.getContent();
+//    	System.out.println("TranslateCell contains: " + cellContent);
+    	return translateToUIElements(cellContent); 
+    }
+    
+    /**
+     * Translates a Row from the domainmodel into the simplified UI-representation
+     * @param content
+     * @return an ArrayList<DocumentCell> with translated elements
+     */
+    private ArrayList<DocumentCell> translateRow(TableRow content) {
+//    	System.out.println("Translate Row: " + content);
+		// get sub elements
+    	ArrayList<DocumentCell> row = new ArrayList<DocumentCell>();
+    	List<TableCell> cells = content.getCells();
+//    	System.out.println("Cells are: " + cells);
+    	// draw the row
+    	for (TableCell cell : cells) {
+//    		System.out.println("Translate Row cells: " + cell);
+    		row.add(translateCell(cell)); 
+    	}
+    	return row;
+    }
+    
+    /**
+     * Translates a HyperLink from the domainmodel into the simplified UI-representation
+     * @param content
+     * @return a UIHyperlink with translated elements
+     */
+    private DocumentCell translateHL(HyperLink content) {    	
+    	// get arguments
+    	String href = content.getHref();
+    	String text = content.getTextSpan().getText();
+    	// return UIHyperlink with arguments
+    	return new UIHyperlink(getxPos(), getyPos(), getWidth(), href.length(), href, text);
+    }
+    
+    /**
+     * Translates a TextSpan from the domainmodel into the simplified UI-representation
+     * @param content
+     * @return a UITextField with translated elements
+     */
+    private DocumentCell translateTextSpan(TextSpan content) {
+    	System.out.println("TEXT: " + content.getText());
+    	return new UITextField(getxPos(), getyPos(), getWidth(), content.getText().length(), content.getText());
+    }
+    
+    
+    
     @Override
     /*
     Renders the content. The content renders its sub-content recursively if existent
@@ -117,7 +246,7 @@ public class DocumentArea extends Frame {
     }
 
 
-    // private UIController controller;
+    private UIController controller;
 
     private String Url = "";
 

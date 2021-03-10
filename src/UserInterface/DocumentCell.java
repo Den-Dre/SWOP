@@ -3,7 +3,7 @@ package UserInterface;
 import java.awt.*;
 
 public class DocumentCell extends Frame {
-    public DocumentCell(int x, int y, int width, int height) throws Exception {
+    public DocumentCell(int x, int y, int width, int height) {
         super(x, y, width, height);
     }
 

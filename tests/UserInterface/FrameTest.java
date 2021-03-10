@@ -15,11 +15,11 @@ class FrameTest {
     private Frame frame;
 
     @BeforeEach
-    public void setUp() throws Exception { frame = new Frame(0,0,10,10); }
+    public void setUp() { frame = new Frame(0,0,10,10); }
 
     @Test
     @DisplayName("Handles initialisation")
-    void correctInit() throws Exception {
+    void correctInit() {
         assertFalse(frame.hasFocus);
         assertEquals(0, frame.getxPos());
         assertEquals(0, frame.getyPos());
