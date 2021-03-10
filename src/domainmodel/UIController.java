@@ -5,7 +5,8 @@ import java.net.URL;
 
 public class UIController {
 
-    private Document document;
+    // Made public because we need to access the addListener method
+    public Document document;
 
     /**
      * Initializes a new UIController given a url
@@ -15,6 +16,17 @@ public class UIController {
      */
     public UIController(URL url) {
         this.document = new Document(url);
+    }
+
+    /**
+     * Changes the url of the document to a given url
+     * Mainly used for testing
+     *
+     * @param url
+     *        The new url of the document
+     */
+    public void changeUrl(URL url){
+        this.document.setUrl(url);
     }
 
     /**
