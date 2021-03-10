@@ -47,7 +47,7 @@ public class UIController {
      * @throws IOException
      * @throws ClassNotFoundException
      */
-    protected Document getContents() throws IOException, ClassNotFoundException {
+    public Document getContents() throws IOException, ClassNotFoundException {
         ObjectInputStream in = new ObjectInputStream(new FileInputStream("documentStream.txt"));
         Document doc = (Document) in.readObject();
         in.close();
