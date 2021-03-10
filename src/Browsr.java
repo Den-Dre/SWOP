@@ -16,6 +16,7 @@ public class Browsr extends CanvasWindow {
         super(title);
         this.Frames.add(this.AddressBar);
         this.Frames.add(this.DocumentArea);
+
     }
 
     String text = "Example Text";
