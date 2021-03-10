@@ -13,7 +13,7 @@ public class AddressBarTest {
             URL url = new URL("http://www.ditiseentest.com");
             AddressBar bar = new AddressBar(10, 100, 50, 60, 5);
             UIController contr = new UIController(url);
-            contr.document.addURLListener(bar);
+            contr.addUrlListener(bar);
             URL newUrl = new URL("http://www.ditiseenneiuweurl.be");
             contr.changeUrl(newUrl);
 

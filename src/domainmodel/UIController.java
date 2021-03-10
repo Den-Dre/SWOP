@@ -1,12 +1,13 @@
 package domainmodel;
 
+import javax.print.Doc;
 import java.io.*;
 import java.net.URL;
 
 public class UIController {
 
     // Made public because we need to access the addListener method
-    public Document document;
+    private Document document;
 
     /**
      * Initializes a new UIController given a url
@@ -78,5 +79,25 @@ public class UIController {
      */
     public URL getUrl(){
         return this.document.getUrl();
+    }
+
+    /**
+     *Add a documentListener to the list of DocumentListeners of the controllers document
+     *
+     * @param d
+     *        The new DocumentListener for the document
+     */
+    public void addDocumentListener(DocumentListener d) {
+        this.document.addDocumentListener(d);
+    }
+
+    /**
+     *Add a documentListener to the list of urlListeners of the controllers document
+     *
+     * @param d
+     *        The new documentListener for the document
+     */
+    public void addUrlListener(DocumentListener d) {
+        this.document.addURLListener(d);
     }
 }
