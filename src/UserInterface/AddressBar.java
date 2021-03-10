@@ -113,9 +113,11 @@ public class AddressBar extends Frame implements DocumentListener {
             // Something else to do when clicked on addressbar?
         }
         else {
-            this.toggleFocus(false);
-            this.moveCursor(this.getURL().length()); // Put cursor at the end of AddressBar
-            // go to this.getURL()
+            // clicking out is the same as pressing enter
+            handleEnter();
+//            this.toggleFocus(false);
+//            this.moveCursor(this.getURL().length()); // Put cursor at the end of AddressBar
+//            // go to this.getURL()
         }
     }
 
