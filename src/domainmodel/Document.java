@@ -43,7 +43,10 @@ public class Document {
 				""");
     }
     
-    // TODO doc
+    /**
+     * little toy-getter, to bypass the serialization mess TODO fix
+     * @return
+     */
     public ContentSpan getContent() {
     	return this.content;
     }

@@ -9,14 +9,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import domainmodel.ContentSpan;
-import domainmodel.Document;
-import domainmodel.HyperLink;
-import domainmodel.Table;
-import domainmodel.TableCell;
-import domainmodel.TableRow;
-import domainmodel.TextSpan;
-import domainmodel.UIController;
+import domainmodel.*;
 
 /*
 -> This class (and the AddressBar) will need an extra field "Controller".
@@ -87,10 +80,7 @@ public class DocumentArea extends Frame {
      * @return a DocumentCell derived class that can be rendered on screen
      */
     private DocumentCell translateToUIElements(ContentSpan contents) {    	
-    	final String packageName = "domainmodel";
-   	
-//    	System.out.println("translating class: " + contents.getClass().getName());
-    	
+    	final String packageName = "domainmodel";    	
     	DocumentCell newUIContents = null;
     	
     	switch (contents.getClass().getCanonicalName()) {
@@ -98,12 +88,9 @@ public class DocumentArea extends Frame {
     	case (packageName+".HyperLink") -> { newUIContents = translateHL((HyperLink) contents);}
     	case (packageName+".TextSpan") -> { newUIContents = translateTextSpan((TextSpan) contents);}
     	default -> { 
-//    		System.out.println("something else that does not exist");
-    		System.out.println("being: "+contents.getClass().getCanonicalName());
+    		System.out.println("unknown domainmodel representation class: "+contents.getClass().getCanonicalName());
     	}
     	}
-    	
-//    	System.out.println("new ui contents are: " + newUIContents);
     	return newUIContents;
     }
     
@@ -129,10 +116,8 @@ public class DocumentArea extends Frame {
      * @return a DocumentCell with translated elements
      */
     private DocumentCell translateCell(TableCell content) {
-//    	System.out.println("TranslateCell: " + content);
     	// get sub-elements    	
     	ContentSpan cellContent = content.getContent();
-//    	System.out.println("TranslateCell contains: " + cellContent);
     	return translateToUIElements(cellContent); 
     }
     
@@ -142,14 +127,11 @@ public class DocumentArea extends Frame {
      * @return an ArrayList<DocumentCell> with translated elements
      */
     private ArrayList<DocumentCell> translateRow(TableRow content) {
-//    	System.out.println("Translate Row: " + content);
 		// get sub elements
     	ArrayList<DocumentCell> row = new ArrayList<DocumentCell>();
     	List<TableCell> cells = content.getCells();
-//    	System.out.println("Cells are: " + cells);
     	// draw the row
     	for (TableCell cell : cells) {
-//    		System.out.println("Translate Row cells: " + cell);
     		row.add(translateCell(cell)); 
     	}
     	return row;
@@ -165,7 +147,7 @@ public class DocumentArea extends Frame {
     	String href = content.getHref();
     	String text = content.getTextSpan().getText();
     	// return UIHyperlink with arguments
-    	return new UIHyperlink(getxPos(), getyPos(), getWidth(), href.length(), href, text);
+    	return new UIHyperlink(getxPos(), getyPos(), getWidth(), textSize, href, text);
     }
     
     /**
@@ -175,7 +157,7 @@ public class DocumentArea extends Frame {
      */
     private DocumentCell translateTextSpan(TextSpan content) {
     	System.out.println("TEXT: " + content.getText());
-    	return new UITextField(getxPos(), getyPos(), getWidth(), content.getText().length(), content.getText());
+    	return new UITextField(getxPos(), getyPos(), getWidth(), textSize, content.getText());
     }
     
     
