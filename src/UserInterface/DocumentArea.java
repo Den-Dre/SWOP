@@ -169,6 +169,19 @@ public class DocumentArea extends Frame {
         return x >= this.getxPos() && x <= (this.getxPos() + this.getWidth()) && y >= this.getyPos() && y <= (this.getyPos() + this.getHeight());
     }
 
+    /**
+     * Notify the DocumentArea that the contents have been changed
+     */
+    public void contentChanged(){
+        try{
+            //Document newDoc = this.controller.getContents();
+            //this.content = mapToDocumentcells(newDoc);
+        }
+        catch(Exception e){
+            System.out.print(e);
+        }
+    }
+
     /*
     This method looks if the given string is a valid link.
     If so, do the right actions.
