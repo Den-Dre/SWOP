@@ -1,6 +1,7 @@
 package UserInterface;
 
 import domainmodel.DocumentListener;
+import domainmodel.TextSpan;
 import domainmodel.UIController;
 
 import java.awt.*;

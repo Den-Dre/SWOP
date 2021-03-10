@@ -13,6 +13,10 @@ public class UIController {
 
     private Document document;
 
+    public UIController() {
+        this.document = new Document();
+    }
+
     /**
      * The constructor gets passed string that represents the url
      * the user has inputted in the AddressBar.
@@ -23,20 +27,19 @@ public class UIController {
      *
      * //@param urlString: The string of the URL that the user has inputted.
      */
-    public UIController() {
-//        try {
-//            URL url = new URL(urlString);
-//            this.document = new Document(url);
-//        } catch (MalformedURLException e) {
-//            URL errorUrl = null;
-//            String path = "src" + File.separator + "domainmodel" + File.separator + "errorPage.html";
-//            try {
-//                errorUrl = new File(path).toURI().toURL();
-//            } catch (MalformedURLException ignored) {}
-////            URL errorUrl = getClass().getResource("errorPage.html");
-//            this.document = new Document(errorUrl);
-//        }
-        this.document = new Document();
+    public UIController(String urlString) {
+        try {
+            URL url = new URL(urlString);
+            this.document = new Document(url);
+        } catch (MalformedURLException e) {
+            URL errorUrl = null;
+            String path = "src" + File.separator + "domainmodel" + File.separator + "errorPage.html";
+            try {
+                errorUrl = new File(path).toURI().toURL();
+            } catch (MalformedURLException ignored) {}
+//            URL errorUrl = getClass().getResource("errorPage.html");
+            this.document = new Document(errorUrl);
+        }
     }
 
     /**
@@ -55,6 +58,7 @@ public class UIController {
     }
 
     public void loadDocumentFromHref(String hrefString) {
+        // verplaatsen naar Document?
         try {
             URL newUrl = new URL(document.getUrl(), hrefString);
             System.out.println(newUrl.toString());
@@ -65,6 +69,7 @@ public class UIController {
     }
 
     public void loadDocument2(String urlString) {
+        // verplaatsen naar Document?
         try {
             document.changeContentSpan(this.document.composeDocument(new URL(urlString)));
             document.setUrl(new URL(urlString));
