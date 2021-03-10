@@ -2,6 +2,7 @@ package domainmodel;
 
 import javax.print.Doc;
 import javax.swing.text.AbstractDocument;
+
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -50,5 +51,56 @@ public class UIController {
         } catch (IOException e) {
             return new TextSpan("Error: malformed URL.");
         }
+    }
+
+    /**
+     * Sets the document to a given document
+     *
+     * @param doc
+     *        The document for this UIController
+     */
+    public void setDocument(Document doc){
+        this.document = doc;
+    }
+
+    /**
+     * Returns the current document of this UIController
+     */
+    public Document getDocument() {
+        return document;
+    }
+
+    /**
+     * Returns a URL of the current document
+     *
+     * @return A URL-object of the document's url
+     */
+    public URL getUrl(){
+        return this.document.getUrl();
+    }
+
+    /**
+     *Add a documentListener to the list of DocumentListeners of the controllers document
+     *
+     * @param d
+     *        The new DocumentListener for the document
+     */
+    public void addDocumentListener(DocumentListener d) {
+        this.document.addDocumentListener(d);
+    }
+
+    /**
+     *Add a documentListener to the list of urlListeners of the controllers document
+     *
+     * @param d
+     *        The new documentListener for the document
+     */
+    public void addUrlListener(DocumentListener d) {
+        this.document.addURLListener(d);
+    }
+
+    // Temp for testing
+    public void changeURL(URL url){
+        this.document.setUrl(url);
     }
 }

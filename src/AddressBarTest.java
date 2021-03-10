@@ -11,14 +11,11 @@ public class AddressBarTest {
     void testUrlChange() {
         try {
             URL url = new URL("http://www.ditiseentest.com");
-            // Observable
-            Document doc = new Document(url);
-            // Observer
             AddressBar bar = new AddressBar(10, 100, 50, 60, 5);
-            doc.addURLListener(bar);
-
+            UIController contr = new UIController(url.toString());
+            contr.addUrlListener(bar);
             URL newUrl = new URL("http://www.ditiseenneiuweurl.be");
-            doc.setUrl(newUrl);
+            contr.changeURL(url);
 
             assertEquals(newUrl.toString(),bar.getURL());
         }

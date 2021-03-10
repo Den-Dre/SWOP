@@ -1,19 +1,25 @@
 package UserInterface;
 
+import domainmodel.Document;
+import domainmodel.DocumentListener;
+import domainmodel.UIController;
+
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.net.URL;
 import java.util.ArrayList;
 
 /*
 -> This class (and the AddressBar) will need an extra field "Controller".
 -> This var should be set in the main-Class with documentarea.setController(controller) and the same for AddressBar
 -> Initially the documentarea is empty (?). When the lister alerts the documentarea.
-It should then call this.controller.getContents(this.controller.getURL()) to fetch the document.
+   It should then call this.controller.getContents(this.controller.getURL()) to fetch the document.
 -> If there is a link pressed, the document should compose a new url using this.URL and the retrieved href.
-It should then call this.controller.loadDocument(newUrl)
+   It should then call this.controller.loadDocument(newUrl)
  */
 
-public class DocumentArea extends Frame {
+
+public class DocumentArea extends Frame implements DocumentListener {
     public DocumentArea(int x, int y, int width, int height) throws Exception {
         super(x, y, width, height);
         // => This is for debugging purposes:
@@ -51,19 +57,27 @@ public class DocumentArea extends Frame {
 
     }
 
-    @Override
-    /*
-    Renders the content. The content renders its sub-content recursively if existent
+    /**
+     * Renders the documentArea
+     *
+     * @param g
+     *        Graphics object containing all the information to render
      */
+    @Override
     public void Render(Graphics g) {
         content.Render(g);
         g.setColor(Color.green);
         //g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
     }
 
-    /*
-    If the new window dimensions are legal, the UserInterface.DocumentArea gets resized.
-    It also resizes its content.
+    /**
+     * If the new window dimensions are legal, the UserInterface.DocumentArea gets resized.
+     * It also resizes its content.
+     *
+     * @param newWindowWidth
+     *        The new window width
+     * @param newWindowHeight
+     *        The new window height
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
@@ -108,21 +122,63 @@ public class DocumentArea extends Frame {
         // controller.loadDocument(this.makeNewUrl(link))
     }
 
+    /**
+     * Notify the DocumentArea that the contents have been changed
+     */
+    public void contentChanged(){
+        try{
+            //Document newDoc = this.controller.getContents();
+            //this.content = mapToDocumentcells(newDoc);
+        }
+        catch(Exception e){
+            System.out.print(e);
+        }
+    }
+
+    /**
+     * Maps a document to the corresponding DocumentCells
+     *
+     * @param doc
+     *        The document tobe mapped
+     * @return DocumentCell object that represents the Document
+     */
+    public DocumentCell mapToDocumentcells(Document doc){
+        // TODO
+        return null;
+    }
+
+
+    /**
+     * Set the content of documentArea to a given Documentcell
+     *
+     * @param content
+     *        The content for the DocumentArea
+     */
     public void setContent(DocumentCell content) {
         this.content = content;
     }
 
+    /**
+     * Returns the content of the DocumentArea
+     */
     public DocumentCell getContent() {
         return this.content;
     }
 
+    /**
+     * Set the DocumentArea's controller to a given controller
+     *
+     * @param controller
+     *        The new controller
+     */
+    public void setController(UIController controller) {
+        this.controller = controller;
+    }
 
-    // private UIController controller;
+    public UIController controller;
 
     private String Url = "";
-
     private final int textSize = 14;
-
     private DocumentCell content;
 }
 
