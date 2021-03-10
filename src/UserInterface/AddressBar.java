@@ -238,7 +238,6 @@ public class AddressBar extends Frame implements DocumentListener {
     // Distance between addressBar and the window edges
     int offset;
 
-    // TODO Switch the URL from a string to a URL-object
     //Two URL's to be able to 'rollback' the old url if editing is cancelled.
     // URL is the variable to be edited. URLCopy gets updated after it is certain the edited url is final.
     private String URL = ""; // The url starts empty
@@ -340,7 +339,6 @@ public class AddressBar extends Frame implements DocumentListener {
         return getyPos()+(getHeight()-cursorDimensions[1])/2;
     }
 
-    // TODO drop the toString()
     /**
      *  Signals that the url has been changed to a given url
      */
