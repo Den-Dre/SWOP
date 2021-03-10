@@ -98,6 +98,10 @@ public class UIHyperlink extends DocumentCell{
         return textWidth;
     }
 
+    public String getText() {
+        return text;
+    }
+
     // Contents of this UIHyperlink
     private String href = "";
     private final String text;

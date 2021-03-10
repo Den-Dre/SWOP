@@ -92,19 +92,4 @@ class DocumentAreaTest {
 
         // Check x and y positions: can't be accessed without adding additional getters ..
     }
-
-    /*
-    Some extra tests that should be added:
-    -> Are the x and y positions off the cells initialised correctly?
-    -> clicking on a link should return the href
-    -> ...
-     */
-
-
-
-    /*
-    UITextField textField = new UITextField(x, y, width, textSize, "teststring");
-        UITextField textField2 = new UITextField(x, y, width, textSize, "hallo");
-        UIHyperlink link = new UIHyperlink(x,y, width, textSize, "/spam/win-actie", "Win €1000!");
-     */
 }
