@@ -8,15 +8,28 @@ import java.awt.event.MouseEvent;
 import java.net.URL;
 
 public class AddressBar extends Frame implements UrlListener {
+    /**
+     * Creates an AddressBar object.
+     *
+     * @param x: x-position on the window
+     * @param y: y-position on the window
+     * @param width: the width of this AddressBar
+     * @param height: the height of this AddressBar
+     * @param offset: distance between this AddressBar and left, right and top window edge
+     */
     public AddressBar(int x, int y, int width, int height, int offset) {
         super(x, y, width, height);
         this.offset = offset;
     }
 
-    @Override
-    /*
-    Takes care off all the drawing in the scope of the addressBar.
+    /**
+     * Renders this {@code AddressBar} using the given {@code Graphics} parameter
+     * - Renders the url
+     * - Renders the selected text
+     * - Renders the cursor
+     * @param g: The graphics object that is used to draw this {@code AddressBar}
      */
+    @Override
     public void Render(Graphics g) {
         setFontMetrics(g);
         updateSelectStart();
@@ -99,6 +112,13 @@ public class AddressBar extends Frame implements UrlListener {
 
     /**
      * Handle mouseEvents. Determine if the addressBar was pressed and do the right actions.
+     *
+     * @param id: The type of mouse activity
+     * @param x: The x coordinate of the mouse activity
+     * @param y: The y coordinate of the mouse activity
+     * @param clickCount: The number of clicks
+     * @param button: The mouse button that was clicked
+     * @param modifiersEx: The control keys that were held on the click
      */
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
@@ -121,6 +141,8 @@ public class AddressBar extends Frame implements UrlListener {
 
     /**
      * Returns true if and oly if the given x and y coordinates are in the addressBar area.
+     * @param x: x-coordinate
+     * @param y: y-coordinate
      */
     private boolean wasClicked(int x, int y){
         return x >= this.getxPos() && x <= (this.getxPos() + this.getWidth()) && y >= this.getyPos() && y <= (this.getyPos() + this.getHeight());
@@ -133,8 +155,15 @@ public class AddressBar extends Frame implements UrlListener {
 
     /**
      * Handle key presses. This method does the right action when a key is pressed.
-     * - If the addressBar has no focus, it does nothing.
-     * - Else, if a key is clicked, it looks at what key it is and does the corresponding action.
+     * <ul>
+     *     <li>If the addressBar has no focus, it does nothing.</li>
+     *     <li>Else, if a key is clicked, it looks at what key it is and does the corresponding action.</li>
+     * </ul>
+     *
+     * @param id: The KeyEvent (Associated with type of KeyEvent)
+     * @param keyCode: The KeyEvent code (Determines the involved key)
+     * @param keyChar: The character representation of the involved key
+     * @param modifiersEx: Specifies other keys that were involved in the event
      */
     @Override
     public void handleKey(int id, int keyCode, char keyChar, int modifiersEx) {
@@ -157,14 +186,28 @@ public class AddressBar extends Frame implements UrlListener {
         updateSelectStart();
     }
 
-    // Documentation needed? It handles the Escape key!
+    /**
+     * Contains the actions needed for the escape key
+     * <ul>
+     *     <li>This AddressBars focus is set to false</li>
+     *     <li>This url is reset to before editing</li>
+     *     <li>The cursor is moved to the end of the url</li>
+     * </ul>
+     */
     private void handleEscape() {
         this.toggleFocus(false);
         this.setURL(this.getOldUrl());
         this.moveCursor(this.getURL().length());
     }
 
-    // Documentation needed? It handles the Enter key!
+    /**
+     * Contains the actions needed for the enter key
+     * <ul>
+     *     <li>This AddressBars focus is set to false</li>
+     *     <li>The editing of the url is finalized</li>
+     *     <li>The cursor is moved to the end of the url</li>
+     * </ul>
+     */
     private void handleEnter() {
         this.toggleFocus(false);
         this.updateCopyUrl();
@@ -174,10 +217,13 @@ public class AddressBar extends Frame implements UrlListener {
 
     /**
      * Remove characters in the following manner:
-     * => If backspace is pressed, zero, one or more characters need to be removed.
-     * => If no characters are selected. The character before the cursor is removed.
-     *    If there are (one or more) selected characters, these are removed.
-     * => The cursor position is then adjusted accordingly.
+     * <ul>
+     *     <li>If backspace is pressed, zero, one or more characters need to be removed.</li>
+     *     <li>If no characters are selected. The character before the cursor is removed.
+     *         If there are (one or more) selected characters, these are removed.</li>
+     *     <li>The cursor position is then adjusted accordingly.</li>
+     * </ul>
+     * @param mode: if 0, function acts as backspace, else as delete
      */
     private void handleRemoveCharacters(int mode) {
         if (getURL().length() == 0) return;
@@ -208,12 +254,17 @@ public class AddressBar extends Frame implements UrlListener {
     }
 
     /**
-     * => This method handles all the normal keys on the keyboard with keyCodes in these ranges: [44,111], [512,523]
-     * These contain normal letters, numbers and some more.
-     * => !! Not all characters are supported yet.
-     * (You need to look at a keyCode table and look which characters can be typed, e.g. some special keys that need shift can't be pressed yet)
-     * => The characters are inserted at the cursor location.
-     * => If text is selected, it will be replaced with the typed character.
+     * <ul>
+     *     <li>This method handles all the normal keys on the keyboard with keyCodes in these ranges: [44,111], [512,523]
+     *     These contain normal letters, numbers and some more.</li>
+     *     <li>!! Not all characters are supported yet.</li>
+     *     <li>(You need to look at a keyCode table and look which characters can be typed, e.g. some special keys that need shift can't be pressed yet)</li>
+     *     <li>The characters are inserted at the cursor location.</li>
+     *     <li>If text is selected, it will be replaced with the typed character.</li>
+     * </ul>
+     * @param id: the KeyEvent id associated with the type of KeyEvent
+     * @param keyCode: the KeyEvent code associated with the key
+     * @param keyChar: the character representation of the pressed key
      */
     private void handleNoSpecialKey(int id, int keyCode, char keyChar) {
         if ((keyCode >= 44 && keyCode <= 111) || (keyCode >= 512 && keyCode <= 523)) {
@@ -229,6 +280,8 @@ public class AddressBar extends Frame implements UrlListener {
      * This method handles resizes.
      * It makes sure the addressBar is adjusted in width when the window shrinks or grows.
      * It does not change its height (e.g. look at Firefox).
+     * @param newWindowHeight: parameter containing the new window-height
+     * @param newWindowWidth: parameter containing the new window-width
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
@@ -265,11 +318,28 @@ public class AddressBar extends Frame implements UrlListener {
     /*
     Getters and setters for some variables:
      */
+
+    /**
+     * @return the url string of this AddressBar
+     */
     public String getURL() {
         return URL;
     }
 
     // externally change the url, this moves the cursor to the right and toggles focus off.
+
+    /**
+     * Completely change this AddressBar url to the given URL
+     * (So without using the regular key or mouse operation)
+     * Use this in stead of the setURL method
+     * <ul>
+     *     <li>Sets the url to the given String</li>
+     *     <li>moves the cursor to the end of the url</li>
+     *     <li>Undo every selection</li>
+     *     <li>Toggle the focus off</li>
+     * </ul>
+     * @param URL: the desired url for this AddressBar
+     */
     public void changeURLto(String URL) {
         this.URL = URL;
         moveCursor(this.getURL().length());
@@ -292,7 +362,7 @@ public class AddressBar extends Frame implements UrlListener {
     /**
      * Move the cursor delta index positions in the url.
      * It cannot move further than the length of the url (both left and right)
-     * @param delta: The amomunt that the cursor should be moved.
+     * @param delta: The amount that the cursor should be moved.
      */
     private void moveCursor(int delta) {
         int urlLength = this.getURL().length();
