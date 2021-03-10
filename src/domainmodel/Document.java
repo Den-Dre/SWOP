@@ -7,6 +7,8 @@ import java.io.*;
 import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Document {
@@ -108,7 +110,7 @@ public class Document {
      * @param document: the HTML code of the document that is to be composed
      * @return a ContentSpan of the given {@code document}.
      */
-    private ContentSpan composeDocument(String document) {
+    public ContentSpan composeDocument(String document) {
         // TODO: verify whether this code of the listeners should be here
         //fireUrlChanged(); for testing
         fireContentsChanged();
@@ -117,11 +119,28 @@ public class Document {
     }
 
     /**
+     * Compose the document from a given url
+     * and update the listeners accordingly.
+     *
+     * @param url: the url of the document that is to be composed.
+     * @return a ContentSpan of the given {@code document}.
+     */
+    public ContentSpan composeDocument(URL url) throws IOException {
+        // TODO: verify whether this code of the listeners should be here
+        //fireUrlChanged(); for testing
+        fireContentsChanged();
+
+        return ContentSpanBuilder.buildContentSpan(url);
+    }
+
+
+    /**
      * Serialize the ContentSpan associated with this Document
      *
      * @return The content span in the form of a byte[] array
      * @throws IOException: if the stream can't be written
      */
+    @Deprecated
    public byte[] getSerializedContentSpan(String doc) throws IOException {
         ContentSpan contentSpan = this.composeDocument(doc);
 
@@ -151,4 +170,7 @@ public class Document {
 //        out.close();
     }
 
+    public static ContentSpan getErrorDocument() {
+        return new TextSpan("Error: malformed URL.");
+    }
 }
