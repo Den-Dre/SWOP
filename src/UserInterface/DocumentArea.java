@@ -20,7 +20,7 @@ It should then call this.controller.getContents(this.controller.getURL()) to fet
 It should then call this.controller.loadDocument(newUrl)
  */
 
-public class DocumentArea extends Frame {
+public class DocumentArea extends Frame implements DocumentListener {
     public DocumentArea(int x, int y, int width, int height) throws Exception {
         super(x, y, width, height);
 
@@ -174,8 +174,8 @@ public class DocumentArea extends Frame {
      */
     public void contentChanged(){
         try{
-            //Document newDoc = this.controller.getContents();
-            //this.content = mapToDocumentcells(newDoc);
+            ContentSpan newContentSpan = controller.getContentSpan();
+            this.setContent(this.translateToUIElements(newContentSpan));
         }
         catch(Exception e){
             System.out.print(e);
@@ -186,12 +186,10 @@ public class DocumentArea extends Frame {
     This method looks if the given string is a valid link.
     If so, do the right actions.
      */
-    private void linkPressed(String link) {
+    private void linkPressed(String link){
         if (link.equals("")) return;
         // What to do when a link is pressed?
-        System.out.println("hyperlink pressed!!");
-        System.out.println(link);
-        // controller.loadDocument(this.makeNewUrl(link))
+        controller.loadDocumentFromHref(link);
     }
 
     public void setContent(DocumentCell content) {
@@ -202,8 +200,17 @@ public class DocumentArea extends Frame {
         return this.content;
     }
 
+    /**
+     * Set the DocumentArea's controller to a given controller
+     *
+     * @param controller
+     *        The new controller
+     */
+    public void setController(UIController controller) {
+        this.controller = controller;
+    }
 
-    private UIController controller;
+    public UIController controller;
 
     private String Url = "";
 

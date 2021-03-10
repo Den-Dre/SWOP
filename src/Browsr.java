@@ -30,7 +30,6 @@ public class Browsr extends CanvasWindow {
 
         controller.addDocumentListener(AddressBar);
         controller.addDocumentListener(DocumentArea);
-
     }
 
     String text = "Example Text";

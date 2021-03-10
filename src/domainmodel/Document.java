@@ -23,8 +23,14 @@ public class Document {
      * //@param url
      *        The URL for this document
      */
-    public Document() {
+    public Document(URL url) {
+        this.url = url;
     }
+
+    /**
+     * Initialize a new Document
+     */
+    public Document() { }
 
     /**
      * Initialize a new Document given a url, and two DocumentListeners representing the DocumentArea and AddressBar
@@ -51,12 +57,12 @@ public class Document {
     public void setUrl(URL url) {
         this.url = url;
         fireUrlChanged();
-        fireContentsChanged();
     }
 
     public void changeContentSpan(ContentSpan span) {
         this.contentSpan = span;
         this.fireContentsChanged();
+
     }
 
     public ContentSpan getContentSpan() {
@@ -80,6 +86,7 @@ public class Document {
      */
     public void addURLListener(DocumentListener u) {
         this.urlListeners.add(u);
+        fireUrlChanged();
     }
 
     /**
@@ -100,6 +107,7 @@ public class Document {
      */
     public void addDocumentListener(DocumentListener d) {
         this.documentListeners.add(d);
+        fireContentsChanged();
     }
 
     /**

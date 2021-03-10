@@ -7,9 +7,9 @@ import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 public class UIController {
-
 
     private Document document;
 
@@ -54,12 +54,21 @@ public class UIController {
         }
     }
 
+    public void loadDocumentFromHref(String hrefString) {
+        try {
+            URL newUrl = new URL(document.getUrl(), hrefString);
+            System.out.println(newUrl.toString());
+            document.changeContentSpan(this.document.composeDocument(newUrl));
+        } catch (IOException | RuntimeException e) {
+            document.changeContentSpan(new TextSpan("Error: malformed URL."));
+        }
+    }
 
     public void loadDocument2(String urlString) {
         try {
             document.changeContentSpan(this.document.composeDocument(new URL(urlString)));
-        } catch (IOException e) {
-            System.out.println("malformed in loaddocuemnt2 in uicontroller");
+            document.setUrl(new URL(urlString));
+        } catch (IOException | RuntimeException e) {
             document.changeContentSpan(new TextSpan("Error: malformed URL."));
         }
     }
