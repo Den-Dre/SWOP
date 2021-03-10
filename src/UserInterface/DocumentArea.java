@@ -21,7 +21,7 @@ It should then call this.controller.loadDocument(newUrl)
  */
 
 public class DocumentArea extends Frame {
-    public DocumentArea(int x, int y, int width, int height) {
+    public DocumentArea(int x, int y, int width, int height) throws Exception {
         super(x, y, width, height);
     	System.out.println("DocumentArea obj made...");
 
@@ -78,8 +78,9 @@ public class DocumentArea extends Frame {
      * Distinction is made between domain-classes Table, HyperLink and TextSpan
      * @param contents
      * @return a DocumentCell derived class that can be rendered on screen
+     * @throws Exception 
      */
-    private DocumentCell translateToUIElements(ContentSpan contents) {    	
+    private DocumentCell translateToUIElements(ContentSpan contents) throws Exception {    	
     	final String packageName = "domainmodel";    	
     	DocumentCell newUIContents = null;
     	
@@ -98,8 +99,9 @@ public class DocumentArea extends Frame {
      * Translates a Table from the domainmodel into the simplified UI-representation
      * @param content
      * @return a UITable with the translated elements
+     * @throws Exception 
      */
-    private UITable translateTable(Table content) {
+    private UITable translateTable(Table content) throws Exception {
     	// get sub elements
     	ArrayList<ArrayList <DocumentCell>> UIrows = new ArrayList<ArrayList <DocumentCell>>();
     	// draw the table
@@ -114,8 +116,9 @@ public class DocumentArea extends Frame {
      * Translates a Cell from the domainmodel into the simplified UI-representation
      * @param content
      * @return a DocumentCell with translated elements
+     * @throws Exception 
      */
-    private DocumentCell translateCell(TableCell content) {
+    private DocumentCell translateCell(TableCell content) throws Exception {
     	// get sub-elements    	
     	ContentSpan cellContent = content.getContent();
     	return translateToUIElements(cellContent); 
@@ -125,8 +128,9 @@ public class DocumentArea extends Frame {
      * Translates a Row from the domainmodel into the simplified UI-representation
      * @param content
      * @return an ArrayList<DocumentCell> with translated elements
+     * @throws Exception 
      */
-    private ArrayList<DocumentCell> translateRow(TableRow content) {
+    private ArrayList<DocumentCell> translateRow(TableRow content) throws Exception {
 		// get sub elements
     	ArrayList<DocumentCell> row = new ArrayList<DocumentCell>();
     	List<TableCell> cells = content.getCells();
@@ -141,8 +145,9 @@ public class DocumentArea extends Frame {
      * Translates a HyperLink from the domainmodel into the simplified UI-representation
      * @param content
      * @return a UIHyperlink with translated elements
+     * @throws Exception 
      */
-    private DocumentCell translateHL(HyperLink content) {    	
+    private DocumentCell translateHL(HyperLink content) throws Exception {    	
     	// get arguments
     	String href = content.getHref();
     	String text = content.getTextSpan().getText();
@@ -154,8 +159,9 @@ public class DocumentArea extends Frame {
      * Translates a TextSpan from the domainmodel into the simplified UI-representation
      * @param content
      * @return a UITextField with translated elements
+     * @throws Exception 
      */
-    private DocumentCell translateTextSpan(TextSpan content) {
+    private DocumentCell translateTextSpan(TextSpan content) throws Exception {
     	System.out.println("TEXT: " + content.getText());
     	return new UITextField(getxPos(), getyPos(), getWidth(), textSize, content.getText());
     }
