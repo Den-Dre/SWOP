@@ -13,6 +13,7 @@ public class UITable extends DocumentCell{
      * @param width: The width of this {@code UITable}.
      * @param height: The height of this {@code UITable}.
      * @param rows: The number of rows of this {@code UITable}.
+     * @throws Exception 
      */
     public UITable(int x, int y, int width, int height, ArrayList<ArrayList<DocumentCell>> rows) throws Exception {
         super(x, y, width, height);

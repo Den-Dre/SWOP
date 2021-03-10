@@ -11,6 +11,7 @@ public class UITextField extends DocumentCell{
      * @param width: the width of this {@code UITextField}.
      * @param text_size: The height of this {@code UITextField}.
      * @param text: The text attribute of this {@code UITextField}.
+     * @throws Exception 
      */
     public UITextField(int x, int y, int width, int text_size, String text) throws Exception {
         super(x, y, width, text_size);
