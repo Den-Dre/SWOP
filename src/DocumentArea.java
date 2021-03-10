@@ -9,7 +9,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 public class DocumentArea extends Frame {
-    public DocumentArea(int x, int y, int width, int height) {
+    public DocumentArea(int x, int y, int width, int height) throws Exception {
         super(x, y, width, height);
 
         // => This is for debugging purposes:

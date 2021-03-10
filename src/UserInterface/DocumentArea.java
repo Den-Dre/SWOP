@@ -14,7 +14,7 @@ It should then call this.controller.loadDocument(newUrl)
  */
 
 public class DocumentArea extends Frame {
-    public DocumentArea(int x, int y, int width, int height) {
+    public DocumentArea(int x, int y, int width, int height) throws Exception {
         super(x, y, width, height);
         // => This is for debugging purposes:
 //        UITextField textField3 = new UITextField(x, y, width, textSize, "Tabel2");

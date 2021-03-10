@@ -14,7 +14,7 @@ public class UITable extends DocumentCell{
      * @param height: The height of this {@code UITable}.
      * @param rows: The number of rows of this {@code UITable}.
      */
-    public UITable(int x, int y, int width, int height, ArrayList<ArrayList<DocumentCell>> rows) {
+    public UITable(int x, int y, int width, int height, ArrayList<ArrayList<DocumentCell>> rows) throws Exception {
         super(x, y, width, height);
 
         // => 1. Initialise the grid

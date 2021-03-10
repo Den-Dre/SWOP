@@ -17,7 +17,7 @@ class DocumentAreaTest {
     private final int doc2Ypos = 15;
 
     @BeforeEach
-    void setUp() {
+    void setUp() throws Exception {
         documentArea1 = new DocumentArea(0,0,100,100);
         documentArea2 = new DocumentArea(doc2Xpos,doc2Ypos,150,500);
     }
@@ -47,7 +47,7 @@ class DocumentAreaTest {
 
     @Test
     @DisplayName("Can set the width and height")
-    void initWidthHeightPos() {
+    void initWidthHeightPos() throws Exception {
         // ====== Setup =======
         int x = 0;
         int y = 0;
@@ -92,19 +92,4 @@ class DocumentAreaTest {
 
         // Check x and y positions: can't be accessed without adding additional getters ..
     }
-
-    /*
-    Some extra tests that should be added:
-    -> Are the x and y positions off the cells initialised correctly?
-    -> clicking on a link should return the href
-    -> ...
-     */
-
-
-
-    /*
-    UITextField textField = new UITextField(x, y, width, textSize, "teststring");
-        UITextField textField2 = new UITextField(x, y, width, textSize, "hallo");
-        UIHyperlink link = new UIHyperlink(x,y, width, textSize, "/spam/win-actie", "Win €1000!");
-     */
 }
