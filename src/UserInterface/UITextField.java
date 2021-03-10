@@ -36,7 +36,7 @@ public class UITextField extends DocumentCell{
         g.setFont(textFieldFont);
         g.drawString(textField, getxPos(), getyPos()+textHeight);
         // Draw a rectangle around the text for debugging purposes
-        g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
+        //g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
     }
 
     /*

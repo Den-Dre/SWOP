@@ -44,7 +44,7 @@ public class UITable extends DocumentCell{
         }
         // Draw a rectangle around the table for debugging purposes
         g.setColor(Color.BLACK);
-        g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
+        //g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
     }
 
     /**
