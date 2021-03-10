@@ -23,54 +23,10 @@ It should then call this.controller.loadDocument(newUrl)
 public class DocumentArea extends Frame {
     public DocumentArea(int x, int y, int width, int height) throws Exception {
         super(x, y, width, height);
-    	System.out.println("DocumentArea obj made...");
 
-        // => This is for debugging purposes:
-//        UITextField textField3 = new UITextField(x, y, width, textSize, "Tabel2");
-//        UITextField textField4 = new UITextField(x, y, width, textSize, "lorem-ipsum");
-//        UIHyperlink link2 = new UIHyperlink(x,y, width, textSize, "/klikhier/hoofdpagina","klik hier");
-//        ArrayList<DocumentCell> row3 = new ArrayList<>();
-//        ArrayList<DocumentCell> row4 = new ArrayList<>();
-//        ArrayList<ArrayList<DocumentCell>> rows2 = new ArrayList<>();
-//        row3.add(textField3);
-//        row3.add(textField4);
-//        row4.add(link2);
-//        rows2.add(row3);
-//        rows2.add(row4);
-//        UITable table = new UITable(x,y,width, height, rows2);
+//        ContentSpan content = this.controller.getContentSpan();
 //
-//        UITextField textField = new UITextField(x, y, width, textSize, "teststring");
-//        UITextField textField2 = new UITextField(x, y, width, textSize, "hallo");
-//        UIHyperlink link = new UIHyperlink(x,y, width, textSize, "/spam/win-actie", "Win €1000!");
-//        ArrayList<DocumentCell> row = new ArrayList<>();
-//        ArrayList<DocumentCell> row2 = new ArrayList<>();
-//        row.add(textField2);
-//        row.add(link);
-//        row2.add(textField);
-//        row2.add(table);
-//        ArrayList<ArrayList<DocumentCell>> rows = new ArrayList<>();
-//        rows.add(row);
-//        rows.add(row2);
-//
-//        content = new UITable(x,y,width, height, rows);
-        // ===============================
-        
-        UITextField textField5 = new UITextField(x, y, width, textSize, "");
-        content = textField5;
-        
-        try {
-			this.controller = new UIController(new URL(new URL("https://people.cs.kuleuven.be/~bart.jacobs/index.html"), "browsrtest.html"));
-		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			System.out.println("DocArea: malformed URL");
-		}
-        
-        ContentSpan content = this.controller.getContent();
-        
-        System.out.println(content);
-        
-        this.content = translateToUIElements(content); // here we need to feed the 'real' content once implemented
+//        this.content = translateToUIElements(content); // here we need to feed the 'real' content once implemented
     }
     
     /**
