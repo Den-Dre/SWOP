@@ -22,6 +22,12 @@ public class DocumentCell extends Frame {
         super.handleResize(newWindowWidth, newWindowHeight);
     }
 
+    /**
+     * Method to determine if the click was in this DocumentCells area
+     * @param x: the x-position of the click
+     * @param y: the y-position of the click
+     * @return True iff the given point lies in this DocumentCells area including the edges
+     */
     public boolean wasClicked(int x, int y) {
         return x >= this.getxPos() && x <= (this.getxPos() + this.getWidth()) && y >= this.getyPos() && y <= (this.getyPos() + this.getHeight());
     }
@@ -38,6 +44,11 @@ public class DocumentCell extends Frame {
         return 1;
     }
 
+    /**
+     * The height-to-width-ratio is the ratio between the height of a character to its width.
+     * This is used for estimating the width of a string given its height
+     * @return the height-to-width-ratio to use for strings in this DocumentCell
+     */
     public double getHeightToWidthRatio() {
         return this.heightToWidthRatio;
     }
