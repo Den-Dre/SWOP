@@ -7,6 +7,7 @@ import java.awt.*;
  * window within which content can be displayed.
  */
 public class Frame {
+
     /**
      * Initialise this Frame with the given parameters.
      *
@@ -14,12 +15,12 @@ public class Frame {
      * @param y: The y coordinate of this Frame.
      * @param width: The width of this Frame
      * @param height: The height of this Frame
-     * @throws Exception: When one of the dimensions of this Frame is negative
+     * @throws IllegalDimensionException: When one of the dimensions of this Frame is negative
      */
-    public Frame(int x, int y, int width, int height) throws Exception {
+    public Frame(int x, int y, int width, int height) throws IllegalDimensionException {
         // defensively throw exception to caller
         if (x < 0 || y < 0 || width < 0 || height < 0)
-        	throw new Exception("Illegal dimensions ...");
+        	throw new IllegalDimensionException();
 
         this.xPos = x;
         this.yPos = y;

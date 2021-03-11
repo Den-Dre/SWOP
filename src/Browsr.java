@@ -1,6 +1,7 @@
 import UserInterface.AddressBar;
 import UserInterface.DocumentArea;
 import UserInterface.Frame;
+import UserInterface.IllegalDimensionException;
 import canvaswindow.CanvasWindow;
 import domainmodel.Document;
 import domainmodel.UIController;
@@ -21,20 +22,24 @@ public class Browsr extends CanvasWindow {
      */
     protected Browsr(String title) throws Exception {
         super(title);
-        
-        AddressBar = new AddressBar(addressBarOffset,addressBarOffset, 100, addressBarHeight, addressBarOffset);
-        DocumentArea = new DocumentArea(addressBarOffset,addressBarHeight+2* addressBarOffset, 100,100);
-//		DocumentArea =  new Frame(0,addressBarHeight, 100,100);
+        try {
+            AddressBar = new AddressBar(addressBarOffset, addressBarOffset, 100, addressBarHeight, addressBarOffset);
+            DocumentArea = new DocumentArea(addressBarOffset, addressBarHeight + 2 * addressBarOffset, 100, 100);
+            //DocumentArea =  new Frame(0,addressBarHeight, 100,100);
 
-        this.Frames.add(this.AddressBar);
-        this.Frames.add(this.DocumentArea);
+            this.Frames.add(this.AddressBar);
+            this.Frames.add(this.DocumentArea);
 
-        UIController controller = new UIController();
-        AddressBar.setUiController(controller);
-        DocumentArea.setController(controller);
+            UIController controller = new UIController();
+            AddressBar.setUiController(controller);
+            DocumentArea.setController(controller);
 
-        controller.addUrlListener(AddressBar);
-        controller.addDocumentListener(DocumentArea);
+            controller.addUrlListener(AddressBar);
+            controller.addDocumentListener(DocumentArea);
+        }
+        catch(IllegalDimensionException e){
+            System.out.print("Dimension error in frame while making browser!");
+        }
     }
 
     /**

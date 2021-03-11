@@ -195,6 +195,7 @@ public class Document {
      *
      * @param url: the url of the document that is to be composed.
      * @return a ContentSpan of the given {@code document}.
+     * @throws IOException
      */
     public ContentSpan composeDocument(URL url) throws IOException {
         // TODO: verify whether this code of the listeners should be here

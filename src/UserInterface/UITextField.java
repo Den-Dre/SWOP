@@ -16,7 +16,7 @@ public class UITextField extends DocumentCell{
      * @param text: The text attribute of this {@code UITextField}.
      * @throws Exception: When one of the dimensions of the associated {@link Frame} is negative.
      */
-    public UITextField(int x, int y, int width, int text_size, String text) throws Exception {
+    public UITextField(int x, int y, int width, int text_size, String text) throws IllegalDimensionException {
         super(x, y, width, text_size);
         textField = text;
         textHeight = text_size;

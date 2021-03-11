@@ -70,4 +70,10 @@ class FrameTest {
         assertEquals(Color.WHITE, frame.getBackgroundColor());
     }
 
+    @Test
+    void wrongDimensionsFrame() throws IllegalDimensionException{
+        IllegalDimensionException exception = assertThrows(IllegalDimensionException.class, () -> {
+            new Frame(-1,10,10,10);
+        });
+    }
 }

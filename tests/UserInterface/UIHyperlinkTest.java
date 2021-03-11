@@ -76,4 +76,11 @@ class UIHyperlinkTest {
         int width2 = (int) (link2.getText().length() * height2 * ratio2);
         assertEquals(width2, link2.getWidth());
     }
+
+    @Test
+    void invalidDimensions() throws IllegalDimensionException {
+        IllegalDimensionException exception = assertThrows(IllegalDimensionException.class, () -> {
+            new UITextField(-1,10,10,10,"Test");
+        });
+    }
 }
