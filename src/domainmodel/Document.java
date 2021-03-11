@@ -21,7 +21,7 @@ public class Document {
     /**
      * Initialize a new Document given a url
      *
-     * //@param url
+     * @param url
      *        The URL for this document
      */
     public Document(URL url) {
@@ -61,20 +61,47 @@ public class Document {
 //        fireContentsChanged();
 //    }
 
+    /**
+     * Set the URL of this Document to the
+     * provided string and alert the listeners.
+     *
+     * @param url:
+     *           The url that should be set for this Document.
+     */
     public void setUrlString(String url) {
         this.urlString = url;
         fireUrlChanged();
     }
 
+    /**
+     * Retrieve the URL-string of this document.
+     *
+     * @return urlString:
+     *              The URL-string of this document.
+     */
     public String getUrlString() {
         return this.urlString;
     }
 
+    /**
+     * Set the {@link ContentSpan} of this Document to
+     * the provided content span.
+     *
+     * @param span:
+     *             The {@link ContentSpan} that should be set for this Document.
+     */
     public void changeContentSpan(ContentSpan span) {
         this.contentSpan = span;
         this.fireContentsChanged();
     }
 
+    /**
+     * Retrieve the {@link ContentSpan}
+     * associated to this Document.
+     *
+     * @return contentSpan:
+     *              The {@link ContentSpan} associated to this Document.
+     */
     public ContentSpan getContentSpan() {
         return this.contentSpan;
     }
@@ -178,6 +205,14 @@ public class Document {
         return ContentSpanBuilder.buildContentSpan(url);
     }
 
+    /**
+     * Retrieve the contents of a docoument
+     * that should be displayed when a malformed
+     * URL is entered by the user.
+     *
+     * @return textSpan:
+     *              The {@link ContentSpan} of the error document.
+     */
     public static ContentSpan getErrorDocument() {
         return new TextSpan("Error: malformed URL.");
     }

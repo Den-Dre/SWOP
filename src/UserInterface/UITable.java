@@ -3,6 +3,9 @@ package UserInterface;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * A class to represent tables in the UI layer.
+ */
 public class UITable extends DocumentCell{
 
     /**
@@ -181,6 +184,12 @@ public class UITable extends DocumentCell{
         setWidth(getMaxWidth());
     }
 
+    /**
+     * Set the x position of this Table to the given value
+     *
+     * @param xPos:
+     *            The new x position this Table will be set to.
+     */
     @Override
     public void setxPos(int xPos) {
         super.setxPos(xPos);
@@ -195,6 +204,12 @@ public class UITable extends DocumentCell{
         columnWidths = new ArrayList<>(); // Contains the width for each column
     }
 
+    /**
+     * Set the y position of this Table to the given value
+     *
+     * @param yPos:
+     *            The new y position this Table will be set to.
+     */
     @Override
     public void setyPos(int yPos) {
         super.setyPos(yPos);
@@ -203,14 +218,31 @@ public class UITable extends DocumentCell{
 
     /**
      * simple getter, only for debug purposes
-     * @return
+     *
+     * @return grid:
+     *          The grid that holds the {@link DocumentCell}'s of this UITable.
+     *
      */
     public ArrayList<ArrayList<DocumentCell>> getContent() {
     	return this.grid;
     }
-    
-    private ArrayList<ArrayList<DocumentCell>> grid;
-    private ArrayList<Integer> rowHeights = new ArrayList<>(); // Contains the height for each row
-    private ArrayList<Integer> columnWidths = new ArrayList<>(); // Contains the width for each column
 
+    /**
+     * An {@link ArrayList} that contains {@link ArrayList}'s
+     * that on their turn contain {@link DocumentCell}'s to
+     * denote the cells of this table.
+     */
+    private ArrayList<ArrayList<DocumentCell>> grid;
+
+    /**
+     * An {@link ArrayList} that contains integers that
+     * represent the heights of the rows in this Table.
+     */
+    private ArrayList<Integer> rowHeights = new ArrayList<>(); // Contains the height for each row
+
+    /**
+     * An {@link ArrayList} that contains integers that
+     * represent the widths of the columns of this Table.
+     */
+    private ArrayList<Integer> columnWidths = new ArrayList<>(); // Contains the width for each column
 }

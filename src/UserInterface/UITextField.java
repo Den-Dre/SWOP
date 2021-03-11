@@ -2,6 +2,9 @@ package UserInterface;
 
 import java.awt.*;
 
+/**
+ * A class to represent text fields in the UI layer.
+ */
 public class UITextField extends DocumentCell{
     /**
      * Create a {@code UITextField} based on the given parameters.
@@ -39,8 +42,8 @@ public class UITextField extends DocumentCell{
         //g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
     }
 
-    /*
-    Update the textWidth of this UserInterface.UITextField in the textFieldFont.
+    /**
+     * Update the textWidth of this UserInterface.UITextField in the textFieldFont.
      */
     private void updateSizes() {
         if (!calculateActualWidth) textWidth =  (int) (textHeight*textField.length()*heightToWidthRatio);
@@ -66,19 +69,44 @@ public class UITextField extends DocumentCell{
         return textHeight;
     }
 
+    /**
+     * Retrieve a String representation of the text that this UITextField contains
+     *
+     * @return text:
+     *              The text that this UITextField contains.
+     */
     public String getText() {
         return this.textField;
     }
 
-    // Content of the textField
+    /**
+     * A string variable to represent the contents of this UITextField.
+     */
     private String textField = "";
 
-    // Dimension parameters
+    // ============== Dimension parameters ====================
+    /**
+     * An integer variable to represent the height
+     * of the text contained in this UITextField.
+     */
     private final int textHeight;
+    /**
+     * An integer variable to represent the width
+     * of the text contained in this UITextField.
+     */
     private int textWidth;
 
-    // Font variables
+    // ================ Font variables ==============
+    /**
+     * A variable to denote the {@link Font} used for the text of this UITextField.
+     */
     private final Font textFieldFont = new Font(Font.SANS_SERIF, Font.PLAIN, getHeight());
+    /**
+     * A variable to denote the {@link Color} used for the text of this UITextField.
+     */
     private final Color textFieldColor = Color.BLACK;
+    /**
+     * A variable to denote the {@link FontMetrics} used for the text of this UITextField.
+     */
     private FontMetrics metrics;
 }

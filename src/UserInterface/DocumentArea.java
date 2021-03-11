@@ -1,25 +1,20 @@
 package UserInterface;
 
+import domainmodel.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
-import java.lang.ModuleLayer.Controller;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import domainmodel.*;
-
-/*
--> This class (and the AddressBar) will need an extra field "Controller".
--> This var should be set in the main-Class with documentarea.setController(controller) and the same for AddressBar
--> Initially the documentarea is empty (?). When the lister alerts the documentarea.
-It should then call this.controller.getContents(this.controller.getURL()) to fetch the document.
--> If there is a link pressed, the document should compose a new url using this.URL and the retrieved href.
-It should then call this.controller.loadDocument(newUrl)
+/**
+ * TODO: remove these comments when things are implemented as described by it.
+ * -> This class (and the AddressBar) will need an extra field "Controller".
+ * -> This var should be set in the main-Class with documentarea.setController(controller) and the same for AddressBar
+ * -> Initially the documentarea is empty (?). When the lister alerts the documentarea.
+ * It should then call this.controller.getContents(this.controller.getURL()) to fetch the document.
+ * -> If there is a link pressed, the document should compose a new url using this.URL and the retrieved href.
+ * It should then call this.controller.loadDocument(newUrl)
  */
-
 public class DocumentArea extends Frame implements DocumentListener {
     public DocumentArea(int x, int y, int width, int height) throws Exception {
         super(x, y, width, height);
@@ -32,16 +27,17 @@ public class DocumentArea extends Frame implements DocumentListener {
     /**
      * Translates the contentSpan from the domainmodel into the simplified UI-representation objects.
      * Distinction is made between domain-classes Table, HyperLink and TextSpan
-     * @param contents
+     *
+     * @param contents: The contents to be translated to UI elements.
      * @return a DocumentCell derived class that can be rendered on screen
-     * @throws Exception 
+     * @throws Exception: when one of the sub elements can't be translated.
      */
-    private DocumentCell translateToUIElements(ContentSpan contents) throws Exception {    	
-    	final String packageName = "domainmodel";    	
+    private DocumentCell translateToUIElements(ContentSpan contents) throws Exception {
+    	final String packageName = "domainmodel";
     	DocumentCell newUIContents = null;
     	
     	switch (contents.getClass().getCanonicalName()) {
-    	case (packageName+".Table") -> { newUIContents = translateTable((Table) contents);} 
+    	case (packageName+".Table") -> { newUIContents = translateTable((Table) contents);}
     	case (packageName+".HyperLink") -> { newUIContents = translateHL((HyperLink) contents);}
     	case (packageName+".TextSpan") -> { newUIContents = translateTextSpan((TextSpan) contents);}
     	default -> { 
@@ -53,9 +49,10 @@ public class DocumentArea extends Frame implements DocumentListener {
     
     /**
      * Translates a Table from the domainmodel into the simplified UI-representation
-     * @param content
+     *
+     * @param content: The content to be translated to UI elements.
      * @return a UITable with the translated elements
-     * @throws Exception 
+     * @throws Exception: When one of the sub elements can't be translated.
      */
     private UITable translateTable(Table content) throws Exception {
     	// get sub elements
@@ -69,10 +66,11 @@ public class DocumentArea extends Frame implements DocumentListener {
     }
     
     /**
-     * Translates a Cell from the domainmodel into the simplified UI-representation
-     * @param content
-     * @return a DocumentCell with translated elements
-     * @throws Exception 
+     * Translates a Cell from the domainmodel into the simplified UI-representation.
+     *
+     * @param content: The content to be translated to UI elements.
+     * @return a DocumentCell with translated elements.
+     * @throws Exception: When one of the sub elements can't be translated.
      */
     private DocumentCell translateCell(TableCell content) throws Exception {
     	// get sub-elements    	
@@ -81,10 +79,11 @@ public class DocumentArea extends Frame implements DocumentListener {
     }
     
     /**
-     * Translates a Row from the domainmodel into the simplified UI-representation
-     * @param content
-     * @return an ArrayList<DocumentCell> with translated elements
-     * @throws Exception 
+     * Translates a Row from the domainmodel into the simplified UI-representation.
+     *
+     * @param content: The content to be translated to UI elements.
+     * @return an ArrayList<DocumentCell> with translated elements.
+     * @throws Exception: When one of the sub elements can't be translated.
      */
     private ArrayList<DocumentCell> translateRow(TableRow content) throws Exception {
 		// get sub elements
@@ -98,12 +97,13 @@ public class DocumentArea extends Frame implements DocumentListener {
     }
     
     /**
-     * Translates a HyperLink from the domainmodel into the simplified UI-representation
-     * @param content
-     * @return a UIHyperlink with translated elements
-     * @throws Exception 
+     * Translates a HyperLink from the domainmodel into the simplified UI-representation.
+     *
+     * @param content: The content to be translated to UI elements.
+     * @return a UIHyperlink with translated elements.
+     * @throws Exception: When one of the sub elements can't be translated.
      */
-    private DocumentCell translateHL(HyperLink content) throws Exception {    	
+    private DocumentCell translateHL(HyperLink content) throws Exception {
     	// get arguments
     	String href = content.getHref();
     	String text = content.getTextSpan().getText();
@@ -113,9 +113,10 @@ public class DocumentArea extends Frame implements DocumentListener {
     
     /**
      * Translates a TextSpan from the domainmodel into the simplified UI-representation
-     * @param content
+     *
+     * @param content: The content to be translated to UI elements.
      * @return a UITextField with translated elements
-     * @throws Exception 
+     * @throws Exception: when one of the sub elements can't be translated.
      */
     private DocumentCell translateTextSpan(TextSpan content) throws Exception {
     	System.out.println("TEXT: " + content.getText());
@@ -124,19 +125,19 @@ public class DocumentArea extends Frame implements DocumentListener {
     
     
     
-    @Override
-    /*
-    Renders the content. The content renders its sub-content recursively if existent
+    /**
+     * Renders the content. The content renders its sub-content recursively if existent.
      */
+    @Override
     public void Render(Graphics g) {
         content.Render(g);
         g.setColor(Color.green);
         //g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
     }
 
-    /*
-    If the new window dimensions are legal, the UserInterface.DocumentArea gets resized.
-    It also resizes its content.
+    /**
+     * If the new window dimensions are legal, the UserInterface.DocumentArea gets resized.
+     * It also resizes its content.
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
@@ -146,15 +147,17 @@ public class DocumentArea extends Frame implements DocumentListener {
             content.handleResize(newWindowWidth, newWindowHeight);
     }
 
-    @Override
-    /*
-    What to do when mouse is pressed?
-    -> Was it on me?
-    -> Was it the right button?
-    -> Is it the right MouseEvent?
-    => If all yes, send the click to content. The result of this could be a href String or the Empty String.
-    => Handle the result accordingly
+    /**
+     * What to do when mouse is pressed? Check the following things:
+     *  <ul>
+     *       <li> -> Was it on me? </li>
+     *       <li> -> Was it the right button? </li>
+     *       <li> -> Is it the right MouseEvent? </li>
+     *       <li> => Handle the result accordingly </li>
+     * </ul>
+     * => If all yes, send the click to content. The result of this could be a href String or the Empty String.
      */
+    @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
         if (!wasClicked(x, y)) return;
         if (button != MouseEvent.BUTTON1) return;
@@ -163,8 +166,8 @@ public class DocumentArea extends Frame implements DocumentListener {
         linkPressed(result);
     }
 
-    /*
-    Returns true if and oly if (x,y) is in this UserInterface.DocumentArea.
+    /**
+     * Returns true if and only if (x,y) is in this UserInterface.DocumentArea.
      */
     private boolean wasClicked(int x, int y) {
         return x >= this.getxPos() && x <= (this.getxPos() + this.getWidth()) && y >= this.getyPos() && y <= (this.getyPos() + this.getHeight());
@@ -183,20 +186,33 @@ public class DocumentArea extends Frame implements DocumentListener {
         }
     }
 
-    /*
-        This method looks if the given string is a valid link.
-        If so, do the right actions.
-         */
+    /**
+     * This method looks if the given string is a valid link.
+     * If so, do the right actions.
+    */
     private void linkPressed(String link){
         if (link.equals("")) return;
         // What to do when a link is pressed?
         controller.loadDocumentFromHref(link);
     }
 
+    /**
+     * Set the content of this DocumentArea
+     * to the provided {@link ContentSpan}.
+     *
+     * @param content:
+     *               The content that should be set.
+     */
     public void setContent(DocumentCell content) {
         this.content = content;
     }
 
+    /**
+     * Retrieve the contents of this DocumentArea.
+     *
+     * @return contentSpan:
+     *              A {@link ContentSpan} that denotes the contents of this DocumentArea.
+     */
     public DocumentCell getContent() {
         return this.content;
     }
@@ -211,12 +227,24 @@ public class DocumentArea extends Frame implements DocumentListener {
         this.controller = controller;
     }
 
+    /**
+     * The {@link UIController} related to this DocumentArea
+      */
     public UIController controller;
 
+    /**
+     * The string representation of the URL that links to this DocumentArea.
+     */
     private String Url = "";
 
+    /**
+     * The text size of the {@code Url} of this DocumentArea.
+     */
     private final int textSize = 14;
 
+    /**
+     * The content that is represented by this DocumentArea.
+     */
     private DocumentCell content;
 }
 
