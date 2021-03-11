@@ -114,7 +114,8 @@ public class AddressBar extends Frame implements DocumentListener {
         }
         else {
             // clicking out is the same as pressing enter
-            handleEnter();
+             handleEnter();
+
 //            this.toggleFocus(false);
 //            this.moveCursor(this.getURL().length()); // Put cursor at the end of AddressBar
 //            // go to this.getURL()
@@ -153,7 +154,7 @@ public class AddressBar extends Frame implements DocumentListener {
             case 36 -> moveCursor(-this.getURL().length());
             case 37 -> moveCursor(-1);
             case 39 -> moveCursor(1);
-            default -> handleNoSpecialKey(id, keyCode, keyChar);
+            default -> handleNoSpecialKey(id, keyCode, keyChar, modifiersEx);
         }
         this.doSelect = (keyCode == 39 || keyCode == 37 || keyCode == 35 || keyCode == 36) && modifiersEx == 64;
         updateSelectStart();
@@ -171,7 +172,10 @@ public class AddressBar extends Frame implements DocumentListener {
         this.toggleFocus(false);
         this.updateCopyUrl();
         this.moveCursor(this.getURL().length());
-        // navigate to this.getURL()
+        System.out.println("Enter pressed");
+        System.out.println(this.getURL());
+        if (uiController != null)
+            this.uiController.loadDocument(this.getURL());
     }
 
     /**
@@ -217,7 +221,11 @@ public class AddressBar extends Frame implements DocumentListener {
      * => The characters are inserted at the cursor location.
      * => If text is selected, it will be replaced with the typed character.
      */
-    private void handleNoSpecialKey(int id, int keyCode, char keyChar) {
+    private void handleNoSpecialKey(int id, int keyCode, char keyChar, int modifier) {
+        if (keyCode == 131) {
+            keyChar = '~';
+            System.out.println("tilde");
+        }
         if ((keyCode >= 44 && keyCode <= 111) || (keyCode >= 512 && keyCode <= 523)) {
             if (doSelect) handleRemoveCharacters(0);
             StringBuilder newUrl = new StringBuilder(this.getURL());
@@ -346,6 +354,7 @@ public class AddressBar extends Frame implements DocumentListener {
      */
     @Override
     public void contentChanged() {
-        this.URL = this.uiController.getUrl().toString();
+        String newUrl = uiController.getUrlString();
+        this.changeURLto(newUrl);
     }
 }

@@ -22,14 +22,7 @@ class AddressBarTest {
     public void setUp() throws Exception {
         bar = new AddressBar(offset,offset,500,50, offset);
     }
-    
-    @Test
-    void illegalDimensions() {
-    	assertThrows(Exception.class, () -> { 
-    		new AddressBar(offset, offset, -500, -50, offset); // making an addressbar with illegal dimensions!
-    	});
-    }
-    
+
     @Test
     @DisplayName("Handles mouse events")
     void handleMouse() {

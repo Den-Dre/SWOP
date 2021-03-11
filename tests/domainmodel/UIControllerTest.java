@@ -9,11 +9,11 @@ public class UIControllerTest {
     @DisplayName("Correct URL document loading")
     void loadURL() {
         String url = "https://people.cs.kuleuven.be/~bart.jacobs/browsrtest.html";
-        UIController controller = new UIController(url);
+        UIController controller = new UIController();
         controller.loadDocument(url);
 
         // Verify contents of returned URL
-        ContentSpan contentSpan = controller.loadDocument(url);
+        ContentSpan contentSpan = controller.getContentSpan();
         browsrhtml.tests.ContentSpanBuilderTest.verifyContents(contentSpan);
     }
 
@@ -21,11 +21,11 @@ public class UIControllerTest {
     @DisplayName("Malformed URL")
     void malformedURL() {
         String malformedURL = "ww.www.test.com";
-        UIController controller = new UIController(malformedURL);
+        UIController controller = new UIController();
         controller.loadDocument(malformedURL);
 
         // Verify contents of returned URL
-        ContentSpan contentSpan = controller.loadDocument(malformedURL);
+        ContentSpan contentSpan = controller.getContentSpan();
         TextSpan textSpan = (TextSpan) contentSpan;
         assertEquals("Error: malformed URL.", textSpan.getText());
     }

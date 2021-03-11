@@ -3,6 +3,7 @@ import UserInterface.DocumentArea;
 import UserInterface.Frame;
 import canvaswindow.CanvasWindow;
 import domainmodel.Document;
+import domainmodel.UIController;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -23,6 +24,12 @@ public class Browsr extends CanvasWindow {
         this.Frames.add(this.AddressBar);
         this.Frames.add(this.DocumentArea);
 
+        UIController controller = new UIController();
+        AddressBar.setUiController(controller);
+        DocumentArea.setController(controller);
+
+        controller.addUrlListener(AddressBar);
+        controller.addDocumentListener(DocumentArea);
     }
 
     String text = "Example Text";
@@ -81,7 +88,7 @@ public class Browsr extends CanvasWindow {
         });
     }
 
-    private int addressBarHeight = 35;
+    private int addressBarHeight = 15;
     private int addressBarOffset = 5;
 //    private UserInterface.AddressBar AddressBar = new AddressBar(addressBarOffset, addressBarOffset, 100, addressBarHeight, addressBarOffset);
     private UserInterface.AddressBar AddressBar;

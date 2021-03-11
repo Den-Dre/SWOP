@@ -4,6 +4,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import browsrhtml.ContentSpanBuilder;
+import domainmodel.ContentSpan;
+
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
@@ -91,5 +94,43 @@ class DocumentAreaTest {
         assertEquals(href, doc.getContent().getHandleMouse(MouseEvent.MOUSE_CLICKED, 1,textSize+2, 1, MouseEvent.BUTTON1, 0));
 
         // Check x and y positions: can't be accessed without adding additional getters ..
+    }
+    
+    @Test
+    @DisplayName("Can translate a contentspan to a documentcell")
+    void handleTranslate() throws Exception {
+    	// ======== Setup ===========
+        
+    	// a valid Browsr document
+    	ContentSpan content1 = ContentSpanBuilder.buildContentSpan("""
+    			<a href="a.html">a</a>
+    			"""); // only a HyperLink
+				
+		ContentSpan content2 = ContentSpanBuilder.buildContentSpan("""
+				<table>
+				  <tr><td>HTML elements partially supported by Browsr:
+				</table>
+				"""); // only a Table
+		
+		ContentSpan content3 = ContentSpanBuilder.buildContentSpan("""
+				  HTML elements partially supported by Browsr:
+				"""); // only a piece of Text
+        
+        // not a valid Browsr document (yoinked from https://www.w3schools.com/html/tryit.asp?filename=tryhtml_basic_document)
+        ContentSpan content4 = ContentSpanBuilder.buildContentSpan("""
+				<!DOCTYPE html>
+				<html>
+				<body>
+				
+				<h1>My First Heading</h1>
+				
+				<p>My first paragraph.</p>
+				
+				</body>
+				</html>
+				""");
+        
+        
+        
     }
 }
