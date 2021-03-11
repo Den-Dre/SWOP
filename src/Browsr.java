@@ -37,19 +37,12 @@ public class Browsr extends CanvasWindow {
         controller.addDocumentListener(DocumentArea);
     }
 
-    String text = "Example Text";
-    Font font = new Font(Font.DIALOG_INPUT, Font.BOLD, 40);
-    FontMetrics metrics;
-    int textWidth;
-
     /**
      * A method to describe the behaviour
      * when the method show is called.
      */
     @Override
     protected void handleShown() {
-        metrics = getFontMetrics(font);
-        textWidth = metrics.stringWidth(text);
         repaint();
     }
 
