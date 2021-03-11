@@ -4,6 +4,9 @@ import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.text.AttributedString;
 
+/**
+ * A class to represent a hyperlink in the UI layer.
+ */
 public class UIHyperlink extends DocumentCell{
     /**
      * Construct a new DocumentCell
@@ -99,20 +102,47 @@ public class UIHyperlink extends DocumentCell{
         return textWidth;
     }
 
+    /**
+     * Retrieve the text displayed in this UIHyperlink
+     *
+     * @return text:
+     *              The text displayed in this UIHyperlink.
+     */
     public String getText() {
         return text;
     }
 
-    // Contents of this UIHyperlink
+    // =========== Contents of this UIHyperlink =============
+    /**
+     * A string variable to denote the href value of this UIHyperlink.
+     */
     private String href = "";
+    /**
+     * A string variable to denote the text value of this UIHyperlink.
+     */
     private final String text;
 
-    // Dimension variables
+    // ============== Dimension variables ====================
+    /**
+     * An integer variable to denote the height of the text of this UIHyperlink.
+     */
     private int textHeight;
+    /**
+     * An integer variable to denote the width of the text of this UIHyperlink.
+     */
     private int textWidth;
 
-    // Font variables
+    // ============== Font variables ===========================
+    /**
+     * A variable to denote the {@link Font} of the text of this UIHyperlink
+     */
     private Font hyperlinkFont = new Font(Font.SANS_SERIF, Font.PLAIN, getHeight());
+    /**
+     * A variable to denote the {@link Color} of the text of this UIHyperlink
+     */
     private Color hyperlinkColor = Color.BLUE;
+    /**
+     * A variable to denote the {@link FontMetrics} of the text of this UIHyperlink.
+     */
     private FontMetrics metrics;
 }

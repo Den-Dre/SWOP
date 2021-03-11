@@ -1,18 +1,30 @@
 package domainmodel;
 
-import javax.print.Doc;
-import javax.swing.text.AbstractDocument;
-
-import java.io.*;
-import java.net.MalformedURLException;
+import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Paths;
-import java.util.UUID;
 
+/**
+ * A class to account for the "Controller" - GRASP principle.
+ *
+ * All calls that are made from the UI Layer
+ * to the domain layer, pass through this
+ * Controller. The Controller then redirects
+ * these calls to the appropriate domain
+ * layer classes. This lowers the coupling between
+ * the domain and UI layer.
+ */
 public class UIController {
 
+    /**
+     * The {@link Document} that is linked
+     * to this Controller.
+     */
     private Document document;
 
+    /**
+     * Initialise this Controller
+     * with the given {@link Document}.
+     */
     public UIController() {
         this.document = new Document();
     }
@@ -88,6 +100,14 @@ public class UIController {
         }
     }
 
+    /**
+     * Retrieve the {@link ContentSpan}
+     * representation of the {@link Document}
+     * that is linked to this Controller.
+     *
+     * @return contentSpan:
+     *                  The ContentSpan representation of the Document linked to this Controller.
+     */
     public ContentSpan getContentSpan() {
         return this.document.getContentSpan();
     }
@@ -119,6 +139,15 @@ public class UIController {
 //        return this.document.getUrl();
 //    }
 
+
+    /**
+     * Retrieve the URL (in String representation)
+     * of the {@link Document} that is
+     * linked to this Controller.
+     *
+     * @return urlString:
+     *              The String representation of the URL of the Document linked to this Controller.
+     */
     public String getUrlString() { return this.document.getUrlString();}
 
     /**

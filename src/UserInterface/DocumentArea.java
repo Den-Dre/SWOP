@@ -196,10 +196,23 @@ public class DocumentArea extends Frame implements DocumentListener {
         controller.loadDocumentFromHref(link);
     }
 
+    /**
+     * Set the content of this DocumentArea
+     * to the provided {@link ContentSpan}.
+     *
+     * @param content:
+     *               The content that should be set.
+     */
     public void setContent(DocumentCell content) {
         this.content = content;
     }
 
+    /**
+     * Retrieve the contents of this DocumentArea.
+     *
+     * @return contentSpan:
+     *              A {@link ContentSpan} that denotes the contents of this DocumentArea.
+     */
     public DocumentCell getContent() {
         return this.content;
     }

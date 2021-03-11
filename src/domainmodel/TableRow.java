@@ -1,6 +1,5 @@
 package domainmodel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
