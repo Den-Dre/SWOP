@@ -21,6 +21,7 @@ public class AddressBar extends Frame implements DocumentListener {
      * @param width: the width of this AddressBar
      * @param height: the height of this AddressBar
      * @param offset: distance between this AddressBar and left, right and top window edge
+     * @throws Exception: When one of the dimensions of the {@link Frame} of this AddressBar is negative
      */
     public AddressBar(int x, int y, int width, int height, int offset) throws Exception {
         super(x, y, width, height);
@@ -464,6 +465,9 @@ public class AddressBar extends Frame implements DocumentListener {
 
     /**
      * Retrurn the old URL of the adressBar
+     *
+     * @return url:
+     *          The old URL linked to this AddressBar.
      */
     public String getOldUrl() {
         return this.URLCopy;
