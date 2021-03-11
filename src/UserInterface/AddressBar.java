@@ -6,6 +6,7 @@ import domainmodel.UIController;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.Arrays;
 
 public class AddressBar extends Frame implements DocumentListener {
     public AddressBar(int x, int y, int width, int height, int offset) throws Exception {
@@ -220,13 +221,13 @@ public class AddressBar extends Frame implements DocumentListener {
      * (You need to look at a keyCode table and look which characters can be typed, e.g. some special keys that need shift can't be pressed yet)
      * => The characters are inserted at the cursor location.
      * => If text is selected, it will be replaced with the typed character.
+     * Zie: https://stackoverflow.com/questions/15313469/java-keyboard-keycodes-list
      */
     private void handleNoSpecialKey(int id, int keyCode, char keyChar, int modifier) {
-        if (keyCode == 131) {
-            keyChar = '~';
-            System.out.println("tilde");
-        }
-        if ((keyCode >= 44 && keyCode <= 111) || (keyCode >= 512 && keyCode <= 523)) {
+        if ((keyCode >= 44 && keyCode <= 111) || (keyCode >= 512 && keyCode <= 523) ||
+                (keyCode == KeyEvent.VK_SPACE) || (keyCode >= 128 && keyCode <= 143) ||
+                (keyCode >= 150 && keyCode <= 153) || (keyCode >= 160 && keyCode <= 162) ||
+                (keyCode == 192) || (keyCode == 222)) {
             if (doSelect) handleRemoveCharacters(0);
             StringBuilder newUrl = new StringBuilder(this.getURL());
             newUrl.insert(this.cursor, keyChar);
