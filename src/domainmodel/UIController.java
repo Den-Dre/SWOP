@@ -125,6 +125,10 @@ public class UIController {
 
     /**
      * Returns the current document of this UIController
+     *
+     * @return document:
+     *              The {@link Document} linked to this UIController.
+     *
      */
     public Document getDocument() {
         return document;
@@ -161,7 +165,7 @@ public class UIController {
     }
 
     /**
-     *Add a documentListener to the list of urlListeners of the controllers document
+     * Add a documentListener to the list of urlListeners of the controllers document
      *
      * @param d
      *        The new documentListener for the document
