@@ -7,18 +7,21 @@ import java.io.*;
 import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Document {
     private URL url;
-    // TODO Maybe one is enough?
-    private List<UrlListener> urlListeners = new ArrayList<>();
+    private String urlString = "";
+    private List<DocumentListener> urlListeners = new ArrayList<>();
     private List<DocumentListener> documentListeners = new ArrayList<>();
+    private ContentSpan contentSpan = new TextSpan("Welkom in Browsr!");
 
     /**
      * Initialize a new Document given a url
      *
-     * @param url
+     * //@param url
      *        The URL for this document
      */
     public Document(URL url) {
@@ -26,24 +29,64 @@ public class Document {
     }
 
     /**
-     * Set the URl of the document to the given url
+     * Initialize a new Document
+     */
+    public Document() { }
+
+    /**
+     * Initialize a new Document given a url, and two DocumentListeners representing the DocumentArea and AddressBar
      *
      * @param url
      *        The url for this document
+     * @param doc
+     *        The DocumentListener for this document
+     * @param bar
+     *        The addressbar listener for this document
      */
-    public void setUrl(URL url) {
+    public Document(URL url, DocumentListener doc, DocumentListener bar) {
         this.url = url;
-        fireUrlChanged(url);
+        this.urlListeners.add(bar);
+        this.documentListeners.add(doc);
     }
 
-    /**
-     * Returns the given URL of the document
-     *
-     * @return a URL object
-     */
-    public URL getUrl() {
-        return this.url;
+//    /**
+//     * Set the URl of the document to the given url
+//     *
+//     * @param url
+//     *        The url for this document
+//     */
+//    public void setUrl(URL url) {
+//        this.url = url;
+//        //fireUrlChanged();
+//        fireContentsChanged();
+//    }
+
+    public void setUrlString(String url) {
+        this.urlString = url;
+        fireUrlChanged();
     }
+
+    public String getUrlString() {
+        return this.urlString;
+    }
+
+    public void changeContentSpan(ContentSpan span) {
+        this.contentSpan = span;
+        this.fireContentsChanged();
+    }
+
+    public ContentSpan getContentSpan() {
+        return this.contentSpan;
+    }
+
+//    /**
+//     * Returns the given URL of the document
+//     *
+//     * @return a URL object
+//     */
+//    public URL getUrl() {
+//        return this.url;
+//    }
 
     /**
      * Adds a given URLListener to the list of urlListeners
@@ -51,8 +94,9 @@ public class Document {
      * @param u
      *        The new UrlListener
      */
-    public void addURLListener(UrlListener u) {
+    public void addURLListener(DocumentListener u) {
         this.urlListeners.add(u);
+        fireUrlChanged();
     }
 
     /**
@@ -61,7 +105,7 @@ public class Document {
      * @param u
      *        The UrlListener to be removed
      */
-    public void removeURLListener(UrlListener u) {
+    public void removeURLListener(DocumentListener u) {
         this.urlListeners.remove(u);
     }
 
@@ -73,6 +117,7 @@ public class Document {
      */
     public void addDocumentListener(DocumentListener d) {
         this.documentListeners.add(d);
+        fireContentsChanged();
     }
 
     /**
@@ -96,9 +141,9 @@ public class Document {
     /**
      * Let the urlListeners know that the URL has been changed
      */
-    private void fireUrlChanged(URL aUrl){
-        for(UrlListener u : urlListeners)
-            u.URLChanged(aUrl);
+    private void fireUrlChanged(){
+        for(DocumentListener u : urlListeners)
+            u.contentChanged();
     }
 
     /**
@@ -108,47 +153,32 @@ public class Document {
      * @param document: the HTML code of the document that is to be composed
      * @return a ContentSpan of the given {@code document}.
      */
-    private ContentSpan composeDocument(String document) {
+    public ContentSpan composeDocument(String document) {
         // TODO: verify whether this code of the listeners should be here
+        // I think not, the contentchanged is called elsewhere
         //fireUrlChanged(); for testing
-        fireContentsChanged();
+        //fireContentsChanged();
 
         return ContentSpanBuilder.buildContentSpan(document);
     }
 
     /**
-     * Serialize the ContentSpan associated with this Document
+     * Compose the document from a given url
+     * and update the listeners accordingly.
      *
-     * @return The content span in the form of a byte[] array
-     * @throws IOException: if the stream can't be written
+     * @param url: the url of the document that is to be composed.
+     * @return a ContentSpan of the given {@code document}.
      */
-   public byte[] getSerializedContentSpan(String doc) throws IOException {
-        ContentSpan contentSpan = this.composeDocument(doc);
+    public ContentSpan composeDocument(URL url) throws IOException {
+        // TODO: verify whether this code of the listeners should be here
+        // I think not, the contentchanged is called elsewhere
+        //fireUrlChanged(); for testing
+        //fireContentsChanged();
 
-       // Create a bitstream to serialize the object
-       // see: https://www.javahelps.com/2015/07/serialization-in-java.html
-       byte[] stream = null;
-
-       try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(baos);) {
-            oos.writeObject(contentSpan);
-            stream = baos.toByteArray();
-       } catch (IOException e) {
-            e.printStackTrace();
-       }
-       return stream;
-
-//        Alternative: make use of fileOutPutstream's and write serialized document to a file
-
-//        Create the output stream (see: https://www.javatpoint.com/serialization-in-java)
-//        FileOutputStream fOut = new FileOutputStream("documentStream.txt");
-//        ObjectOutputStream out = new ObjectOutputStream(fOut);
-//
-//        out.writeObject(contentSpan);
-//        out.flush();
-//
-//        // Close the stream
-//        out.close();
+        return ContentSpanBuilder.buildContentSpan(url);
     }
 
+    public static ContentSpan getErrorDocument() {
+        return new TextSpan("Error: malformed URL.");
+    }
 }

@@ -1,7 +1,7 @@
 package domainmodel;
 
 /**
- * A class to represnt Hyperlinks in the domain layer.
+ * A class to represent Hyperlinks in the domain layer.
  */
 public class HyperLink extends ContentSpan {
     private String href;

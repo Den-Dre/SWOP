@@ -10,4 +10,6 @@ public interface DocumentListener {
      * Interface should do when the contents of the {@link Document} change.
      */
     void contentChanged();
+
+    //void urlChanged();
 }

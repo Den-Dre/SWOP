@@ -2,6 +2,8 @@ import UserInterface.AddressBar;
 import UserInterface.DocumentArea;
 import UserInterface.Frame;
 import canvaswindow.CanvasWindow;
+import domainmodel.Document;
+import domainmodel.UIController;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -12,11 +14,22 @@ public class Browsr extends CanvasWindow {
      *
      * @param title Window title
      */
-    protected Browsr(String title) {
+    protected Browsr(String title) throws Exception {
         super(title);
+        
+        AddressBar = new AddressBar(addressBarOffset,addressBarOffset, 100, addressBarHeight, addressBarOffset);
+        DocumentArea = new DocumentArea(addressBarOffset,addressBarHeight+2* addressBarOffset, 100,100);
+//		DocumentArea =  new Frame(0,addressBarHeight, 100,100);
+
         this.Frames.add(this.AddressBar);
         this.Frames.add(this.DocumentArea);
 
+        UIController controller = new UIController();
+        AddressBar.setUiController(controller);
+        DocumentArea.setController(controller);
+
+        controller.addUrlListener(AddressBar);
+        controller.addDocumentListener(DocumentArea);
     }
 
     String text = "Example Text";
@@ -67,13 +80,19 @@ public class Browsr extends CanvasWindow {
 
     public static void main(String[] args) {
         java.awt.EventQueue.invokeLater(() -> {
-            new Browsr("Browsr").show();
+            try {
+                new Browsr("Browsr").show();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
     }
 
-    private int addressBarHeight = 35;
-    private int offset = 5;
-    private UserInterface.AddressBar AddressBar = new AddressBar(offset, offset, 100, addressBarHeight, offset);
-    private DocumentArea DocumentArea = new DocumentArea(offset,addressBarHeight+2* offset, 100,100);
+    private int addressBarHeight = 15;
+    private int addressBarOffset = 5;
+//    private UserInterface.AddressBar AddressBar = new AddressBar(addressBarOffset, addressBarOffset, 100, addressBarHeight, addressBarOffset);
+    private UserInterface.AddressBar AddressBar;
+//    private DocumentArea DocumentArea = new DocumentArea(addressBarOffset,addressBarHeight+2* addressBarOffset, 100,100);
+    private DocumentArea DocumentArea;
     private ArrayList<UserInterface.Frame> Frames = new ArrayList<>();
 }

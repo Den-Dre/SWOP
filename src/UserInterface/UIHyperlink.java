@@ -13,8 +13,9 @@ public class UIHyperlink extends DocumentCell{
      * @param width: the width of this {@code UIHyperlink}
      * @param link_size: The height of this {@code UIHyperlink}
      * @param href: The value of the href attribute of this {@code UIHyperlink}
+     * @throws Exception 
      */
-    public UIHyperlink(int x, int y, int width, int link_size, String href, String text) {
+    public UIHyperlink(int x, int y, int width, int link_size, String href, String text) throws Exception {
         super(x, y, width, link_size);
         this.href = href;
         this.text = text;
@@ -46,7 +47,7 @@ public class UIHyperlink extends DocumentCell{
         g.drawString(link.getIterator(), getxPos(), getyPos()+textHeight);
 
         // Draw a rectangle around the text for debugging purposes
-        g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
+        //g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
     }
 
     /**
@@ -96,6 +97,10 @@ public class UIHyperlink extends DocumentCell{
     @Override
     public int getMaxWidth() {
         return textWidth;
+    }
+
+    public String getText() {
+        return text;
     }
 
     // Contents of this UIHyperlink
