@@ -35,4 +35,11 @@ class FrameTest {
         	new Frame(-15,-5,-6,-12);
         });
     }
+
+    @Test
+    void wrongDimensionsFrame() throws IllegalDimensionException{
+        IllegalDimensionException exception = assertThrows(IllegalDimensionException.class, () -> {
+            new Frame(-1,10,10,10);
+        });
+    }
 }

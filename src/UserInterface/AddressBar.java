@@ -9,7 +9,7 @@ import java.awt.event.MouseEvent;
 import java.util.Arrays;
 
 public class AddressBar extends Frame implements DocumentListener {
-    public AddressBar(int x, int y, int width, int height, int offset) throws Exception {
+    public AddressBar(int x, int y, int width, int height, int offset) throws IllegalDimensionException {
         super(x, y, width, height);
         this.offset = offset;
     }

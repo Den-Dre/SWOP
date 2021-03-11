@@ -13,9 +13,9 @@ public class UIHyperlink extends DocumentCell{
      * @param width: the width of this {@code UIHyperlink}
      * @param link_size: The height of this {@code UIHyperlink}
      * @param href: The value of the href attribute of this {@code UIHyperlink}
-     * @throws Exception 
+     * @throws IllegalDimensionException
      */
-    public UIHyperlink(int x, int y, int width, int link_size, String href, String text) throws Exception {
+    public UIHyperlink(int x, int y, int width, int link_size, String href, String text) throws IllegalDimensionException {
         super(x, y, width, link_size);
         this.href = href;
         this.text = text;

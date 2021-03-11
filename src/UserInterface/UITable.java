@@ -13,9 +13,9 @@ public class UITable extends DocumentCell{
      * @param width: The width of this {@code UITable}.
      * @param height: The height of this {@code UITable}.
      * @param rows: The number of rows of this {@code UITable}.
-     * @throws Exception 
+     * @throws IllegalDimensionException
      */
-    public UITable(int x, int y, int width, int height, ArrayList<ArrayList<DocumentCell>> rows) throws Exception {
+    public UITable(int x, int y, int width, int height, ArrayList<ArrayList<DocumentCell>> rows) throws IllegalDimensionException {
         super(x, y, width, height);
 
         // => 1. Initialise the grid

@@ -131,4 +131,11 @@ class UITableTest {
         assertEquals(newypos, table1.getyPos());
         setRowHeights();
     }
+
+    @Test
+    void invalidDimensions() throws IllegalDimensionException {
+        IllegalDimensionException exception = assertThrows(IllegalDimensionException.class, () -> {
+            new UITable(-1,10,10,10,null);
+        });
+    }
 }

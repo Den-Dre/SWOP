@@ -17,7 +17,7 @@ class UITextFieldTest {
     private int size2 = 100;
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() throws IllegalDimensionException {
         textField1 = new UITextField(0,0,0,size1, text1);
         textField2 = new UITextField(10,10,0,size2, text2);
     }
@@ -52,5 +52,12 @@ class UITextFieldTest {
     void getText() {
         assertEquals(text1, textField1.getText());
         assertEquals(text2, textField2.getText());
+    }
+
+    @Test
+    void invalidDimension() throws IllegalDimensionException{
+        IllegalDimensionException exception = assertThrows(IllegalDimensionException.class, () -> {
+            new UITextField(-1,10,10,10,"Test");
+        });
     }
 }

@@ -59,6 +59,7 @@ public class UIController {
 
     /**
      * Combine the current url with the given href
+     *
      * @param hrefString: the String representation of the href.
      */
     public void loadDocumentFromHref(String hrefString) {
@@ -66,7 +67,7 @@ public class UIController {
             URL newUrl = new URL(new URL(document.getUrlString()), hrefString);
             document.changeContentSpan(this.document.composeDocument(newUrl));
             document.setUrlString(newUrl.toString());
-        } catch (IOException | RuntimeException e) {
+        } catch (Exception e) {
             document.changeContentSpan(Document.getErrorDocument());
         }
     }
@@ -82,12 +83,17 @@ public class UIController {
             URL newUrl = new URL(urlString);
             document.changeContentSpan(this.document.composeDocument(newUrl));
             document.setUrlString(urlString);
-        } catch (IOException | RuntimeException e) {
+        } catch (Exception e) {
             document.changeContentSpan(Document.getErrorDocument());
             document.setUrlString(urlString);
         }
     }
 
+    /**
+     * Returns the contentSpan of the controller's Document
+     *
+     * @return The contentSpan of the controller's Document
+     */
     public ContentSpan getContentSpan() {
         return this.document.getContentSpan();
     }
@@ -119,6 +125,11 @@ public class UIController {
 //        return this.document.getUrl();
 //    }
 
+    /**
+     * Returns the url in string format of the Document
+     *
+     * @return The String representation of the Document's url
+     */
     public String getUrlString() { return this.document.getUrlString();}
 
     /**
