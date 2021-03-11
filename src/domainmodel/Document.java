@@ -143,7 +143,7 @@ public class Document {
      */
     private void fireUrlChanged(){
         for(DocumentListener u : urlListeners)
-            u.urlChanged();
+            u.contentChanged();
     }
 
     /**

@@ -11,5 +11,5 @@ public interface DocumentListener {
      */
     void contentChanged();
 
-    void urlChanged();
+    //void urlChanged();
 }

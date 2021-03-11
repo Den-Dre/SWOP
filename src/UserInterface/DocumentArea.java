@@ -183,11 +183,6 @@ public class DocumentArea extends Frame implements DocumentListener {
         }
     }
 
-    @Override
-    public void urlChanged() {
-
-    }
-
     /*
         This method looks if the given string is a valid link.
         If so, do the right actions.

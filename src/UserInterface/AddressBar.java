@@ -353,13 +353,8 @@ public class AddressBar extends Frame implements DocumentListener {
      *  Signals that the url has been changed to a given url
      */
     @Override
-    public void urlChanged() {
+    public void contentChanged() {
         String newUrl = uiController.getUrlString();
         this.changeURLto(newUrl);
-    }
-
-    @Override
-    public void contentChanged() {
-
     }
 }
