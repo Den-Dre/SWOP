@@ -142,7 +142,8 @@ public class DocumentArea extends Frame implements DocumentListener {
     public void handleResize(int newWindowWidth, int newWindowHeight) {
         if ((newWindowWidth - getxPos()) >= 0) setWidth(newWindowWidth - getxPos());
         if ((newWindowHeight - getyPos()) >= 0) setHeight(newWindowHeight - getyPos());
-        content.handleResize(newWindowWidth, newWindowHeight);
+        if (content != null)
+            content.handleResize(newWindowWidth, newWindowHeight);
     }
 
     @Override
@@ -182,10 +183,15 @@ public class DocumentArea extends Frame implements DocumentListener {
         }
     }
 
+    @Override
+    public void urlChanged() {
+
+    }
+
     /*
-    This method looks if the given string is a valid link.
-    If so, do the right actions.
-     */
+        This method looks if the given string is a valid link.
+        If so, do the right actions.
+         */
     private void linkPressed(String link){
         if (link.equals("")) return;
         // What to do when a link is pressed?

@@ -28,7 +28,7 @@ public class Browsr extends CanvasWindow {
         AddressBar.setUiController(controller);
         DocumentArea.setController(controller);
 
-        controller.addDocumentListener(AddressBar);
+        controller.addUrlListener(AddressBar);
         controller.addDocumentListener(DocumentArea);
     }
 

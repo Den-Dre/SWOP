@@ -10,7 +10,7 @@ public class UIControllerTest {
     void loadURL() {
         String url = "https://people.cs.kuleuven.be/~bart.jacobs/browsrtest.html";
         UIController controller = new UIController();
-        controller.loadDocument2(url);
+        controller.loadDocument(url);
 
         // Verify contents of returned URL
         ContentSpan contentSpan = controller.getContentSpan();
@@ -22,7 +22,7 @@ public class UIControllerTest {
     void malformedURL() {
         String malformedURL = "ww.www.test.com";
         UIController controller = new UIController();
-        controller.loadDocument2(malformedURL);
+        controller.loadDocument(malformedURL);
 
         // Verify contents of returned URL
         ContentSpan contentSpan = controller.getContentSpan();

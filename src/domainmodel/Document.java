@@ -13,6 +13,7 @@ import java.util.List;
 
 public class Document {
     private URL url;
+    private String urlString = "";
     private List<DocumentListener> urlListeners = new ArrayList<>();
     private List<DocumentListener> documentListeners = new ArrayList<>();
     private ContentSpan contentSpan = new TextSpan("Welkom in Browsr!");
@@ -48,35 +49,44 @@ public class Document {
         this.documentListeners.add(doc);
     }
 
-    /**
-     * Set the URl of the document to the given url
-     *
-     * @param url
-     *        The url for this document
-     */
-    public void setUrl(URL url) {
-        this.url = url;
+//    /**
+//     * Set the URl of the document to the given url
+//     *
+//     * @param url
+//     *        The url for this document
+//     */
+//    public void setUrl(URL url) {
+//        this.url = url;
+//        //fireUrlChanged();
+//        fireContentsChanged();
+//    }
+
+    public void setUrlString(String url) {
+        this.urlString = url;
         fireUrlChanged();
+    }
+
+    public String getUrlString() {
+        return this.urlString;
     }
 
     public void changeContentSpan(ContentSpan span) {
         this.contentSpan = span;
         this.fireContentsChanged();
-
     }
 
     public ContentSpan getContentSpan() {
         return this.contentSpan;
     }
 
-    /**
-     * Returns the given URL of the document
-     *
-     * @return a URL object
-     */
-    public URL getUrl() {
-        return this.url;
-    }
+//    /**
+//     * Returns the given URL of the document
+//     *
+//     * @return a URL object
+//     */
+//    public URL getUrl() {
+//        return this.url;
+//    }
 
     /**
      * Adds a given URLListener to the list of urlListeners
@@ -133,7 +143,7 @@ public class Document {
      */
     private void fireUrlChanged(){
         for(DocumentListener u : urlListeners)
-            u.contentChanged();
+            u.urlChanged();
     }
 
     /**
@@ -145,8 +155,9 @@ public class Document {
      */
     public ContentSpan composeDocument(String document) {
         // TODO: verify whether this code of the listeners should be here
+        // I think not, the contentchanged is called elsewhere
         //fireUrlChanged(); for testing
-        fireContentsChanged();
+        //fireContentsChanged();
 
         return ContentSpanBuilder.buildContentSpan(document);
     }
@@ -160,47 +171,11 @@ public class Document {
      */
     public ContentSpan composeDocument(URL url) throws IOException {
         // TODO: verify whether this code of the listeners should be here
+        // I think not, the contentchanged is called elsewhere
         //fireUrlChanged(); for testing
-        fireContentsChanged();
+        //fireContentsChanged();
 
         return ContentSpanBuilder.buildContentSpan(url);
-    }
-
-
-    /**
-     * Serialize the ContentSpan associated with this Document
-     *
-     * @return The content span in the form of a byte[] array
-     * @throws IOException: if the stream can't be written
-     */
-    @Deprecated
-   public byte[] getSerializedContentSpan(String doc) throws IOException {
-        ContentSpan contentSpan = this.composeDocument(doc);
-
-       // Create a bitstream to serialize the object
-       // see: https://www.javahelps.com/2015/07/serialization-in-java.html
-       byte[] stream = null;
-
-       try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(baos);) {
-            oos.writeObject(contentSpan);
-            stream = baos.toByteArray();
-       } catch (IOException e) {
-            e.printStackTrace();
-       }
-       return stream;
-
-//        Alternative: make use of fileOutPutstream's and write serialized document to a file
-
-//        Create the output stream (see: https://www.javatpoint.com/serialization-in-java)
-//        FileOutputStream fOut = new FileOutputStream("documentStream.txt");
-//        ObjectOutputStream out = new ObjectOutputStream(fOut);
-//
-//        out.writeObject(contentSpan);
-//        out.flush();
-//
-//        // Close the stream
-//        out.close();
     }
 
     public static ContentSpan getErrorDocument() {

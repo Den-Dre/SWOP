@@ -1,14 +1,11 @@
 package UserInterface;
 
 import domainmodel.DocumentListener;
-import domainmodel.TextSpan;
 import domainmodel.UIController;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.net.MalformedURLException;
-import java.net.URL;
 
 public class AddressBar extends Frame implements DocumentListener {
     public AddressBar(int x, int y, int width, int height, int offset) throws Exception {
@@ -177,7 +174,8 @@ public class AddressBar extends Frame implements DocumentListener {
         this.moveCursor(this.getURL().length());
         System.out.println("Enter pressed");
         System.out.println(this.getURL());
-        this.uiController.loadDocument2(this.getURL());
+        if (uiController != null)
+            this.uiController.loadDocument(this.getURL());
     }
 
     /**
@@ -355,8 +353,13 @@ public class AddressBar extends Frame implements DocumentListener {
      *  Signals that the url has been changed to a given url
      */
     @Override
+    public void urlChanged() {
+        String newUrl = uiController.getUrlString();
+        this.changeURLto(newUrl);
+    }
+
+    @Override
     public void contentChanged() {
-        if (this.uiController.getUrl() != null)
-            this.changeURLto(this.uiController.getUrl().toString());
+
     }
 }

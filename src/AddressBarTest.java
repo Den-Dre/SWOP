@@ -13,10 +13,10 @@ public class AddressBarTest {
             URL url = new URL("http://www.ditiseentest.com");
             AddressBar bar = new AddressBar(10, 100, 50, 60, 5);
             UIController contr = new UIController();
-            contr.changeURL(url);
+            contr.changeURL(url.toString());
             contr.addUrlListener(bar);
             URL newUrl = new URL("http://www.ditiseenneiuweurl.be");
-            contr.changeURL(url);
+            contr.changeURL(url.toString());
 
             assertEquals(newUrl.toString(),bar.getURL());
         }
