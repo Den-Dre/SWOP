@@ -18,7 +18,7 @@ class UITableTest {
     private UIHyperlink link;
     int textSize = 15;
     String href = "/wiki/Java";
-    String hrefText = "Java";
+    String hrefText = "Java-lange-string";
     String text = "oefentext";
     String text2 = "aa";
 
@@ -113,6 +113,15 @@ class UITableTest {
         assertEquals(table1.getxPos(), textField1.getxPos());
         assertEquals(table1.getxPos(), link.getxPos());
         assertEquals(table1.getxPos()+width1, textField2.getxPos());
+    }
+
+    @Test
+    void handleResize() {
+        // Do a resize-operation
+        table1.handleResize(500,500);
+        // Check if the columns-and rows are still set correctly
+        setColumnWidths();
+        setRowHeights();
     }
 
     @Test

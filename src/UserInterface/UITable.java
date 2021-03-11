@@ -196,13 +196,13 @@ public class UITable extends DocumentCell{
         setColumnWidths();
     }
 
-    /**
-     * Reset the {@code rowHeights} and {@code columnWidths} to empty lists.
-     */
-    private void resetWidthsHeights() {
-        rowHeights = new ArrayList<>(); // Contains the height for each row
-        columnWidths = new ArrayList<>(); // Contains the width for each column
-    }
+//    /**
+//     * Reset the {@code rowHeights} and {@code columnWidths} to empty lists.
+//     */
+//    private void resetWidthsHeights() {
+//        rowHeights = new ArrayList<>(); // Contains the height for each row
+//        columnWidths = new ArrayList<>(); // Contains the width for each column
+//    }
 
     /**
      * Set the y position of this Table to the given value
