@@ -13,10 +13,17 @@ import java.util.List;
 
 public class Document {
     private URL url;
-    private String urlString = "";
+
     private List<DocumentListener> urlListeners = new ArrayList<>();
     private List<DocumentListener> documentListeners = new ArrayList<>();
+
+    private String urlString = "";
     private ContentSpan contentSpan = new TextSpan("Welkom in Browsr!");
+
+//    private String urlString = "https://people.cs.kuleuven.be/bart.jacobs/index.html";
+//    private ContentSpan contentSpan = new HyperLink("browsrtest.html", new TextSpan("Klik hier"));//new TextSpan("Welkom in Browsr!");
+
+
 
     /**
      * Initialize a new Document given a url
