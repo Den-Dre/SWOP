@@ -4,8 +4,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.sun.net.httpserver.Authenticator.Success;
+
 import browsrhtml.ContentSpanBuilder;
 import domainmodel.ContentSpan;
+import domainmodel.Document;
+import domainmodel.UIController;
 
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -100,37 +104,64 @@ class DocumentAreaTest {
     @DisplayName("Can translate a contentspan to a documentcell")
     void handleTranslate() throws Exception {
     	// ======== Setup ===========
-        
+    	UIController ctrl1 = new UIController(); 
+    	Document doc1 = new Document();
+    	UIController ctrl2 = new UIController(); 
+    	Document doc2 = new Document();
+    	UIController ctrl3 = new UIController(); 
+    	Document doc3 = new Document();
+    	
     	// a valid Browsr document
     	ContentSpan content1 = ContentSpanBuilder.buildContentSpan("""
     			<a href="a.html">a</a>
     			"""); // only a HyperLink
-				
+    	doc1.changeContentSpan(content1);
+    	documentArea1.setController(ctrl1);
+    	ctrl1.setDocument(doc1);
+    	documentArea1.contentChanged(); // would throw an exception if translation failed
+    	assertEquals(documentArea1.getContent().getClass(), UIHyperlink.class);
+    	assertEquals(((UIHyperlink) documentArea1.getContent()).getText(), "a");
+    	
 		ContentSpan content2 = ContentSpanBuilder.buildContentSpan("""
 				<table>
 				  <tr><td>HTML elements partially supported by Browsr:
 				</table>
 				"""); // only a Table
-		
+    	doc2.changeContentSpan(content2);
+    	documentArea1.setController(ctrl2);
+    	ctrl2.setDocument(doc2);	
+    	documentArea1.contentChanged(); // would throw an exception if translation failed
+    	assertEquals(documentArea1.getContent().getClass(), UITable.class); // content is translated into a UITable
+    	UITable table = (UITable) documentArea1.getContent(); 
+    	assertEquals(table.getContent().size(), 1); // this table only contains one element
+    	assertEquals(table.getContent().get(0).get(0).getClass(), UITextField.class); // and this is a UITextField
+    	assertEquals(((UITextField) table.getContent().get(0).get(0)).getText(), "HTML elements partially supported by Browsr:");
+    	// the UITextField contains what we expect
+    	
 		ContentSpan content3 = ContentSpanBuilder.buildContentSpan("""
 				  HTML elements partially supported by Browsr:
 				"""); // only a piece of Text
-        
+    	doc3.changeContentSpan(content3);
+    	documentArea1.setController(ctrl3);
+    	ctrl3.setDocument(doc3);
+    	documentArea1.contentChanged(); // would throw an exception if translation failed
+    	assertEquals(documentArea1.getContent().getClass(), UITextField.class);	
+    	assertEquals(((UITextField) documentArea1.getContent()).getText(), "HTML elements partially supported by Browsr:");
+    	
         // not a valid Browsr document (yoinked from https://www.w3schools.com/html/tryit.asp?filename=tryhtml_basic_document)
-        ContentSpan content4 = ContentSpanBuilder.buildContentSpan("""
-				<!DOCTYPE html>
-				<html>
-				<body>
-				
-				<h1>My First Heading</h1>
-				
-				<p>My first paragraph.</p>
-				
-				</body>
-				</html>
-				""");
-        
-        
-        
+		assertThrows(Exception.class, () -> {
+			ContentSpanBuilder.buildContentSpan("""
+					<!DOCTYPE html>
+					<html>
+					<body>
+					
+					<h1>My First Heading</h1>
+					
+					<p>My first paragraph.</p>
+					
+					</body>
+					</html>
+					""");
+        });
     }
 }

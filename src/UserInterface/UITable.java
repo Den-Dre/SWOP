@@ -201,6 +201,14 @@ public class UITable extends DocumentCell{
         setRowHeights();
     }
 
+    /**
+     * simple getter, only for debug purposes
+     * @return
+     */
+    public ArrayList<ArrayList<DocumentCell>> getContent() {
+    	return this.grid;
+    }
+    
     private ArrayList<ArrayList<DocumentCell>> grid;
     private ArrayList<Integer> rowHeights = new ArrayList<>(); // Contains the height for each row
     private ArrayList<Integer> columnWidths = new ArrayList<>(); // Contains the width for each column
