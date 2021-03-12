@@ -83,6 +83,7 @@ class HyperLinkTest{
 	void composeFullURL() {
 		// browsr is already initialised with prof. Jacobs' index.html url
 		String href = "browsrtest.html";
+		ctrl.getDocument().setUrlString("https://people.cs.kuleuven.be/bart.jacobs/index.html");
 		// compose url with href and load the document
 		ctrl.loadDocumentFromHref(href);
 		
@@ -97,6 +98,7 @@ class HyperLinkTest{
 	void loadAndShowDoc() {
 		// browsr is already initialised with prof. Jacobs' index.html url
 		String href = "browsrtest.html";
+		ctrl.getDocument().setUrlString("https://people.cs.kuleuven.be/bart.jacobs/index.html");
 		// compose url with href and load the document
 		ctrl.loadDocumentFromHref(href);
 		
@@ -112,6 +114,7 @@ class HyperLinkTest{
 	void updateAddressBar() {
 		// browsr is already initialised with prof. Jacobs' index.html url
 		String href = "browsrtest.html";
+		ctrl.getDocument().setUrlString("https://people.cs.kuleuven.be/bart.jacobs/index.html");
 		// compose url with href and load the document
 		ctrl.loadDocumentFromHref(href);
 		

@@ -1,0 +1,104 @@
+\documentclass[12pt]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[dutch]{babel}
+\usepackage{amssymb}
+
+
+\title{Beknopte uitleg designkeuzes\\ Iteratie 1: project Software-Ontwerp}
+\author{Jakob Heirwegh, Martijn Leplae, Thibault van Win en Andreas Hinderyckx}
+\date{Maart 2021} 
+
+\usepackage{graphicx}
+\usepackage{caption}
+
+\begin{document}
+
+\maketitle
+
+\newpage
+
+\section{Domeinlaag}
+Om het design van de domeinlaag uit te bouwen, hebben we ons gebaseerd op het meegeleverde domeinmodel als basis. Hierbij maakten we gebruik van \textbf{GRASP-principles} (verder in het document steeds geformatteerd in boldface). Onderstaande uitleg en structuur kan steeds op het meegeleverde design model (\texttt{designModel.png}) gevolgd worden. We beginnen onderaan het designmodel en bouwen op naar boven. Het gegeven domeinmodel hebben we aldus uitgebreid door volgende zaken toe te voegen:
+\begin{itemize}
+	\item \texttt{Document}-klasse:\\
+	Deze klasse staat centraal in onze domeinlaag en gebruiken we als abstracte voorstelling van een document. Een \texttt{Document} wordt uniek bepaald door een \texttt{URL} en bevat precies één \texttt{ContentSpan} die de inhoud omschrijft.
+	
+	\item \texttt{ContentSpanBuilder}-klasse:\\
+	Deze klasse erft over van \texttt{BrowsrDocumentValidator} en hergberuikt de logica uit deze laatste klasse om tokens die geparset worden, om te zetten naar een boomstructuur van \texttt{ContentSpan}'s die aan het \texttt{Document}-object wordt gelinkt.
+	
+	Wanneer een \texttt{Document}-object HTML-code wil inlezen, doet deze beroep op de \texttt{ContentSpanBuilder}-klasse. Deze heeft alle kennis van de HTML code die gelezen wordt, en fungeert bijgevolg als \textbf{Information Expert} wat betreft het aanmaken van de \texttt{ContentSpan}-structuur. Verder is de \texttt{ContentSpanBuilder}-klasse een voorbeeld van \textbf{Pure Fabrication}: het is een artificiële klasse die geen domeinconcept voorstelt, maar specifiek is aangemaakt om de \textbf{koppeling} laag te houden tussen de \texttt{Document}-klasse enerzijds en de \texttt{HtmlLexer}- en \texttt{BrowsrDocumentValidator}-klasse anderzijds. Daarnaast verhoogt het mede de \textbf{cohesie} van de \texttt{Document}-klasse door de verantwoordlijkheid van het aanmaken van de \texttt{ContentSpan}-structuur te verschuiven naar een aparte klasse.
+	
+	\item \texttt{UIController}-klasse:\\
+	Deze klasse fungeert als \textbf{Controller} waarop de UI-laag beroep kan doen wanneer ze diensten uit de domeinlaag wilt oproepen. De \textbf{controller} verlaagt de koppeling tussen de domein- en UI-laag: alle oproepen van de UI-laag naar de domeinlaag moeten via deze klasse gebeuren. Hierdoor kan de UI-laag hergebruikt worden op verschillende domeinlagen.
+	
+	\item \texttt{DocumentListener}-Interface:\\
+	Dit is een toepassing van het design patroon \textit{Observer}: bij aanpassingen in het \texttt{Document}-object wordt een notification ge-broadcast en worden alle UI-elementen die hierbij actie moeten ondernemen op de hoogte gesteld. Elk UI-object dat hierbij actie moet ondernemen, zal namelijk als \texttt{listener} op dit evenement `geabonneerd' zijn. Dit is op zijn beurt ook een voorbeeld van het \textbf{polymorphism}-principle, doordat DocumentListener door twee soorten listeners wordt geïmplementeerd: 
+	\begin{itemize}
+		\item enerzijds \texttt{urlListeners}, en 
+		\item anderzijds \texttt{documentListeners}.
+	\end{itemize} 
+	Afhankelijk van het soort listener, zal de subject-methode \texttt{contentChanged} (waarop deze listeners geabonneerd zijn) ander gedrag vertonen.
+	
+	
+	Ook in het licht van andere GRASP-principles is deze aanpak voordelig, aangezien we op deze manier ook gebruik maken van \textbf{indirectie}: de \textbf{koppeling} tussen de UI- en domeinlaag wordt verlaagd, waardoor de UI-laag kan losgekoppeld worden en bij verschillende domeinlagen kan hergebruikt worden.
+\end{itemize}
+
+Vervolgens zullen we onze design-keuzes in de UI-laag bespreken.
+
+\section{UI-laag}
+
+We starten uiterst rechts in de UI-laag, met de klasse \texttt{Browsr}.
+
+\begin{itemize}
+	\item \texttt{Browsr}-klasse:\\
+	Deze klasse stelt het ganse UI-venster voor dat in de opdracht dezelfde naam Browsr krijgt. Het erft over van de geleverde klasse \texttt{CanvasWindow}. Deze klasse voldoet aan het \textbf{creator}-principe omwille van twee redenen:
+	\begin{itemize}
+		\item ze maakt twee klassen \texttt{DocumentArea} en \texttt{AddressBar} aan en aggregeert deze klassen doordat ze beide subklassen zijn van \texttt{Frame}. \texttt{Browsr} heeft immers steeds een connectie naar deze twee \texttt{Frame}s.
+		\item Daarnaast beschikt de klasse \texttt{Browsr} ook over de initialiserende data voor het correct aanmaken van deze vorige twee vernoemde klassen: \texttt{AddressBar} en \texttt{DocumentArea} moeten immers gelinkt worden aan hetzelfde \texttt{UIController}-object.
+	\end{itemize}
+	 
+	 \item \texttt{Frame}-klasse:\\
+	 Deze klasse is een abstracte voorstelling van de sub-onderdelen van het \texttt{Browsr}-object. De klasse laat toe om de gemeenschappelijke eigenschappen van de sub-onderdelen van het \texttt{Browsr}-object af te zonderen en in verdere uitbreidingen van het project eenvoudig nieuwe sub-onderdleen toe te voegen.
+	 Deze klasse vervult het principe van \textbf{protected variations}, doordat sub-onderdelen van de Browsr onderling kunnen uitgewisseld worden zonder een invloed te hebben op de gehele structuur van de Browsr.
+	 
+	 \item \texttt{AddressBar}-klasse:\\
+	 Dit is een specialisatie van de \texttt{Frame}-klasse die de adres-bar van de Browsr voorstelt. Ze staat in verbinding met de domeinlaag via de controller, wat haar in staat stelt om zaken die domeinkennis vereisen zoals het laden van documenten, het doorgeven van gebruikersinvoer e.d. te vervolledigen. In de omgekeerde richting, vloeit er informatie van de domein- naar de UI-laag doordat deze klasse het \texttt{DocumentListener}-interface implementeert en zo bij veranderingen van de informatie uit de domeinlaag - bv. de URL bijbehordend bij een nieuw ingeladen \texttt{Document} - hier op een gespecialiseerde manier kan op ingaan.
+	 
+	 \item \texttt{DocumentArea}-klasse:\\
+	 Dit is eveneens een specialisatie van de \texttt{Frame}-klasse die het gedeelte van de Browsr voorstelt waarin de inhoud van documenten moet worden weergegeven. Ze vertoont een gelijkaardige link met de domeinlaag zoals deze bij de bovenvermelde \texttt{AddressBar}-klasse. 
+	 
+	 Wanneer een document moet gerenderd worden, wordt deze taak doorgeschoven naar de onderliggende sub-onderdleen van \texttt{DocumentArea}, namelijk de \texttt{DocumentCell} (zie verder). Deze manier van aanpak steunt op het \textbf{information expert} principe in die zin dat elk sub-onderdeel verantwoordelijkheid neemt om zichzelf te renderen. Verder komt hier ook het \textbf{creator}-principe naar voren: de klasse \texttt{DocumentArea} is verantwoordelijk voor het aanmaken van een \texttt{DocumentCell} die de juiste structuur bevat.
+	 
+	 Om elementen uit de domeinlaag te kunnen weergeven in de UI-laag, bevat de \texttt{DocumentArea}-klasse een link naar een \texttt{DocumentCell}-object, wat op zich ook een specialisatie van de \texttt{Frame}-klasse is.
+	 
+	 \item \texttt{DocumentCell}-klasse:\\
+	 Deze klasse is eveneens een specialisatie van de \texttt{Frame}-klasse en fungeert als algemeen object om domeinelementen onafhankelijk van de structuur van de domeinlaag naar UI-elementen te kunnen omzetten om deze te kunnen renderen. Door gebruik te maken van een overkoepelend en abstract UI-element zoals \texttt{DocumentCell}, verlagen we de \textbf{koppeling} tussen specifiekere UI-elementen (zie onderstannde drie klassen) en \texttt{DocumentArea}.
+	 
+	 Verder is deze structuur van \texttt{DocumentCell}'s ontworpen volgens het \textit{composite}-designpatroon
+	 
+	 \item \texttt{UIHyperlink}-, \texttt{UITextField}- en \texttt{UITable}-klassen:
+	 dit zijn alledrie specialisaties van de \texttt{DocumentCell}-klasse die in staat zijn om de individuele domeinobjecten voor te stellen. 
+ \end{itemize}
+
+Ten slotte bespreken we de uitwerking van enkele system operations in ons design.
+
+\section{System operations}
+\subsection{Document Loading}
+Wanneer een document moet geladen worden, wordt een \texttt{loadDocument()}-oproep gedaan vanuit de UI-laag naar de \texttt{UIController}. Deze delegeert de oproep verder naar de \texttt{Document}-klasse, die op zijn beurt een beroep doet op de \texttt{ContentSpanBuilder} om het document succesvol in een \texttt{ContentSpan} om te zetten. Dit triggert een event, namelijk \texttt{contentChanged} uit het \texttt{DocumentListener}-interface, waardoor de elementen uit de UI-laag die zich hierdoor moeten aanpassen, op de hoogte gebracht worden. Hierdoor wordt zowel de \texttt{DocumentArea} als de \texttt{AddressBar} op de benodigde manier geüpdated. De nodige listeners om dit te realiseren worden bij de aanmaak van het \texttt{UIController}-object in de \texttt{Browsr}-klasse ineens mee toegevoegd.
+
+\subsection{URL clicking}
+Wanneer een gebruiker een URL aanklikt, wordt in de \texttt{DocumentArea}-klasse uit de UI-laag elke \texttt{Frame} overlopen om te bepalen op welke \texttt{DocumentCell} deze klik juist was. Het afhandelen van de benodigde actie bij deze klik, wordt dan gedaan door deze bepaalde \texttt{DocumentCell}, die via \texttt{DocumentArea} en de controller \texttt{UIController} beroep kan doen op de nodige diensten uit de domeinlaag.
+
+\subsection{(Malformed) URL handling}
+Wanneer een gebruiker een URL in de \texttt{AddressBar} ingeeft, wordt deze als \texttt{String} opgeslagen in de UI-laag en doorgegeven aan de \texttt{UIController}, dewelke het eerste object in de domeinlaag is. Pas wanneer de URL hier aankomt, wordt geprobeerd om de URL van een \texttt{String} naar een effectief \texttt{URL}-object om te zetten. Hierbij kunnen we twee scenario's onderscheiden:
+\begin{itemize}
+	\item De URL is correct:\\
+	De \texttt{loadDocument}-methode uit \texttt{Document} wordt opgeroepen vanuit de controller en deze bepaalt verder welk document moet geladen worden. Dit triggert een \texttt{contentChanged()}-event in het \texttt{DocumentListener}-interface, waardoor de betrokken UI-elementen worden gealarmeerd en zich naargelang kunnen updaten.
+	\item De URL is malformed:\\
+	In de \texttt{UIController} zal een \texttt{MalformedURLException} optreden. Deze wordt \textit{defensief} afgehandeld door een nieuw \texttt{Document}-object aan te maken met een vastgelegde `error-URL'. \texttt{contentChanged} wordt getriggerd, maar door de vastgelegde error-URL, zullen enkel de \texttt{DocumentListeners} en niet de \texttt{urlListeners} zichzelf updaten. Hierdoor blijft de URL die door de gebruiker is ingegeven in de \texttt{AddressBar} staan, maar kan wel een error-Document worden weergegeven in de \texttt{DocumentArea}.
+\end{itemize}
+
+
+\end{document}

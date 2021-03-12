@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<diagram program="umlet" version="13.3">
-  <zoom_level>20</zoom_level>
+<diagram program="umlet" version="14.3.0">
+  <zoom_level>10</zoom_level>
   <element>
     <id>UMLActor</id>
     <coordinates>
-      <x>560</x>
-      <y>520</y>
-      <w>120</w>
-      <h>200</h>
+      <x>10</x>
+      <y>170</y>
+      <w>60</w>
+      <h>110</h>
     </coordinates>
     <panel_attributes/>
     <additional_attributes/>
@@ -15,10 +15,10 @@
   <element>
     <id>Text</id>
     <coordinates>
-      <x>1180</x>
-      <y>540</y>
-      <w>500</w>
-      <h>60</h>
+      <x>320</x>
+      <y>180</y>
+      <w>250</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>_Process: User clicks on hyperlink_</panel_attributes>
     <additional_attributes/>
@@ -26,10 +26,10 @@
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>540</x>
-      <y>680</y>
-      <w>200</w>
-      <h>60</h>
+      <x>0</x>
+      <y>250</y>
+      <w>100</w>
+      <h>30</h>
     </coordinates>
     <panel_attributes>_:User_
 bg=yellow</panel_attributes>
@@ -38,22 +38,22 @@ bg=yellow</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1280</x>
-      <y>680</y>
-      <w>200</w>
-      <h>60</h>
+      <x>540</x>
+      <y>250</y>
+      <w>100</w>
+      <h>30</h>
     </coordinates>
-    <panel_attributes>_:GUI_
+    <panel_attributes>_:UIController_
 bg=red</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>620</x>
-      <y>800</y>
-      <w>40</w>
-      <h>640</h>
+      <x>40</x>
+      <y>310</y>
+      <w>20</w>
+      <h>400</h>
     </coordinates>
     <panel_attributes>
 bg=yellow</panel_attributes>
@@ -62,10 +62,10 @@ bg=yellow</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1360</x>
-      <y>840</y>
-      <w>40</w>
-      <h>520</h>
+      <x>580</x>
+      <y>330</y>
+      <w>20</w>
+      <h>310</h>
     </coordinates>
     <panel_attributes>
 bg=red</panel_attributes>
@@ -74,10 +74,10 @@ bg=red</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>620</x>
-      <y>720</y>
-      <w>60</w>
-      <h>120</h>
+      <x>40</x>
+      <y>270</y>
+      <w>30</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;40.0</additional_attributes>
@@ -85,10 +85,10 @@ bg=red</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1360</x>
-      <y>720</y>
-      <w>60</w>
-      <h>160</h>
+      <x>580</x>
+      <y>270</y>
+      <w>30</w>
+      <h>80</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
@@ -96,93 +96,34 @@ bg=red</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>640</x>
-      <y>800</y>
-      <w>760</w>
-      <h>80</h>
+      <x>50</x>
+      <y>310</y>
+      <w>270</w>
+      <h>40</h>
     </coordinates>
     <panel_attributes>lt=-&gt;&gt;&gt;
 &lt;&lt;Clicks on hyperlink&gt;&gt;</panel_attributes>
-    <additional_attributes>10.0;20.0;360.0;20.0</additional_attributes>
+    <additional_attributes>10.0;20.0;250.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>640</x>
-      <y>1320</y>
-      <w>760</w>
+      <x>310</x>
+      <y>560</y>
+      <w>290</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+loadErrorDocument()</panel_attributes>
+    <additional_attributes>10.0;20.0;270.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>40</x>
+      <y>700</y>
+      <w>30</w>
       <h>80</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;.
-Return viewable document, update address bar</panel_attributes>
-    <additional_attributes>10.0;20.0;360.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1380</x>
-      <y>820</y>
-      <w>600</w>
-      <h>80</h>
-    </coordinates>
-    <panel_attributes>lt=-&gt;&gt;&gt;
-Obtain full URL</panel_attributes>
-    <additional_attributes>10.0;20.0;280.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLGeneric</id>
-    <coordinates>
-      <x>1820</x>
-      <y>680</y>
-      <w>260</w>
-      <h>60</h>
-    </coordinates>
-    <panel_attributes>_:URLComposer_
-bg=green</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1940</x>
-      <y>720</y>
-      <w>60</w>
-      <h>180</h>
-    </coordinates>
-    <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;70.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLGeneric</id>
-    <coordinates>
-      <x>1940</x>
-      <y>860</y>
-      <w>40</w>
-      <h>120</h>
-    </coordinates>
-    <panel_attributes>
-bg=green</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>1380</x>
-      <y>940</y>
-      <w>600</w>
-      <h>80</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;.
-Return full URL</panel_attributes>
-    <additional_attributes>10.0;20.0;280.0;20.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>620</x>
-      <y>1420</y>
-      <w>60</w>
-      <h>160</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
     <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
@@ -190,37 +131,317 @@ Return full URL</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1360</x>
-      <y>1340</y>
-      <w>60</w>
-      <h>200</h>
+      <x>580</x>
+      <y>630</y>
+      <w>30</w>
+      <h>150</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;80.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;130.0</additional_attributes>
   </element>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>1260</x>
-      <y>780</y>
-      <w>840</w>
-      <h>460</h>
+      <x>510</x>
+      <y>390</y>
+      <w>420</w>
+      <h>230</h>
     </coordinates>
     <panel_attributes>Alt
 --
-
-
-
-
-
-
-
 [Correct URL and Parsing]
 
+
+
+
+
 --
+
 [Error]
 
 </panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>310</x>
+      <y>330</y>
+      <w>290</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+composeUrl()</panel_attributes>
+    <additional_attributes>270.0;20.0;10.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>310</x>
+      <y>430</y>
+      <w>290</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+loadDocument(URL)</panel_attributes>
+    <additional_attributes>10.0;20.0;270.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLNote</id>
+    <coordinates>
+      <x>680</x>
+      <y>0</y>
+      <w>460</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>Moeten hier ook nog Adressbar, Documentarea en Document
+bij staan om te laten zien hoe die calls verlopen? Want
+uiteindelijk gaat het maar tussen systeem en user?
+
+Moet het wel binnen komen bij de UIController of DocumentArea?</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>250</x>
+      <y>250</y>
+      <w>130</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>_:DocumenArea_
+bg=orange</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>300</x>
+      <y>270</y>
+      <w>30</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>300</x>
+      <y>320</y>
+      <w>20</w>
+      <h>330</h>
+    </coordinates>
+    <panel_attributes>
+bg=orange</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>50</x>
+      <y>620</y>
+      <w>270</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+renderDocument()</panel_attributes>
+    <additional_attributes>10.0;20.0;250.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>300</x>
+      <y>640</y>
+      <w>30</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLActor</id>
+    <coordinates>
+      <x>1060</x>
+      <y>210</y>
+      <w>60</w>
+      <h>110</h>
+    </coordinates>
+    <panel_attributes/>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Text</id>
+    <coordinates>
+      <x>1390</x>
+      <y>220</y>
+      <w>250</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>_Process: User clicks on hyperlink_</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>1070</x>
+      <y>290</y>
+      <w>100</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>_:User_
+bg=yellow</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>1110</x>
+      <y>350</y>
+      <w>20</w>
+      <h>400</h>
+    </coordinates>
+    <panel_attributes>
+bg=yellow</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1110</x>
+      <y>310</y>
+      <w>30</w>
+      <h>60</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;40.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1120</x>
+      <y>350</y>
+      <w>270</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;&gt;&gt;
+&lt;&lt;Clicks on hyperlink&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;20.0;250.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1120</x>
+      <y>610</y>
+      <w>270</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+loadErrorDocument()</panel_attributes>
+    <additional_attributes>10.0;20.0;250.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1110</x>
+      <y>740</y>
+      <w>30</w>
+      <h>80</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;60.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLFrame</id>
+    <coordinates>
+      <x>1230</x>
+      <y>450</y>
+      <w>420</w>
+      <h>230</h>
+    </coordinates>
+    <panel_attributes>Alt
+--
+                    [Correct URL and Parsing]
+
+
+
+
+
+--
+
+[Error]
+
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1380</x>
+      <y>370</y>
+      <w>200</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+composeUrl()</panel_attributes>
+    <additional_attributes>10.0;70.0;90.0;70.0;90.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1120</x>
+      <y>490</y>
+      <w>270</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+loadDocument(URL)</panel_attributes>
+    <additional_attributes>10.0;20.0;250.0;20.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>1320</x>
+      <y>290</y>
+      <w>130</w>
+      <h>30</h>
+    </coordinates>
+    <panel_attributes>_:UI_
+bg=orange</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1370</x>
+      <y>310</y>
+      <w>30</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;50.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>1370</x>
+      <y>360</y>
+      <w>20</w>
+      <h>330</h>
+    </coordinates>
+    <panel_attributes>
+bg=orange</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1370</x>
+      <y>680</y>
+      <w>30</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>lt=.</panel_attributes>
+    <additional_attributes>10.0;10.0;10.0;120.0</additional_attributes>
   </element>
 </diagram>

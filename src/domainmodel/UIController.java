@@ -96,15 +96,6 @@ public class UIController {
         return document;
     }
 
-//    /**
-//     * Returns a URL of the current document
-//     *
-//     * @return A URL-object of the document's url
-//     */
-//    public URL getUrl(){
-//        return this.document.getUrl();
-//    }
-
 
     /**
      * Retrieve the URL (in String representation)
