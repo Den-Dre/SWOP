@@ -19,9 +19,39 @@ public class DocumentArea extends Frame implements DocumentListener {
     public DocumentArea(int x, int y, int width, int height) throws IllegalDimensionException {
         super(x, y, width, height);
 
-//        ContentSpan content = this.controller.getContentSpan();
-//
-//        this.content = translateToUIElements(content); // here we need to feed the 'real' content once implemented
+        // hard-coded Welcome document (for now!)
+        ArrayList<ArrayList<DocumentCell>> rows = new ArrayList<ArrayList<DocumentCell>>();
+      
+        UITextField title = new UITextField(x, y, "Welcome to Browsr!".length(), 50, "Welcome to Browsr!");
+        UITextField authors = new UITextField(x, y, width, 20, 
+	  		"By yours truly: Andreas Hinderyckx, Martijn Leplae, Thibault Van Win and Jakob Heirwegh");
+        UITextField swopper = new UITextField(x, y, width, 20, "1st iteration Software-Ontwerp 2020-2021");
+        UITextField empty = new UITextField(x, y, width, 20, " ");
+	      
+        String href = "browsrtest.html";
+        String text = "Click here to see what we can do!";
+	      
+        UIHyperlink hyperLink = new UIHyperlink(x, y, width, 20, href, text);
+	      		
+        ArrayList<DocumentCell> row1 = new ArrayList<DocumentCell>();
+        ArrayList<DocumentCell> row2 = new ArrayList<DocumentCell>();
+        ArrayList<DocumentCell> row3 = new ArrayList<DocumentCell>();
+        ArrayList<DocumentCell> row4 = new ArrayList<DocumentCell>();
+        ArrayList<DocumentCell> row5 = new ArrayList<DocumentCell>();
+      
+	    row1.add(title);
+	    row2.add(authors);
+	    row3.add(empty);
+	    row4.add(hyperLink);
+	    row5.add(swopper);
+	    
+	    rows.add(row1);
+	    rows.add(row2);
+	    rows.add(row3);
+	    rows.add(row4);
+	    rows.add(row5);
+	    
+	    this.content = new UITable(x, y, width, height, rows);
     }
     
     /**
@@ -171,7 +201,10 @@ public class DocumentArea extends Frame implements DocumentListener {
         if (!wasClicked(x, y)) return;
         if (button != MouseEvent.BUTTON1) return;
         if (id != MouseEvent.MOUSE_CLICKED) return;
+        System.out.println("content: "+content);
+        System.out.println(content.getxPos()+","+content.getyPos());
         String result = content.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
+        System.out.println("result: '"+result+"' on "+this.getClass());
         linkPressed(result);
     }
 
@@ -179,6 +212,9 @@ public class DocumentArea extends Frame implements DocumentListener {
      * Returns true if and only if (x,y) is in this UserInterface.DocumentArea.
      */
     private boolean wasClicked(int x, int y) {
+    	System.out.println("DocArea: on: "+x+","+y);
+    	System.out.println("getX: "+this.getxPos()+", getY: "+this.getyPos());
+    	System.out.println("width: "+this.getWidth()+", height: "+this.getHeight());
         return x >= this.getxPos() && x <= (this.getxPos() + this.getWidth()) && y >= this.getyPos() && y <= (this.getyPos() + this.getHeight());
     }
 

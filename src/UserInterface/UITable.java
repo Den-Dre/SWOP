@@ -41,7 +41,7 @@ public class UITable extends DocumentCell{
                 cell.Render(g);
             }
         }
-        if (calculateActualWidth) {
+        if (isCalculateActualWidth()) {
             setColumnWidths();
             setRowHeights();
         }

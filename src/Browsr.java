@@ -159,4 +159,18 @@ public class Browsr extends CanvasWindow {
      * {@link Frame}'s associated to this Browsr.
      */
     private ArrayList<UserInterface.Frame> Frames = new ArrayList<>();
+    
+    /**
+     * @return the {@link AddressBar} of this {@link Browsr}, for testing/debug purposes
+     */
+	public AddressBar getAddressBar() {
+		return this.AddressBar;
+	}
+	
+    /**
+     * @return the {@link DocumentArea} of this {@link Browsr}, for testing/debug purposes
+     */
+	public DocumentArea getDocumentArea() {
+		return this.DocumentArea;
+	}
 }

@@ -1,0 +1,159 @@
+import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import domainmodel.*;
+import UserInterface.*;
+
+import java.awt.event.MouseEvent;
+import java.awt.KeyEventDispatcher;
+import java.awt.event.KeyEvent;
+
+class HyperLinkTest{
+	
+    private AddressBar bar;
+    private DocumentArea doc;
+    private Browsr browsr = null;
+	private UIController ctrl;
+    private int offset = 5;
+
+    private UIHyperlink goodLink;
+	
+    private UIHyperlink link1;
+    private UIHyperlink link2;
+    private int height1 = 10;
+    private int height2 = 100;
+    private String href1 = "/wiki/SWOP";
+    private String text1 = "klik hier voor swop";
+    private String href2 = "heeeel lange href!!!!!";
+    private String text2 = "kort.";
+
+    private final int mouseClick = MouseEvent.MOUSE_CLICKED;
+    private final int leftMouse = MouseEvent.BUTTON1;
+
+    @BeforeEach
+    void setUp() throws Exception {
+    	        
+        browsr = new Browsr("browsr");
+        
+        bar = browsr.getAddressBar();
+        doc = browsr.getDocumentArea();
+        
+		ctrl = doc.controller;
+    	
+        link1 = new UIHyperlink(0,0,0,height1, href1, text1);
+
+        link2 = new UIHyperlink(10,15,0,height2, href2, text2);
+        
+        goodLink = new UIHyperlink(10, 10, 0, height1, "browsrtest.html", text1);
+    }
+	// ===== main success scenario =====
+	
+	// 1
+	@Test
+	@DisplayName("The user clicks a hyperlink in the document area")
+	void clickHyperlink() {
+        // Not possible to calculate the actual with by hand, depends on the font etc.
+        assertFalse(link1.isCalculateActualWidth());
+        assertFalse(link2.isCalculateActualWidth());
+        // LINK 1
+        int link1Width = link1.getWidth();
+        // Click not on link1
+        String result = link1.getHandleMouse(mouseClick,link1Width+1, 5, 0, leftMouse, 0);
+        assertEquals("", result);
+        // Click on link1
+        String result2 = link1.getHandleMouse(mouseClick,link1Width-1, 5, 0, leftMouse, 0);
+        assertEquals(this.href1, result2);
+        
+        // LINK 2
+        int link2Width = link2.getWidth();
+        // Click not on link2
+        String result3 = link2.getHandleMouse(mouseClick,link2Width+1+10, 17, 0, leftMouse, 0);
+        assertEquals("", result3);
+        // Click on link2
+        String result4 = link2.getHandleMouse(mouseClick,link2Width-1+10, 17, 0, leftMouse, 0);
+        assertEquals(this.href2, result4);
+	}
+	
+	// 2.1
+	@Test
+	@DisplayName("Compose full URL")
+	void composeFullURL() {
+		ctrl.changeURL("https://people.cs.kuleuven.be/bart.jacobs/index.html");
+		//("https://people.cs.kuleuven.be/bart.jacobs/index.html");
+		doc.setContent(goodLink);
+        int width = goodLink.getWidth();
+        System.out.println("ctrl cs: "+ctrl.getContentSpan());
+        // hit the link
+		doc.handleMouse(mouseClick, 11, 30, 0, leftMouse, 0);
+		// we traveled to this hyperlink, hence the url of the document has changed
+		assertEquals(bar.getURL().toString(), "https://people.cs.kuleuven.be/bart.jacobs/browsrtest.html");
+		
+	}
+	
+	// 2.2
+	@Test
+	@DisplayName("Load the document and show it")
+	void loadAndShowDoc() {
+		doc.controller.changeURL("https://people.cs.kuleuven.be/bart.jacobs/index.html");
+		doc.setContent(goodLink);
+		// click on link
+        int width = goodLink.getWidth();
+        // to make sure we really hit the link
+		doc.handleMouse(mouseClick, width-1, 5, 0, leftMouse, 0);	
+		
+		// check if document has changed
+		assertEquals(doc.getContent().getClass(), UITable.class);
+		assertEquals(((UITextField) ((UITable) doc.getContent()).getContent().get(0).get(0)).getText(),
+				"HTML elements partially supported by Browsr:");
+	}
+	
+	// 2.3
+	@Test
+	@DisplayName("Update Address bar to show full URL")
+	void updateAddressBar() {
+		doc.controller.changeURL("https://people.cs.kuleuven.be/bart.jacobs/index.html");
+		doc.setContent(goodLink);
+		// click on link
+        int width = goodLink.getWidth();
+        // to make sure we really hit the link
+		doc.handleMouse(mouseClick, width-1, 5, 0, leftMouse, 0);	
+		
+		// check Addressbar
+		assertEquals(bar.getURL(), 
+				"https://people.cs.kuleuven.be/bart.jacobs/browsrtest.html");
+	}
+	
+	// ===== Extensions =====
+	 
+	// 2a.1.1 
+	@Test
+	@DisplayName("URL is malformed, shows error document")
+    void malformedURL() {
+        String malformedURL = "ww.www.test.com";
+        UIController controller = new UIController();
+        controller.loadDocument(malformedURL);
+
+        // Verify contents of returned URL
+        ContentSpan contentSpan = controller.getContentSpan();
+        TextSpan textSpan = (TextSpan) contentSpan;
+        assertEquals("Error: malformed URL.", textSpan.getText());
+    }
+	
+//	// 2a.1.2
+//	@Test
+//	@DisplayName("Loading fails, shows error document")
+//	void loadingFailed() {
+//		fail("");
+//	}
+//	
+//	// 2a.1.3
+//	@Test
+//	@DisplayName("Parsing the document fails, shows error document")
+//	void docParsingFails() {
+//		fail("");
+//	}
+	
+	
+}

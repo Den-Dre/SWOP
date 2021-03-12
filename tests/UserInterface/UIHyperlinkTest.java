@@ -35,8 +35,8 @@ class UIHyperlinkTest {
     @DisplayName("can handle mouse-clicks")
     void getHandleMouse() {
         // Not possible to calculate the actual with by hand, depends on the font etc.
-        assertFalse(link1.calculateActualWidth);
-        assertFalse(link2.calculateActualWidth);
+        assertFalse(link1.isCalculateActualWidth());
+        assertFalse(link2.isCalculateActualWidth());
         // LINK 1
         int link1Width = link1.getWidth();
         // Click not on link1

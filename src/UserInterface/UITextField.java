@@ -46,7 +46,7 @@ public class UITextField extends DocumentCell{
      * Update the textWidth of this UserInterface.UITextField in the textFieldFont.
      */
     private void updateSizes() {
-        if (!calculateActualWidth) textWidth =  (int) (textHeight*textField.length()*heightToWidthRatio);
+        if (!isCalculateActualWidth()) textWidth =  (int) (textHeight*textField.length()*heightToWidthRatio);
         else {
             if (metrics == null) return;
             textWidth = metrics.stringWidth(textField);

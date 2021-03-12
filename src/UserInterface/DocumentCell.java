@@ -8,7 +8,7 @@ import java.awt.*;
  */
 public class DocumentCell extends Frame {
 
-    /**
+	/**
      * Initialise this DocumentCell with the given parameters.
      *
      * @param x: The x coordinate of this DocumentCell
@@ -64,6 +64,9 @@ public class DocumentCell extends Frame {
      * @return True iff the given point lies in this DocumentCells area including the edges
      */
     public boolean wasClicked(int x, int y) {
+    	System.out.println("docCell: on: "+x+","+y);
+    	System.out.println("getX: "+this.getxPos()+", getY: "+this.getyPos());
+    	System.out.println("width: "+this.getWidth()+", height: "+this.getHeight());
         return x >= this.getxPos() && x <= (this.getxPos() + this.getWidth()) && y >= this.getyPos() && y <= (this.getyPos() + this.getHeight());
     }
 
@@ -109,12 +112,19 @@ public class DocumentCell extends Frame {
     public double getHeightToWidthRatio() {
         return this.heightToWidthRatio;
     }
-
+    
+    /**
+     * @return result of {@code calculateActualWidth}, for testing/debug purposes 
+     */
+    public boolean isCalculateActualWidth() {
+		return this.calculateActualWidth;
+	}
+    
     /**
      * If calculateActualWidth is false, the estimation of the width is done as follows:
      * -> textHeight*(length of the text)*heightToWidthRatio
      */
-    protected final boolean calculateActualWidth = false; // set to true if the actual width has to be calculated, otherwise an estimation is made
+    private final boolean calculateActualWidth = false; // set to true if the actual width has to be calculated, otherwise an estimation is made
 
     /**
      * The height to width ratio of this DocumentCell,
