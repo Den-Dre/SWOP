@@ -4,6 +4,9 @@ import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.text.AttributedString;
 
+/**
+ * A class to represent a hyperlink in the UI layer.
+ */
 public class UIHyperlink extends DocumentCell{
     /**
      * Construct a new DocumentCell
@@ -13,8 +16,9 @@ public class UIHyperlink extends DocumentCell{
      * @param width: the width of this {@code UIHyperlink}
      * @param link_size: The height of this {@code UIHyperlink}
      * @param href: The value of the href attribute of this {@code UIHyperlink}
+     * @throws IllegalDimensionException: When negative dimensions are provided.
      */
-    public UIHyperlink(int x, int y, int width, int link_size, String href, String text) throws Exception {
+    public UIHyperlink(int x, int y, int width, int link_size, String href, String text) throws IllegalDimensionException {
         super(x, y, width, link_size);
         this.href = href;
         this.text = text;
@@ -46,14 +50,14 @@ public class UIHyperlink extends DocumentCell{
         g.drawString(link.getIterator(), getxPos(), getyPos()+textHeight);
 
         // Draw a rectangle around the text for debugging purposes
-        g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
+        //g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
     }
 
     /**
      * Update the {@code textWidth} based on this {@code UIHyperlink} {@code href} attribute.
      */
     private void updateSizes() {
-        if (!calculateActualWidth) textWidth =  (int) (textHeight*text.length()*heightToWidthRatio);
+        if (!isCalculateActualWidth()) textWidth =  (int) (textHeight*text.length()*heightToWidthRatio);
         else {
             if (metrics == null) return;
             textWidth = metrics.stringWidth(href);
@@ -98,16 +102,47 @@ public class UIHyperlink extends DocumentCell{
         return textWidth;
     }
 
-    // Contents of this UIHyperlink
+    /**
+     * Retrieve the text displayed in this UIHyperlink
+     *
+     * @return text:
+     *              The text displayed in this UIHyperlink.
+     */
+    public String getText() {
+        return text;
+    }
+
+    // =========== Contents of this UIHyperlink =============
+    /**
+     * A string variable to denote the href value of this UIHyperlink.
+     */
     private String href = "";
+    /**
+     * A string variable to denote the text value of this UIHyperlink.
+     */
     private final String text;
 
-    // Dimension variables
-    private int textHeight;
+    // ============== Dimension variables ====================
+    /**
+     * An integer variable to denote the height of the text of this UIHyperlink.
+     */
+    private final int textHeight;
+    /**
+     * An integer variable to denote the width of the text of this UIHyperlink.
+     */
     private int textWidth;
 
-    // Font variables
-    private Font hyperlinkFont = new Font(Font.SANS_SERIF, Font.PLAIN, getHeight());
-    private Color hyperlinkColor = Color.BLUE;
+    // ============== Font variables ===========================
+    /**
+     * A variable to denote the {@link Font} of the text of this UIHyperlink
+     */
+    private final Font hyperlinkFont = new Font(Font.SANS_SERIF, Font.PLAIN, getHeight());
+    /**
+     * A variable to denote the {@link Color} of the text of this UIHyperlink
+     */
+    private final Color hyperlinkColor = Color.BLUE;
+    /**
+     * A variable to denote the {@link FontMetrics} of the text of this UIHyperlink.
+     */
     private FontMetrics metrics;
 }

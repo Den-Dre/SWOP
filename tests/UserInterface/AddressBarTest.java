@@ -1,12 +1,14 @@
 package UserInterface;
 
 import UserInterface.AddressBar;
+import domainmodel.UIController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.awt.event.*;
+import java.net.URL;
 
 class AddressBarTest {
 
@@ -22,14 +24,7 @@ class AddressBarTest {
     public void setUp() throws Exception {
         bar = new AddressBar(offset,offset,500,50, offset);
     }
-    
-    @Test
-    void illegalDimensions() {
-    	assertThrows(Exception.class, () -> { 
-    		new AddressBar(offset, offset, -500, -50, offset); // making an addressbar with illegal dimensions!
-    	});
-    }
-    
+
     @Test
     @DisplayName("Handles mouse events")
     void handleMouse() {
@@ -253,5 +248,21 @@ class AddressBarTest {
         String url = "https://nieuweurl.be";
         bar.changeURLto(url);
         assertEquals(url, bar.getURL());
+    }
+
+    @Test
+    void testUrlChange() {
+        try {
+            URL url = new URL("http://www.ditiseentest.com");
+            AddressBar bar = new AddressBar(10, 100, 50, 60, 5);
+            UIController contr = new UIController();
+            contr.changeURL(url.toString());
+            contr.addUrlListener(bar);
+            URL newUrl = new URL("http://www.ditiseenneiuweurl.be");
+            contr.changeURL(url.toString());
+
+            assertEquals(newUrl.toString(),bar.getURL());
+        }
+        catch(Exception e) { System.out.println(e);}
     }
 }

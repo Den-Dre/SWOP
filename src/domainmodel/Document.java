@@ -7,43 +7,99 @@ import java.io.*;
 import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
+/**
+ * A class to represent an abstract document.
+ */
 public class Document {
-    private URL url;
-    // TODO Maybe one is enough?
-    private List<UrlListener> urlListeners = new ArrayList<>();
+
+    /**
+     * An {@link ArrayList} to hold all urlListeners.
+     */
+    private List<DocumentListener> urlListeners = new ArrayList<>();
+
+    /**
+     * An {@link ArrayList} to hold all documentListeners.
+     */
     private List<DocumentListener> documentListeners = new ArrayList<>();
 
-    /**
-     * Initialize a new Document given a url
-     *
-     * @param url
-     *        The URL for this document
-     */
-    public Document(URL url) {
-        this.url = url;
-    }
+    private String urlString = "";
+    private ContentSpan contentSpan = Document.getWelcomeDocument();
+
+    // Example of a hyperlink that can be clicked
+//    private String urlString = "https://people.cs.kuleuven.be/bart.jacobs/index.html";
+//    private ContentSpan contentSpan; //= new HyperLink("browsrtest.html", new TextSpan("Welcome to Browsr! Click here to see our features!"));//new TextSpan("Welkom in Browsr!");
+    
 
     /**
-     * Set the URl of the document to the given url
+     * Initialize a new Document
+     */
+    public Document() { }
+
+    /**
+     * Initialize a new Document given a url, and two DocumentListeners representing the DocumentArea and AddressBar
      *
      * @param url
      *        The url for this document
+     * @param doc
+     *        The DocumentListener for this document
+     * @param bar
+     *        The addressbar listener for this document
      */
-    public void setUrl(URL url) {
-        this.url = url;
-        fireUrlChanged(url);
+    public Document(String url, DocumentListener doc, DocumentListener bar) {
+        this.urlString = url;
+        this.urlListeners.add(bar);
+        this.documentListeners.add(doc);
     }
 
     /**
-     * Returns the given URL of the document
+     * Set the URL of this Document to the
+     * provided string and alert the listeners.
      *
-     * @return a URL object
+     * @param url:
+     *           The url that should be set for this Document.
      */
-    public URL getUrl() {
-        return this.url;
+    public void setUrlString(String url) {
+        this.urlString = url;
+        fireUrlChanged();
     }
+
+    /**
+     * Retrieve the URL-string of this document.
+     *
+     * @return urlString:
+     *              The URL-string of this document.
+     */
+    public String getUrlString() {
+        return this.urlString;
+    }
+
+    /**
+     * Set the {@link ContentSpan} of this Document to
+     * the provided content span.
+     *
+     * @param span:
+     *             The {@link ContentSpan} that should be set for this Document.
+     */
+    public void changeContentSpan(ContentSpan span) {
+        this.contentSpan = span;
+        this.fireContentsChanged();
+    }
+
+    /**
+     * Retrieve the {@link ContentSpan}
+     * associated to this Document.
+     *
+     * @return contentSpan:
+     *              The {@link ContentSpan} associated to this Document.
+     */
+    public ContentSpan getContentSpan() {
+        return this.contentSpan;
+    }
+
 
     /**
      * Adds a given URLListener to the list of urlListeners
@@ -51,19 +107,11 @@ public class Document {
      * @param u
      *        The new UrlListener
      */
-    public void addURLListener(UrlListener u) {
+    public void addURLListener(DocumentListener u) {
         this.urlListeners.add(u);
+        fireUrlChanged();
     }
 
-    /**
-     * Removes a given URLListener from the list of urlListeners
-     *
-     * @param u
-     *        The UrlListener to be removed
-     */
-    public void removeURLListener(UrlListener u) {
-        this.urlListeners.remove(u);
-    }
 
     /**
      * Adds a given DocumentListener to the list of documentListeners
@@ -73,16 +121,7 @@ public class Document {
      */
     public void addDocumentListener(DocumentListener d) {
         this.documentListeners.add(d);
-    }
-
-    /**
-     * Removes a given DocumentListener from the list of documentListeners
-     *
-     * @param d
-     *        The DocumentListener to be removed
-     */
-    public void removeDocumentListener(DocumentListener d) {
-        this.documentListeners.remove(d);
+        fireContentsChanged();
     }
 
     /**
@@ -96,59 +135,42 @@ public class Document {
     /**
      * Let the urlListeners know that the URL has been changed
      */
-    private void fireUrlChanged(URL aUrl){
-        for(UrlListener u : urlListeners)
-            u.URLChanged(aUrl);
+    private void fireUrlChanged(){
+        for(DocumentListener u : urlListeners)
+            u.contentChanged();
     }
 
     /**
-     * Compose the document from a given string of code,
-     * and update the listeners accordingly
+     * Compose the document from a given url
+     * and update the listeners accordingly.
      *
-     * @param document: the HTML code of the document that is to be composed
+     * @param url: the url of the document that is to be composed.
      * @return a ContentSpan of the given {@code document}.
+     * @throws IOException: If one of the parts of the code isn't code that is currently supported.
      */
-    private ContentSpan composeDocument(String document) {
-        // TODO: verify whether this code of the listeners should be here
-        //fireUrlChanged(); for testing
-        fireContentsChanged();
-
-        return ContentSpanBuilder.buildContentSpan(document);
+    public ContentSpan composeDocument(URL url) throws IOException {
+        return ContentSpanBuilder.buildContentSpan(url);
     }
 
     /**
-     * Serialize the ContentSpan associated with this Document
+     * Retrieve the contents of a docoument
+     * that should be displayed when a malformed
+     * URL is entered by the user.
      *
-     * @return The content span in the form of a byte[] array
-     * @throws IOException: if the stream can't be written
+     * @return textSpan:
+     *              The {@link ContentSpan} of the error document.
      */
-   public byte[] getSerializedContentSpan(String doc) throws IOException {
-        ContentSpan contentSpan = this.composeDocument(doc);
-
-       // Create a bitstream to serialize the object
-       // see: https://www.javahelps.com/2015/07/serialization-in-java.html
-       byte[] stream = null;
-
-       try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            ObjectOutputStream oos = new ObjectOutputStream(baos);) {
-            oos.writeObject(contentSpan);
-            stream = baos.toByteArray();
-       } catch (IOException e) {
-            e.printStackTrace();
-       }
-       return stream;
-
-//        Alternative: make use of fileOutPutstream's and write serialized document to a file
-
-//        Create the output stream (see: https://www.javatpoint.com/serialization-in-java)
-//        FileOutputStream fOut = new FileOutputStream("documentStream.txt");
-//        ObjectOutputStream out = new ObjectOutputStream(fOut);
-//
-//        out.writeObject(contentSpan);
-//        out.flush();
-//
-//        // Close the stream
-//        out.close();
+    public static ContentSpan getErrorDocument() {
+        return new TextSpan("Error: malformed URL.");
     }
 
+    /**
+     * A method to retrieve the welcome page of Browsr.
+     *
+     * @return contentSpan:
+     *                  A {@link ContentSpan} that represents the welcome page.
+     */
+    public static ContentSpan getWelcomeDocument() {
+        return new TextSpan("Welcome to Browsr!");
+    }
 }

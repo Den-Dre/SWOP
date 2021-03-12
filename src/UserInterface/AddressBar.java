@@ -1,20 +1,43 @@
 package UserInterface;
 
+import domainmodel.DocumentListener;
+import domainmodel.UIController;
+
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import domainmodel.UrlListener;
 
-public class AddressBar extends Frame implements UrlListener {
-    public AddressBar(int x, int y, int width, int height, int offset) throws Exception {
+/**
+ * A class to represent an address bar in the browsr,
+ * as an extension of a Frame, in the UI layer.
+ */
+public class AddressBar extends Frame implements DocumentListener {
+
+    /**
+     * Creates an AddressBar object.
+     *
+     * @param x: x-position on the window
+     * @param y: y-position on the window
+     * @param width: the width of this AddressBar
+     * @param height: the height of this AddressBar
+     * @param offset: distance between this AddressBar and left, right and top window edge
+     * @throws IllegalDimensionException: When one of the dimensions of the {@link Frame} of this AddressBar is negative
+     */
+    public AddressBar(int x, int y, int width, int height, int offset) throws IllegalDimensionException {
         super(x, y, width, height);
         this.offset = offset;
     }
 
-    @Override
-    /*
-    Takes care off all the drawing in the scope of the addressBar.
+    /**
+     * Renders this {@code AddressBar} using the given {@code Graphics} parameter
+     * <ul>
+     *       <li>  Renders the url </li>
+     *       <li>  Renders the selected text </li>
+     *       <li>  Renders the cursor </li>
+     * </ul>
+     * @param g: The graphics object that is used to draw this {@code AddressBar}
      */
+    @Override
     public void Render(Graphics g) {
         setFontMetrics(g);
         updateSelectStart();
@@ -26,9 +49,11 @@ public class AddressBar extends Frame implements UrlListener {
 
     /**
      * Prints the url into the addressBar.
-     * - The color is textcolor. - The font is font.
-     * - The last term in the calculation is to draw it slightly higher than the underside of the addressBar.
-     *
+     * <ul>
+     *      <li>  The color is textcolor. </li>
+     *      <li>  The font is font.</li>
+     *      <li>  The last term in the calculation is to draw it slightly higher than the underside of the addressBar.</li>
+     * </ul>
      * @param g: The graphics that contain the information to be printed
      */
     private void printURL(Graphics g){
@@ -72,7 +97,7 @@ public class AddressBar extends Frame implements UrlListener {
     }
 
     /**
-     * Draw a rectangle of color highlightcolor behind the selected characters.
+     * Draw a rectangle of color highlight color behind the selected characters.
      *
      * @param g: The graphics that will be updated.
      */
@@ -97,6 +122,13 @@ public class AddressBar extends Frame implements UrlListener {
 
     /**
      * Handle mouseEvents. Determine if the addressBar was pressed and do the right actions.
+     *
+     * @param id: The type of mouse activity
+     * @param x: The x coordinate of the mouse activity
+     * @param y: The y coordinate of the mouse activity
+     * @param clickCount: The number of clicks
+     * @param button: The mouse button that was clicked
+     * @param modifiersEx: The control keys that were held on the click
      */
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
@@ -108,22 +140,26 @@ public class AddressBar extends Frame implements UrlListener {
                 resetSelectStart();
             }
             this.toggleFocus(true);
-            // Something else to do when clicked on addressbar?
         }
         else {
-            this.toggleFocus(false);
-            this.moveCursor(this.getURL().length()); // Put cursor at the end of AddressBar
-            // go to this.getURL()
+            // clicking out is the same as pressing enter.
+            // Only react if the addressbar has focus
+            if (hasFocus) handleEnter();
         }
     }
 
     /**
      * Returns true if and oly if the given x and y coordinates are in the addressBar area.
+     * @param x: x-coordinate
+     * @param y: y-coordinate
      */
     private boolean wasClicked(int x, int y){
         return x >= this.getxPos() && x <= (this.getxPos() + this.getWidth()) && y >= this.getyPos() && y <= (this.getyPos() + this.getHeight());
     }
 
+    /**
+     * Reset the selection cursor back to the start of this {@code AddressBar}.
+     */
     private void resetSelectStart() {
         selectStart = 0;
         selectStartPos = new int[] {this.getxPos() + (URLStart/2), this.getyPos()};
@@ -131,8 +167,15 @@ public class AddressBar extends Frame implements UrlListener {
 
     /**
      * Handle key presses. This method does the right action when a key is pressed.
-     * - If the addressBar has no focus, it does nothing.
-     * - Else, if a key is clicked, it looks at what key it is and does the corresponding action.
+     * <ul>
+     *     <li>If the addressBar has no focus, it does nothing.</li>
+     *     <li>Else, if a key is clicked, it looks at what key it is and does the corresponding action.</li>
+     * </ul>
+     *
+     * @param id: The KeyEvent (Associated with type of KeyEvent)
+     * @param keyCode: The KeyEvent code (Determines the involved key)
+     * @param keyChar: The character representation of the involved key
+     * @param modifiersEx: Specifies other keys that were involved in the event
      */
     @Override
     public void handleKey(int id, int keyCode, char keyChar, int modifiersEx) {
@@ -149,54 +192,53 @@ public class AddressBar extends Frame implements UrlListener {
             case 36 -> moveCursor(-this.getURL().length());
             case 37 -> moveCursor(-1);
             case 39 -> moveCursor(1);
-            default -> handleNoSpecialKey(id, keyCode, keyChar);
+            default -> handleNoSpecialKey(id, keyCode, keyChar, modifiersEx);
         }
         this.doSelect = (keyCode == 39 || keyCode == 37 || keyCode == 35 || keyCode == 36) && modifiersEx == 64;
         updateSelectStart();
     }
 
-    // Documentation needed? It handles the Escape key!
+    /**
+     * Contains the actions needed for the escape key
+     * <ul>
+     *     <li>This AddressBars focus is set to false</li>
+     *     <li>This url is reset to before editing</li>
+     *     <li>The cursor is moved to the end of the url</li>
+     * </ul>
+     */
     private void handleEscape() {
         this.toggleFocus(false);
         this.setURL(this.getOldUrl());
         this.moveCursor(this.getURL().length());
     }
 
-    // Documentation needed? It handles the Enter key!
+    /**
+     * Contains the actions needed for the enter key
+     * <ul>
+     *     <li>This AddressBars focus is set to false</li>
+     *     <li>The editing of the url is finalized</li>
+     *     <li>The cursor is moved to the end of the url</li>
+     * </ul>
+     */
     private void handleEnter() {
         this.toggleFocus(false);
         this.updateCopyUrl();
         this.moveCursor(this.getURL().length());
-        // navigate to this.getURL()
+        System.out.println("Enter pressed");
+        System.out.println(this.getURL());
+        if (uiController != null)
+            this.uiController.loadDocument(this.getURL());
     }
-
-    // TODO reimplement when controller is ready
-    /**
-     *  Signals that the url has been changed to a given url
-     *
-     * @param url
-     *        The new URL for the address bar
-     */
-    public void URLChanged(java.net.URL url) {
-        // String newUrl = this.uiController.getUrl();
-        this.URL = url.toString(); // for testing
-    }
-
-    /**
-     *  Notifies the Document that the contents have been changed
-     */
-    // TODO discuss if this is the right way to do it
-    // This method should only be implemented in the case that the contents of a Document can chage,
-    // without affecting the URL in the AddressBar. However, in this iteration of the project this is impossible.
-    public void contentChanged() { }
-
 
     /**
      * Remove characters in the following manner:
-     * => If backspace is pressed, zero, one or more characters need to be removed.
-     * => If no characters are selected. The character before the cursor is removed.
-     *    If there are (one or more) selected characters, these are removed.
-     * => The cursor position is then adjusted accordingly.
+     * <ul>
+     *     <li>If backspace is pressed, zero, one or more characters need to be removed.</li>
+     *     <li>If no characters are selected. The character before the cursor is removed.
+     *         If there are (one or more) selected characters, these are removed.</li>
+     *     <li>The cursor position is then adjusted accordingly.</li>
+     * </ul>
+     * @param mode: if 0, function acts as backspace, else as delete
      */
     private void handleRemoveCharacters(int mode) {
         if (getURL().length() == 0) return;
@@ -227,15 +269,26 @@ public class AddressBar extends Frame implements UrlListener {
     }
 
     /**
-     * => This method handles all the normal keys on the keyboard with keyCodes in these ranges: [44,111], [512,523]
-     * These contain normal letters, numbers and some more.
-     * => !! Not all characters are supported yet.
-     * (You need to look at a keyCode table and look which characters can be typed, e.g. some special keys that need shift can't be pressed yet)
-     * => The characters are inserted at the cursor location.
-     * => If text is selected, it will be replaced with the typed character.
+     * <ul>
+     *     <li>This method handles all the normal keys on the keyboard with keyCodes in these ranges: [44,111], [512,523]
+     *     These contain normal letters, numbers and some more.</li>
+     *     <li>!! Not all characters are supported yet.</li>
+     *     <li>(You need to look at a keyCode table and look which characters can be typed, e.g. some special keys that need shift can't be pressed yet)</li>
+     *     <li>The characters are inserted at the cursor location.</li>
+     *     <li>If text is selected, it will be replaced with the typed character.</li>
+     * </ul>
+     *
+     * Based on: https://stackoverflow.com/questions/15313469/java-keyboard-keycodes-list
+     *
+     * @param id: the KeyEvent id associated with the type of KeyEvent
+     * @param keyCode: the KeyEvent code associated with the key
+     * @param keyChar: the character representation of the pressed key
      */
-    private void handleNoSpecialKey(int id, int keyCode, char keyChar) {
-        if ((keyCode >= 44 && keyCode <= 111) || (keyCode >= 512 && keyCode <= 523)) {
+    private void handleNoSpecialKey(int id, int keyCode, char keyChar, int modifier) {
+        if ((keyCode >= 44 && keyCode <= 111) || (keyCode >= 512 && keyCode <= 523) ||
+                (keyCode == KeyEvent.VK_SPACE) || (keyCode >= 128 && keyCode <= 143) ||
+                (keyCode >= 150 && keyCode <= 153) || (keyCode >= 160 && keyCode <= 162) ||
+                (keyCode == 192) || (keyCode == 222)) {
             if (doSelect) handleRemoveCharacters(0);
             StringBuilder newUrl = new StringBuilder(this.getURL());
             newUrl.insert(this.cursor, keyChar);
@@ -248,48 +301,38 @@ public class AddressBar extends Frame implements UrlListener {
      * This method handles resizes.
      * It makes sure the addressBar is adjusted in width when the window shrinks or grows.
      * It does not change its height (e.g. look at Firefox).
+     *
+     * @param newWindowHeight: parameter containing the new window-height
+     * @param newWindowWidth: parameter containing the new window-width
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
         this.setWidth(newWindowWidth-2*offset);
     }
 
-    // Distance between addressBar and the window edges
-    int offset;
-
-    //Two URL's to be able to 'rollback' the old url if editing is cancelled.
-    // URL is the variable to be edited. URLCopy gets updated after it is certain the edited url is final.
-    private String URL = ""; // The url starts empty
-    private String URLCopy = URL;
-    private final int URLStart = this.getxPos()+5;
-
-    // Cursor variables
-    private int cursor = 0;
-    private final int[] cursorDimensions = new int[] {3, this.getHeight()*3/4};
-    private int[] cursorPos = new int[] {this.getxPos() + (URLStart/2), getCursorYPos()};
-    private final Color cursorColor = Color.BLACK;
-    // TODO: link this to the UIController object
-
-    // Selection variables
-    private boolean doSelect = false;
-    private int selectStart = 0;
-    private int[] selectStartPos = new int[] {this.getxPos() + (URLStart/2), this.getyPos()};
-    private final Color highlightColor = Color.BLUE;
-
-    // Font variables
-    Font font = new Font(Font.DIALOG_INPUT, Font.PLAIN, this.getHeight()*3/4);
-    FontMetrics metrics;
-    int textHeight;
-    private final Color textColor = Color.BLACK;
-
-    /*
-    Getters and setters for some variables:
+    /**
+     * Get the current url of the AddressBar.
+     *
+     * @return the url string of this AddressBar.
      */
     public String getURL() {
         return URL;
     }
 
-    // externally change the url, this moves the cursor to the right and toggles focus off.
+    /**
+     * Set the URL of the addressBar to a given URL
+     * @param URL
+     *        The new URL for this Document
+     */
+    public void setURL(String URL) {
+        this.URL = URL;
+    }
+
+    /**
+     * Externally change the url, this moves the cursor to the right and toggles focus off.
+     * @param URL
+     *        The String representation of the url to be set
+     */
     public void changeURLto(String URL) {
         this.URL = URL;
         moveCursor(this.getURL().length());
@@ -297,14 +340,29 @@ public class AddressBar extends Frame implements UrlListener {
         toggleFocus(false);
     }
 
-    private void setURL(String URL) {
-        this.URL = URL;
+    /**
+     * Set the uiController of the AddressBar to the given uiController
+     *
+     * @param uiController
+     *        The uiController to be set
+     */
+    public void setUiController(UIController uiController) {
+        this.uiController = uiController;
     }
 
-    private String getOldUrl() {
+    /**
+     * Retrurn the old URL of the adressBar
+     *
+     * @return url:
+     *          The old URL linked to this AddressBar.
+     */
+    public String getOldUrl() {
         return this.URLCopy;
     }
 
+    /**
+     * Updates the URLCopy to the new URL
+     */
     private void updateCopyUrl() {
         this.URLCopy = this.URL;
     }
@@ -312,7 +370,8 @@ public class AddressBar extends Frame implements UrlListener {
     /**
      * Move the cursor delta index positions in the url.
      * It cannot move further than the length of the url (both left and right)
-     * @param delta: The amomunt that the cursor should be moved.
+     *
+     * @param delta: The amount that the cursor should be moved.
      */
     private void moveCursor(int delta) {
         int urlLength = this.getURL().length();
@@ -328,4 +387,129 @@ public class AddressBar extends Frame implements UrlListener {
     private int getCursorYPos() {
         return getyPos()+(getHeight()-cursorDimensions[1])/2;
     }
+
+    /**
+     *  Signals that the url has been changed to a given url
+     */
+    @Override
+    public void contentChanged() {
+        String newUrl = uiController.getUrlString();
+        this.changeURLto(newUrl);
+    }
+
+    // ===============URL variables =====================
+    /**
+     * Distance between addressBar and the window edges
+     */
+    int offset;
+
+    /**
+     * A string variable to hold the
+     * current contents of this AddressBar
+     */
+    private String URL = ""; // The url starts off empty
+
+    /**
+     * Two URL's should be used to be able to 'rollback'
+     * the old url if editing is cancelled.
+     * URLCopy gets updated after it is certain the edited url is final.
+     */
+    private String URLCopy = URL;
+
+    /**
+     * An integer variable to denote the position
+     * where the cursor should return to if it
+     * is placed at the start of this AddressBar.
+     */
+    private final int URLStart = this.getxPos()+5;
+
+    /**
+     * The {@link UIController} object that is
+     * linked to this AddressBar.
+     */
+    private UIController uiController;
+
+    /**
+     * An integer variable to denote the current
+     * position of the cursor in this AddressBar
+     */
+    private int cursor = 0;
+
+    /**
+     * An integer variable to denote the graphical
+     * dimensions of the cursor displayed this AddressBar.
+     */
+    private final int[] cursorDimensions = new int[] {3, this.getHeight()*3/4};
+
+    /**
+     * An integer array that contains two values:
+     * <ul>
+     *     <li>The current x coordinate of the cursor </li>
+     *     <li>The current y coordinate of the cursor</li>
+     * </ul>
+     */
+    private int[] cursorPos = new int[] {this.getxPos() + (URLStart/2), getCursorYPos()};
+
+    /**
+     * A variable that holds the {@link Color}
+     * of the cursor in this AddressBar.
+     */
+    private final Color cursorColor = Color.BLACK;
+
+    // =============== Selection Variables ===================
+    /**
+     * A boolean variable to denote whether the user
+     * is currently selecting content of this AddressBar.
+     */
+    private boolean doSelect = false;
+
+    /**
+     * An integer variable to denote the start
+     * of a selection action in this AddressBar.
+     */
+    private int selectStart = 0;
+
+    /**
+     * An integer array that contains two values:
+     * <ul>
+     *     <li>The current x coordinate of the content selection action </li>
+     *     <li>The current y coordinate of the content selection action</li>
+     * </ul>
+     */
+    private int[] selectStartPos = new int[] {this.getxPos() + (URLStart/2), this.getyPos()};
+
+    /**
+     * A variable that denotes the {@link Color}
+     * that should be displayed when selecting
+     * content of this AddressBar.
+     */
+    private final Color highlightColor = Color.BLUE;
+
+    // ================ Font variables =======================
+    /**
+     * A variable to denote the {@link Font}
+     * the text displayed in this AddressBar
+     * should be typed in.
+     */
+    Font font = new Font(Font.DIALOG_INPUT, Font.PLAIN, this.getHeight()*3/4);
+
+    /**
+     * A variable to hold the {@link FontMetrics}
+     * associated to the text in this AddressBar
+     */
+    FontMetrics metrics;
+
+    /**
+     * An integer variable to denote the
+     * height of the text displayed in this
+     * AddressBar.
+     */
+    int textHeight;
+
+    /**
+     * A variable to denote the
+     * {@link Color} of the text
+     * displayed in this AddressBar.
+     */
+    private final Color textColor = Color.BLACK;
 }

@@ -3,6 +3,9 @@ package UserInterface;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * A class to represent tables in the UI layer.
+ */
 public class UITable extends DocumentCell{
 
     /**
@@ -13,8 +16,9 @@ public class UITable extends DocumentCell{
      * @param width: The width of this {@code UITable}.
      * @param height: The height of this {@code UITable}.
      * @param rows: The number of rows of this {@code UITable}.
+     * @throws IllegalDimensionException: When negative dimensions are supplied.
      */
-    public UITable(int x, int y, int width, int height, ArrayList<ArrayList<DocumentCell>> rows) throws Exception {
+    public UITable(int x, int y, int width, int height, ArrayList<ArrayList<DocumentCell>> rows) throws IllegalDimensionException {
         super(x, y, width, height);
 
         // => 1. Initialise the grid
@@ -37,13 +41,13 @@ public class UITable extends DocumentCell{
                 cell.Render(g);
             }
         }
-        if (calculateActualWidth) {
+        if (isCalculateActualWidth()) {
             setColumnWidths();
             setRowHeights();
         }
         // Draw a rectangle around the table for debugging purposes
         g.setColor(Color.BLACK);
-        g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
+        //g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
     }
 
     /**
@@ -180,6 +184,12 @@ public class UITable extends DocumentCell{
         setWidth(getMaxWidth());
     }
 
+    /**
+     * Set the x position of this Table to the given value
+     *
+     * @param xPos:
+     *            The new x position this Table will be set to.
+     */
     @Override
     public void setxPos(int xPos) {
         super.setxPos(xPos);
@@ -187,21 +197,44 @@ public class UITable extends DocumentCell{
     }
 
     /**
-     * Reset the {@code rowHeights} and {@code columnWidths} to empty lists.
+     * Set the y position of this Table to the given value
+     *
+     * @param yPos:
+     *            The new y position this Table will be set to.
      */
-    private void resetWidthsHeights() {
-        rowHeights = new ArrayList<>(); // Contains the height for each row
-        columnWidths = new ArrayList<>(); // Contains the width for each column
-    }
-
     @Override
     public void setyPos(int yPos) {
         super.setyPos(yPos);
         setRowHeights();
     }
 
-    private ArrayList<ArrayList<DocumentCell>> grid;
-    private ArrayList<Integer> rowHeights = new ArrayList<>(); // Contains the height for each row
-    private ArrayList<Integer> columnWidths = new ArrayList<>(); // Contains the width for each column
+    /**
+     * simple getter, only for debug purposes
+     *
+     * @return grid:
+     *          The grid that holds the {@link DocumentCell}'s of this UITable.
+     *
+     */
+    public ArrayList<ArrayList<DocumentCell>> getContent() {
+    	return this.grid;
+    }
 
+    /**
+     * An {@link ArrayList} that contains {@link ArrayList}'s
+     * that on their turn contain {@link DocumentCell}'s to
+     * denote the cells of this table.
+     */
+    private final ArrayList<ArrayList<DocumentCell>> grid;
+
+    /**
+     * An {@link ArrayList} that contains integers that
+     * represent the heights of the rows in this Table.
+     */
+    private ArrayList<Integer> rowHeights = new ArrayList<>(); // Contains the height for each row
+
+    /**
+     * An {@link ArrayList} that contains integers that
+     * represent the widths of the columns of this Table.
+     */
+    private ArrayList<Integer> columnWidths = new ArrayList<>(); // Contains the width for each column
 }
