@@ -17,7 +17,7 @@ public class Document {
     private List<DocumentListener> documentListeners = new ArrayList<>();
 
     private String urlString = "";
-    private ContentSpan contentSpan = new TextSpan("Welkom in Browsr!");
+    private ContentSpan contentSpan = Document.getWelcomeDocument();
 
 //    private String urlString = "https://people.cs.kuleuven.be/bart.jacobs/index.html";
 //    private ContentSpan contentSpan = new HyperLink("browsrtest.html", new TextSpan("Klik hier"));//new TextSpan("Welkom in Browsr!");
@@ -151,5 +151,9 @@ public class Document {
      */
     public static ContentSpan getErrorDocument() {
         return new TextSpan("Error: malformed URL.");
+    }
+
+    public static ContentSpan getWelcomeDocument() {
+        return new TextSpan("Welcome to Browsr!");
     }
 }
