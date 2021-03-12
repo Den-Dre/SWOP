@@ -5,6 +5,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import domainmodel.*;
 import UserInterface.*;
+import browsrhtml.*;
 
 import java.awt.event.MouseEvent;
 import java.awt.KeyEventDispatcher;
@@ -80,14 +81,12 @@ class HyperLinkTest{
 	@Test
 	@DisplayName("Compose full URL")
 	void composeFullURL() {
-		ctrl.changeURL("https://people.cs.kuleuven.be/bart.jacobs/index.html");
-		//("https://people.cs.kuleuven.be/bart.jacobs/index.html");
-		doc.setContent(goodLink);
-        int width = goodLink.getWidth();
-        System.out.println("ctrl cs: "+ctrl.getContentSpan());
-        // hit the link
-		doc.handleMouse(mouseClick, 11, 30, 0, leftMouse, 0);
-		// we traveled to this hyperlink, hence the url of the document has changed
+		// browsr is already initialised with prof. Jacobs' index.html url
+		String href = "browsrtest.html";
+		// compose url with href and load the document
+		ctrl.loadDocumentFromHref(href);
+		
+		// we traveled to this new url, hence the url in the bar has changed
 		assertEquals(bar.getURL().toString(), "https://people.cs.kuleuven.be/bart.jacobs/browsrtest.html");
 		
 	}
@@ -96,12 +95,10 @@ class HyperLinkTest{
 	@Test
 	@DisplayName("Load the document and show it")
 	void loadAndShowDoc() {
-		doc.controller.changeURL("https://people.cs.kuleuven.be/bart.jacobs/index.html");
-		doc.setContent(goodLink);
-		// click on link
-        int width = goodLink.getWidth();
-        // to make sure we really hit the link
-		doc.handleMouse(mouseClick, width-1, 5, 0, leftMouse, 0);	
+		// browsr is already initialised with prof. Jacobs' index.html url
+		String href = "browsrtest.html";
+		// compose url with href and load the document
+		ctrl.loadDocumentFromHref(href);
 		
 		// check if document has changed
 		assertEquals(doc.getContent().getClass(), UITable.class);
@@ -113,12 +110,10 @@ class HyperLinkTest{
 	@Test
 	@DisplayName("Update Address bar to show full URL")
 	void updateAddressBar() {
-		doc.controller.changeURL("https://people.cs.kuleuven.be/bart.jacobs/index.html");
-		doc.setContent(goodLink);
-		// click on link
-        int width = goodLink.getWidth();
-        // to make sure we really hit the link
-		doc.handleMouse(mouseClick, width-1, 5, 0, leftMouse, 0);	
+		// browsr is already initialised with prof. Jacobs' index.html url
+		String href = "browsrtest.html";
+		// compose url with href and load the document
+		ctrl.loadDocumentFromHref(href);
 		
 		// check Addressbar
 		assertEquals(bar.getURL(), 
