@@ -18,7 +18,7 @@ class UITableTest {
     private UIHyperlink link;
     int textSize = 15;
     String href = "/wiki/Java";
-    String hrefText = "Java";
+    String hrefText = "Java-lange-string";
     String text = "oefentext";
     String text2 = "aa";
 
@@ -116,6 +116,15 @@ class UITableTest {
     }
 
     @Test
+    void handleResize() {
+        // Do a resize-operation
+        table1.handleResize(500,500);
+        // Check if the columns-and rows are still set correctly
+        setColumnWidths();
+        setRowHeights();
+    }
+
+    @Test
     @DisplayName("adjusts the x-position of it and its contents")
     void setxPos() {
         int newpos = 10;
@@ -130,5 +139,12 @@ class UITableTest {
         table1.setyPos(newypos);
         assertEquals(newypos, table1.getyPos());
         setRowHeights();
+    }
+
+    @Test
+    void invalidDimensions() throws IllegalDimensionException {
+        IllegalDimensionException exception = assertThrows(IllegalDimensionException.class, () -> {
+            new UITable(-1,10,10,10,null);
+        });
     }
 }

@@ -7,6 +7,7 @@ import java.awt.*;
  * elements that need to be rendered.
  */
 public class DocumentCell extends Frame {
+
     /**
      * Initialise this DocumentCell with the given parameters.
      *
@@ -14,9 +15,9 @@ public class DocumentCell extends Frame {
      * @param y: The y coordinate of this DocumentCell
      * @param width: The width of this DoucmentCell
      * @param height: The height of this DoucmentCell
-     * @throws Exception: When the dimensions of {@code super} are illegal.
+     * @throws IllegalDimensionException: When the dimensions of {@code super} are illegal.
      */
-    public DocumentCell(int x, int y, int width, int height) throws Exception {
+    public DocumentCell(int x, int y, int width, int height) throws IllegalDimensionException {
         super(x, y, width, height);
     }
 

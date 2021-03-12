@@ -13,6 +13,7 @@ import java.util.Arrays;
  * as an extension of a Frame, in the UI layer.
  */
 public class AddressBar extends Frame implements DocumentListener {
+
     /**
      * Creates an AddressBar object.
      *
@@ -21,9 +22,9 @@ public class AddressBar extends Frame implements DocumentListener {
      * @param width: the width of this AddressBar
      * @param height: the height of this AddressBar
      * @param offset: distance between this AddressBar and left, right and top window edge
-     * @throws Exception: When one of the dimensions of the {@link Frame} of this AddressBar is negative
+     * @throws IllegalDimensionException: When one of the dimensions of the {@link Frame} of this AddressBar is negative
      */
-    public AddressBar(int x, int y, int width, int height, int offset) throws Exception {
+    public AddressBar(int x, int y, int width, int height, int offset) throws IllegalDimensionException {
         super(x, y, width, height);
         this.offset = offset;
     }
@@ -139,12 +140,9 @@ public class AddressBar extends Frame implements DocumentListener {
             // Something else to do when clicked on addressbar?
         }
         else {
-            // clicking out is the same as pressing enter
-             handleEnter();
-
-//            this.toggleFocus(false);
-//            this.moveCursor(this.getURL().length()); // Put cursor at the end of AddressBar
-//            // go to this.getURL()
+            // clicking out is the same as pressing enter.
+            // Only react if the addressbar has focus
+            if (hasFocus) handleEnter();
         }
     }
 

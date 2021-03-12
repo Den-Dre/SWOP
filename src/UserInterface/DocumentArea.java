@@ -16,7 +16,7 @@ import java.util.List;
  * It should then call this.controller.loadDocument(newUrl)
  */
 public class DocumentArea extends Frame implements DocumentListener {
-    public DocumentArea(int x, int y, int width, int height) throws Exception {
+    public DocumentArea(int x, int y, int width, int height) throws IllegalDimensionException {
         super(x, y, width, height);
 
 //        ContentSpan content = this.controller.getContentSpan();
@@ -30,9 +30,8 @@ public class DocumentArea extends Frame implements DocumentListener {
      *
      * @param contents: The contents to be translated to UI elements.
      * @return a DocumentCell derived class that can be rendered on screen
-     * @throws Exception: when one of the sub elements can't be translated.
      */
-    private DocumentCell translateToUIElements(ContentSpan contents) throws Exception {
+    private DocumentCell translateToUIElements(ContentSpan contents) {
     	final String packageName = "domainmodel";
     	DocumentCell newUIContents = null;
     	
@@ -52,40 +51,41 @@ public class DocumentArea extends Frame implements DocumentListener {
      *
      * @param content: The content to be translated to UI elements.
      * @return a UITable with the translated elements
-     * @throws Exception: When one of the sub elements can't be translated.
      */
-    private UITable translateTable(Table content) throws Exception {
-    	// get sub elements
-    	ArrayList<ArrayList <DocumentCell>> UIrows = new ArrayList<ArrayList <DocumentCell>>();
-    	// draw the table
-    	List<TableRow> rows = content.getRows();
-    	for (TableRow row : rows)
-    		UIrows.add(translateRow(row));
-    	
-    	return new UITable(this.getxPos(), this.getyPos(), this.getWidth(), this.getHeight(), UIrows);
+    private UITable translateTable(Table content) {
+    	try {
+            // get sub elements
+            ArrayList<ArrayList<DocumentCell>> UIrows = new ArrayList<ArrayList<DocumentCell>>();
+            // draw the table
+            List<TableRow> rows = content.getRows();
+            for (TableRow row : rows)
+                UIrows.add(translateRow(row));
+
+            return new UITable(this.getxPos(), this.getyPos(), this.getWidth(), this.getHeight(), UIrows);
+        }
+    	catch(IllegalDimensionException e){
+    	    System.out.print("Invalid UITable dimensions");
+    	    return null;
+        }
     }
     
     /**
-     * Translates a Cell from the domainmodel into the simplified UI-representation.
-     *
-     * @param content: The content to be translated to UI elements.
-     * @return a DocumentCell with translated elements.
-     * @throws Exception: When one of the sub elements can't be translated.
+     * Translates a Cell from the domainmodel into the simplified UI-representation
+     * @param content
+     * @return a DocumentCell with translated elements
      */
-    private DocumentCell translateCell(TableCell content) throws Exception {
+    private DocumentCell translateCell(TableCell content) {
     	// get sub-elements    	
     	ContentSpan cellContent = content.getContent();
     	return translateToUIElements(cellContent); 
     }
     
     /**
-     * Translates a Row from the domainmodel into the simplified UI-representation.
-     *
-     * @param content: The content to be translated to UI elements.
-     * @return an ArrayList<DocumentCell> with translated elements.
-     * @throws Exception: When one of the sub elements can't be translated.
+     * Translates a Row from the domainmodel into the simplified UI-representation
+     * @param content
+     * @return an ArrayList<DocumentCell> with translated elements
      */
-    private ArrayList<DocumentCell> translateRow(TableRow content) throws Exception {
+    private ArrayList<DocumentCell> translateRow(TableRow content) {
 		// get sub elements
     	ArrayList<DocumentCell> row = new ArrayList<DocumentCell>();
     	List<TableCell> cells = content.getCells();
@@ -97,18 +97,22 @@ public class DocumentArea extends Frame implements DocumentListener {
     }
     
     /**
-     * Translates a HyperLink from the domainmodel into the simplified UI-representation.
-     *
-     * @param content: The content to be translated to UI elements.
-     * @return a UIHyperlink with translated elements.
-     * @throws Exception: When one of the sub elements can't be translated.
+     * Translates a HyperLink from the domainmodel into the simplified UI-representation
+     * @param content
+     * @return a UIHyperlink with translated elements
      */
-    private DocumentCell translateHL(HyperLink content) throws Exception {
-    	// get arguments
-    	String href = content.getHref();
-    	String text = content.getTextSpan().getText();
-    	// return UIHyperlink with arguments
-    	return new UIHyperlink(getxPos(), getyPos(), getWidth(), textSize, href, text);
+    private DocumentCell translateHL(HyperLink content) {
+    	try {
+            // get arguments
+            String href = content.getHref();
+            String text = content.getTextSpan().getText();
+            // return UIHyperlink with arguments
+            return new UIHyperlink(getxPos(), getyPos(), getWidth(), textSize, href, text);
+        }
+    	catch(IllegalDimensionException e){
+    	    System.out.print("Invalid UIHyperLink dimensions");
+    	    return null;
+        }
     }
     
     /**
@@ -116,17 +120,22 @@ public class DocumentArea extends Frame implements DocumentListener {
      *
      * @param content: The content to be translated to UI elements.
      * @return a UITextField with translated elements
-     * @throws Exception: when one of the sub elements can't be translated.
      */
-    private DocumentCell translateTextSpan(TextSpan content) throws Exception {
-    	System.out.println("TEXT: " + content.getText());
-    	return new UITextField(getxPos(), getyPos(), getWidth(), textSize, content.getText());
+    private DocumentCell translateTextSpan(TextSpan content)  {
+        try {
+            System.out.println("TEXT: " + content.getText());
+            return new UITextField(getxPos(), getyPos(), getWidth(), textSize, content.getText());
+        }
+        catch(IllegalDimensionException e){
+            System.out.print("Invalid UITextField dimensions");
+            return null;
+        }
     }
-    
-    
-    
+
+
     /**
-     * Renders the content. The content renders its sub-content recursively if existent.
+     * Renders the content. The content renders its sub-content recursively if existent
+     * @param g
      */
     @Override
     public void Render(Graphics g) {
