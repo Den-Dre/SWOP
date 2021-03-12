@@ -135,7 +135,7 @@ public class Browsr extends CanvasWindow {
     private int addressBarHeight = 15;
 
     /**
-     * An integer varible to denote the offset of the AddressBar
+     * An integer variable to denote the offset of the AddressBar
      * that is linked to this Browsr.
      */
     private int addressBarOffset = 5;
