@@ -12,7 +12,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class Document {
-    private URL url;
 
     private List<DocumentListener> urlListeners = new ArrayList<>();
     private List<DocumentListener> documentListeners = new ArrayList<>();
@@ -23,17 +22,6 @@ public class Document {
 //    private String urlString = "https://people.cs.kuleuven.be/bart.jacobs/index.html";
 //    private ContentSpan contentSpan = new HyperLink("browsrtest.html", new TextSpan("Klik hier"));//new TextSpan("Welkom in Browsr!");
 
-
-
-    /**
-     * Initialize a new Document given a url
-     *
-     * @param url
-     *        The URL for this document
-     */
-    public Document(URL url) {
-        this.url = url;
-    }
 
     /**
      * Initialize a new Document
@@ -50,23 +38,11 @@ public class Document {
      * @param bar
      *        The addressbar listener for this document
      */
-    public Document(URL url, DocumentListener doc, DocumentListener bar) {
-        this.url = url;
+    public Document(String url, DocumentListener doc, DocumentListener bar) {
+        this.urlString = url;
         this.urlListeners.add(bar);
         this.documentListeners.add(doc);
     }
-
-//    /**
-//     * Set the URl of the document to the given url
-//     *
-//     * @param url
-//     *        The url for this document
-//     */
-//    public void setUrl(URL url) {
-//        this.url = url;
-//        //fireUrlChanged();
-//        fireContentsChanged();
-//    }
 
     /**
      * Set the URL of this Document to the
@@ -113,14 +89,6 @@ public class Document {
         return this.contentSpan;
     }
 
-//    /**
-//     * Returns the given URL of the document
-//     *
-//     * @return a URL object
-//     */
-//    public URL getUrl() {
-//        return this.url;
-//    }
 
     /**
      * Adds a given URLListener to the list of urlListeners
@@ -133,15 +101,6 @@ public class Document {
         fireUrlChanged();
     }
 
-    /**
-     * Removes a given URLListener from the list of urlListeners
-     *
-     * @param u
-     *        The UrlListener to be removed
-     */
-    public void removeURLListener(DocumentListener u) {
-        this.urlListeners.remove(u);
-    }
 
     /**
      * Adds a given DocumentListener to the list of documentListeners
@@ -152,16 +111,6 @@ public class Document {
     public void addDocumentListener(DocumentListener d) {
         this.documentListeners.add(d);
         fireContentsChanged();
-    }
-
-    /**
-     * Removes a given DocumentListener from the list of documentListeners
-     *
-     * @param d
-     *        The DocumentListener to be removed
-     */
-    public void removeDocumentListener(DocumentListener d) {
-        this.documentListeners.remove(d);
     }
 
     /**
@@ -181,22 +130,6 @@ public class Document {
     }
 
     /**
-     * Compose the document from a given string of code,
-     * and update the listeners accordingly
-     *
-     * @param document: the HTML code of the document that is to be composed
-     * @return a ContentSpan of the given {@code document}.
-     */
-    public ContentSpan composeDocument(String document) {
-        // TODO: verify whether this code of the listeners should be here
-        // I think not, the contentchanged is called elsewhere
-        //fireUrlChanged(); for testing
-        //fireContentsChanged();
-
-        return ContentSpanBuilder.buildContentSpan(document);
-    }
-
-    /**
      * Compose the document from a given url
      * and update the listeners accordingly.
      *
@@ -205,11 +138,6 @@ public class Document {
      * @throws IOException
      */
     public ContentSpan composeDocument(URL url) throws IOException {
-        // TODO: verify whether this code of the listeners should be here
-        // I think not, the contentchanged is called elsewhere
-        //fireUrlChanged(); for testing
-        //fireContentsChanged();
-
         return ContentSpanBuilder.buildContentSpan(url);
     }
 
