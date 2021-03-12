@@ -16,7 +16,7 @@ public class UIHyperlink extends DocumentCell{
      * @param width: the width of this {@code UIHyperlink}
      * @param link_size: The height of this {@code UIHyperlink}
      * @param href: The value of the href attribute of this {@code UIHyperlink}
-     * @throws IllegalDimensionException
+     * @throws IllegalDimensionException: When negative dimensions are provided.
      */
     public UIHyperlink(int x, int y, int width, int link_size, String href, String text) throws IllegalDimensionException {
         super(x, y, width, link_size);
@@ -126,7 +126,7 @@ public class UIHyperlink extends DocumentCell{
     /**
      * An integer variable to denote the height of the text of this UIHyperlink.
      */
-    private int textHeight;
+    private final int textHeight;
     /**
      * An integer variable to denote the width of the text of this UIHyperlink.
      */
@@ -136,11 +136,11 @@ public class UIHyperlink extends DocumentCell{
     /**
      * A variable to denote the {@link Font} of the text of this UIHyperlink
      */
-    private Font hyperlinkFont = new Font(Font.SANS_SERIF, Font.PLAIN, getHeight());
+    private final Font hyperlinkFont = new Font(Font.SANS_SERIF, Font.PLAIN, getHeight());
     /**
      * A variable to denote the {@link Color} of the text of this UIHyperlink
      */
-    private Color hyperlinkColor = Color.BLUE;
+    private final Color hyperlinkColor = Color.BLUE;
     /**
      * A variable to denote the {@link FontMetrics} of the text of this UIHyperlink.
      */

@@ -30,7 +30,7 @@ public class ContentSpanBuilderTest {
 				    </table>
 				</table>
 				""");
-        this.verifyContents(contentSpan);
+        verifyContents(contentSpan);
     }
 
     @Test
@@ -38,7 +38,7 @@ public class ContentSpanBuilderTest {
 	void testWithURL() throws IOException {
 		URL url = new URL(new URL("https://people.cs.kuleuven.be/~bart.jacobs/index.html"), "browsrtest.html");
     	ContentSpan contentSpan = ContentSpanBuilder.buildContentSpan(url);
-    	this.verifyContents(contentSpan);
+    	verifyContents(contentSpan);
 	}
 
 	public static void verifyContents(ContentSpan contentSpan) {

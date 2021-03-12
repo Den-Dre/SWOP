@@ -1,53 +1,46 @@
-import static org.junit.jupiter.api.Assertions.*;
-
+import UserInterface.*;
+import domainmodel.ContentSpan;
+import domainmodel.TextSpan;
+import domainmodel.UIController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import domainmodel.*;
-import UserInterface.*;
-import browsrhtml.*;
 
 import java.awt.event.MouseEvent;
-import java.awt.KeyEventDispatcher;
-import java.awt.event.KeyEvent;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class HyperLinkTest{
 	
     private AddressBar bar;
     private DocumentArea doc;
-    private Browsr browsr = null;
-	private UIController ctrl;
-    private int offset = 5;
+    private UIController ctrl;
 
-    private UIHyperlink goodLink;
-	
     private UIHyperlink link1;
     private UIHyperlink link2;
-    private int height1 = 10;
-    private int height2 = 100;
-    private String href1 = "/wiki/SWOP";
-    private String text1 = "klik hier voor swop";
-    private String href2 = "heeeel lange href!!!!!";
-    private String text2 = "kort.";
-
-    private final int mouseClick = MouseEvent.MOUSE_CLICKED;
-    private final int leftMouse = MouseEvent.BUTTON1;
+    private final String href1 = "/wiki/SWOP";
+    private final String href2 = "heeeel lange href!!!!!";
 
     @BeforeEach
     void setUp() throws Exception {
-    	        
-        browsr = new Browsr("browsr");
+
+        Browsr browsr = new Browsr("browsr");
         
         bar = browsr.getAddressBar();
         doc = browsr.getDocumentArea();
         
 		ctrl = doc.controller;
-    	
-        link1 = new UIHyperlink(0,0,0,height1, href1, text1);
 
-        link2 = new UIHyperlink(10,15,0,height2, href2, text2);
-        
-        goodLink = new UIHyperlink(10, 10, 0, height1, "browsrtest.html", text1);
+        int height1 = 10;
+        String text1 = "klik hier voor swop";
+        link1 = new UIHyperlink(0,0,0, height1, href1, text1);
+
+        int height2 = 100;
+        String text2 = "kort.";
+        link2 = new UIHyperlink(10,15,0, height2, href2, text2);
+
+        UIHyperlink goodLink = new UIHyperlink(10, 10, 0, height1, "browsrtest.html", text1);
     }
 	// ===== main success scenario =====
 	
@@ -61,6 +54,8 @@ class HyperLinkTest{
         // LINK 1
         int link1Width = link1.getWidth();
         // Click not on link1
+        int mouseClick = MouseEvent.MOUSE_CLICKED;
+        int leftMouse = MouseEvent.BUTTON1;
         String result = link1.getHandleMouse(mouseClick,link1Width+1, 5, 0, leftMouse, 0);
         assertEquals("", result);
         // Click on link1

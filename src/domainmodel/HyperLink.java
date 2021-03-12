@@ -8,13 +8,13 @@ public class HyperLink extends ContentSpan {
      * A string that represents the href
      * attribute of this HyperLink.
      */
-    private String href;
+    private final String href;
 
     /**
      * A {@link TextSpan} that represents
-     * the text disiplayed by this HyperLink.
+     * the text displayed by this HyperLink.
      */
-    private TextSpan textSpan;
+    private final TextSpan textSpan;
 
     /**
      * Create a HyperLink with the given parameters.

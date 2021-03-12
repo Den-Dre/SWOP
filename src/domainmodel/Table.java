@@ -10,7 +10,7 @@ public class Table extends ContentSpan {
     /**
      * The rows of this Table.
      */
-    private List<TableRow> rows;
+    private final List<TableRow> rows;
 
     /**
      * Initialise this Table with the given rows.

@@ -10,7 +10,7 @@ public class TableRow {
     /**
      * A list to hold all {@link TableCell}'s contained in this TableRow.
      */
-    private List<TableCell> cells;
+    private final List<TableCell> cells;
 
     /**
      * Initialise this TableRow with the given cells.

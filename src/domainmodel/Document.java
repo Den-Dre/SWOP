@@ -11,16 +11,25 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * A class to represent an abstract document.
+ */
 public class Document {
 
+    /**
+     * An {@link ArrayList} to hold all urlListeners.
+     */
     private List<DocumentListener> urlListeners = new ArrayList<>();
+
+    /**
+     * An {@link ArrayList} to hold all documentListeners.
+     */
     private List<DocumentListener> documentListeners = new ArrayList<>();
 
-//    private String urlString = "";
-//    private ContentSpan contentSpan = new TextSpan("Welkom in Browsr!");
     private String urlString = "";
     private ContentSpan contentSpan = Document.getWelcomeDocument();
 
+    // Example of a hyperlink that can be clicked
 //    private String urlString = "https://people.cs.kuleuven.be/bart.jacobs/index.html";
 //    private ContentSpan contentSpan; //= new HyperLink("browsrtest.html", new TextSpan("Welcome to Browsr! Click here to see our features!"));//new TextSpan("Welkom in Browsr!");
     
@@ -137,7 +146,7 @@ public class Document {
      *
      * @param url: the url of the document that is to be composed.
      * @return a ContentSpan of the given {@code document}.
-     * @throws IOException
+     * @throws IOException: If one of the parts of the code isn't code that is currently supported.
      */
     public ContentSpan composeDocument(URL url) throws IOException {
         return ContentSpanBuilder.buildContentSpan(url);
@@ -155,6 +164,12 @@ public class Document {
         return new TextSpan("Error: malformed URL.");
     }
 
+    /**
+     * A method to retrieve the welcome page of Browsr.
+     *
+     * @return contentSpan:
+     *                  A {@link ContentSpan} that represents the welcome page.
+     */
     public static ContentSpan getWelcomeDocument() {
         return new TextSpan("Welcome to Browsr!");
     }

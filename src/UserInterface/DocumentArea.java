@@ -1,26 +1,23 @@
 package UserInterface;
 
 import domainmodel.*;
+import org.w3c.dom.Text;
+
+import javax.naming.ContextNotEmptyException;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * TODO: remove these comments when things are implemented as described by it.
- * -> This class (and the AddressBar) will need an extra field "Controller".
- * -> This var should be set in the main-Class with documentarea.setController(controller) and the same for AddressBar
- * -> Initially the documentarea is empty (?). When the lister alerts the documentarea.
- * It should then call this.controller.getContents(this.controller.getURL()) to fetch the document.
- * -> If there is a link pressed, the document should compose a new url using this.URL and the retrieved href.
- * It should then call this.controller.loadDocument(newUrl)
+ * A class to represent the portion of Broswr that renders the document
  */
 public class DocumentArea extends Frame implements DocumentListener {
     public DocumentArea(int x, int y, int width, int height) throws IllegalDimensionException {
         super(x, y, width, height);
 
         // hard-coded Welcome document (for now!)
-        ArrayList<ArrayList<DocumentCell>> rows = new ArrayList<ArrayList<DocumentCell>>();
+        ArrayList<ArrayList<DocumentCell>> rows = new ArrayList<>();
       
         UITextField title = new UITextField(x, y, "Welcome to Browsr!".length(), 50, "Welcome to Browsr!");
         UITextField authors = new UITextField(x, y, width, 20, 
@@ -33,11 +30,11 @@ public class DocumentArea extends Frame implements DocumentListener {
 	      
         UIHyperlink hyperLink = new UIHyperlink(x, y, width, 20, href, text);
 	      		
-        ArrayList<DocumentCell> row1 = new ArrayList<DocumentCell>();
-        ArrayList<DocumentCell> row2 = new ArrayList<DocumentCell>();
-        ArrayList<DocumentCell> row3 = new ArrayList<DocumentCell>();
-        ArrayList<DocumentCell> row4 = new ArrayList<DocumentCell>();
-        ArrayList<DocumentCell> row5 = new ArrayList<DocumentCell>();
+        ArrayList<DocumentCell> row1 = new ArrayList<>();
+        ArrayList<DocumentCell> row2 = new ArrayList<>();
+        ArrayList<DocumentCell> row3 = new ArrayList<>();
+        ArrayList<DocumentCell> row4 = new ArrayList<>();
+        ArrayList<DocumentCell> row5 = new ArrayList<>();
       
 	    row1.add(title);
 	    row2.add(authors);
@@ -62,18 +59,17 @@ public class DocumentArea extends Frame implements DocumentListener {
      * @return a DocumentCell derived class that can be rendered on screen
      */
     private DocumentCell translateToUIElements(ContentSpan contents) {
-    	final String packageName = "domainmodel";
-    	DocumentCell newUIContents = null;
-    	
-    	switch (contents.getClass().getCanonicalName()) {
-    	case (packageName+".Table") -> { newUIContents = translateTable((Table) contents);}
-    	case (packageName+".HyperLink") -> { newUIContents = translateHL((HyperLink) contents);}
-    	case (packageName+".TextSpan") -> { newUIContents = translateTextSpan((TextSpan) contents);}
-    	default -> { 
-    		System.out.println("unknown domainmodel representation class: "+contents.getClass().getCanonicalName());
-    	}
-    	}
-    	return newUIContents;
+        DocumentCell newUIContents = null;
+
+        if (contents instanceof Table)
+            newUIContents = translateTable((Table) contents);
+        else if (contents instanceof HyperLink)
+            newUIContents = translateHL((HyperLink) contents);
+        else if (contents instanceof TextSpan)
+            newUIContents = translateTextSpan((TextSpan) contents);
+        else
+            System.out.println("unknown domainmodel representation class: "+contents.getClass().getCanonicalName());
+        return newUIContents;
     }
     
     /**
@@ -101,7 +97,7 @@ public class DocumentArea extends Frame implements DocumentListener {
     
     /**
      * Translates a Cell from the domainmodel into the simplified UI-representation
-     * @param content
+     * @param content: The content to be translated to UI elements
      * @return a DocumentCell with translated elements
      */
     private DocumentCell translateCell(TableCell content) {
@@ -112,7 +108,7 @@ public class DocumentArea extends Frame implements DocumentListener {
     
     /**
      * Translates a Row from the domainmodel into the simplified UI-representation
-     * @param content
+     * @param content: The content to be translated to UI elements
      * @return an ArrayList<DocumentCell> with translated elements
      */
     private ArrayList<DocumentCell> translateRow(TableRow content) {
@@ -128,7 +124,7 @@ public class DocumentArea extends Frame implements DocumentListener {
     
     /**
      * Translates a HyperLink from the domainmodel into the simplified UI-representation
-     * @param content
+     * @param content: The content to be translated to UI elements
      * @return a UIHyperlink with translated elements
      */
     private DocumentCell translateHL(HyperLink content) {
@@ -165,7 +161,7 @@ public class DocumentArea extends Frame implements DocumentListener {
 
     /**
      * Renders the content. The content renders its sub-content recursively if existent
-     * @param g
+     * @param g: The graphics to be rendered
      */
     @Override
     public void Render(Graphics g) {
@@ -210,6 +206,9 @@ public class DocumentArea extends Frame implements DocumentListener {
 
     /**
      * Returns true if and only if (x,y) is in this UserInterface.DocumentArea.
+     *
+     * @param x: The x coordinate to check
+     * @param y: the y coordinate to check
      */
     private boolean wasClicked(int x, int y) {
     	System.out.println("DocArea: on: "+x+","+y);
@@ -221,7 +220,7 @@ public class DocumentArea extends Frame implements DocumentListener {
     /**
      * Notify the DocumentArea that the contents have been changed
      */
-    public void contentChanged(){
+    public void contentChanged() {
         try{
             ContentSpan newContentSpan = controller.getContentSpan();
             this.setContent(this.translateToUIElements(newContentSpan));
@@ -234,6 +233,8 @@ public class DocumentArea extends Frame implements DocumentListener {
     /**
      * This method looks if the given string is a valid link.
      * If so, do the right actions.
+     *
+     * @param link: The string of the link to be checked
     */
     private void linkPressed(String link){
         if (link.equals("")) return;
@@ -276,11 +277,6 @@ public class DocumentArea extends Frame implements DocumentListener {
      * The {@link UIController} related to this DocumentArea
       */
     public UIController controller;
-
-    /**
-     * The string representation of the URL that links to this DocumentArea.
-     */
-    private String Url = "";
 
     /**
      * The text size of the {@code Url} of this DocumentArea.

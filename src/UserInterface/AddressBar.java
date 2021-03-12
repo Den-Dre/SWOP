@@ -6,7 +6,6 @@ import domainmodel.UIController;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.Arrays;
 
 /**
  * A class to represent an address bar in the browsr,
@@ -31,9 +30,11 @@ public class AddressBar extends Frame implements DocumentListener {
 
     /**
      * Renders this {@code AddressBar} using the given {@code Graphics} parameter
-     * - Renders the url
-     * - Renders the selected text
-     * - Renders the cursor
+     * <ul>
+     *       <li>  Renders the url </li>
+     *       <li>  Renders the selected text </li>
+     *       <li>  Renders the cursor </li>
+     * </ul>
      * @param g: The graphics object that is used to draw this {@code AddressBar}
      */
     @Override
@@ -48,9 +49,11 @@ public class AddressBar extends Frame implements DocumentListener {
 
     /**
      * Prints the url into the addressBar.
-     * - The color is textcolor. - The font is font.
-     * - The last term in the calculation is to draw it slightly higher than the underside of the addressBar.
-     *
+     * <ul>
+     *      <li>  The color is textcolor. </li>
+     *      <li>  The font is font.</li>
+     *      <li>  The last term in the calculation is to draw it slightly higher than the underside of the addressBar.</li>
+     * </ul>
      * @param g: The graphics that contain the information to be printed
      */
     private void printURL(Graphics g){
@@ -94,7 +97,7 @@ public class AddressBar extends Frame implements DocumentListener {
     }
 
     /**
-     * Draw a rectangle of color highlightcolor behind the selected characters.
+     * Draw a rectangle of color highlight color behind the selected characters.
      *
      * @param g: The graphics that will be updated.
      */
@@ -137,7 +140,6 @@ public class AddressBar extends Frame implements DocumentListener {
                 resetSelectStart();
             }
             this.toggleFocus(true);
-            // Something else to do when clicked on addressbar?
         }
         else {
             // clicking out is the same as pressing enter.
@@ -155,6 +157,9 @@ public class AddressBar extends Frame implements DocumentListener {
         return x >= this.getxPos() && x <= (this.getxPos() + this.getWidth()) && y >= this.getyPos() && y <= (this.getyPos() + this.getHeight());
     }
 
+    /**
+     * Reset the selection cursor back to the start of this {@code AddressBar}.
+     */
     private void resetSelectStart() {
         selectStart = 0;
         selectStartPos = new int[] {this.getxPos() + (URLStart/2), this.getyPos()};
@@ -305,122 +310,6 @@ public class AddressBar extends Frame implements DocumentListener {
         this.setWidth(newWindowWidth-2*offset);
     }
 
-    // ===============URL variables =====================
-    /**
-     * Distance between addressBar and the window edges
-     */
-    int offset;
-
-    /**
-     * A string variable to hold the
-     * current contents of this AddressBar
-     */
-    private String URL = ""; // The url starts off empty
-
-    /**
-     * Two URL's should be used to be able to 'rollback'
-     * the old url if editing is cancelled.
-     * URLCopy gets updated after it is certain the edited url is final.
-     */
-    private String URLCopy = URL;
-
-    /**
-     * An integer variable to denote the position
-     * where the cursor should return to if it
-     * is placed at the start of this AddressBar.
-     */
-    private final int URLStart = this.getxPos()+5;
-
-    /**
-     * The {@link UIController} object that is
-     * linked to this AddressBar.
-      */
-    private UIController uiController;
-
-    /**
-     * An integer variable to denote the current
-     * position of the cursor in this AddressBar
-     */
-    private int cursor = 0;
-
-    /**
-     * An integer variable to denote the graphical
-     * dimensions of the cursor displayed this AddressBar.
-     */
-    private final int[] cursorDimensions = new int[] {3, this.getHeight()*3/4};
-
-    /**
-     * An integer array that contains two values:
-     * <ul>
-     *     <li>The current x coordinate of the cursor </li>
-     *     <li>The current y coordinate of the cursor</li>
-     * </ul>
-     */
-    private int[] cursorPos = new int[] {this.getxPos() + (URLStart/2), getCursorYPos()};
-
-    /**
-     * A variable that holds the {@link Color}
-     * of the cursor in this AddressBar.
-     */
-    private final Color cursorColor = Color.BLACK;
-
-    // =============== Selection Variables ===================
-    /**
-     * A boolean variable to denote whether the user
-     * is currently selecting content of this AddressBar.
-     */
-    private boolean doSelect = false;
-
-    /**
-     * An integer variable to denote the start
-     * of a selection action in this AddressBar.
-     */
-    private int selectStart = 0;
-
-     /**
-     * An integer array that contains two values:
-     * <ul>
-     *     <li>The current x coordinate of the content selection action </li>
-     *     <li>The current y coordinate of the content selection action</li>
-     * </ul>
-     */
-    private int[] selectStartPos = new int[] {this.getxPos() + (URLStart/2), this.getyPos()};
-
-    /**
-     * A variable that denotes the {@link Color}
-     * that should be displayed when selecting
-     * content of this AddressBar.
-     */
-    private final Color highlightColor = Color.BLUE;
-
-    // ================ Font variables =======================
-    /**
-     * A variable to denote the {@link Font}
-     * the text displayed in this AddressBar
-     * should be typed in.
-     */
-    Font font = new Font(Font.DIALOG_INPUT, Font.PLAIN, this.getHeight()*3/4);
-
-    /**
-     * A variable to hold the {@link FontMetrics}
-     * associated to the text in this AddressBar
-     */
-    FontMetrics metrics;
-
-    /**
-     * An integer variable to denote the
-     * height of the text displayed in this
-     * AddressBar.
-     */
-    int textHeight;
-
-    /**
-     * A variable to denote the
-     * {@link Color} of the text
-     * displayed in this AddressBar.
-     */
-    private final Color textColor = Color.BLACK;
-
     /**
      * Get the current url of the AddressBar.
      *
@@ -507,4 +396,120 @@ public class AddressBar extends Frame implements DocumentListener {
         String newUrl = uiController.getUrlString();
         this.changeURLto(newUrl);
     }
+
+    // ===============URL variables =====================
+    /**
+     * Distance between addressBar and the window edges
+     */
+    int offset;
+
+    /**
+     * A string variable to hold the
+     * current contents of this AddressBar
+     */
+    private String URL = ""; // The url starts off empty
+
+    /**
+     * Two URL's should be used to be able to 'rollback'
+     * the old url if editing is cancelled.
+     * URLCopy gets updated after it is certain the edited url is final.
+     */
+    private String URLCopy = URL;
+
+    /**
+     * An integer variable to denote the position
+     * where the cursor should return to if it
+     * is placed at the start of this AddressBar.
+     */
+    private final int URLStart = this.getxPos()+5;
+
+    /**
+     * The {@link UIController} object that is
+     * linked to this AddressBar.
+     */
+    private UIController uiController;
+
+    /**
+     * An integer variable to denote the current
+     * position of the cursor in this AddressBar
+     */
+    private int cursor = 0;
+
+    /**
+     * An integer variable to denote the graphical
+     * dimensions of the cursor displayed this AddressBar.
+     */
+    private final int[] cursorDimensions = new int[] {3, this.getHeight()*3/4};
+
+    /**
+     * An integer array that contains two values:
+     * <ul>
+     *     <li>The current x coordinate of the cursor </li>
+     *     <li>The current y coordinate of the cursor</li>
+     * </ul>
+     */
+    private int[] cursorPos = new int[] {this.getxPos() + (URLStart/2), getCursorYPos()};
+
+    /**
+     * A variable that holds the {@link Color}
+     * of the cursor in this AddressBar.
+     */
+    private final Color cursorColor = Color.BLACK;
+
+    // =============== Selection Variables ===================
+    /**
+     * A boolean variable to denote whether the user
+     * is currently selecting content of this AddressBar.
+     */
+    private boolean doSelect = false;
+
+    /**
+     * An integer variable to denote the start
+     * of a selection action in this AddressBar.
+     */
+    private int selectStart = 0;
+
+    /**
+     * An integer array that contains two values:
+     * <ul>
+     *     <li>The current x coordinate of the content selection action </li>
+     *     <li>The current y coordinate of the content selection action</li>
+     * </ul>
+     */
+    private int[] selectStartPos = new int[] {this.getxPos() + (URLStart/2), this.getyPos()};
+
+    /**
+     * A variable that denotes the {@link Color}
+     * that should be displayed when selecting
+     * content of this AddressBar.
+     */
+    private final Color highlightColor = Color.BLUE;
+
+    // ================ Font variables =======================
+    /**
+     * A variable to denote the {@link Font}
+     * the text displayed in this AddressBar
+     * should be typed in.
+     */
+    Font font = new Font(Font.DIALOG_INPUT, Font.PLAIN, this.getHeight()*3/4);
+
+    /**
+     * A variable to hold the {@link FontMetrics}
+     * associated to the text in this AddressBar
+     */
+    FontMetrics metrics;
+
+    /**
+     * An integer variable to denote the
+     * height of the text displayed in this
+     * AddressBar.
+     */
+    int textHeight;
+
+    /**
+     * A variable to denote the
+     * {@link Color} of the text
+     * displayed in this AddressBar.
+     */
+    private final Color textColor = Color.BLACK;
 }

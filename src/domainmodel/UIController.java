@@ -1,6 +1,5 @@
 package domainmodel;
 
-import java.io.IOException;
 import java.net.URL;
 
 /**
@@ -127,7 +126,7 @@ public class UIController {
         this.document.addURLListener(d);
     }
 
-    // Temp for testing
+    // Temporary method for testing listeners
     public void changeURL(String url){
         this.document.setUrlString(url);
     }

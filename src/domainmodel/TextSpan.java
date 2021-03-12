@@ -8,7 +8,7 @@ public class TextSpan extends ContentSpan {
     /**
      * The text contained in this TextSpan.
      */
-    private String text;
+    private final String text;
 
     /**
      * Initialise a TextSpan with the given string of text.

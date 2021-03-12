@@ -17,6 +17,4 @@ public interface DocumentListener {
      * linked {@link Document} change.
      */
     void contentChanged();
-
-    //void urlChanged();
 }

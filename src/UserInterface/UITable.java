@@ -16,7 +16,7 @@ public class UITable extends DocumentCell{
      * @param width: The width of this {@code UITable}.
      * @param height: The height of this {@code UITable}.
      * @param rows: The number of rows of this {@code UITable}.
-     * @throws IllegalDimensionException
+     * @throws IllegalDimensionException: When negative dimensions are supplied.
      */
     public UITable(int x, int y, int width, int height, ArrayList<ArrayList<DocumentCell>> rows) throws IllegalDimensionException {
         super(x, y, width, height);
@@ -196,14 +196,6 @@ public class UITable extends DocumentCell{
         setColumnWidths();
     }
 
-//    /**
-//     * Reset the {@code rowHeights} and {@code columnWidths} to empty lists.
-//     */
-//    private void resetWidthsHeights() {
-//        rowHeights = new ArrayList<>(); // Contains the height for each row
-//        columnWidths = new ArrayList<>(); // Contains the width for each column
-//    }
-
     /**
      * Set the y position of this Table to the given value
      *
@@ -232,7 +224,7 @@ public class UITable extends DocumentCell{
      * that on their turn contain {@link DocumentCell}'s to
      * denote the cells of this table.
      */
-    private ArrayList<ArrayList<DocumentCell>> grid;
+    private final ArrayList<ArrayList<DocumentCell>> grid;
 
     /**
      * An {@link ArrayList} that contains integers that

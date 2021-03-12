@@ -9,7 +9,7 @@ public class TableCell {
      * This can either recursively express a structure of
      * {@link Table}'s, or be a single {@link TextSpan}.
      */
-    private ContentSpan content;
+    private final ContentSpan content;
 
     /**
      * Initialise this TableCell with the given content.

@@ -20,9 +20,17 @@ public class Browsr extends CanvasWindow {
      * @param title:
      *            The Window title
      */
-    protected Browsr(String title) throws Exception {
+    protected Browsr(String title) {
         super(title);
         try {
+             // An integer variable to denote the height of the AddressBar
+             // that is linked to this Browsr.
+            int addressBarHeight = 20;
+
+            //  An integer variable to denote the offset of the AddressBar
+            //  that is linked to this Browsr.
+            int addressBarOffset = 5;
+
             AddressBar = new AddressBar(addressBarOffset, addressBarOffset, 100, addressBarHeight, addressBarOffset);
             DocumentArea = new DocumentArea(addressBarOffset, addressBarHeight + 2 * addressBarOffset, 100, 100);
             //DocumentArea =  new Frame(0,addressBarHeight, 100,100);
@@ -129,18 +137,6 @@ public class Browsr extends CanvasWindow {
     }
 
     /**
-     * An integer variable to denote the height of the AddressBar
-     * that is linked to this Browsr.
-     */
-    private int addressBarHeight = 15;
-
-    /**
-     * An integer variable to denote the offset of the AddressBar
-     * that is linked to this Browsr.
-     */
-    private int addressBarOffset = 5;
-
-    /**
      * A variable that denotes the {@link AddressBar}
      * associated to this Browsr.
      */
@@ -151,14 +147,13 @@ public class Browsr extends CanvasWindow {
      * A variable that denotes the {@link DocumentArea}
      * associated to this Browsr.
      */
-//    private DocumentArea DocumentArea = new DocumentArea(addressBarOffset,addressBarHeight+2* addressBarOffset, 100,100);
     private DocumentArea DocumentArea;
 
     /**
      * An {@link ArrayList} to hold all the
      * {@link Frame}'s associated to this Browsr.
      */
-    private ArrayList<UserInterface.Frame> Frames = new ArrayList<>();
+    private final ArrayList<UserInterface.Frame> Frames = new ArrayList<>();
     
     /**
      * @return the {@link AddressBar} of this {@link Browsr}, for testing/debug purposes
