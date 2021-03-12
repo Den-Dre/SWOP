@@ -44,7 +44,7 @@ class UITableTest {
         tableContents.add(row);
         tableContents.add(row2);
         table1 = new UITable(x,y,width, width, tableContents);
-        assertFalse(table1.calculateActualWidth);
+        assertFalse(table1.isCalculateActualWidth());
         /*
         table layout:
         ----------------

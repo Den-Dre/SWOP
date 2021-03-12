@@ -57,7 +57,7 @@ public class UIHyperlink extends DocumentCell{
      * Update the {@code textWidth} based on this {@code UIHyperlink} {@code href} attribute.
      */
     private void updateSizes() {
-        if (!calculateActualWidth) textWidth =  (int) (textHeight*text.length()*heightToWidthRatio);
+        if (!isCalculateActualWidth()) textWidth =  (int) (textHeight*text.length()*heightToWidthRatio);
         else {
             if (metrics == null) return;
             textWidth = metrics.stringWidth(href);

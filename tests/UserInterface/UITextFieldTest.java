@@ -27,13 +27,13 @@ class UITextFieldTest {
     void getMaxWidth() {
         // The maximum width is calculated as follows:
         // -> number of characters * height * height-to-width-ratio
-        assertFalse(textField1.calculateActualWidth);
+        assertFalse(textField1.isCalculateActualWidth());
         int height1 = textField1.getHeight();
         double ratio1 = textField1.getHeightToWidthRatio();
         int width1 = (int) (textField1.getText().length() * height1 * ratio1);
         assertEquals(width1, textField1.getMaxWidth());
 
-        assertFalse(textField2.calculateActualWidth);
+        assertFalse(textField2.isCalculateActualWidth());
         int height2 = textField2.getHeight();
         double ratio2 = textField2.getHeightToWidthRatio();
         int width2 = (int) (textField2.getText().length() * height2 * ratio2);
