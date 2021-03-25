@@ -16,8 +16,10 @@ public class UITextInputField extends DocumentCell{
      */
     public UITextInputField(int x, int y, int width, int height) throws IllegalDimensionException {
         super(x, y, width, height);
-        //int inputFieldWidth = 50;
-        //setWidth(inputFieldWidth);
+        // An inputfield has a fixed width as denoted in the assignment
+        // on page 7
+        int inputFieldWidth = 50;
+        setWidth(inputFieldWidth);
     }
 
     /**
@@ -120,6 +122,8 @@ public class UITextInputField extends DocumentCell{
             g.setColor(focusColor);
             g2.setStroke(new BasicStroke(2));
         }
+        // Draw a normal rectangle or a rectangle with rounded corners
+        //g.drawRect(this.getxPos(), this.getyPos(), this.getWidth(), this.getHeight());
         g.drawRoundRect(this.getxPos(), this.getyPos(), this.getWidth(), this.getHeight(), 3,3);
         g2.setStroke(new BasicStroke(1));
     }
@@ -153,6 +157,16 @@ public class UITextInputField extends DocumentCell{
         }
     }
 
+    /**
+     *
+     * @param id: The id of the click
+     * @param x: The x coordinate of the click
+     * @param y: The y coordinate of the click
+     * @param clickCount: The number of clicks that occured.
+     * @param button: Which mouse button was clicked.
+     * @param modifier: Extra control key that was held during the click.
+     * @return empty String, an inputField does not return its content when clicked
+     */
     @Override
     public String getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
         handleMouse(id, x, y, clickCount, button, modifier);
@@ -349,7 +363,13 @@ public class UITextInputField extends DocumentCell{
      */
     private int cursor = 0;
 
-    private int cursorOffset = 2;
+    /**
+     * An integer variable to denote the offset
+     * of the cursor if this UITextInputFields
+     * contains no text. (So it does not appear
+     * too close to the edge)
+     */
+    private final int cursorOffset = 1;
 
     /**
      * An integer variable to denote the graphical
@@ -433,6 +453,7 @@ public class UITextInputField extends DocumentCell{
      * A variable to denote the
      * {@link Color} of the box
      * surrounding this UITextInputField
+     * when hasFocus is true
      */
     private final Color focusColor = Color.BLUE;
 
