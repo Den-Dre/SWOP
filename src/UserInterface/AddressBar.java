@@ -56,15 +56,18 @@ public class AddressBar extends UITextInputField implements DocumentListener {
         this.toggleFocus(false);
         this.updateCopyUrl();
         this.moveCursor(this.getURL().length());
-        System.out.println("Enter pressed");
-        System.out.println(this.getURL());
         if (uiController != null)
             this.uiController.loadDocument(this.getURL());
     }
 
+    /**
+     * Method that specifies what this AddressBar should do when
+     * it gets notified of a content-change
+     */
     @Override
     public void contentChanged() {
-
+        String newUrl = uiController.getUrlString();
+        this.changeURLto(newUrl);
     }
 
     /**
