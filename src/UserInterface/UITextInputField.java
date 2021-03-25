@@ -16,10 +16,9 @@ public class UITextInputField extends DocumentCell{
      */
     public UITextInputField(int x, int y, int width, int height) throws IllegalDimensionException {
         super(x, y, width, height);
-        // An inputfield has a fixed width as denoted in the assignment
-        // on page 7
-        int inputFieldWidth = 50;
-        setWidth(inputFieldWidth);
+        // An inputfield has a fixed width as denoted in the assignment on page 7
+        //int inputFieldWidth = 50;
+        //setWidth(inputFieldWidth);
     }
 
     /**
