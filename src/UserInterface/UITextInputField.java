@@ -16,6 +16,8 @@ public class UITextInputField extends DocumentCell{
      */
     public UITextInputField(int x, int y, int width, int height) throws IllegalDimensionException {
         super(x, y, width, height);
+        //int inputFieldWidth = 50;
+        //setWidth(inputFieldWidth);
     }
 
     /**
@@ -49,7 +51,7 @@ public class UITextInputField extends DocumentCell{
     private void printText(Graphics g){
         g.setColor(textColor);
         g.setFont(font);
-        g.drawString(this.getText(), this.textStart, this.getyPos()+this.getHeight()-(this.getHeight()/5));
+        g.drawString(this.getText(), this.textStart+getxPos(), this.getyPos()+this.getHeight()-(this.getHeight()/5));
     }
 
     /**
@@ -71,7 +73,9 @@ public class UITextInputField extends DocumentCell{
      */
     private void setFontMetrics(Graphics g) {
         this.metrics = g.getFontMetrics(font);
-        this.cursorPos = new int[] {metrics.stringWidth(this.getText().substring(0,this.cursor))+this.getxPos()+(textStart /2), getCursorYPos()};
+        int offset = 0;
+        if (getText().length() == 0) offset = cursorOffset;
+        this.cursorPos = new int[] {metrics.stringWidth(this.getText().substring(0,this.cursor))+this.getxPos()+(textStart)+offset, getCursorYPos()};
         this.textHeight = metrics.getHeight();
     }
 
@@ -83,7 +87,9 @@ public class UITextInputField extends DocumentCell{
         if (this.doSelect) return;
         this.selectStart = this.cursor;
         if (metrics == null) return;
-        this.selectStartPos = new int[] {metrics.stringWidth(this.getText().substring(0,this.selectStart))+this.getxPos()+(textStart /2), this.getyPos()};
+        int offset = 0;
+        if (getText().length() == 0) offset = cursorOffset;
+        this.selectStartPos = new int[] {metrics.stringWidth(this.getText().substring(0,this.selectStart))+this.getxPos()+(textStart), this.getyPos()};
     }
 
     /**
@@ -92,6 +98,8 @@ public class UITextInputField extends DocumentCell{
      * @param g: The graphics that will be updated.
      */
     private void drawSelection(Graphics g) {
+        System.out.println(doSelect);
+        if (!doSelect) return;
         if (this.hasFocus) {
             g.setColor(this.highlightColor);
             int start = Math.min(this.cursorPos[0], this.selectStartPos[0]);
@@ -107,7 +115,13 @@ public class UITextInputField extends DocumentCell{
      */
     private void drawBox(Graphics g) {
         g.setColor(Color.BLACK);
-        g.drawRect(this.getxPos(), this.getyPos(), this.getWidth(), this.getHeight());
+        Graphics2D g2 = (Graphics2D) g;
+        if (hasFocus) {
+            g.setColor(focusColor);
+            g2.setStroke(new BasicStroke(2));
+        }
+        g.drawRoundRect(this.getxPos(), this.getyPos(), this.getWidth(), this.getHeight(), 3,3);
+        g2.setStroke(new BasicStroke(1));
     }
 
     /**
@@ -135,7 +149,14 @@ public class UITextInputField extends DocumentCell{
             // clicking out is the same as pressing enter.
             // Only react if the addressbar has focus
             if (hasFocus) handleEnter();
+            toggleFocus(false);
         }
+    }
+
+    @Override
+    public String getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
+        handleMouse(id, x, y, clickCount, button, modifier);
+        return "";
     }
 
     /**
@@ -143,7 +164,9 @@ public class UITextInputField extends DocumentCell{
      */
     private void resetSelectStart() {
         selectStart = 0;
-        selectStartPos = new int[] {this.getxPos() + (textStart /2), this.getyPos()};
+        int offset = 0;
+        if (getText().length() == 0) offset = cursorOffset;
+        selectStartPos = new int[] {this.getxPos() + textStart + offset, this.getyPos()};
     }
 
     /**
@@ -318,13 +341,15 @@ public class UITextInputField extends DocumentCell{
      * where the cursor should return to if it
      * is placed at the start of this AddressBar.
      */
-    private final int textStart = this.getxPos()+5;
+    private final int textStart = 2;
 
     /**
      * An integer variable to denote the current
      * position of the cursor in this AddressBar
      */
     private int cursor = 0;
+
+    private int cursorOffset = 2;
 
     /**
      * An integer variable to denote the graphical
@@ -339,7 +364,7 @@ public class UITextInputField extends DocumentCell{
      *     <li>The current y coordinate of the cursor</li>
      * </ul>
      */
-    private int[] cursorPos = new int[] {this.getxPos() + (textStart /2), getCursorYPos()};
+    private int[] cursorPos = new int[] {this.getxPos() + (textStart) + cursorOffset, getCursorYPos()};
 
     /**
      * A variable that holds the {@link Color}
@@ -367,7 +392,7 @@ public class UITextInputField extends DocumentCell{
      *     <li>The current y coordinate of the content selection action</li>
      * </ul>
      */
-    private int[] selectStartPos = new int[] {this.getxPos() + (textStart /2), this.getyPos()};
+    private int[] selectStartPos = new int[] {this.getxPos() + (textStart), this.getyPos()};
 
     /**
      * A variable that denotes the {@link Color}
@@ -403,4 +428,12 @@ public class UITextInputField extends DocumentCell{
      * displayed in this AddressBar.
      */
     private final Color textColor = Color.BLACK;
+
+    /**
+     * A variable to denote the
+     * {@link Color} of the box
+     * surrounding this UITextInputField
+     */
+    private final Color focusColor = Color.BLUE;
+
 }

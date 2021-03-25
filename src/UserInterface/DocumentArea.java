@@ -16,39 +16,40 @@ public class DocumentArea extends Frame implements DocumentListener {
     public DocumentArea(int x, int y, int width, int height) throws IllegalDimensionException {
         super(x, y, width, height);
 
-        // hard-coded Welcome document (for now!)
-        ArrayList<ArrayList<DocumentCell>> rows = new ArrayList<>();
-      
-        UITextField title = new UITextField(x, y, "Welcome to Browsr!".length(), 50, "Welcome to Browsr!");
-        UITextField authors = new UITextField(x, y, width, 20, 
-	  		"By yours truly: Andreas Hinderyckx, Martijn Leplae, Thibault Van Win and Jakob Heirwegh");
-        UITextField swopper = new UITextField(x, y, width, 20, "1st iteration Software-Ontwerp 2020-2021");
-        UITextField empty = new UITextField(x, y, width, 20, " ");
-	      
-        String href = "browsrtest.html";
-        String text = "Click here to see what we can do!";
-	      
-        UIHyperlink hyperLink = new UIHyperlink(x, y, width, 20, href, text);
-	      		
-        ArrayList<DocumentCell> row1 = new ArrayList<>();
-        ArrayList<DocumentCell> row2 = new ArrayList<>();
-        ArrayList<DocumentCell> row3 = new ArrayList<>();
-        ArrayList<DocumentCell> row4 = new ArrayList<>();
-        ArrayList<DocumentCell> row5 = new ArrayList<>();
-      
-	    row1.add(title);
-	    row2.add(authors);
-	    row3.add(empty);
-	    row4.add(hyperLink);
-	    row5.add(swopper);
-	    
-	    rows.add(row1);
-	    rows.add(row2);
-	    rows.add(row3);
-	    rows.add(row4);
-	    rows.add(row5);
-	    
-	    this.content = new UITable(x, y, width, height, rows);
+//        // hard-coded Welcome document (for now!)
+//        ArrayList<ArrayList<DocumentCell>> rows = new ArrayList<>();
+//
+//        UITextField title = new UITextField(x, y, "Welcome to Browsr!".length(), 50, "Welcome to Browsr!");
+//        UITextField authors = new UITextField(x, y, width, 20,
+//	  		"By yours truly: Andreas Hinderyckx, Martijn Leplae, Thibault Van Win and Jakob Heirwegh");
+//        UITextField swopper = new UITextField(x, y, width, 20, "1st iteration Software-Ontwerp 2020-2021");
+//        UITextField empty = new UITextField(x, y, width, 20, " ");
+//
+//        String href = "browsrtest.html";
+//        String text = "Click here to see what we can do!";
+//
+//        UIHyperlink hyperLink = new UIHyperlink(x, y, width, 20, href, text);
+//
+//        ArrayList<DocumentCell> row1 = new ArrayList<>();
+//        ArrayList<DocumentCell> row2 = new ArrayList<>();
+//        ArrayList<DocumentCell> row3 = new ArrayList<>();
+//        ArrayList<DocumentCell> row4 = new ArrayList<>();
+//        ArrayList<DocumentCell> row5 = new ArrayList<>();
+//
+//	    row1.add(title);
+//	    row2.add(authors);
+//	    row3.add(empty);
+//	    row4.add(hyperLink);
+//	    row5.add(swopper);
+//
+//	    rows.add(row1);
+//	    rows.add(row2);
+//	    rows.add(row3);
+//	    rows.add(row4);
+//	    rows.add(row5);
+
+        // uncomment the setContent in the contentChanged method to see a documentarea with a textinputfield-box
+	    this.content = new UITextInputField(100,50,100,25);
     }
     
     /**
@@ -194,13 +195,13 @@ public class DocumentArea extends Frame implements DocumentListener {
      */
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-        if (!wasClicked(x, y)) return;
+        //if (!wasClicked(x, y)) return; (elements in the doc-area also need to know if a click was not on them e.g.: inputfields)
         if (button != MouseEvent.BUTTON1) return;
         if (id != MouseEvent.MOUSE_CLICKED) return;
-        System.out.println("content: "+content);
-        System.out.println(content.getxPos()+","+content.getyPos());
+        //System.out.println("content: "+content);
+        //System.out.println(content.getxPos()+","+content.getyPos());
         String result = content.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
-        System.out.println("result: '"+result+"' on "+this.getClass());
+        //System.out.println("result: '"+result+"' on "+this.getClass());
         linkPressed(result);
     }
 
@@ -211,10 +212,15 @@ public class DocumentArea extends Frame implements DocumentListener {
      * @param y: the y coordinate to check
      */
     private boolean wasClicked(int x, int y) {
-    	System.out.println("DocArea: on: "+x+","+y);
-    	System.out.println("getX: "+this.getxPos()+", getY: "+this.getyPos());
-    	System.out.println("width: "+this.getWidth()+", height: "+this.getHeight());
+//    	System.out.println("DocArea: on: "+x+","+y);
+//    	System.out.println("getX: "+this.getxPos()+", getY: "+this.getyPos());
+//    	System.out.println("width: "+this.getWidth()+", height: "+this.getHeight());
         return x >= this.getxPos() && x <= (this.getxPos() + this.getWidth()) && y >= this.getyPos() && y <= (this.getyPos() + this.getHeight());
+    }
+
+    @Override
+    public void handleKey(int id, int keyCode, char keyChar, int modifiersEx) {
+        content.handleKey(id, keyCode, keyChar, modifiersEx);
     }
 
     /**
