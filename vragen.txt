@@ -1,3 +1,7 @@
+========================================================================
+                                ITERATIE 1
+========================================================================
+
 - TableCell: bijhouden of verwijderen voor information model?
 - Minuut 51 in collaborate video: Hoe zijn UI Layer en domain model verbonden?
 - Hoe weten we waarop geklikt wordt? Via de tabel zijn rijen en kolommen hun coördinaten 
@@ -18,3 +22,18 @@
 
 - Moet er een link zijn tussen UI en Domain klasse om de centrale klasse van de domeinlaag te initialiseren?
 - Structuur van documentCell zou die van contentSpan moeten weergeven in ons huidig design. Is dit bad practice?
+
+========================================================================
+                                ITERATIE 2
+========================================================================
+
+1. Verantwoordelijkheid verdelen voor aanmaak UI objecten, m.b.v. dedicated 'builder' classes?
+2. Associaton from BookmarksDialog to Bookmarks bar:
+    - Association to Browsr only, or
+    - Association to Browsr and association to BookmarksBar, or
+    (- Bidirectional association from Browsr to Frame)
+3. Nut van domain layer? ㋡
+4. HTML code parsen
+    - In Document via url.openStream(), of
+    - In ContentSpanBuilder tijdens opstellen van ContentSpan-structuur
+5.
