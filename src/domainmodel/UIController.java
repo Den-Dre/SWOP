@@ -131,4 +131,16 @@ public class UIController {
         this.document.setUrlString(url);
     }
 
+
+    /**
+     * Method to save a document
+     */
+    public void saveDocument(){
+        try{
+            this.document.saveDocument();
+        } catch (Exception e) {
+            System.out.println("Can't save this document!");
+        }
+    }
+
 }

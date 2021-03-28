@@ -6,6 +6,7 @@ import com.sun.jdi.request.ClassUnloadRequest;
 import java.io.*;
 import java.lang.reflect.Array;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -172,5 +173,32 @@ public class Document {
      */
     public static ContentSpan getWelcomeDocument() {
         return new TextSpan("Welcome to Browsr!");
+    }
+
+    /**
+     * A method to save a document to a file
+     * Inspiration from: https://stackoverflow.com/questions/17440236/getting-java-to-save-a-html-file
+     *
+     * @throws Exception: if the current document is the error document
+     */
+    // TODO change output file name
+    public void saveDocument() throws Exception {
+        if (this.contentSpan.equals(new TextSpan("Welcome to Browsr!"))) {
+            throw new Exception();
+        } else {
+            URL tmpUrl = new URL(this.urlString);
+            URLConnection con = tmpUrl.openConnection();
+            InputStream stream = con.getInputStream();
+
+            BufferedReader buffer = new BufferedReader(new InputStreamReader(stream));
+            BufferedWriter outputFile = new BufferedWriter(new FileWriter("test.html"));
+            String line;
+
+            while((line = buffer.readLine()) != null) {
+                outputFile.write(line);
+            }
+            outputFile.close();
+            buffer.close();
+        }
     }
 }
