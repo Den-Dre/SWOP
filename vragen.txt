@@ -36,4 +36,20 @@
 4. HTML code parsen
     - In Document via url.openStream(), of
     - In ContentSpanBuilder tijdens opstellen van ContentSpan-structuur
-5.
+
+Nieuwe mail:
+1. Vermeld dat we puntje twee (opdeling van UITextInputField over domain en UI Layer) uit de mail van 25/03 voor later in ons achterhoofd houden maar dit ons nu nog niet nodig lijkt.
+2. Als we een domeinlaag counterpart zouden hebben van BookmarksBar, dan zou deze dienen om hierin de 'data' dus de bookmarks zelf op te slaan. Dit zou het renderen van deze bookmarks zeer omslachtig maken, omdat we dan ook een tegenhanger van elke bookmark/link in de UI layer nodig hebben. Door dit te doen slagen we opnieuw weer de inhoud van de BookmarkBar in de UI layer bijhouden, wat het nut van het domeinlaag counterpart teniet doet. Dan zouden we de click functionaliteit opnieuw moeten implementeren, wat ook code reuse in de hand werkt.
+3Oi mate,
+
+    That proposal seems reasonable to use as well. We've decided to keep the association as you've suggested.
+    In the current requirements of the assignment, there's no real use case such as the one of spell/password checking you've described. For this reason, we think it would only create unnecessary complexity if we were to implement the BookmarksBar - and the assignment in general - in a way that would cover this possible future expansion. We're not sure whether it would be the right decision to put this additional functionality of for now, or whether we should already prepare our design for possible future expansions and thus increase the complexity of the current design as well. This motivation is also related to the remark you've made in the fourth bullet of your e-mail (your first general remark).
+    At the moment, the most elegant solution to us seems to use the openStream()-method (of the URL-Java class in our class Document) to fetch the HTML-code corresponding to the current URL. This way, we don't need to construct the entire HTML code while parsing and we reduce the amount of work only to the situations where to user decides to save the page.
+
+    As for the code reuse, we've extracted the 'typing'-logic out of the AddressBar class into the UITextInputField class. The only possibility we found to further improve upon this is by making a hierarchical structure of the UI counterparts of the domain classes. For example, we could define UISubmitButton as a sub-class of UIHyperlink and let UIHyperlink inherit from UITextField. We think, however, that this saves only a very small amount of code duplication, but at the same time strongly increases the coupling as a lot of the UI classes become dependent on each other.
+    ƃuᴉzɐɯɐ ʎpoolq sᴉ sᴉɥʇ
+    PS: je bent een echte schat, veel liefs en kusjes xxx
+    Een beetje gay is okey
+
+Have a bloody amazing day,
+Thibault, Jakob, Martijn and Andreas - team 17.
