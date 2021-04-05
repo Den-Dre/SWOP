@@ -42,15 +42,15 @@ class DocumentCellTest {
     }
 
     @Test
-    @DisplayName("returns standard 1 as max-height")
+    @DisplayName("returns height as max-height")
     void getMaxHeight() {
-        assertEquals(1, cell.getMaxHeight());
+        assertEquals(cell.getHeight(), cell.getMaxHeight());
     }
 
     @Test
-    @DisplayName("returns standard 1 as max-width")
+    @DisplayName("returns width as max-width")
     void getMaxWidth() {
-        assertEquals(1, cell.getMaxWidth());
+        assertEquals(cell.getWidth(), cell.getMaxWidth());
     }
 
     @Test

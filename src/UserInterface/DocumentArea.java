@@ -69,8 +69,7 @@ public class DocumentArea extends Frame implements DocumentListener {
         innerTableRows.add(innerTableRow2);
         UITable innerTable = new UITable(x,y,0,0, innerTableRows);
 
-        // Button not implemented at the moment.
-        UIHyperlink submitLink = new UIHyperlink(x,y, 0, textSize, "submit", "Submit");
+        UIButton button = new UIButton(x,y,50,15, "Submit", "submit");
 
         ArrayList<ArrayList<DocumentCell>> outerTableRows = new ArrayList<>();
         ArrayList<DocumentCell> outerTableRow1 = new ArrayList<>();
@@ -78,7 +77,7 @@ public class DocumentArea extends Frame implements DocumentListener {
         ArrayList<DocumentCell> outerTableRow2 = new ArrayList<>();
         outerTableRow2.add(innerTable);
         ArrayList<DocumentCell> outerTableRow3 = new ArrayList<>();
-        outerTableRow3.add(submitLink);
+        outerTableRow3.add(button);
         outerTableRows.add(outerTableRow1);
         outerTableRows.add(outerTableRow2);
         outerTableRows.add(outerTableRow3);
@@ -267,7 +266,7 @@ public class DocumentArea extends Frame implements DocumentListener {
     public void contentChanged() {
         try{
             ContentSpan newContentSpan = controller.getContentSpan();
-            //this.setContent(this.translateToUIElements(newContentSpan));
+            this.setContent(this.translateToUIElements(newContentSpan));
         }
         catch(Exception e){
             System.out.print(e);
