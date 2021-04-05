@@ -6,6 +6,7 @@ import org.w3c.dom.Text;
 import javax.naming.ContextNotEmptyException;
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,8 +49,42 @@ public class DocumentArea extends Frame implements DocumentListener {
 //	    rows.add(row4);
 //	    rows.add(row5);
 
-        // uncomment the setContent in the contentChanged method to see a documentarea with a textinputfield-box
-	    this.content = new UITextInputField(100,50,100,25);
+        UITextField formTitle = new UITextField(x, y, 0,textSize, "List words from ...");
+
+        UITextField firstText = new UITextField(x,y,0,textSize, "Starts with:");
+        UITextInputField firstInput = new UITextInputField(x,y,100,textSize, "starts_with");
+        UITextField secondText = new UITextField(x,y,0,textSize, "Max. results");
+        UITextInputField secondInput = new UITextInputField(x,y,100,textSize, "max_nb_results");
+
+        ArrayList<ArrayList<DocumentCell>> innerTableRows = new ArrayList<>();
+        ArrayList<DocumentCell> innerTableRow1 = new ArrayList<>();
+        innerTableRow1.add(firstText);
+        innerTableRow1.add(firstInput);
+        ArrayList<DocumentCell> innerTableRow2 = new ArrayList<>();
+        innerTableRow2.add(secondText);
+        innerTableRow2.add(secondInput);
+        innerTableRows.add(innerTableRow1);
+        innerTableRows.add(innerTableRow2);
+        UITable innerTable = new UITable(x,y,0,0, innerTableRows);
+
+        UIHyperlink submitLink = new UIHyperlink(x,y, 0, textSize, "submit", "Submit");
+
+        ArrayList<ArrayList<DocumentCell>> outerTableRows = new ArrayList<>();
+        ArrayList<DocumentCell> outerTableRow1 = new ArrayList<>();
+        outerTableRow1.add(formTitle);
+        ArrayList<DocumentCell> outerTableRow2 = new ArrayList<>();
+        outerTableRow2.add(innerTable);
+        ArrayList<DocumentCell> outerTableRow3 = new ArrayList<>();
+        outerTableRow3.add(submitLink);
+        outerTableRows.add(outerTableRow1);
+        outerTableRows.add(outerTableRow2);
+        outerTableRows.add(outerTableRow3);
+
+        UITable outerTable = new UITable(x,y,0,0, outerTableRows);
+
+
+        // uncomment the setContent in the contentChanged method
+	    this.content = new UIForm(0,50, "browsrformactiontest.php", outerTable);
     }
     
     /**
@@ -229,7 +264,7 @@ public class DocumentArea extends Frame implements DocumentListener {
     public void contentChanged() {
         try{
             ContentSpan newContentSpan = controller.getContentSpan();
-            this.setContent(this.translateToUIElements(newContentSpan));
+            //this.setContent(this.translateToUIElements(newContentSpan));
         }
         catch(Exception e){
             System.out.print(e);

@@ -75,6 +75,15 @@ public class UITable extends DocumentCell{
         return "";
     }
 
+    @Override
+    public void handleKey(int id, int keyCode, char keyChar, int modifiersEx) {
+        for (ArrayList<DocumentCell> row : grid) {
+            for (DocumentCell cell : row) {
+                cell.handleKey(id, keyCode, keyChar, modifiersEx);
+            }
+        }
+    }
+
     /**
      * Re-calculates the necessary widths and heights of the DocumentCells
      */
@@ -217,6 +226,17 @@ public class UITable extends DocumentCell{
      */
     public ArrayList<ArrayList<DocumentCell>> getContent() {
     	return this.grid;
+    }
+
+    @Override
+    public ArrayList<String> getNamesAndValues() {
+        ArrayList<String> namesAndValues = new ArrayList<>();
+        for (ArrayList<DocumentCell> row : grid) {
+            for (DocumentCell cell : row) {
+                namesAndValues.addAll(cell.getNamesAndValues());
+            }
+        }
+        return namesAndValues;
     }
 
     /**
