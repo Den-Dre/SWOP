@@ -49,7 +49,9 @@ public class DocumentArea extends Frame implements DocumentListener {
 //	    rows.add(row4);
 //	    rows.add(row5);
 
-        UITextField formTitle = new UITextField(x, y, 0,textSize, "List words from ...");
+
+        // A copy of the form in the assignment.
+        UITextField formTitle = new UITextField(x, y, 0,textSize, "List words from the Woordenlijst Nederlandse Taal");
 
         UITextField firstText = new UITextField(x,y,0,textSize, "Starts with:");
         UITextInputField firstInput = new UITextInputField(x,y,100,textSize, "starts_with");
@@ -67,6 +69,7 @@ public class DocumentArea extends Frame implements DocumentListener {
         innerTableRows.add(innerTableRow2);
         UITable innerTable = new UITable(x,y,0,0, innerTableRows);
 
+        // Button not implemented at the moment.
         UIHyperlink submitLink = new UIHyperlink(x,y, 0, textSize, "submit", "Submit");
 
         ArrayList<ArrayList<DocumentCell>> outerTableRows = new ArrayList<>();
@@ -83,8 +86,8 @@ public class DocumentArea extends Frame implements DocumentListener {
         UITable outerTable = new UITable(x,y,0,0, outerTableRows);
 
 
-        // uncomment the setContent in the contentChanged method
-	    this.content = new UIForm(0,50, "browsrformactiontest.php", outerTable);
+        // Comment the setContent in the contentChanged method for this code to have effect.
+	    this.content = new UIForm(x,y, "browsrformactiontest.php", outerTable);
     }
     
     /**

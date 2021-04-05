@@ -349,6 +349,11 @@ public class UITextInputField extends DocumentCell{
         return getyPos()+(getHeight()-cursorDimensions[1])/2;
     }
 
+    /**
+     * Get the name and value of this {@code UITextInputField}.
+     *
+     * @return An ArrayList with the name and value separated with "=".
+     */
     @Override
     public ArrayList<String> getNamesAndValues() {
         ArrayList<String> nameAndValue = new ArrayList<>();
