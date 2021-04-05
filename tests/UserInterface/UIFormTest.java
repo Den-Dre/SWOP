@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@DisplayName("UIForm")
 class UIFormTest {
 
     private UITextInputField formContent;

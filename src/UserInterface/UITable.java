@@ -110,7 +110,7 @@ public class UITable extends DocumentCell{
         int maxheight = 0;
         for (int height :  rowHeights)
             maxheight += height;
-        return maxheight;
+        return maxheight; //+(3*grid.get(0).size());
 //        return rowHeights.stream().mapToInt(Integer::intValue).sum();
     }
 
