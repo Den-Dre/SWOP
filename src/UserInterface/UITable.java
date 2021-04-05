@@ -75,6 +75,14 @@ public class UITable extends DocumentCell{
         return "";
     }
 
+    /**
+     * Send the given KeyEvent to the {@code DocumentCells} of this {@code UITable}.
+     *
+     * @param id: The KeyEvent (Associated with type of KeyEvent)
+     * @param keyCode: The KeyEvent code (Determines the involved key)
+     * @param keyChar: The character representation of the involved key
+     * @param modifiersEx: Specifies other keys that were involved in the event
+     */
     @Override
     public void handleKey(int id, int keyCode, char keyChar, int modifiersEx) {
         for (ArrayList<DocumentCell> row : grid) {
@@ -228,6 +236,12 @@ public class UITable extends DocumentCell{
     	return this.grid;
     }
 
+    /**
+     * Get a list of the names/value pairs of the {@code DocumentCells} contained
+     * in this {@code UITable}.
+     *
+     * @return An ArrayList with the name-value pairs of the {@code DocumentCells}.
+     */
     @Override
     public ArrayList<String> getNamesAndValues() {
         ArrayList<String> namesAndValues = new ArrayList<>();
