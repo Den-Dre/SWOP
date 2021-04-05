@@ -15,6 +15,8 @@ public class UIForm extends DocumentCell{
         super(x, y, formContent.getMaxWidth(), formContent.getMaxHeight());
         this.action = action;
         this.formContent = formContent;
+        this.formContent.setxPos(x);
+        this.formContent.setyPos(y);
     }
 
     /**
@@ -125,6 +127,24 @@ public class UIForm extends DocumentCell{
     public void setxPos(int xPos) {
         super.setxPos(xPos);
         formContent.setxPos(xPos);
+    }
+
+    /**
+     * Get the {@link DocumentCell} encapsulated in this {@code UIForm}.
+     *
+     * @return The content of this {@code UIForm}.
+     */
+    public DocumentCell getFormContent() {
+        return formContent;
+    }
+
+    /**
+     * Get the action associated with this {@code UIForm}.
+     *
+     * @return The form-action.
+     */
+    public String getAction() {
+        return action;
     }
 
     /**
