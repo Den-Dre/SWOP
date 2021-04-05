@@ -3,6 +3,7 @@ package UserInterface;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 public class UITextInputField extends DocumentCell{
     /**
@@ -19,6 +20,11 @@ public class UITextInputField extends DocumentCell{
         // An inputfield has a fixed width as denoted in the assignment on page 7
         //int inputFieldWidth = 50;
         //setWidth(inputFieldWidth);
+    }
+
+    public UITextInputField(int x, int y, int width, int height, String name) throws IllegalDimensionException {
+        super(x, y, width, height);
+        this.name = name;
     }
 
     /**
@@ -342,6 +348,18 @@ public class UITextInputField extends DocumentCell{
     private int getCursorYPos() {
         return getyPos()+(getHeight()-cursorDimensions[1])/2;
     }
+
+    @Override
+    public ArrayList<String> getNamesAndValues() {
+        ArrayList<String> nameAndValue = new ArrayList<>();
+        nameAndValue.add(name + "=" + text);
+        return nameAndValue;
+    }
+
+    /**
+     * The name of this UITextInputField.
+     */
+    private String name = "";
 
     /**
      * A string variable to hold the
