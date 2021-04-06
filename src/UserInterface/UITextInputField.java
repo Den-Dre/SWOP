@@ -50,7 +50,7 @@ public class UITextInputField extends DocumentCell{
      * Prints the url into the addressBar.
      * <ul>
      *      <li>  The color is textcolor. </li>
-     *      <li>  The font is font.</li>
+     *      <li>  The normalFont is normalFont.</li>
      *      <li>  The last term in the calculation is to draw it slightly higher than the underside of the addressBar.</li>
      * </ul>
      * @param g: The graphics that contain the information to be printed
@@ -72,8 +72,8 @@ public class UITextInputField extends DocumentCell{
     }
 
     /**
-     * This gets the metrics of the font and uses it to determine the position of the cursor on screen.
-     * The metrics includes information about the width of the characters in that font.
+     * This gets the metrics of the normalFont and uses it to determine the position of the cursor on screen.
+     * The metrics includes information about the width of the characters in that normalFont.
      * The idea here is to ask the distance from the beginning of the url to the cursorindex (=this.cursor)
      *
      * @param g: The graphics that contain the information to be printed
@@ -105,7 +105,6 @@ public class UITextInputField extends DocumentCell{
      * @param g: The graphics that will be updated.
      */
     private void drawSelection(Graphics g) {
-        System.out.println(doSelect);
         if (!doSelect) return;
         if (this.hasFocus) {
             g.setColor(this.highlightColor);

@@ -1,6 +1,7 @@
 package UserInterface;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 
 public class UIButton extends DocumentCell{
 
@@ -19,29 +20,98 @@ public class UIButton extends DocumentCell{
         this.returnText = returnText;
     }
 
-    /**
-     * Renders this {@code UIButton} on the display.
-     *
-     * @param g: The graphics to be rendered with.
-     */
-    @Override
-    public void Render(Graphics g) {
-        // hangt af van staat: not-pressed of pressed -> design pattern gebruiken hiervoor? (zie pac-man voorbeeld)
-        drawButton(g);
-        drawText(g);
+    private State state = new NotPressed();
+
+    private final String displayText;
+    private final String returnText;
+
+    private final int textHeight = getHeight()*4/5;
+
+    private Color buttonColor = Color.LIGHT_GRAY;
+    private Color contourColor = Color.BLACK;
+    private Color textColor = Color.BLACK;
+    private Font font = new Font(Font.SERIF, Font.PLAIN, textHeight);
+
+    private static abstract class State {
+        abstract void Render(Graphics g);
+        abstract String getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier);
     }
 
-    /**
-     * Draw this {@code UIButton} visual aspects on the screen.
-     *
-     * @param g The graphics object to use.
-     */
-    private void drawButton(Graphics g) {
+    private class NotPressed extends State {
+        private NotPressed() {
+            buttonColor = Color.LIGHT_GRAY;
+            contourColor = Color.BLACK;
+            textColor = Color.BLACK;
+            font = new Font(Font.SERIF, Font.PLAIN, textHeight);
+        }
+
+        @Override
+        void Render(Graphics g) {
+            drawButton(g);
+            drawText(g);
+        }
+
+        private void drawButton(Graphics g) {
+            g.setColor(buttonColor);
+            g.fillRoundRect(getxPos(), getyPos(), getWidth(), getHeight(), 3,3);
+            g.setColor(contourColor);
+            g.drawRoundRect(getxPos(), getyPos(), getWidth(), getHeight(), 3,3);
+        }
+
+        @Override
+        public String getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
+            if (!wasClicked(x, y)) return "";
+            if (id != MouseEvent.MOUSE_PRESSED) return "";
+            System.out.println("Button is pressed in!");
+            state = new Pressed();
+            return "";
+        }
+    }
+
+    private class Pressed extends State {
+
+        private Pressed() {
+            buttonColor = Color.GRAY;
+            contourColor = Color.BLACK;
+            textColor = Color.BLACK;
+            font = new Font(Font.SERIF, Font.ITALIC, textHeight);
+        }
+
+        @Override
+        void Render(Graphics g) {
+            drawButton(g);
+            drawText(g);
+        }
+
+        void drawButton(Graphics g) {
+            g.setColor(buttonColor);
+            g.fillRoundRect(getxPos(), getyPos(), getWidth(), getHeight(), 3,3);
+            g.setColor(contourColor);
+            Graphics2D g2 = (Graphics2D) g;
+            g2.setStroke(new BasicStroke(2));
+            g.drawRoundRect(getxPos(), getyPos(), getWidth(), getHeight(), 3,3);
+        }
+
+        @Override
+        public String getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
+            if (id != MouseEvent.MOUSE_RELEASED) return "";
+            state = new NotPressed();
+            System.out.println("button released -> ");
+            if (!wasClicked(x, y)) return "";
+            System.out.println("Returning content.");
+            return returnText;
+        }
+    }
+
+    @Override
+    public void Render(Graphics g) {
         setWidth(g.getFontMetrics().stringWidth(displayText)*3/2);
-        g.setColor(normalButtonColor);
-        g.fillRoundRect(getxPos(), getyPos(), getWidth(), getHeight(), 3,3);
-        g.setColor(buttonContourColor);
-        g.drawRoundRect(getxPos(), getyPos(), getWidth(), getHeight(), 3,3);
+        state.Render(g);
+    }
+
+    @Override
+    public String getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
+        return state.getHandleMouse(id, x, y, clickCount, button, modifier);
     }
 
     /**
@@ -49,8 +119,8 @@ public class UIButton extends DocumentCell{
      *
      * @param g The graphics to use.
      */
-    private void drawText(Graphics g) {
-        g.setColor(normalTextColor);
+    void drawText(Graphics g) {
+        g.setColor(textColor);
         g.setFont(font);
         int centerY = getyPos()+textHeight;
         int textWidth = g.getFontMetrics().stringWidth(displayText);
@@ -59,29 +129,9 @@ public class UIButton extends DocumentCell{
     }
 
     @Override
-    public String getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
-        if (!wasClicked(x, y)) return "";
-        System.out.println("Button was pressed!");
-        return returnText;
-    }
-
-//    @Override
-//    public void setWidth(int newWidth) { }
-
-    @Override
     public void setHeight(int newHeight) { }
 
     public String getDisplayText() {
         return displayText;
     }
-
-    private final String displayText;
-    private final String returnText;
-
-    private final int textHeight = getHeight()*4/5;
-    Font font = new Font(Font.SERIF, Font.PLAIN, textHeight);
-
-    private final Color normalButtonColor = Color.LIGHT_GRAY;
-    private final Color buttonContourColor = Color.BLACK;
-    private final Color normalTextColor = Color.BLACK;
 }

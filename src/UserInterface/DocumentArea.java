@@ -1,12 +1,9 @@
 package UserInterface;
 
 import domainmodel.*;
-import org.w3c.dom.Text;
 
-import javax.naming.ContextNotEmptyException;
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -232,13 +229,9 @@ public class DocumentArea extends Frame implements DocumentListener {
      */
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-        //if (!wasClicked(x, y)) return; (elements in the doc-area also need to know if a click was not on them e.g.: inputfields)
         if (button != MouseEvent.BUTTON1) return;
-        if (id != MouseEvent.MOUSE_CLICKED) return;
-        //System.out.println("content: "+content);
-        //System.out.println(content.getxPos()+","+content.getyPos());
+        // if (id != MouseEvent.MOUSE_CLICKED) return;
         String result = content.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
-        //System.out.println("result: '"+result+"' on "+this.getClass());
         linkPressed(result);
     }
 
@@ -266,7 +259,7 @@ public class DocumentArea extends Frame implements DocumentListener {
     public void contentChanged() {
         try{
             ContentSpan newContentSpan = controller.getContentSpan();
-            this.setContent(this.translateToUIElements(newContentSpan));
+            //this.setContent(this.translateToUIElements(newContentSpan));
         }
         catch(Exception e){
             System.out.print(e);

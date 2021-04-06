@@ -110,7 +110,7 @@ public class UITable extends DocumentCell{
         int maxheight = 0;
         for (int height :  rowHeights)
             maxheight += height;
-        return maxheight; //+(3*grid.get(0).size());
+        return maxheight +(verticalOffset*grid.get(0).size());
 //        return rowHeights.stream().mapToInt(Integer::intValue).sum();
     }
 
@@ -150,7 +150,7 @@ public class UITable extends DocumentCell{
                 cell.setHeight(max);
                 // Also, the y-position needs to be updated. This is the y-position of the table + the heights of all the above cells
                 int offset = 0;
-                for (int j = 0; j < i; j++) offset += rowHeights.get(j);
+                for (int j = 0; j < i; j++) offset += rowHeights.get(j)+verticalOffset;
                 cell.setyPos(getyPos()+offset);
             }
             i++;
@@ -252,6 +252,8 @@ public class UITable extends DocumentCell{
         }
         return namesAndValues;
     }
+
+    int verticalOffset = 3;
 
     /**
      * An {@link ArrayList} that contains {@link ArrayList}'s
