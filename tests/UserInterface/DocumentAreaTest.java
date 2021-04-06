@@ -91,11 +91,11 @@ class DocumentAreaTest {
         // The width and height of the table should be the width and height of the cells combined.
         // The height of a cell is the size of the text. The width is the
         double ratio = doc.getContent().getHeightToWidthRatio();
-        assertEquals(2*textSize, doc.getContent().getMaxHeight());
+        assertEquals(2*(textSize+ table.verticalOffset), doc.getContent().getMaxHeight());
         assertEquals((int) ((Math.max(text.length(), hrefText.length())+text2.length())*textSize*ratio), doc.getContent().getMaxWidth());
 
         // Click on link and retrieve href attribute
-        assertEquals(href, doc.getContent().getHandleMouse(MouseEvent.MOUSE_CLICKED, 1,textSize+2, 1, MouseEvent.BUTTON1, 0));
+        assertEquals(href, doc.getContent().getHandleMouse(MouseEvent.MOUSE_PRESSED, 1,textSize+6, 1, MouseEvent.BUTTON1, 0));
 
         // Check x and y positions: can't be accessed without adding additional getters ..
     }
