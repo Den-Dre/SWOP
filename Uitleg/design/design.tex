@@ -4,9 +4,10 @@
 \usepackage[T1]{fontenc}
 \usepackage[dutch]{babel}
 \usepackage{amssymb}
+\usepackage{hyperref}
 
 
-\title{Beknopte uitleg designkeuzes\\ Iteratie 1: project Software-Ontwerp}
+\title{Beknopte uitleg designkeuzes\\ Iteratie 1 \& 2: project Software-Ontwerp}
 \author{Jakob Heirwegh, Martijn Leplae, Thibault van Win en Andreas Hinderyckx}
 \date{Maart 2021} 
 
@@ -18,8 +19,8 @@
 \maketitle
 
 \newpage
-
-\section{Domeinlaag}
+\section{Iteratie 1}\label{sec:Iteratie1}
+\subsection{Domeinlaag}
 Om het design van de domeinlaag uit te bouwen, hebben we ons gebaseerd op het meegeleverde domeinmodel als basis. Hierbij maakten we gebruik van \textbf{GRASP-principles} (verder in het document steeds geformatteerd in boldface). Onderstaande uitleg en structuur kan steeds op het meegeleverde design model (\texttt{designModel.png}) gevolgd worden. We beginnen onderaan het designmodel en bouwen op naar boven. Het gegeven domeinmodel hebben we aldus uitgebreid door volgende zaken toe te voegen:
 \begin{itemize}
 	\item \texttt{Document}-klasse:\\
@@ -34,7 +35,7 @@ Om het design van de domeinlaag uit te bouwen, hebben we ons gebaseerd op het me
 	Deze klasse fungeert als \textbf{Controller} waarop de UI-laag beroep kan doen wanneer ze diensten uit de domeinlaag wilt oproepen. De \textbf{controller} verlaagt de koppeling tussen de domein- en UI-laag: alle oproepen van de UI-laag naar de domeinlaag moeten via deze klasse gebeuren. Hierdoor kan de UI-laag hergebruikt worden op verschillende domeinlagen.
 	
 	\item \texttt{DocumentListener}-Interface:\\
-	Dit is een toepassing van het design patroon \textit{Observer}: bij aanpassingen in het \texttt{Document}-object wordt een notification ge-broadcast en worden alle UI-elementen die hierbij actie moeten ondernemen op de hoogte gesteld. Elk UI-object dat hierbij actie moet ondernemen, zal namelijk als \texttt{listener} op dit evenement `geabonneerd' zijn. Dit is op zijn beurt ook een voorbeeld van het \textbf{polymorphism}-principle, doordat DocumentListener door twee soorten listeners wordt geïmplementeerd: 
+	Dit is een toepassing van het designpatroon \textit{Observer}: bij aanpassingen in het \texttt{Document}-object wordt een notification ge-broadcast en worden alle UI-elementen die hierbij actie moeten ondernemen op de hoogte gesteld. Elk UI-object dat hierbij actie moet ondernemen, zal namelijk als \texttt{listener} op dit evenement `geabonneerd' zijn. Dit is op zijn beurt ook een voorbeeld van het \textbf{polymorphism}-principle, doordat DocumentListener door twee soorten listeners wordt geïmplementeerd: 
 	\begin{itemize}
 		\item enerzijds \texttt{urlListeners}, en 
 		\item anderzijds \texttt{documentListeners}.
@@ -47,7 +48,7 @@ Om het design van de domeinlaag uit te bouwen, hebben we ons gebaseerd op het me
 
 Vervolgens zullen we onze design-keuzes in de UI-laag bespreken.
 
-\section{UI-laag}
+\subsection{UI-laag}
 
 We starten uiterst rechts in de UI-laag, met de klasse \texttt{Browsr}.
 
@@ -67,7 +68,7 @@ We starten uiterst rechts in de UI-laag, met de klasse \texttt{Browsr}.
 	 Dit is een specialisatie van de \texttt{Frame}-klasse die de adres-bar van de Browsr voorstelt. Ze staat in verbinding met de domeinlaag via de controller, wat haar in staat stelt om zaken die domeinkennis vereisen zoals het laden van documenten, het doorgeven van gebruikersinvoer e.d. te vervolledigen. In de omgekeerde richting, vloeit er informatie van de domein- naar de UI-laag doordat deze klasse het \texttt{DocumentListener}-interface implementeert en zo bij veranderingen van de informatie uit de domeinlaag - bv. de URL bijbehordend bij een nieuw ingeladen \texttt{Document} - hier op een gespecialiseerde manier kan op ingaan.
 	 
 	 \item \texttt{DocumentArea}-klasse:\\
-	 Dit is eveneens een specialisatie van de \texttt{Frame}-klasse die het gedeelte van de Browsr voorstelt waarin de inhoud van documenten moet worden weergegeven. Ze vertoont een gelijkaardige link met de domeinlaag zoals deze bij de bovenvermelde \texttt{AddressBar}-klasse. 
+	 Dit is eveneens een specialisatie van de \texttt{Frame}-klasse die het gedeelte van de Browsr voorstelt waarin de inhoud van documenten moet worden weergegeven. Ze vertoont een gelijkaardige link met de domeinlaag zoals deze bij de bovenvermelde \texttt{AddressBar}-klasse.
 	 
 	 Wanneer een document moet gerenderd worden, wordt deze taak doorgeschoven naar de onderliggende sub-onderdleen van \texttt{DocumentArea}, namelijk de \texttt{DocumentCell} (zie verder). Deze manier van aanpak steunt op het \textbf{information expert} principe in die zin dat elk sub-onderdeel verantwoordelijkheid neemt om zichzelf te renderen. Verder komt hier ook het \textbf{creator}-principe naar voren: de klasse \texttt{DocumentArea} is verantwoordelijk voor het aanmaken van een \texttt{DocumentCell} die de juiste structuur bevat.
 	 
@@ -78,20 +79,20 @@ We starten uiterst rechts in de UI-laag, met de klasse \texttt{Browsr}.
 	 
 	 Verder is deze structuur van \texttt{DocumentCell}'s ontworpen volgens het \textit{composite}-designpatroon
 	 
-	 \item \texttt{UIHyperlink}-, \texttt{UITextField}- en \texttt{UITable}-klassen:
+	 \item \texttt{UIHyperlink}\label{UIHyperlink1}-, \texttt{UITextField}- en \texttt{UITable}-klassen:
 	 dit zijn alledrie specialisaties van de \texttt{DocumentCell}-klasse die in staat zijn om de individuele domeinobjecten voor te stellen. 
  \end{itemize}
 
 Ten slotte bespreken we de uitwerking van enkele system operations in ons design.
 
-\section{System operations}
-\subsection{Document Loading}
+\subsection{System operations}
+\subsubsection{Document Loading}
 Wanneer een document moet geladen worden, wordt een \texttt{loadDocument()}-oproep gedaan vanuit de UI-laag naar de \texttt{UIController}. Deze delegeert de oproep verder naar de \texttt{Document}-klasse, die op zijn beurt een beroep doet op de \texttt{ContentSpanBuilder} om het document succesvol in een \texttt{ContentSpan} om te zetten. Dit triggert een event, namelijk \texttt{contentChanged} uit het \texttt{DocumentListener}-interface, waardoor de elementen uit de UI-laag die zich hierdoor moeten aanpassen, op de hoogte gebracht worden. Hierdoor wordt zowel de \texttt{DocumentArea} als de \texttt{AddressBar} op de benodigde manier geüpdated. De nodige listeners om dit te realiseren worden bij de aanmaak van het \texttt{UIController}-object in de \texttt{Browsr}-klasse ineens mee toegevoegd.
 
-\subsection{URL clicking}
+\subsubsection{URL clicking}
 Wanneer een gebruiker een URL aanklikt, wordt in de \texttt{DocumentArea}-klasse uit de UI-laag elke \texttt{Frame} overlopen om te bepalen op welke \texttt{DocumentCell} deze klik juist was. Het afhandelen van de benodigde actie bij deze klik, wordt dan gedaan door deze bepaalde \texttt{DocumentCell}, die via \texttt{DocumentArea} en de controller \texttt{UIController} beroep kan doen op de nodige diensten uit de domeinlaag.
 
-\subsection{(Malformed) URL handling}
+\subsubsection{(Malformed) URL handling}
 Wanneer een gebruiker een URL in de \texttt{AddressBar} ingeeft, wordt deze als \texttt{String} opgeslagen in de UI-laag en doorgegeven aan de \texttt{UIController}, dewelke het eerste object in de domeinlaag is. Pas wanneer de URL hier aankomt, wordt geprobeerd om de URL van een \texttt{String} naar een effectief \texttt{URL}-object om te zetten. Hierbij kunnen we twee scenario's onderscheiden:
 \begin{itemize}
 	\item De URL is correct:\\
@@ -100,5 +101,65 @@ Wanneer een gebruiker een URL in de \texttt{AddressBar} ingeeft, wordt deze als 
 	In de \texttt{UIController} zal een \texttt{MalformedURLException} optreden. Deze wordt \textit{defensief} afgehandeld door een nieuw \texttt{Document}-object aan te maken met een vastgelegde `error-URL'. \texttt{contentChanged} wordt getriggerd, maar door de vastgelegde error-URL, zullen enkel de \texttt{DocumentListeners} en niet de \texttt{urlListeners} zichzelf updaten. Hierdoor blijft de URL die door de gebruiker is ingegeven in de \texttt{AddressBar} staan, maar kan wel een error-Document worden weergegeven in de \texttt{DocumentArea}.
 \end{itemize}
 
+\newpage
+\section{Iteratie 2}
+
+\subsection{Domeinlaag}
+In de domeinlaag hebben we de klassen \texttt{TextInputField}, \texttt{SubmitButton} en \texttt{Form} toegevoegd zoals gespecifieerd in de opgave. 
+
+Verder hebben we een klasse \texttt{BookmarksURLKeeper} toegevoegd met als doel om de URL's bijbehorend bij door de gebruiker aangemaakte bookmarks bij te houden. Deze klasse is nodig omdat we niet alle informatie van de bookmarks willen bijhouden in de UI-laag. Om dit probleem op te lossen, hebben we besloten om bij het aanmaken van een bookmark enkel de naam in de UI-laag bij te houden en de bijbehorende URL op te slaan in de domeinlaag, in de klasse \texttt{BookmarksURLKeeper}. De motivatie achter deze aanpak zijn de volgende elementen:
+
+\begin{itemize}
+	\item We houden kennis vanuit de domeinlaag zoveel mogelijk gescheiden van de UI-laag. We hebben echter besloten om de namen van de bookmarks wel in de UI-laag bij te houden zodat elke bookmark gelinkt kan worden aan een bijbehorende sectie van de UI om het renderen van deze bookmarks in de \texttt{BookmarksBar} (cfr. infra) mogelijk te maken.
+	\item Indien er later extra attributen aan een bookmark moeten kunnen worden toegevoged, zoals bijvoorbeeld functionaliteit voor een beschrijving, commentaar, \texttt{tags} etc., kunnen deze eenvoudigweg aan de klasse \texttt{BookmakrsURLKeeper} worden toegevoegd zonder dat deze in de UI-laag moeten worden opgeslagen en de \textbf{koppeling} tussen UI- en domeinlaag laag blijft.
+\end{itemize}
+
+\subsection{UI-laag}
+\begin{itemize}
+	\item \textbf{BookmarksBar}\\
+	Zoals vermeld in de vorige paragraaf, hebben we een klasse genaamd \texttt{BookmarksBar} toegevoegd die een grafische versie van de toegevoegde bookmarks weergeeft en van de bookmarks enkel en alleen de ingegeven naam bijhoudt. Indien op een bookmark geklikt wordt, kan dit gedetecteerd worden door het grafische gebied (i.e. een instantie van de klasse \texttt{Frame}, zie \nameref{sec:Iteratie1}) gelinkt van de naam van de bookmark te raadplegen. De bijhorende URL van de bookmark wordt vervolgens uit de domeinlaag opgevraagd via de \texttt{UIController}. Om dit idee te implementeren maken we gebruik van een beperktere vorm van een hyperlink, die enkel de naam maar niet de URL zelf omvat, genaamd een \texttt{UITextHyperlink} (cfr. infra).
+	
+	Deze werkwijze houdt de \textbf{koppeling} tussen de domein- en UI-laag zo laag mogelijk en leidt tot een \textbf{hoge cohesie} van de \texttt{BookmarksBar}-klasse.
+	\item  \textbf{UI-tegenhangers van de domeinobjecten}\\
+	Om de uitgebreide structuur van de domeinlaag te weerspiegelen in de UI-laag, hebben we volgende tegenhangers van deze nieuwe objecten in de UI-laag toegevoegd:
+	\begin{itemize}
+		\item \textbf{UItextInputField}\\
+		Dit is het UI-equivalent van het domeinobject \texttt{InputField}. Deze klasse omvat alle functionaliteit wat betreft tekst-invoer van de gebruiker en is bijgevolg \textbf{information expert} op dit vlak. De klasse \texttt{AddressBar} laten we van deze klassen overerven, zodat we \textbf{code duplicatie beperken}. Deze zaken leiden ertoe dat de klasse \texttt{UITextInputField} een \textbf{hoge cohesie} heeft en de klasse \texttt{AddressBar} ook zijn hoge cohesie verder behoudt.
+		
+		\item \textbf{UISubmitButton}\\
+		Deze klasse is de tegenhanger van het domeinobject \texttt{SubmitButton} en omvat alle functionaliteit wat het grafisch weergeven van knoppen en de benodigde acties die hierbij moeten worden genomen. Om de verschillende grafische weergaves van een knop te implementeren met \textbf{minimale koppeling}, hebben we gebruik gemaakt van het \textit{State} designpatroon. Meer specifiek: beide mogelijke toestanden waarin een knop zich kan bevinden zijn geïmplementeerd d.m.v. een overeenkomstige geneste klasse. Zo zijn er geneste klasses \texttt{Pressed} en \texttt{NotPressed} om de correcte grafische weergave en nodige acties van een druk op een ingedrukte respectievelijk niet-ingedrukte knop weer te geven en af te handelen.
+		
+		\item \textbf{UIForm}
+		Deze klasse is de tegenhanger van het domeinobject \texttt{Form}. Net zoals gespecifieerd in de domeinlaag, kan een \texttt{UIForm} meerdere \texttt{DocumentCell}'s (UI tegenhanger van een \texttt{ContentSpan}: zie \nameref{sec:Iteratie1}) bevatten om de gewenste structuur te verkrijgen. Een \texttt{UIForm} is gekenmerkt door een \texttt{action} die bij het aanklikken van een bijhorende \texttt{UISubmitButton} specifieert hoe de URL moet worden samengesteld.
+		
+		\item \textbf{UITexeHyperlink} 
+		Deze klasse gelijkaardig aan de klasse \texttt{UIHyperlink} uit \nameref{sec:Iteratie1}, met de uitzondering dat ze het URL-veld van de hyperlink niet bevat. Deze klasse maakt het mogelijk de hogerop beschreven werking van de domeinklasse \texttt{BookmarksURLKeeper} en UI-klasse \texttt{BookmarksBar} te implementeren. 
+		
+		\item \textbf{UIHyperlink}
+		Deze klasse erft over van de klasse \texttt{UITextHyperlink} en voegt een URL attribuut toe aan de superklasse. Dit stelt ons in staat om volledige hyperlinks weer te geven en bij te houden in de UI-laag daar waar dit nodig is, zoals in \texttt{UIForm}'s en \texttt{DocumentCell}s in het algemeen. Op deze manier kunnen we garanderen dat enkel die objecten die volledige kennis moeten hebben over de hyperlinks (zoals \texttt{UIForm}'s e.d.) ook effectief deze kennis bevatten, en klassen zoals \texttt{BookmarksBar} enkel een minimale subset van deze domeinkennis omvatten.
+	\end{itemize}
+
+	Ten slotte hebben we een drietal klassen toegevoegd teneinde de \texttt{Save}- en \texttt{Save Bookmark}-functionaliteit te implementeren, namelijk;
+	\begin{itemize}
+		\item \texttt{GenericDialogScreen}\\
+		Dit is een abstracte superklasse om het abstract idee van een dialoogscherm voor te stellen. De klasse bevat alle gedeelde functionaliteit van de klassen \texttt{BookmarksDialog} en \texttt{SaveDialog} (cfr. infra) om \textbf{code duplicatie} tot een minimum te \textbf{beperken}.
+		
+		\item \textbf{BookmarksDialog}\\
+		Deze klasse stelt het concept van een venster voor dat weergegeven wordt bij het opslaan van een bookmark. Het bevat een \texttt{UIForm} met twee knoppen om de gevraagde layout weer te geven. De URL - die zich op het moment dat de toetsencombinatie \texttt{Ctrl + d} wordt ingedrukt in de \texttt{AddressBar} bevindt - wordt via de link met de klasse \texttt{Browsr} van de superklasse \texttt{GenericDialogScreen} opgevraagd en ingevuld in het 'URL'-veld uit de \texttt{UIForm}. 
+		
+		Door gebruik van een superklasse te maken, vermijden we dat de klasse \texttt{BookmarksDialog} een rechtstreekse link met de klasse \texttt{Browsr} moet hebben. Dit probleem lijkt verschoven te worden naar de superklasse, maar dit is onze ogen een meer modulair design. Hierdoor moeten de connecties met de \texttt{Browsr}-klasse namelijk niet voor elke specifieke instantie van een dialoogscherm worden voorzien: in dit geval zou de klasse \texttt{Browsr} namelijk kennis zou moeten hebben van de verschillende soorten dialoogschermen. Dit verhoogt de \textbf{cohesie} van zowel de klasse \texttt{Browsr} als de dialoogscherm-klassen, en verlaagt opnieuw de koppeling tussen deze klassen.
+		
+		Ten slotte bevat de klasse \texttt{BookmarksDialogScreen} een connectie met de klasse \texttt{BookmarksBar} om de functionaliteit van het toevoegen van bookmarks te implementeren. Deze associatie \textbf{verhoogt de koppeling niet} naar onze mening, doordat de functionaliteit van een \texttt{BookmarksDialog} rechtsreeks in verband staat met de \texttt{BookmarksBar}, en met geen enkele andere klasse. Bijgevolg modelleert deze associatie modelleert dit idee en veroorzaakt ze geen onnodige, extra koppeling.
+		
+		\item \textbf{SaveDialog}\\
+		Deze klasse stelt het dialoogscherm voor dat weergegeven wordt wanneer de toetsencombinatie \texttt{Ctrl + s} wordt ingeduwd. Ze erft over van de klasse \texttt{GenericDialogScreen} en deelt bijgevolg degemeenschappelijke functionaliteit met \texttt{BookmarksDialog}. Door deze overervingsstructuur, heeft de klasse \texttt{SaveDialog} geen associatie met de klasse \texttt{BookmakrsDialog}, wat onnodige \textbf{koppeling vermijdt}.
+	\end{itemize}	
+\end{itemize}
+
+Tot slot hebben we enkele toevoegingen gemaakt aan de klasse \texttt{Browsr} tegenover de versie die we hebben ingediend bij \nameref{sec:Iteratie1}. De voornaamste aanpassing is de toevoeging van geneste klassen die de huidige layout van het programma weergeven, i.e. of er al dan niet een dialoogscherm wordt weergegeven en hoe input afgehandeld moet worden indien dit al dan niet het geval is. Deze geneste klassen noemen we \texttt{Layout}s, omdat ze de huidige layout van het programma weergeven; ze zijn dan ook een rechtstreekse implementatie van het \textit{State} designpatroon. 
+
+Bij aanvang bevindt \texttt{Browsr} zich in een \texttt{RegularLayout}. Wanneer de toetsencombinatie \texttt{Ctrl + d} of \texttt{Ctrl + s} wordt ingeduwd, wordt de layout geüpdated naar respectievelijk een \texttt{BookmarksBarLayout} of een \texttt{SaveDialogLayout}. Elke layout heeft een eigen implementatie van de uit \texttt{CanvasWindow} overgeërfde methoden \texttt{handleMouseEvent}, \texttt{handleKeyEvent} en \texttt{Render}. Op deze manier kunnen we en juiste afhandeling van deze methoden impmlementeren en houden we ons design modulair wat het eenvoudig maakt om later eventueel extra dialoogschermen toe te voegen: dit vereist namleijk enkel een toevoegingn van een overeenkomstige \texttt{Layout} en implementatie van diens overgeërfde methodes.
+
+Daarnaast hebben we ook overwogen om het \textit{memento} design pattern te implementeren om de vorige staten van de \texttt{Regular}-, \texttt{BookmarksDialog-} of \texttt{SaveDialog}-layout te herstellen. Een implementatie van dit designpatroon bracht echter een aanzienlijke hoeveelheid overhead met zich mee vanwege de nood aan zogenoemde `memento-klassen' voor elk object dat de mogelijkheid moest hebben om hersteld te worden na het wisselen van een layout. Deze overhead vermijden indien we voor elk van deze layouts de benodigde informatie in de hoger vermelde klassen bijhouden en via het gebruik van de zonet vernoemde layouts tussen deze scenario's wisselen vanuit de \texttt{Browsr}-klasse. Bovendien gebeurt dit alles met slechts een instantie van de \texttt{CanvasWindow}-klasse, zoals ook gevraagd is geweest.
 
 \end{document}

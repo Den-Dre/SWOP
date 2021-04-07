@@ -1,17 +1,15 @@
-import UserInterface.AddressBar;
-import UserInterface.DocumentArea;
-import UserInterface.UITextField;
-import domainmodel.ContentSpan;
-import domainmodel.Document;
-import domainmodel.TextSpan;
-import domainmodel.UIController;
+import userinterface.AddressBar;
+import userinterface.DocumentArea;
+import userinterface.UITextField;
+import domainlayer.Document;
+import domainlayer.TextSpan;
+import domainlayer.UIController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.awt.event.*;
-import java.net.URL;
 
 @DisplayName("total program flow when typing in addressbar")
 public class flowTest {
@@ -23,7 +21,7 @@ public class flowTest {
     private final String badUrl = "www.fout.be";
 
     private final char undefChar = KeyEvent.CHAR_UNDEFINED;
-    private final int mouseClick = MouseEvent.MOUSE_CLICKED;
+    private final int mouseClick = MouseEvent.MOUSE_RELEASED;
     private final int keyPress = KeyEvent.KEY_PRESSED;
     private final int leftMouse = MouseEvent.BUTTON1;
     private final int shiftModifier = KeyEvent.SHIFT_DOWN_MASK;
