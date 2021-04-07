@@ -71,7 +71,7 @@ class UITableTest {
     @Test
     @DisplayName("can calculate its maximum height")
     void getMaxHeight() {
-        assertEquals(2*textSize, table1.getMaxHeight());
+        assertEquals(2*(textSize+table1.verticalOffset), table1.getMaxHeight());
     }
 
     @Test
@@ -94,7 +94,7 @@ class UITableTest {
         // Check if y-positions are set correctly
         assertEquals(table1.getyPos(), textField1.getyPos());
         assertEquals(table1.getyPos(), textField2.getyPos());
-        assertEquals(table1.getyPos()+textSize, link.getyPos());
+        assertEquals(table1.getyPos()+textSize+table1.verticalOffset, link.getyPos());
     }
 
     @Test
