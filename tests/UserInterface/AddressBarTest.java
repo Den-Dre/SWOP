@@ -71,10 +71,9 @@ class AddressBarTest {
         }
     }
 
-
     @Test
     @DisplayName("Can handle escape and enter")
-    void handleEscape() {
+    void handleEscapeEnter() {
         String first = "helloworld.com";
         String second = "loremipsum.be";
         bar.changeURLto(first);
@@ -110,121 +109,6 @@ class AddressBarTest {
         assertFalse(bar.hasFocus);
         assertEquals(first, bar.getURL());
     }
-
-    @Test
-    @DisplayName("Handles simple backspace and delete operation")
-    void handleBackspace(){
-        String url = "helloworld.com";
-        bar.changeURLto(url);
-        // Click on bar and check if it has focus
-        bar.handleMouse(mouseClick, 10,10, 1,leftMouse,0);
-        assertTrue(bar.hasFocus);
-        // Press Right (all the text is selected when clicking to gain focus, we want no text to be selected for this test)
-        bar.handleKey(keyPress, KeyEvent.VK_RIGHT, undefChar, 0);
-        // Press backspace
-        bar.handleKey(keyPress, KeyEvent.VK_BACK_SPACE, undefChar, 0);
-        assertEquals("helloworld.co", bar.getURL());
-
-        //Press left
-        bar.handleKey(keyPress, KeyEvent.VK_LEFT, undefChar, 0);
-        // Press backspace again
-        bar.handleKey(keyPress, KeyEvent.VK_BACK_SPACE, undefChar,0);
-        assertEquals("helloworld.o", bar.getURL());
-        // Press delete
-        bar.handleKey(keyPress, KeyEvent.VK_DELETE, undefChar,0);
-        assertEquals("helloworld.", bar.getURL());
-    }
-
-    @Test
-    @DisplayName("Deletes all text with Backspace after the bar gains focus from mouseclick")
-    void handleBackSpaceAfterClick() {
-        String url = "helloworld.com";
-        bar.changeURLto(url);
-        // Click on bar and check if it has focus
-        bar.handleMouse(mouseClick, 10,10, 1,leftMouse,0);
-        assertTrue(bar.hasFocus);
-        // Press backspace
-        bar.handleKey(keyPress, KeyEvent.VK_BACK_SPACE, undefChar, 0);
-        assertEquals("", bar.getURL());
-    }
-
-    @Test
-    @DisplayName("Deletes all text with Delete after the bar gains focus from mouseclick")
-    void handleDeleteAfterClick() {
-        String url = "helloworld.com";
-        bar.changeURLto(url);
-        // Click on bar and check if it has focus
-        bar.handleMouse(mouseClick, 10,10, 1,leftMouse,0);
-        assertTrue(bar.hasFocus);
-        // Press backspace
-        bar.handleKey(keyPress, KeyEvent.VK_DELETE, undefChar, 0);
-        assertEquals("", bar.getURL());
-    }
-
-    @Test
-    @DisplayName("Can handle End, Home, Left and Right + typing at insertion point")
-    void handleEndHomeLeftRight() {
-        String url = "helloworld.com";
-        bar.changeURLto(url);
-        // Click on bar and check if it has focus
-        bar.handleMouse(mouseClick, 10,10, 1,leftMouse,0);
-        assertTrue(bar.hasFocus);
-
-        // => Press Home + enter letter
-        bar.handleKey(keyPress, KeyEvent.VK_HOME, undefChar, 0);
-        bar.handleKey(keyPress, 65, 'a', 0);
-        assertEquals("ahelloworld.com", bar.getURL());
-        // => Press End + enter letter
-        bar.handleKey(keyPress, KeyEvent.VK_END, undefChar, 0);
-        bar.handleKey(keyPress, 65, 'a', 0);
-        assertEquals("ahelloworld.coma", bar.getURL());
-        // => Press left + enter letter
-        bar.handleKey(keyPress, KeyEvent.VK_LEFT, undefChar, 0);
-        bar.handleKey(keyPress, 66, 'b',0);
-        assertEquals("ahelloworld.comba", bar.getURL());
-        // => Press Right + enter letter
-        bar.handleKey(keyPress, KeyEvent.VK_RIGHT, undefChar, 0);
-        bar.handleKey(keyPress, 66, 'b',0);
-        assertEquals("ahelloworld.combab", bar.getURL());
-    }
-
-    @Test
-    @DisplayName("Can handle selection+backspace operations")
-    void handleSelection() {
-        String url = "helloworld.com";
-        bar.changeURLto(url);
-        // Click on bar and check if it has focus
-        bar.toggleFocus(true);
-        assertTrue(bar.hasFocus);
-
-        // => 2 * shift-left + backspace
-        for (int i = 0; i < 2; i++)
-            bar.handleKey(keyPress, KeyEvent.VK_LEFT, undefChar, shiftModifier);
-        bar.handleKey(keyPress, KeyEvent.VK_BACK_SPACE, undefChar,0);
-        assertEquals("helloworld.c", bar.getURL());
-        // => 2 * left + 2 * shift-right + backspace
-        for (int i = 0; i < 2; i++)
-            bar.handleKey(keyPress, KeyEvent.VK_LEFT, undefChar, 0);
-        for (int i = 0; i < 2; i++)
-            bar.handleKey(keyPress, KeyEvent.VK_RIGHT, undefChar, shiftModifier);
-        bar.handleKey(keyPress, KeyEvent.VK_BACK_SPACE, undefChar,0);
-        assertEquals("helloworld", bar.getURL());
-        // => shift-home + backspace
-        bar.handleKey(keyPress, KeyEvent.VK_HOME, undefChar, shiftModifier);
-        bar.handleKey(keyPress, KeyEvent.VK_BACK_SPACE, undefChar,0);
-        assertEquals("", bar.getURL());
-        // set url back to a string
-        bar.changeURLto("test");
-        bar.toggleFocus(true);
-        // press home
-        bar.handleKey(keyPress, KeyEvent.VK_HOME, undefChar, 0);
-        // => shift-end + backspace
-        bar.handleKey(keyPress, KeyEvent.VK_END,undefChar, shiftModifier);
-        bar.handleKey(keyPress, KeyEvent.VK_BACK_SPACE, undefChar,0);
-        assertEquals("", bar.getURL());
-    }
-
-
 
     @Test
     @DisplayName("Handles resizes")

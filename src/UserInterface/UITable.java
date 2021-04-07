@@ -76,6 +76,23 @@ public class UITable extends DocumentCell{
     }
 
     /**
+     * Send the given KeyEvent to the {@code DocumentCells} of this {@code UITable}.
+     *
+     * @param id: The KeyEvent (Associated with type of KeyEvent)
+     * @param keyCode: The KeyEvent code (Determines the involved key)
+     * @param keyChar: The character representation of the involved key
+     * @param modifiersEx: Specifies other keys that were involved in the event
+     */
+    @Override
+    public void handleKey(int id, int keyCode, char keyChar, int modifiersEx) {
+        for (ArrayList<DocumentCell> row : grid) {
+            for (DocumentCell cell : row) {
+                cell.handleKey(id, keyCode, keyChar, modifiersEx);
+            }
+        }
+    }
+
+    /**
      * Re-calculates the necessary widths and heights of the DocumentCells
      */
     @Override
@@ -93,7 +110,7 @@ public class UITable extends DocumentCell{
         int maxheight = 0;
         for (int height :  rowHeights)
             maxheight += height;
-        return maxheight;
+        return maxheight +(verticalOffset*grid.get(0).size());
 //        return rowHeights.stream().mapToInt(Integer::intValue).sum();
     }
 
@@ -133,7 +150,7 @@ public class UITable extends DocumentCell{
                 cell.setHeight(max);
                 // Also, the y-position needs to be updated. This is the y-position of the table + the heights of all the above cells
                 int offset = 0;
-                for (int j = 0; j < i; j++) offset += rowHeights.get(j);
+                for (int j = 0; j < i; j++) offset += rowHeights.get(j)+verticalOffset;
                 cell.setyPos(getyPos()+offset);
             }
             i++;
@@ -218,6 +235,25 @@ public class UITable extends DocumentCell{
     public ArrayList<ArrayList<DocumentCell>> getContent() {
     	return this.grid;
     }
+
+    /**
+     * Get a list of the names/value pairs of the {@code DocumentCells} contained
+     * in this {@code UITable}.
+     *
+     * @return An ArrayList with the name-value pairs of the {@code DocumentCells}.
+     */
+    @Override
+    public ArrayList<String> getNamesAndValues() {
+        ArrayList<String> namesAndValues = new ArrayList<>();
+        for (ArrayList<DocumentCell> row : grid) {
+            for (DocumentCell cell : row) {
+                namesAndValues.addAll(cell.getNamesAndValues());
+            }
+        }
+        return namesAndValues;
+    }
+
+    int verticalOffset = 3;
 
     /**
      * An {@link ArrayList} that contains {@link ArrayList}'s
