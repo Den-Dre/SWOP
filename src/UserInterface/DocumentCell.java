@@ -1,6 +1,7 @@
 package UserInterface;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /**
  * A class to represent individual UI
@@ -87,12 +88,24 @@ public class DocumentCell extends Frame {
     }
 
     /**
+     * Retrieve the name and value of this DocumentCell.
+     *
+     * Only applies if the DocumentCell has a name and value (e.g UITextInputField)
+     * or can contain elements that do (e.g. UITable).
+     *
+     * @return An ArrayList with the name and value of the DocumentCell separated by a '=' sign.
+     */
+    public ArrayList<String> getNamesAndValues() {
+        return new ArrayList<>();
+    }
+
+    /**
      * Return the maximum height of this DocumentCell.
      *
      * @return 1: this is always equal to 1.
      */
     public int getMaxHeight() {
-        return 1;
+        return getHeight();
     }
 
     /**
@@ -101,7 +114,7 @@ public class DocumentCell extends Frame {
      * @return 1: this is always equal to 1.
      */
     public int getMaxWidth() {
-        return 1;
+        return getWidth();
     }
 
     /**

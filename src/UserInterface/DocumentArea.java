@@ -1,9 +1,7 @@
 package UserInterface;
 
 import domainmodel.*;
-import org.w3c.dom.Text;
 
-import javax.naming.ContextNotEmptyException;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -48,8 +46,44 @@ public class DocumentArea extends Frame implements DocumentListener {
 //	    rows.add(row4);
 //	    rows.add(row5);
 
-        // uncomment the setContent in the contentChanged method to see a documentarea with a textinputfield-box
-	    this.content = new UITextInputField(100,50,100,25);
+
+        // A copy of the form in the assignment.
+        UITextField formTitle = new UITextField(x, y, 0,textSize, "List words from the Woordenlijst Nederlandse Taal");
+
+        UITextField firstText = new UITextField(x,y,0,textSize, "Starts with:");
+        UITextInputField firstInput = new UITextInputField(x,y,100,textSize, "starts_with");
+        UITextField secondText = new UITextField(x,y,0,textSize, "Max. results");
+        UITextInputField secondInput = new UITextInputField(x,y,100,textSize, "max_nb_results");
+
+        ArrayList<ArrayList<DocumentCell>> innerTableRows = new ArrayList<>();
+        ArrayList<DocumentCell> innerTableRow1 = new ArrayList<>();
+        innerTableRow1.add(firstText);
+        innerTableRow1.add(firstInput);
+        ArrayList<DocumentCell> innerTableRow2 = new ArrayList<>();
+        innerTableRow2.add(secondText);
+        innerTableRow2.add(secondInput);
+        innerTableRows.add(innerTableRow1);
+        innerTableRows.add(innerTableRow2);
+        UITable innerTable = new UITable(x,y,0,0, innerTableRows);
+
+        UIButton button = new UIButton(x,y,50,15, "Submit", "submit");
+
+        ArrayList<ArrayList<DocumentCell>> outerTableRows = new ArrayList<>();
+        ArrayList<DocumentCell> outerTableRow1 = new ArrayList<>();
+        outerTableRow1.add(formTitle);
+        ArrayList<DocumentCell> outerTableRow2 = new ArrayList<>();
+        outerTableRow2.add(innerTable);
+        ArrayList<DocumentCell> outerTableRow3 = new ArrayList<>();
+        outerTableRow3.add(button);
+        outerTableRows.add(outerTableRow1);
+        outerTableRows.add(outerTableRow2);
+        outerTableRows.add(outerTableRow3);
+
+        UITable outerTable = new UITable(x,y,0,0, outerTableRows);
+
+
+        // Comment the setContent in the contentChanged method for this code to have effect.
+	    this.content = new UIForm(x,y, "browsrformactiontest.php", outerTable);
     }
     
     /**
@@ -195,13 +229,9 @@ public class DocumentArea extends Frame implements DocumentListener {
      */
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-        //if (!wasClicked(x, y)) return; (elements in the doc-area also need to know if a click was not on them e.g.: inputfields)
         if (button != MouseEvent.BUTTON1) return;
-        if (id != MouseEvent.MOUSE_CLICKED) return;
-        //System.out.println("content: "+content);
-        //System.out.println(content.getxPos()+","+content.getyPos());
+        // if (id != MouseEvent.MOUSE_CLICKED) return;
         String result = content.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
-        //System.out.println("result: '"+result+"' on "+this.getClass());
         linkPressed(result);
     }
 
