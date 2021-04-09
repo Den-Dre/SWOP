@@ -38,14 +38,14 @@ public class Browsr extends CanvasWindow {
             // that is linked to this UserInterface.Browsr.
             int bookmarksBarHeight = 20;
 
-            AddressBar = new AddressBar(addressBarOffset, addressBarOffset, 100, addressBarHeight, addressBarOffset);
+            AddressBar   = new AddressBar(addressBarOffset, addressBarOffset, 100, addressBarHeight, addressBarOffset);
+            bookmarksBar = new BookmarksBar(bookmarksBarOffset, addressBarHeight + 2 * bookmarksBarOffset, 100, bookmarksBarHeight);
             DocumentArea = new DocumentArea(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100);
             //DocumentArea =  new Frame(0,addressBarHeight, 100,100);
-            bookmarksBar = new BookmarksBar(bookmarksBarOffset, bookmarksBarOffset + 2 * bookmarksBarOffset, 100, bookmarksBarHeight);
 
             this.Frames.add(this.AddressBar);
             this.Frames.add(this.DocumentArea);
-            this.Frames.add(bookmarksBar);
+            this.Frames.add(this.bookmarksBar);
 
             UIController controller = new UIController();
             AddressBar.setUiController(controller);
