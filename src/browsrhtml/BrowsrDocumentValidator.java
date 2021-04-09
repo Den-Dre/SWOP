@@ -20,7 +20,7 @@ public class BrowsrDocumentValidator {
 	void eatToken() { lexer.eatToken(); }
 	
 	void fail() {
-		throw new RuntimeException("The given document is not a valid Browsr document.");
+		throw new RuntimeException("The given document is not a valid UserInterface.Browsr document.");
 	}
 	
 	void assertTrue(boolean b) {

@@ -417,7 +417,7 @@ DocumentListener
       <w>198</w>
       <h>90</h>
     </coordinates>
-    <panel_attributes>Browsr
+    <panel_attributes>UserInterface.Browsr
 --
 +paint()</panel_attributes>
     <additional_attributes/>

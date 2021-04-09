@@ -1,4 +1,5 @@
-import UserInterface.*;
+package UserInterface;
+
 import domainmodel.ContentSpan;
 import domainmodel.TextSpan;
 import domainmodel.UIController;
@@ -100,7 +101,7 @@ class HyperLinkTest{
 		// check if document has changed
 		assertEquals(doc.getContent().getClass(), UITable.class);
 		assertEquals(((UITextField) ((UITable) doc.getContent()).getContent().get(0).get(0)).getText(),
-				"HTML elements partially supported by Browsr:");
+				"HTML elements partially supported by UserInterface.Browsr:");
 	}
 	
 	// 2.3
