@@ -13,7 +13,9 @@ import java.util.ArrayList;
  */
 public class Browsr extends CanvasWindow {
     /**
-     * Initializes a CanvasWindow object.
+     * Initializes this {@code Browsr} as CanvasWindow object:
+     * the initial layout consists of: an {@link AddressBar},
+     * a {@link BookmarksBar} and a {@link DocumentArea}
      *
      * @param title:
      *            The Window title
@@ -21,9 +23,24 @@ public class Browsr extends CanvasWindow {
     protected Browsr(String title) {
         super(title);
         this.layout = new RegularLayout();
+        setUpRegularBrowsrLayout();
+    }
+
+    /**
+     * This method is called in the constructor
+     * of a {@code Browsr} object * to create a:
+     *
+     * <ul>
+     *     <li>an {@link AddressBar} object where URL's are entered,</li>
+     *     <li>a {@link BookmarksBar} object to display the bookmarks added by the user, and </li>
+     *     <li>a {@link DocumentArea} object to display the content of the requested sites.</li>
+     *     <li>a {@link UIController} which is linked to the above three objects. </li>
+     * </ul>
+     */
+    private void setUpRegularBrowsrLayout() {
         try {
-             // An integer variable to denote the height of the AddressBar
-             // that is linked to this UserInterface.Browsr.
+            // An integer variable to denote the height of the AddressBar
+            // that is linked to this UserInterface.Browsr.
             int addressBarHeight = 20;
 
             //  An integer variable to denote the offset of the AddressBar
@@ -69,24 +86,65 @@ public class Browsr extends CanvasWindow {
         repaint();
     }
 
+    /**
+     * An abstract class which represents
+     * the possible layouts of a {@code Browsr} object.
+     *
+     * Classes that extend this method, need to implement
+     * a {@code Render}, {@code handleMouseEvent} and {@code handleKeyEvent} method,
+     * to handle rendering, clicking and keyboard input of this {@code Browsr} object respectively.
+     */
     protected static abstract class Layout {
         abstract void Render(Graphics g);
         abstract void handleMouseEvent(int id, int x, int y, int clickCount, int button, int modifiersEx);
         abstract void handleKeyEvent(int id, int keyCode, char keyChar, int modifiersEx);
     }
 
+    /**
+     * A {@code Browsr Layout} that represents the
+     * regular layout conaining a an {@link AddressBar},
+     * a {@link BookmarksBar} and a {@link DocumentArea}.
+     */
     protected class RegularLayout extends Layout {
 
+        /**
+         * Render this {@code RegularLayout} of
+         * this {@code Browsr} object.
+         *
+         * @param g:
+         *      The graphics used to render this {@code RegularLayout}.
+         */
         @Override
         void Render(Graphics g) {
             Frames.forEach(f -> f.Render(g));
         }
 
+        /**
+         * Handle a mouse click on this {@code RegularLayout}.
+         *
+         * @param id: The type of mouse activity.
+         * @param x: The x coordinate of the mouse activity.
+         * @param y: The y coordinate of the mouse activity.
+         * @param clickCount: The number of clicks.
+         * @param button: The mouse button that was clicked.
+         * @param modifiersEx: The control keys that were held on the click.
+         */
         @Override
         void handleMouseEvent(int id, int x, int y, int clickCount, int button, int modifiersEx) {
             Frames.forEach(f -> f.handleMouse(id, x, y, clickCount, button, modifiersEx));
         }
 
+        /**
+         * Handle keyboard input on this {@code RegularLayout}.
+         *
+         * Handle key presses on this {@code BrowsrLayout}.
+         * This method does the right action when a key is pressed.
+         *
+         * @param id: The KeyEvent (Associated with type of KeyEvent).
+         * @param keyCode: The KeyEvent code (Determines the involved key).
+         * @param keyChar: The character representation of the involved key.
+         * @param modifiersEx: Specifies other keys that were involved in the event.
+         */
         @Override
         void handleKeyEvent(int id, int keyCode, char keyChar, int modifiersEx) {
             Frames.forEach(f -> f.handleKey(id, keyCode, keyChar, modifiersEx));
@@ -95,16 +153,44 @@ public class Browsr extends CanvasWindow {
 
     protected class BookmarksDialogLayout extends Layout {
 
+        /**
+         * Render this {@code BookmarksDialogLayout} of
+         * this {@code Browsr} object.
+         *
+         * @param g:
+         *      The graphics used to render this {@code BookmarksDialogLayout}.
+         */
         @Override
         void Render(Graphics g) {
             bookmarksDialog.Render(g);
         }
 
+        /**
+         * Handle a mouse click on this {@code BookmarksDialogLayout}.
+         *
+         * @param id: The type of mouse activity.
+         * @param x: The x coordinate of the mouse activity.
+         * @param y: The y coordinate of the mouse activity.
+         * @param clickCount: The number of clicks.
+         * @param button: The mouse button that was clicked.
+         * @param modifiersEx: The control keys that were held on the click.
+         */
         @Override
         void handleMouseEvent(int id, int x, int y, int clickCount, int button, int modifiersEx) {
             bookmarksDialog.handleMouse(id, x, y, clickCount, button, modifiersEx);
         }
 
+        /**
+         * Handle keyboard input on this {@code BrowsrLayout}.
+         *
+         * Handle key presses on this {@code BookmarksDialogLayout}.
+         * This method does the right action when a key is pressed.
+         *
+         * @param id: The KeyEvent (Associated with type of KeyEvent).
+         * @param keyCode: The KeyEvent code (Determines the involved key).
+         * @param keyChar: The character representation of the involved key.
+         * @param modifiersEx: Specifies other keys that were involved in the event.
+         */
         @Override
         void handleKeyEvent(int id, int keyCode, char keyChar, int modifiersEx) {
             bookmarksDialog.handleKey(id, keyCode, keyChar, modifiersEx);
@@ -113,14 +199,43 @@ public class Browsr extends CanvasWindow {
 
     protected class SaveDialogLayout extends Layout {
         // TODO
+
+        /**
+         * Render this {@code SaveDialogLayout} of
+         * this {@code Browsr} object.
+         *
+         * @param g:
+         *      The graphics used to render this {@code SaveDialogLayout}.
+         */
         @Override
         void Render(Graphics g) {
         }
 
+        /**
+         * Handle a mouse click on this {@code SaveDialogLayout}.
+         *
+         * @param id: The type of mouse activity.
+         * @param x: The x coordinate of the mouse activity.
+         * @param y: The y coordinate of the mouse activity.
+         * @param clickCount: The number of clicks.
+         * @param button: The mouse button that was clicked.
+         * @param modifiersEx: The control keys that were held on the click.
+         */
         @Override
         void handleMouseEvent(int id, int x, int y, int clickCount, int button, int modifiersEx) {
         }
 
+        /**
+         * Handle keyboard input on this {@code BrowsrLayout}.
+         *
+         * Handle key presses on this {@code SaveDialogLayout}.
+         * This method does the right action when a key is pressed.
+         *
+         * @param id: The KeyEvent (Associated with type of KeyEvent).
+         * @param keyCode: The KeyEvent code (Determines the involved key).
+         * @param keyChar: The character representation of the involved key.
+         * @param modifiersEx: Specifies other keys that were involved in the event.
+         */
         @Override
         void handleKeyEvent(int id, int keyCode, char keyChar, int modifiersEx) {
         }

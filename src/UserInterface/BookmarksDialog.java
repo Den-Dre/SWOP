@@ -3,8 +3,9 @@ package UserInterface;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class BookmarksDialog extends GenericDialogScreen {
+// TODO: Fix: Entered URL automatically loads after adding a bookmark
 
+public class BookmarksDialog extends GenericDialogScreen {
     /**
      * Initialise this Frame with the given parameters.
      *
@@ -23,10 +24,22 @@ public class BookmarksDialog extends GenericDialogScreen {
         this.content = getForm();
     }
 
+    /**
+     * Get the {@link UIForm} contents of this {@code BookmarksDialog}.
+     *
+     * @return form: the {@link UIForm} linked to this {@code BookmarksDialog}.
+     */
     public UIForm getForm() {
         return constructForm(currentUrl);
     }
 
+    /**
+     * Construct the hardcoded layout of this {@code BookmarksDialog}.
+     *
+     * @param currentUrl:
+     *           The {@link String} representation of the URL currently entered in the {@link AddressBar}.
+     * @return new UIForm: a {@link UIForm} object that represents the form of this {@code BookmarksDialog}.
+     */
     private UIForm constructForm(String currentUrl) {
 
         // Hard coded bookmarks dialog screen
@@ -64,17 +77,38 @@ public class BookmarksDialog extends GenericDialogScreen {
         return new UIForm(offset, offset, "bookmarksDialog", outerTable);
     }
 
+    /**
+     * Render this {@code BookmarksDialog}.
+     *
+     * @param g: The graphics used to render this {@code BookmarksDialog}.
+     */
     @Override
     public void Render(Graphics g) {
         this.content.Render(g);
     }
 
+     /**
+     * Handle a mouseclick on this {@code BookmarksDialog}.
+     *
+     * @param id: The type of mouse activity.
+     * @param x: The x coordinate of the mouse activity.
+     * @param y: The y coordinate of the mouse activity.
+     * @param clickCount: The number of clicks.
+     * @param button: The mouse button that was clicked.
+     * @param modifiersEx: The control keys that were held on the click.
+     */
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
         String result = this.content.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
         handleClickResult(result);
     }
 
+    /**
+     * Help method to handle mouse clicks on this {@code BookmarksDialog}.
+     *
+     * @param result:
+     *              the string returned by the clicked element of the content of this {@code BookmarksDialog}.
+     */
     private void handleClickResult(String result) {
         if (result.equals(""))
             return;
@@ -91,11 +125,29 @@ public class BookmarksDialog extends GenericDialogScreen {
         getBrowsr().setBrowsrLayout(layout);
     }
 
+
+    /**
+     * Handle key presses on this {@code SaveDialogLayout}.
+     * This method does the right action when a key is pressed.
+     *
+     * @param id: The KeyEvent (Associated with type of KeyEvent).
+     * @param keyCode: The KeyEvent code (Determines the involved key).
+     * @param keyChar: The character representation of the involved key.
+     * @param modifiersEx: Specifies other keys that were involved in the event.
+     */
     @Override
     public void handleKey(int id, int keyCode, char keyChar, int modifiersEx) {
         this.content.handleKey(id, keyCode, keyChar, modifiersEx);
     }
 
+    /**
+     * This method handles resizes of this {@code BookmarksDialog}.
+     * It makes sure the {@code BookmarksDialog} is adjusted in width when the window shrinks or grows.
+     * It does not change its height (e.g. look at Firefox).
+     *
+     * @param newWindowHeight: parameter containing the new window-height
+     * @param newWindowWidth: parameter containing the new window-width
+     */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
         this.content.handleResize(newWindowWidth, newWindowHeight);
