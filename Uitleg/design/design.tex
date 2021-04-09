@@ -49,25 +49,25 @@ Vervolgens zullen we onze design-keuzes in de UI-laag bespreken.
 
 \section{UI-laag}
 
-We starten uiterst rechts in de UI-laag, met de klasse \texttt{Browsr}.
+We starten uiterst rechts in de UI-laag, met de klasse \texttt{UserInterface.Browsr}.
 
 \begin{itemize}
-	\item \texttt{Browsr}-klasse:\\
-	Deze klasse stelt het ganse UI-venster voor dat in de opdracht dezelfde naam Browsr krijgt. Het erft over van de geleverde klasse \texttt{CanvasWindow}. Deze klasse voldoet aan het \textbf{creator}-principe omwille van twee redenen:
+	\item \texttt{UserInterface.Browsr}-klasse:\\
+	Deze klasse stelt het ganse UI-venster voor dat in de opdracht dezelfde naam UserInterface.Browsr krijgt. Het erft over van de geleverde klasse \texttt{CanvasWindow}. Deze klasse voldoet aan het \textbf{creator}-principe omwille van twee redenen:
 	\begin{itemize}
-		\item ze maakt twee klassen \texttt{DocumentArea} en \texttt{AddressBar} aan en aggregeert deze klassen doordat ze beide subklassen zijn van \texttt{Frame}. \texttt{Browsr} heeft immers steeds een connectie naar deze twee \texttt{Frame}s.
-		\item Daarnaast beschikt de klasse \texttt{Browsr} ook over de initialiserende data voor het correct aanmaken van deze vorige twee vernoemde klassen: \texttt{AddressBar} en \texttt{DocumentArea} moeten immers gelinkt worden aan hetzelfde \texttt{UIController}-object.
+		\item ze maakt twee klassen \texttt{DocumentArea} en \texttt{AddressBar} aan en aggregeert deze klassen doordat ze beide subklassen zijn van \texttt{Frame}. \texttt{UserInterface.Browsr} heeft immers steeds een connectie naar deze twee \texttt{Frame}s.
+		\item Daarnaast beschikt de klasse \texttt{UserInterface.Browsr} ook over de initialiserende data voor het correct aanmaken van deze vorige twee vernoemde klassen: \texttt{AddressBar} en \texttt{DocumentArea} moeten immers gelinkt worden aan hetzelfde \texttt{UIController}-object.
 	\end{itemize}
 	 
 	 \item \texttt{Frame}-klasse:\\
-	 Deze klasse is een abstracte voorstelling van de sub-onderdelen van het \texttt{Browsr}-object. De klasse laat toe om de gemeenschappelijke eigenschappen van de sub-onderdelen van het \texttt{Browsr}-object af te zonderen en in verdere uitbreidingen van het project eenvoudig nieuwe sub-onderdleen toe te voegen.
-	 Deze klasse vervult het principe van \textbf{protected variations}, doordat sub-onderdelen van de Browsr onderling kunnen uitgewisseld worden zonder een invloed te hebben op de gehele structuur van de Browsr.
+	 Deze klasse is een abstracte voorstelling van de sub-onderdelen van het \texttt{UserInterface.Browsr}-object. De klasse laat toe om de gemeenschappelijke eigenschappen van de sub-onderdelen van het \texttt{UserInterface.Browsr}-object af te zonderen en in verdere uitbreidingen van het project eenvoudig nieuwe sub-onderdleen toe te voegen.
+	 Deze klasse vervult het principe van \textbf{protected variations}, doordat sub-onderdelen van de UserInterface.Browsr onderling kunnen uitgewisseld worden zonder een invloed te hebben op de gehele structuur van de UserInterface.Browsr.
 	 
 	 \item \texttt{AddressBar}-klasse:\\
-	 Dit is een specialisatie van de \texttt{Frame}-klasse die de adres-bar van de Browsr voorstelt. Ze staat in verbinding met de domeinlaag via de controller, wat haar in staat stelt om zaken die domeinkennis vereisen zoals het laden van documenten, het doorgeven van gebruikersinvoer e.d. te vervolledigen. In de omgekeerde richting, vloeit er informatie van de domein- naar de UI-laag doordat deze klasse het \texttt{DocumentListener}-interface implementeert en zo bij veranderingen van de informatie uit de domeinlaag - bv. de URL bijbehordend bij een nieuw ingeladen \texttt{Document} - hier op een gespecialiseerde manier kan op ingaan.
+	 Dit is een specialisatie van de \texttt{Frame}-klasse die de adres-bar van de UserInterface.Browsr voorstelt. Ze staat in verbinding met de domeinlaag via de controller, wat haar in staat stelt om zaken die domeinkennis vereisen zoals het laden van documenten, het doorgeven van gebruikersinvoer e.d. te vervolledigen. In de omgekeerde richting, vloeit er informatie van de domein- naar de UI-laag doordat deze klasse het \texttt{DocumentListener}-interface implementeert en zo bij veranderingen van de informatie uit de domeinlaag - bv. de URL bijbehordend bij een nieuw ingeladen \texttt{Document} - hier op een gespecialiseerde manier kan op ingaan.
 	 
 	 \item \texttt{DocumentArea}-klasse:\\
-	 Dit is eveneens een specialisatie van de \texttt{Frame}-klasse die het gedeelte van de Browsr voorstelt waarin de inhoud van documenten moet worden weergegeven. Ze vertoont een gelijkaardige link met de domeinlaag zoals deze bij de bovenvermelde \texttt{AddressBar}-klasse. 
+	 Dit is eveneens een specialisatie van de \texttt{Frame}-klasse die het gedeelte van de UserInterface.Browsr voorstelt waarin de inhoud van documenten moet worden weergegeven. Ze vertoont een gelijkaardige link met de domeinlaag zoals deze bij de bovenvermelde \texttt{AddressBar}-klasse.
 	 
 	 Wanneer een document moet gerenderd worden, wordt deze taak doorgeschoven naar de onderliggende sub-onderdleen van \texttt{DocumentArea}, namelijk de \texttt{DocumentCell} (zie verder). Deze manier van aanpak steunt op het \textbf{information expert} principe in die zin dat elk sub-onderdeel verantwoordelijkheid neemt om zichzelf te renderen. Verder komt hier ook het \textbf{creator}-principe naar voren: de klasse \texttt{DocumentArea} is verantwoordelijk voor het aanmaken van een \texttt{DocumentCell} die de juiste structuur bevat.
 	 
@@ -86,7 +86,7 @@ Ten slotte bespreken we de uitwerking van enkele system operations in ons design
 
 \section{System operations}
 \subsection{Document Loading}
-Wanneer een document moet geladen worden, wordt een \texttt{loadDocument()}-oproep gedaan vanuit de UI-laag naar de \texttt{UIController}. Deze delegeert de oproep verder naar de \texttt{Document}-klasse, die op zijn beurt een beroep doet op de \texttt{ContentSpanBuilder} om het document succesvol in een \texttt{ContentSpan} om te zetten. Dit triggert een event, namelijk \texttt{contentChanged} uit het \texttt{DocumentListener}-interface, waardoor de elementen uit de UI-laag die zich hierdoor moeten aanpassen, op de hoogte gebracht worden. Hierdoor wordt zowel de \texttt{DocumentArea} als de \texttt{AddressBar} op de benodigde manier geüpdated. De nodige listeners om dit te realiseren worden bij de aanmaak van het \texttt{UIController}-object in de \texttt{Browsr}-klasse ineens mee toegevoegd.
+Wanneer een document moet geladen worden, wordt een \texttt{loadDocument()}-oproep gedaan vanuit de UI-laag naar de \texttt{UIController}. Deze delegeert de oproep verder naar de \texttt{Document}-klasse, die op zijn beurt een beroep doet op de \texttt{ContentSpanBuilder} om het document succesvol in een \texttt{ContentSpan} om te zetten. Dit triggert een event, namelijk \texttt{contentChanged} uit het \texttt{DocumentListener}-interface, waardoor de elementen uit de UI-laag die zich hierdoor moeten aanpassen, op de hoogte gebracht worden. Hierdoor wordt zowel de \texttt{DocumentArea} als de \texttt{AddressBar} op de benodigde manier geüpdated. De nodige listeners om dit te realiseren worden bij de aanmaak van het \texttt{UIController}-object in de \texttt{UserInterface.Browsr}-klasse ineens mee toegevoegd.
 
 \subsection{URL clicking}
 Wanneer een gebruiker een URL aanklikt, wordt in de \texttt{DocumentArea}-klasse uit de UI-laag elke \texttt{Frame} overlopen om te bepalen op welke \texttt{DocumentCell} deze klik juist was. Het afhandelen van de benodigde actie bij deze klik, wordt dan gedaan door deze bepaalde \texttt{DocumentCell}, die via \texttt{DocumentArea} en de controller \texttt{UIController} beroep kan doen op de nodige diensten uit de domeinlaag.

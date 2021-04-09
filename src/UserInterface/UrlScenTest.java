@@ -1,14 +1,14 @@
+package UserInterface;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import UserInterface.*;
 import domainmodel.ContentSpan;
 import domainmodel.TextSpan;
 import domainmodel.UIController;
@@ -218,7 +218,7 @@ class UrlScenTest {
 		// something must be visible, contents have changed!
 		assertEquals(doc.getContent().getClass(), UITable.class);
 		assertEquals(((UITextField) ((UITable) doc.getContent()).getContent().get(0).get(0)).getText(),
-				"HTML elements partially supported by Browsr:");
+				"HTML elements partially supported by UserInterface.Browsr:");
 	}
 	
 	// ===== Extensions =====

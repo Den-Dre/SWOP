@@ -16,9 +16,15 @@ public class UIController {
 
     /**
      * The {@link Document} that is linked
-     * to this Controller.
+     * to this {@code Controller}.
      */
     private Document document;
+
+    /**
+     * The {@link BookmarksHrefKeeper} that is
+     * linked to this {@code Controller}.
+     */
+    private BookmarksHrefKeeper bookmarksHrefKeeper;
 
     /**
      * Initialise this Controller
@@ -26,6 +32,7 @@ public class UIController {
      */
     public UIController() {
         this.document = new Document();
+        this.bookmarksHrefKeeper = new BookmarksHrefKeeper();
     }
 
 
@@ -126,9 +133,23 @@ public class UIController {
         this.document.addURLListener(d);
     }
 
+    /**
+     * Get the Href value associated to this bookmark
+     * from this {@code Controller}'s {@link BookmarksHrefKeeper}.
+     *
+     * @param bookmarkName: the name of the bookmark to be retrieved.
+     * @return href: The href value of the requested {@code bookmarkName}.
+     */
+    public String getHrefFromBookmark(String bookmarkName) {
+        return this.bookmarksHrefKeeper.getHrefFromBookmark(bookmarkName);
+    }
+
     // Temporary method for testing listeners
     public void changeURL(String url){
         this.document.setUrlString(url);
     }
 
+    public void addHref(String name, String url) {
+        this.bookmarksHrefKeeper.addBookmarksHref(name, url);
+    }
 }
