@@ -20,7 +20,7 @@ public class Browsr extends CanvasWindow {
      */
     protected Browsr(String title) {
         super(title);
-        this.layout = BrowsrLayout.REGULAR;
+        this.layout = new RegularLayout();
         try {
              // An integer variable to denote the height of the AddressBar
              // that is linked to this UserInterface.Browsr.
@@ -69,49 +69,62 @@ public class Browsr extends CanvasWindow {
         repaint();
     }
 
-//    private static abstract class Layout {
-//        abstract void Render(Graphics g);
-//        abstract void handleMouseEvent(int id, int x, int y, int clickCount, int button, int modifiersEx);
-//    }
-//
-//    private class Regular extends Layout {
-//
-//        @Override
-//        void Render(Graphics g) {
-//            Frames.forEach(f -> f.Render(g));
-//        }
-//
-//        @Override
-//        void handleMouseEvent(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-//            Frames.forEach(f -> f.handleMouse(id, x, y, clickCount, button, modifiersEx));
-//        }
-//    }
-//
-//    private class BookmarksDialog extends Layout {
-//
-//        @Override
-//        void Render(Graphics g) {
-//            bookmarksDialog.Render(g);
-//        }
-//
-//        @Override
-//        void handleMouseEvent(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-//            bookmarksDialog.handleMouseEvent(id, x, y, clickCount, button, modifiersEx);
-//        }
-//    }
-//
-//    private class SaveDialog extends Layout {
-//
-//        @Override
-//        void Render(Graphics g) {
-//            //
-//        }
-//
-//        @Override
-//        void handleMouseEvent(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-//            //
-//        }
-//    }
+    protected static abstract class Layout {
+        abstract void Render(Graphics g);
+        abstract void handleMouseEvent(int id, int x, int y, int clickCount, int button, int modifiersEx);
+        abstract void handleKeyEvent(int id, int keyCode, char keyChar, int modifiersEx);
+    }
+
+    protected class RegularLayout extends Layout {
+
+        @Override
+        void Render(Graphics g) {
+            Frames.forEach(f -> f.Render(g));
+        }
+
+        @Override
+        void handleMouseEvent(int id, int x, int y, int clickCount, int button, int modifiersEx) {
+            Frames.forEach(f -> f.handleMouse(id, x, y, clickCount, button, modifiersEx));
+        }
+
+        @Override
+        void handleKeyEvent(int id, int keyCode, char keyChar, int modifiersEx) {
+            Frames.forEach(f -> f.handleKey(id, keyCode, keyChar, modifiersEx));
+        }
+    }
+
+    protected class BookmarksDialogLayout extends Layout {
+
+        @Override
+        void Render(Graphics g) {
+            bookmarksDialog.Render(g);
+        }
+
+        @Override
+        void handleMouseEvent(int id, int x, int y, int clickCount, int button, int modifiersEx) {
+            bookmarksDialog.handleMouse(id, x, y, clickCount, button, modifiersEx);
+        }
+
+        @Override
+        void handleKeyEvent(int id, int keyCode, char keyChar, int modifiersEx) {
+            bookmarksDialog.handleKey(id, keyCode, keyChar, modifiersEx);
+        }
+    }
+
+    protected class SaveDialogLayout extends Layout {
+        // TODO
+        @Override
+        void Render(Graphics g) {
+        }
+
+        @Override
+        void handleMouseEvent(int id, int x, int y, int clickCount, int button, int modifiersEx) {
+        }
+
+        @Override
+        void handleKeyEvent(int id, int keyCode, char keyChar, int modifiersEx) {
+        }
+    }
 
     /**
      * (Re)Render the elements of this Broswr window.
@@ -121,19 +134,7 @@ public class Browsr extends CanvasWindow {
      */
     @Override
     protected void paint(Graphics g) {
-        switch (this.layout) {
-            case REGULAR -> {
-                for (UserInterface.Frame frame : Frames)
-                    frame.Render(g);
-            }
-
-            case BOOKMARKS_DIALOG ->
-                    this.bookmarksDialog.Render(g);
-
-            // TODO
-            case SAVE_DIALOG ->
-                    System.out.println("Not implemented.");
-        }
+        layout.Render(g);
     }
 
     /**
@@ -162,14 +163,7 @@ public class Browsr extends CanvasWindow {
      */
     @Override
     protected void handleMouseEvent(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-        switch (this.layout) {
-            case REGULAR ->
-                    Frames.forEach(f -> f.handleMouse(id, x, y, clickCount, button, modifiersEx));
-            case BOOKMARKS_DIALOG ->
-                    this.bookmarksDialog.handleMouse(id, x, y, clickCount, button, modifiersEx);
-            case SAVE_DIALOG ->
-                    System.out.println("Click functionality for Save Dialog not yet implemented.");
-        }
+        layout.handleMouseEvent(id, x, y, clickCount, button, modifiersEx);
         repaint();
     }
 
@@ -189,16 +183,7 @@ public class Browsr extends CanvasWindow {
             else if (keyCode == 83) // 83 == s
                 System.out.println("Save dialog not implemented yet");
         }
-
-        switch (layout) {
-            case REGULAR ->
-                    Frames.forEach(f -> f.handleKey(id, keyCode, keyChar, modifiersEx));
-            case BOOKMARKS_DIALOG ->
-                    bookmarksDialog.handleKey(id, keyCode, keyChar, modifiersEx);
-            case SAVE_DIALOG ->
-                    // TODO
-                    System.out.println("Save dialog not implemented yet.");
-        }
+        this.layout.handleKeyEvent(id, keyCode, keyChar, modifiersEx);
         repaint();
     }
 
@@ -208,7 +193,7 @@ public class Browsr extends CanvasWindow {
      * pressed by the user.
      */
     private void handleBookmarksDialog() {
-        this.layout = BrowsrLayout.BOOKMARKS_DIALOG;
+        this.layout = new BookmarksDialogLayout();
         String currentUrl = this.getAddressBar().getURL();
         this.bookmarksDialog = new BookmarksDialog(this.getWidth(), this.getHeight(), currentUrl, bookmarksBar, this);
     }
@@ -219,7 +204,7 @@ public class Browsr extends CanvasWindow {
      *
      * @param layout: the new {@link BrowsrLayout} to be set.
      */
-    public void setBrowsrLayout(BrowsrLayout layout) {
+    public void setBrowsrLayout(Layout layout) {
         this.layout = layout;
     }
 
@@ -243,7 +228,6 @@ public class Browsr extends CanvasWindow {
      * A variable that denotes the {@link AddressBar}
      * associated to this UserInterface.Browsr.
      */
-//    private UserInterface.AddressBar AddressBar = new AddressBar(addressBarOffset, addressBarOffset, 100, addressBarHeight, addressBarOffset);
     private UserInterface.AddressBar AddressBar;
 
      /**
@@ -276,10 +260,10 @@ public class Browsr extends CanvasWindow {
      * A variable that denotes the current
      * {@link BrowsrLayout} of this {@code UserInterface.Browsr}.
      */
-    private BrowsrLayout layout;
+    private Layout layout;
 
     /**
-     * A variable that denotes the {@link BookmarksDialog}
+     * A variable that denotes the {@link BookmarksDialogLayout}
      * associated to this UserInterface.Browsr.
      */
     private BookmarksDialog bookmarksDialog = null;

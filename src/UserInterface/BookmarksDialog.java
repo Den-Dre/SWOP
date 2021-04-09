@@ -86,7 +86,9 @@ public class BookmarksDialog extends GenericDialogScreen {
             case "Save" ->
                     System.out.println("Save document not implemented yet.");
         }
-        getBrowsr().setBrowsrLayout(BrowsrLayout.REGULAR);
+        Browsr browsr = getBrowsr();
+        Browsr.RegularLayout layout = browsr.new RegularLayout();
+        getBrowsr().setBrowsrLayout(layout);
     }
 
     @Override
