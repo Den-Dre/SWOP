@@ -25,6 +25,8 @@ public class UITextHyperlink extends DocumentCell {
         super(x, y, width, link_size);
         this.text = text;
         textHeight = link_size;
+
+        // TODO: Decide whether the following two calls can be omitted in this class's constructor:
         updateSizes();
         setWidth(getMaxWidth());
     }

@@ -20,7 +20,7 @@ public class ContentSpanBuilderTest {
     void testWithString() {
         ContentSpan contentSpan = ContentSpanBuilder.buildContentSpan("""
 				<table>
-				  <tr><td>HTML elements partially supported by UserInterface.Browsr:
+				  <tr><td>HTML elements partially supported by Browsr:
 				  <tr><td>
 				    <table>
 				      <tr><td><a href="a.html">a</a><td>Hyperlink anchors
@@ -61,7 +61,7 @@ public class ContentSpanBuilderTest {
 		assertNotNull(contentSpan);
 		Table outerTable = ((Table) contentSpan);
 		List<TableRow> outerRows = outerTable.getRows();
-		assertEquals("HTML elements partially supported by UserInterface.Browsr:", ((TextSpan) outerRows.get(0).getCells().get(0).getContent()).getText());
+		assertEquals("HTML elements partially supported by Browsr:", ((TextSpan) outerRows.get(0).getCells().get(0).getContent()).getText());
 
 		Table innerTable = (Table) outerRows.get(1).getCells().get(0).getContent();
 		List<TableRow> innerRows = innerTable.getRows();
