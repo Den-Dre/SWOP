@@ -14,11 +14,11 @@ public class UITextHyperlink extends DocumentCell {
     /**
      * Construct a new DocumentCell
      *
-     * @param x: x position on the window
-     * @param y: y position of the window
-     * @param width: the width of this {@code UIHyperlink}
+     * @param x        : x position on the window
+     * @param y        : y position of the window
+     * @param width    : the width of this {@code UIHyperlink}
      * @param link_size: The height of this {@code UIHyperlink}
-     * @param href: The value of the href attribute of this {@code UIHyperlink}
+     * @param text     : The value of the href attribute of this {@code UIHyperlink}
      * @throws IllegalDimensionException : When negative dimensions are provided.
      */
     public UITextHyperlink(int x, int y, int width, int link_size, String text) throws IllegalDimensionException {
@@ -75,7 +75,7 @@ public class UITextHyperlink extends DocumentCell {
      */
     @Override
     public String getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
-        return "";
+        return this.text;
     }
 
     /**

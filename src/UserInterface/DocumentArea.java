@@ -259,7 +259,7 @@ public class DocumentArea extends Frame implements DocumentListener {
     public void contentChanged() {
         try{
             ContentSpan newContentSpan = controller.getContentSpan();
-//            this.setContent(this.translateToUIElements(newContentSpan));
+            this.setContent(this.translateToUIElements(newContentSpan));
         }
         catch(Exception e){
             System.out.print(e);
