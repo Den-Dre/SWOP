@@ -218,7 +218,7 @@ class UrlScenTest {
 		// something must be visible, contents have changed!
 		assertEquals(doc.getContent().getClass(), UITable.class);
 		assertEquals(((UITextField) ((UITable) doc.getContent()).getContent().get(0).get(0)).getText(),
-				"HTML elements partially supported by UserInterface.Browsr:");
+				"HTML elements partially supported by Browsr:");
 	}
 	
 	// ===== Extensions =====

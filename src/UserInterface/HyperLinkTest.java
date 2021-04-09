@@ -101,7 +101,7 @@ class HyperLinkTest{
 		// check if document has changed
 		assertEquals(doc.getContent().getClass(), UITable.class);
 		assertEquals(((UITextField) ((UITable) doc.getContent()).getContent().get(0).get(0)).getText(),
-				"HTML elements partially supported by UserInterface.Browsr:");
+				"HTML elements partially supported by Browsr:");
 	}
 	
 	// 2.3
