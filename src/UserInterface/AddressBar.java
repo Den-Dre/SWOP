@@ -75,6 +75,11 @@ public class AddressBar extends UITextInputField implements DocumentListener {
      * It makes sure the addressBar is adjusted in width when the window shrinks or grows.
      * It does not change its height (e.g. look at Firefox).
      *
+     * <p>N.B.: without this method, {@code BookmakrBar} would be rendered with
+     *          the given absolute width, and thus one would need to guess the
+     *          correct initial size of the window. Using this mehtod, widths are
+     *          automatically adjusted: both at initialisation and at runtime.</p>
+     *
      * @param newWindowHeight: parameter containing the new window-height
      * @param newWindowWidth: parameter containing the new window-width
      */

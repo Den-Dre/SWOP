@@ -24,7 +24,7 @@ public class UIController {
      * The {@link BookmarksHrefKeeper} that is
      * linked to this {@code Controller}.
      */
-    private BookmarksHrefKeeper bookmarksHrefKeeper;
+    private final BookmarksHrefKeeper bookmarksHrefKeeper;
 
     /**
      * Initialise this Controller

@@ -22,6 +22,7 @@ public class BookmarksDialog extends GenericDialogScreen {
         this.nameInput = new UITextInputField(offset, offset,100,textSize, "Name");
         this.urlInput = new UITextInputField(offset, offset,100,textSize, "URL");
         this.content = getForm();
+        this.wasClicked = false;
     }
 
     /**
@@ -120,9 +121,14 @@ public class BookmarksDialog extends GenericDialogScreen {
             case "Save" ->
                     System.out.println("Save document not implemented yet.");
         }
+
+        // Set the BrowsrLayout of the linked Browsr back to the regular Layout.
         Browsr browsr = getBrowsr();
-        Browsr.RegularLayout layout = browsr.new RegularLayout();
-        getBrowsr().setBrowsrLayout(layout);
+        browsr.setBrowsrLayout(browsr.new RegularLayout());
+
+        // Register this java.awt.MouseEvent.MOUSE_RELEASED event has occured:
+        // For details, see comments at declaration of `wasClicked' variable.
+        this.wasClicked = true;
     }
 
 
@@ -196,4 +202,25 @@ public class BookmarksDialog extends GenericDialogScreen {
      * displayed in this {@code BookmarksDialog}.
      */
     private final int offset = 5;
+
+    /**
+     * Boolean to remember wether this {@code BookmarksDialog}
+     * was {@link java.awt.event.MouseEvent}.MOUSE_RELEASED before.
+     */
+     /*
+     When a mouse click at coordinates (x, y) occurs,
+     java.awt.MouseEvent registers this as the following
+      sequence of MouseEvent's:
+        1. MOUSE_PRESSED  at (x, y)
+        2. MOUSE_RELEASED at (x, y)
+        3. MOUSE_CLICKED  at (x, y)
+     This boolean is necessary to prevent that when a bookmark is
+     added, the corresponding URL is loaded after pressing the
+     'Add Bookmark' button. Without this boolean, the even that
+     follows this mouse release, namely java.awt.event.MouseEvent.MOUSE_CLICKED,
+     would trigger another handleMouseEvent call in
+     Browsr, which would incorrectly load the url of the
+     added bookmark upon exiting the BookmarksDialog.
+      */
+    private boolean wasClicked;
 }
