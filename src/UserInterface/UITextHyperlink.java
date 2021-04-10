@@ -12,7 +12,7 @@ import java.text.AttributedString;
  */
 public class UITextHyperlink extends DocumentCell {
     /**
-     * Construct a new DocumentCell
+     * Construct a new {@code UITextHyperlink}.
      *
      * @param x        : x position on the window
      * @param y        : y position of the window
@@ -73,7 +73,7 @@ public class UITextHyperlink extends DocumentCell {
      * @param clickCount: The number of times the mouse has clicked.
      * @param button: The mouse button that was clicked.
      * @param modifier: Possible other keys that were pressed during this mouse action.
-     * @return string: the empty string ""
+     * @return text: the text attribute of this {@code UITextHyperlink}.
      */
     @Override
     public String getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {

@@ -3,9 +3,7 @@ package UserInterface;
 import domainmodel.UIController;
 
 import java.awt.*;
-import java.awt.geom.Line2D;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /* TODO
     - Fix width of BookmarksBar
@@ -21,9 +19,11 @@ public class BookmarksBar extends Frame {
      * @param height : The height of this Frame
      * @throws IllegalDimensionException: When one of the dimensions of this Frame is negative
      */
-    public BookmarksBar(int x, int y, int width, int height) throws IllegalDimensionException {
+    public BookmarksBar(int x, int y, int width, int height, int offset) throws IllegalDimensionException {
         super(x, y, width, height);
         this.yCoordinate = y;
+        this.height = height;
+        this.offset = offset;
     }
 
     /**
@@ -48,18 +48,20 @@ public class BookmarksBar extends Frame {
         UITextHyperlink textHyperlink = new UITextHyperlink(coordinates[0], coordinates[1], 0, 10, name);
         textHyperLinks.add(textHyperlink);
         this.controller.addHref(name, url);
+        handleResize(getWidth(), height);
     }
 
     /**
-     * Get the x and y coordinates of where
-     * a newly * added URL should be placed.
+     * Calculate the x and y coordinates of where
+     * a newly added URL should be placed.
      *
      * @return coords:
-     *      an int[2] array: int[0] is the x coordinate, int[1[ the y coordinate
+     *      an int[2] array: int[0] is the x-coordinate, int[1] the y-coordinate.
      */
     private int[] getNextPosition() {
-        int x = textHyperLinks.stream().mapToInt(UITextHyperlink::getMaxWidth).map(t -> t + xSpacing).sum();
-        return new int[]{x, this.yCoordinate};
+        int x = offset + textHyperLinks.stream().mapToInt(UITextHyperlink::getMaxWidth).map(t -> t + bookmarkSeperationDistance).sum();
+        int y = yCoordinate + height / 4;
+        return new int[]{x, y};
     }
 
     /**
@@ -68,24 +70,21 @@ public class BookmarksBar extends Frame {
      */
     @Override
     public void Render(Graphics g) {
-//        Graphics2D g2 = (Graphics2D) g;
-//        Shape upperLine = new Line2D.Double(0, this.getyPos(), this.getWidth(), this.getyPos());
-//        Shape lowerLine = new Line2D.Double(0, this.getyPos() + this.getHeight(), this.getWidth(), this.getyPos() + this.getHeight());
-//        g2.draw(upperLine);
-//        g2.draw(lowerLine);
-        g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
+        g.setColor(Color.GRAY);
+        g.drawLine(getxPos() + offset, getyPos() + height, getWidth() - offset, getyPos() + height);
+//        g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
         this.textHyperLinks.forEach(t -> t.Render(g));
     }
 
     /**
      * Handle a mouseclick on this {@code BookmarksBar}.
      *
-     * @param id: The type of mouse activity.
-     * @param x: The x coordinate of the mouse activity.
-     * @param y: The y coordinate of the mouse activity.
-     * @param clickCount: The number of clicks.
-     * @param button: The mouse button that was clicked.
-     * @param modifiersEx: The control keys that were held on the click.
+     * @param id: the type of mouse activity.
+     * @param x: the x coordinate of the mouse activity.
+     * @param y: the y coordinate of the mouse activity.
+     * @param clickcount: the number of clicks.
+     * @param button: the mouse button that was clicked.
+     * @param modifiersex: the control keys that were held on the click.
      */
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
@@ -94,9 +93,27 @@ public class BookmarksBar extends Frame {
             result = textHyperlink.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
             if (!(result.equals(""))) {
                 loadTextHyperlink(result);
-                break;
+                return;
             }
         }
+    }
+
+    /**
+     * This method handles resizes.
+     * It makes sure the addressBar is adjusted in width when the window shrinks or grows.
+     * It does not change its height (e.g. look at Firefox).
+     *
+     * <p>N.B.: without this method, {@code BookmakrBar} would be rendered with
+     *          the given absolute width, and thus one would need to guess the
+     *          correct initial size of the window. Using this mehtod, widths are
+     *          automatically adjusted: both at initialisation and at runtime.</p>
+     *
+     * @param newWindowHeight: parameter containing the new window-height
+     * @param newWindowWidth: parameter containing the new window-width
+     */
+    @Override
+    public void handleResize(int newWindowWidth, int newWindowHeight) {
+        this.setWidth(newWindowWidth - 2*offset);
     }
 
     /**
@@ -121,7 +138,7 @@ public class BookmarksBar extends Frame {
      * A list of all the bookmarks that are
      * currently present in this {@code BookmarksBar}.
      */
-    private ArrayList<UITextHyperlink> textHyperLinks = new ArrayList<>();
+    private final ArrayList<UITextHyperlink> textHyperLinks = new ArrayList<>();
 
     /**
      * The y coordinate of this {@code BookmarksBar}
@@ -134,6 +151,20 @@ public class BookmarksBar extends Frame {
      * be left in between the rendered
      * bookmarks.
      */
-    private final int xSpacing = 3;
+    private final int bookmarkSeperationDistance = 5;
+
+    /**
+     * An integer variable representing
+     * the offset of this {@code BookmarksBar}
+     * measured from the left-hand side of the
+     * current window {@link Browsr} window.
+     */
+    private final int offset;
+
+    /**
+     * An integer variable representing
+     * the height of this {@code BookmarksBar}.
+     */
+    private final int height;
 }
 

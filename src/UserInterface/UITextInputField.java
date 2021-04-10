@@ -162,6 +162,8 @@ public class UITextInputField extends DocumentCell{
     }
 
     /**
+     * Retrieve the return value after the event of handling
+     * a mouse click on this {@code UITextInputField}.
      *
      * @param id: The id of the click
      * @param x: The x coordinate of the click

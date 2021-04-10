@@ -5,6 +5,7 @@ import domainmodel.UIController;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.print.Book;
 import java.util.ArrayList;
 
 /**
@@ -23,6 +24,7 @@ public class Browsr extends CanvasWindow {
     protected Browsr(String title) {
         super(title);
         this.layout = new RegularLayout();
+        this.canHandleAnotherClick = false;
         setUpRegularBrowsrLayout();
     }
 
@@ -56,7 +58,7 @@ public class Browsr extends CanvasWindow {
             int bookmarksBarHeight = 20;
 
             AddressBar   = new AddressBar(addressBarOffset, addressBarOffset, 100, addressBarHeight, addressBarOffset);
-            bookmarksBar = new BookmarksBar(bookmarksBarOffset, addressBarHeight + 2 * bookmarksBarOffset, 100, bookmarksBarHeight);
+            bookmarksBar = new BookmarksBar(bookmarksBarOffset, addressBarHeight + 2 * bookmarksBarOffset, 100, bookmarksBarHeight, bookmarksBarOffset);
             DocumentArea = new DocumentArea(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100);
             //DocumentArea =  new Frame(0,addressBarHeight, 100,100);
 
@@ -131,7 +133,13 @@ public class Browsr extends CanvasWindow {
          */
         @Override
         void handleMouseEvent(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-            Frames.forEach(f -> f.handleMouse(id, x, y, clickCount, button, modifiersEx));
+//            if ((layout instanceof RegularLayout) && (previousLayout instanceof BookmarksDialogLayout)) {
+//                canHandleAnotherClick = true;
+//            }
+            if (!canHandleAnotherClick)
+                canHandleAnotherClick = true;
+            else
+                Frames.forEach(f -> f.handleMouse(id, x, y, clickCount, button, modifiersEx));
         }
 
         /**
@@ -178,6 +186,7 @@ public class Browsr extends CanvasWindow {
         @Override
         void handleMouseEvent(int id, int x, int y, int clickCount, int button, int modifiersEx) {
             bookmarksDialog.handleMouse(id, x, y, clickCount, button, modifiersEx);
+            canHandleAnotherClick = false;
         }
 
         /**
@@ -255,6 +264,13 @@ public class Browsr extends CanvasWindow {
     /**
      * Handle the resizing of this UserInterface.Browsr window
      * and its sub windows.
+     *
+     * <p>
+     * N.B.: without this method, {@code BookmakrBar} would be rendered with
+     *       the given absolute width, and thus one would need to guess the
+     *       correct initial size of the window. Using this mehtod, widths are
+     *       automatically adjusted: both at initialisation and at runtime.
+     *</p>
      */
     @Override
     protected void handleResize() {
@@ -320,6 +336,7 @@ public class Browsr extends CanvasWindow {
      * @param layout: the new {@link BrowsrLayout} to be set.
      */
     public void setBrowsrLayout(Layout layout) {
+        this.previousLayout = this.layout;
         this.layout = layout;
     }
 
@@ -377,15 +394,19 @@ public class Browsr extends CanvasWindow {
      */
     private Layout layout;
 
+    private Layout previousLayout;
+
     /**
      * A variable that denotes the {@link BookmarksDialogLayout}
      * associated to this UserInterface.Browsr.
      */
-    private BookmarksDialog bookmarksDialog = null;
+    private BookmarksDialog bookmarksDialog;
 
     /**
      * A variable that denotes the {@link BookmarksBar}
      * associated to this UserInterface.Browsr.
      */
     private BookmarksBar bookmarksBar;
+
+    private boolean canHandleAnotherClick;
 }
