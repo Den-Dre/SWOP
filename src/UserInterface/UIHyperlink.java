@@ -1,5 +1,7 @@
 package UserInterface;
 
+import org.junit.platform.commons.annotation.Testable;
+
 import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.text.AttributedString;
@@ -104,6 +106,15 @@ public class UIHyperlink extends UITextHyperlink{
     @Override
     public int getMaxHeight() {
         return this.textHeight;
+    }
+
+    /**
+     * Get the {@code href} value of this {@code UITextHyperlink}.
+     *
+     * @return href: the href value of this {@code UITextHyperlink}.
+     */
+    public String getHref() {
+        return this.href;
     }
 
 

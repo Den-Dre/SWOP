@@ -2,8 +2,8 @@ package domainmodel;
 
 import java.util.HashMap;
 
-public class BookmarksHrefKeeper {
-    public BookmarksHrefKeeper() {
+public class BookmarksURLKeeper {
+    public BookmarksURLKeeper() {
         this.bookmarkHrefs = new HashMap<>();
     }
 

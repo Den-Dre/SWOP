@@ -4,6 +4,7 @@ import domainmodel.UIController;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.List;
 
 /* TODO
     - Fix width of BookmarksBar
@@ -123,10 +124,20 @@ public class BookmarksBar extends Frame {
      *
      * @param linkName: the name of the link that needs to be loaded.
      */
-    private void loadTextHyperlink(String linkName) {
+    public void loadTextHyperlink(String linkName) {
         // TODO: This seems really redundant. Maybe we should change our approach of storing bookmarks.
         String url = controller.getURLFromBookmark(linkName);
         controller.loadDocument(url);
+    }
+
+    /**
+     * Retrieve the list of bookmarks represented as
+     * {@link UITextHyperlink}'s associated to this {@code BookmarksBar}.
+     *
+     * @return textHyperLinks: list of bookmarks represented as {@link UITextHyperlink}'s.
+     */
+    public ArrayList<UITextHyperlink> getTextHyperLinks() {
+        return textHyperLinks;
     }
 
     /**
