@@ -246,8 +246,33 @@ public class UITable extends DocumentCell{
         return namesAndValues;
     }
 
+
+    /**
+     * An integer variable to denote a horizontal
+     * offset that is added to each width of each
+     * {@link DocumentCell} in this {@code UITable}.
+     *
+     * <p>
+     * This is needed to properly separate
+     * {@link UITextInputField}'s from adjacent
+     * {@link UITextField}'s, such as presented in
+     * a {@link BookmarksDialog}.
+     * </p>
+     */
     int verticalOffset = 3;
 
+    /**
+     * An integer variable to denote a vertical
+     * offset that is added to each width of each
+     * {@link DocumentCell} in this {@code UITable}.
+     *
+     * <p>
+     * This is needed to properly separate
+     * {@link UITextInputField}'s from adjacent
+     * {@link UITextField}'s, such as presented in
+     * a {@link BookmarksDialog}.
+     * </p>
+     */
     int horizontalOffset = 3;
 
     /**
