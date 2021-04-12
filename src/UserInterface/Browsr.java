@@ -5,7 +5,6 @@ import domainmodel.UIController;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.print.Book;
 import java.util.ArrayList;
 
 /**
@@ -74,7 +73,7 @@ public class Browsr extends CanvasWindow {
             controller.addDocumentListener(DocumentArea);
 
             // For testing purposes
-            AddressBar.changeTextTo("https://people.cs.kuleuven.be/bart.jacobs/browsrtest.html");
+//            AddressBar.changeTextTo("https://people.cs.kuleuven.be/bart.jacobs/browsrtest.html");
         }
         catch(IllegalDimensionException e){
             System.out.print("Dimension error in frame while making browser!");
