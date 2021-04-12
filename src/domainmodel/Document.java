@@ -165,12 +165,12 @@ public class Document {
     }
 
     /**
-     * A method to retrieve the welcome page of UserInterface.Browsr.
+     * A method to retrieve the welcome page of Browsr.
      *
      * @return contentSpan:
      *                  A {@link ContentSpan} that represents the welcome page.
      */
     public static ContentSpan getWelcomeDocument() {
-        return new TextSpan("Welcome to UserInterface.Browsr!");
+        return new TextSpan("Welcome to Browsr!");
     }
 }

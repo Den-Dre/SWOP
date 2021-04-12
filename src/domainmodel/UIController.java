@@ -140,7 +140,7 @@ public class UIController {
      * @param bookmarkName: the name of the bookmark to be retrieved.
      * @return href: The href value of the requested {@code bookmarkName}.
      */
-    public String getHrefFromBookmark(String bookmarkName) {
+    public String getURLFromBookmark(String bookmarkName) {
         return this.bookmarksHrefKeeper.getHrefFromBookmark(bookmarkName);
     }
 

@@ -73,11 +73,14 @@ public class UITextHyperlink extends DocumentCell {
      * @param clickCount: The number of times the mouse has clicked.
      * @param button: The mouse button that was clicked.
      * @param modifier: Possible other keys that were pressed during this mouse action.
-     * @return text: the text attribute of this {@code UITextHyperlink}.
+     * @return text or "": the text attribute of this {@code UITextHyperlink} if this {@code UITextHyperlink}
+     *                      was clicked, "" otherwise.
      */
     @Override
     public String getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
-        return this.text;
+        if (wasClicked(x,y))
+            return this.text;
+        return "";
     }
 
     /**
