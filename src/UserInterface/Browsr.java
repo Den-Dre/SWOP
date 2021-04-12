@@ -24,7 +24,6 @@ public class Browsr extends CanvasWindow {
     protected Browsr(String title) {
         super(title);
         this.layout = new RegularLayout();
-        this.canHandleAnotherClick = false;
         setUpRegularBrowsrLayout();
     }
 
@@ -73,6 +72,9 @@ public class Browsr extends CanvasWindow {
 
             controller.addUrlListener(AddressBar);
             controller.addDocumentListener(DocumentArea);
+
+            // For testing purposes
+            AddressBar.changeTextTo("https://people.cs.kuleuven.be/bart.jacobs/browsrtest.html");
         }
         catch(IllegalDimensionException e){
             System.out.print("Dimension error in frame while making browser!");
@@ -133,13 +135,7 @@ public class Browsr extends CanvasWindow {
          */
         @Override
         void handleMouseEvent(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-//            if ((layout instanceof RegularLayout) && (previousLayout instanceof BookmarksDialogLayout)) {
-//                canHandleAnotherClick = true;
-//            }
-            if (!canHandleAnotherClick)
-                canHandleAnotherClick = true;
-            else
-                Frames.forEach(f -> f.handleMouse(id, x, y, clickCount, button, modifiersEx));
+            Frames.forEach(f -> f.handleMouse(id, x, y, clickCount, button, modifiersEx));
         }
 
         /**
@@ -186,7 +182,6 @@ public class Browsr extends CanvasWindow {
         @Override
         void handleMouseEvent(int id, int x, int y, int clickCount, int button, int modifiersEx) {
             bookmarksDialog.handleMouse(id, x, y, clickCount, button, modifiersEx);
-            canHandleAnotherClick = false;
         }
 
         /**
@@ -336,7 +331,6 @@ public class Browsr extends CanvasWindow {
      * @param layout: the new {@link BrowsrLayout} to be set.
      */
     public void setBrowsrLayout(Layout layout) {
-        this.previousLayout = this.layout;
         this.layout = layout;
     }
 
@@ -394,8 +388,6 @@ public class Browsr extends CanvasWindow {
      */
     private Layout layout;
 
-    private Layout previousLayout;
-
     /**
      * A variable that denotes the {@link BookmarksDialogLayout}
      * associated to this UserInterface.Browsr.
@@ -407,6 +399,4 @@ public class Browsr extends CanvasWindow {
      * associated to this UserInterface.Browsr.
      */
     private BookmarksBar bookmarksBar;
-
-    private boolean canHandleAnotherClick;
 }

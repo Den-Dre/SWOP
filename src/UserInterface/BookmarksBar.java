@@ -59,7 +59,7 @@ public class BookmarksBar extends Frame {
      *      an int[2] array: int[0] is the x-coordinate, int[1] the y-coordinate.
      */
     private int[] getNextPosition() {
-        int x = offset + textHyperLinks.stream().mapToInt(UITextHyperlink::getMaxWidth).map(t -> t + bookmarkSeperationDistance).sum();
+        int x = getxPos() + offset + textHyperLinks.stream().mapToInt(UITextHyperlink::getMaxWidth).map(t -> t + bookmarkSeperationDistance).sum();
         int y = yCoordinate + height / 4;
         return new int[]{x, y};
     }
@@ -82,9 +82,9 @@ public class BookmarksBar extends Frame {
      * @param id: the type of mouse activity.
      * @param x: the x coordinate of the mouse activity.
      * @param y: the y coordinate of the mouse activity.
-     * @param clickcount: the number of clicks.
+     * @param clickCount: the number of clicks.
      * @param button: the mouse button that was clicked.
-     * @param modifiersex: the control keys that were held on the click.
+     * @param modifiersEx: the control keys that were held on the click.
      */
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
@@ -125,8 +125,8 @@ public class BookmarksBar extends Frame {
      */
     private void loadTextHyperlink(String linkName) {
         // TODO: This seems really redundant. Maybe we should change our approach of storing bookmarks.
-        String href = controller.getHrefFromBookmark(linkName);
-        controller.loadDocumentFromHref(href);
+        String url = controller.getURLFromBookmark(linkName);
+        controller.loadDocument(url);
     }
 
     /**
