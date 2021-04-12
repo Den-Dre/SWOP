@@ -335,6 +335,29 @@ public class Browsr extends CanvasWindow {
     }
 
     /**
+     * Retrieve the current {@link Layout} of this
+     * {@code Browsr} object.
+     *
+     * @return layout: The current {@link Layout} of this {@code Browsr} object.
+     */
+    public Layout getBrowsrLayout() {
+        return this.layout;
+    }
+
+    /**
+     * Retrieve the current {@link BookmarksDialog} of this
+     * {@code Browsr} object if it exists, otherwise {@code null} is returned.
+     *
+     * @return dialog: The current {@link BookmarksDialog} of this {@code Browsr} object
+     *      if it exists, otherwise {@code null} is returned.
+     */
+    public BookmarksDialog getBookmarksDialog() {
+        if (bookmarksDialog != null)
+            return this.bookmarksDialog;
+        return null;
+    }
+
+    /**
      * Main method. This creates a UserInterface.Browsr window.
      *
      * @param args:

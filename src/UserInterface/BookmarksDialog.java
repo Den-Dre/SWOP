@@ -22,7 +22,6 @@ public class BookmarksDialog extends GenericDialogScreen {
         this.nameInput = new UITextInputField(offset, offset,100,textSize, "Name");
         this.urlInput = new UITextInputField(offset, offset,100,textSize, "URL");
         this.content = getForm();
-        this.wasClicked = false;
     }
 
     /**
@@ -125,10 +124,6 @@ public class BookmarksDialog extends GenericDialogScreen {
         // Set the BrowsrLayout of the linked Browsr back to the regular Layout.
         Browsr browsr = getBrowsr();
         browsr.setBrowsrLayout(browsr.new RegularLayout());
-
-        // Register this java.awt.MouseEvent.MOUSE_RELEASED event has occured:
-        // For details, see comments at declaration of `wasClicked' variable.
-        this.wasClicked = true;
     }
 
 
@@ -157,6 +152,14 @@ public class BookmarksDialog extends GenericDialogScreen {
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
         this.content.handleResize(newWindowWidth, newWindowHeight);
+    }
+
+    public String getNameInput() {
+        return this.nameInput.getText();
+    }
+
+    public String getURLInput() {
+        return this.urlInput.getText();
     }
 
     /**
@@ -202,6 +205,4 @@ public class BookmarksDialog extends GenericDialogScreen {
      * displayed in this {@code BookmarksDialog}.
      */
     private final int offset = 5;
-
-    private boolean wasClicked;
 }
