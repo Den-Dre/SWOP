@@ -18,6 +18,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import static org.junit.jupiter.api.Assertions.*;
 
+// Unfortunately, we can't run Browsr in test files. So the tests for BookmarksDialog can't cover
+// the entire use case of pressing CTRL+D etc. The tests provided underneath do test the internal
+// functionality for the most part, however.
 public class BookmarksDialogTest {
 
     private Browsr browsr;
