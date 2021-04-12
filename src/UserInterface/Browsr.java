@@ -4,6 +4,9 @@ import canvaswindow.CanvasWindow;
 import domainmodel.UIController;
 
 import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.Transferable;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
@@ -307,6 +310,8 @@ public class Browsr extends CanvasWindow {
                 handleBookmarksDialog();
             else if (keyCode == 83) // 83 == s
                 System.out.println("Save dialog not implemented yet");
+            else if (keyCode == 86)
+                handlePaste();
         }
         this.layout.handleKeyEvent(id, keyCode, keyChar, modifiersEx);
         repaint();
@@ -321,6 +326,22 @@ public class Browsr extends CanvasWindow {
         this.layout = new BookmarksDialogLayout();
         String currentUrl = this.getAddressBar().getURL();
         this.bookmarksDialog = new BookmarksDialog(this.getWidth(), this.getHeight(), currentUrl, bookmarksBar, this);
+    }
+
+    /**
+     * For testing purposes: paste contents
+     * in the {@link AddressBar} using CTRL+v.
+     */
+    private void handlePaste() {
+        Clipboard c = Toolkit.getDefaultToolkit().getSystemClipboard();
+        Transferable t = c.getContents(this);
+        if (t == null)
+            return;
+        try {
+            this.AddressBar.changeTextTo((String) t.getTransferData(DataFlavor.stringFlavor));
+        } catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     /**

@@ -44,6 +44,8 @@ public class UITextHyperlink extends DocumentCell {
         metrics = g.getFontMetrics(hyperlinkFont);
         updateSizes();
         AttributedString link = new AttributedString(text);
+        g.setColor(Color.BLUE);
+        link.addAttribute(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
         g.drawString(link.getIterator(), getxPos(), getyPos()+textHeight);
 
         // Draw a rectangle around the text for debugging purposes

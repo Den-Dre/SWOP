@@ -162,7 +162,7 @@ public class BookmarksBar extends Frame {
      * be left in between the rendered
      * bookmarks.
      */
-    private final int bookmarkSeperationDistance = 5;
+    private final int bookmarkSeperationDistance = 10;
 
     /**
      * An integer variable representing
