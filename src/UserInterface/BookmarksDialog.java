@@ -100,7 +100,11 @@ public class BookmarksDialog extends GenericDialogScreen {
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
         String result = this.content.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
-        handleClickResult(result);
+        try {
+			handleClickResult(result);
+		} catch (IllegalArgumentException e) {
+			System.out.println("bad arguments!!");
+		}
     }
 
     /**
@@ -114,11 +118,11 @@ public class BookmarksDialog extends GenericDialogScreen {
             return;
         switch (result) {
             case "Add Bookmark" ->
-                    bookmarksBar.addBookmark(nameInput.getText(), urlInput.getText());
+            		bookmarksBar.addBookmark(nameInput.getText(), urlInput.getText());
             case "Cancel" ->  // nothing needs to be done here
                     System.out.println("Cancel pressed.");
             case "Save" ->
-                    System.out.println("Save document not implemented yet.");
+                    System.out.println("Save document not implemented yet."); // TODO also needs to check whether the input differs from ""
         }
 
         // Set the BrowsrLayout of the linked Browsr back to the regular Layout.
