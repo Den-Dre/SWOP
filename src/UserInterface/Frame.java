@@ -66,8 +66,8 @@ public class Frame {
      *
      * <p>N.B.: without this method, {@code BookmakrBar} would be rendered with
      *          the given absolute width, and thus one would need to guess the
-     *          correct initial size of the window. Using this mehtod, widths are
-     *          automatically adjusted: both at initialisation and at runtime.</p>
+     *          correct initial size of the window. Using this method, widths are
+     *          automatically adjusted: both at initialization and at runtime.</p>
      *
      * @param newWindowHeight: parameter containing the new window-height of this Frame.
      * @param newWindowWidth: parameter containing the new window-width of this Frame.

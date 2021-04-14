@@ -43,9 +43,12 @@ public class BookmarksBar extends Frame {
      *
      * @param name: The name of the bookmark that will be added.
      * @param url: The URL of the bookmark that will be added.
+     * @throws IllegalArgumentException: name or url parameter is empty
      */
-    public void addBookmark(String name, String url) {
-        int[] coordinates = getNextPosition();
+    public void addBookmark(String name, String url) throws IllegalArgumentException{
+        if (name == "" || url == "")
+        	throw new IllegalArgumentException("name or url of new bookmark cannot be empty");
+    	int[] coordinates = getNextPosition();
         UITextHyperlink textHyperlink = new UITextHyperlink(coordinates[0], coordinates[1], 0, 10, name);
         textHyperLinks.add(textHyperlink);
         this.controller.addHref(name, url);
@@ -106,8 +109,8 @@ public class BookmarksBar extends Frame {
      *
      * <p>N.B.: without this method, {@code BookmakrBar} would be rendered with
      *          the given absolute width, and thus one would need to guess the
-     *          correct initial size of the window. Using this mehtod, widths are
-     *          automatically adjusted: both at initialisation and at runtime.</p>
+     *          correct initial size of the window. Using this method, widths are
+     *          automatically adjusted: both at initialization and at runtime.</p>
      *
      * @param newWindowHeight: parameter containing the new window-height
      * @param newWindowWidth: parameter containing the new window-width

@@ -108,7 +108,7 @@ public class Browsr extends CanvasWindow {
 
     /**
      * A {@code Browsr Layout} that represents the
-     * regular layout conaining a an {@link AddressBar},
+     * regular layout containing a an {@link AddressBar},
      * a {@link BookmarksBar} and a {@link DocumentArea}.
      */
     protected class RegularLayout extends Layout {
@@ -265,8 +265,8 @@ public class Browsr extends CanvasWindow {
      * <p>
      * N.B.: without this method, {@code BookmakrBar} would be rendered with
      *       the given absolute width, and thus one would need to guess the
-     *       correct initial size of the window. Using this mehtod, widths are
-     *       automatically adjusted: both at initialisation and at runtime.
+     *       correct initial size of the window. Using this method, widths are
+     *       automatically adjusted: both at initialization and at runtime.
      *</p>
      */
     @Override
@@ -427,7 +427,7 @@ public class Browsr extends CanvasWindow {
 
     /**
      * A variable that denotes the current
-     * {@link BrowsrLayout} of this {@code UserInterface.Browsr}.
+     * {@link Layout} of this {@code UserInterface.Browsr}.
      */
     private Layout layout;
 
