@@ -1,5 +1,6 @@
 package domainmodel;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
@@ -28,37 +29,16 @@ public class UIController {
         this.document = new Document();
     }
 
-
+    
     /**
-     * Combine the current url with the given href
-     *
-     * @param hrefString: the String representation of the href.
+     * load the document with the given url or href, represented by a string. Only calls method 
+     * with same name in {@link Document} associated with this Controller
+     * 
+     * @param urlOrHrefString: the String representation of the URL of the document to be loaded.
+     * or a String representation of the href
      */
-    public void loadDocumentFromHref(String hrefString) {
-        try {
-            URL newUrl = new URL(new URL(document.getUrlString()), hrefString);
-            document.setUrlString(newUrl.toString());
-            document.changeContentSpan(this.document.composeDocument(newUrl));
-        } catch (Exception e) {
-            document.changeContentSpan(Document.getErrorDocument());
-        }
-    }
-
-    /**
-     * Load the document that is related to
-     * the provided String that represents a URL.
-     *
-     * @param urlString: the String representation of the URL of the document to be loaded.
-     */
-    public void loadDocument(String urlString) {
-        try {
-            URL newUrl = new URL(urlString);
-            document.changeContentSpan(this.document.composeDocument(newUrl));
-            document.setUrlString(urlString);
-        } catch (Exception e) {
-            document.changeContentSpan(Document.getErrorDocument());
-            document.setUrlString(urlString);
-        }
+    public void loadDocument(String urlOrHrefString) {
+    	document.loadDocument(urlOrHrefString); 
     }
 
     /**

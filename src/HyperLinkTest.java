@@ -80,7 +80,7 @@ class HyperLinkTest{
 		String href = "browsrtest.html";
 		ctrl.getDocument().setUrlString("https://people.cs.kuleuven.be/bart.jacobs/index.html");
 		// compose url with href and load the document
-		ctrl.loadDocumentFromHref(href);
+		ctrl.loadDocument(href);
 		
 		// we traveled to this new url, hence the url in the bar has changed
 		assertEquals(bar.getURL().toString(), "https://people.cs.kuleuven.be/bart.jacobs/browsrtest.html");
@@ -95,7 +95,7 @@ class HyperLinkTest{
 		String href = "browsrtest.html";
 		ctrl.getDocument().setUrlString("https://people.cs.kuleuven.be/bart.jacobs/index.html");
 		// compose url with href and load the document
-		ctrl.loadDocumentFromHref(href);
+		ctrl.loadDocument(href);
 		
 		// check if document has changed
 		assertEquals(doc.getContent().getClass(), UITable.class);
@@ -111,7 +111,7 @@ class HyperLinkTest{
 		String href = "browsrtest.html";
 		ctrl.getDocument().setUrlString("https://people.cs.kuleuven.be/bart.jacobs/index.html");
 		// compose url with href and load the document
-		ctrl.loadDocumentFromHref(href);
+		ctrl.loadDocument(href);
 		
 		// check Addressbar
 		assertEquals(bar.getURL(), 

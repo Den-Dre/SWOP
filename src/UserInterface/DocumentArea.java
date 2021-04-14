@@ -239,7 +239,7 @@ public class DocumentArea extends Frame implements DocumentListener {
     private void linkPressed(String link){
         if (link.equals("")) return;
         // What to do when a link is pressed?
-        controller.loadDocumentFromHref(link);
+        controller.loadDocument(link);
     }
 
     /**

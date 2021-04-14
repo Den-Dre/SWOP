@@ -46,7 +46,7 @@ public class UIControllerTest {
 
         // Load the actual href
         String href = "fout.html";
-        controller.loadDocumentFromHref(href);
+        controller.loadDocument(href);
         // should show errortext
         TextSpan span = (TextSpan) controller.getContentSpan();
         assertEquals("Error: malformed URL.", span.getText());
@@ -84,7 +84,7 @@ public class UIControllerTest {
         controller.addUrlListener(bar);
 
         String link = "www.test.be";
-        controller.loadDocument("www.test.be");
+        controller.loadDocument("www.test.be"); // malformed url?
         assertEquals(link, bar.getURL());
 
         TextSpan errorText = (TextSpan) Document.getErrorDocument();

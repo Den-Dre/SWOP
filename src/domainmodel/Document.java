@@ -5,6 +5,7 @@ import com.sun.jdi.request.ClassUnloadRequest;
 
 import java.io.*;
 import java.lang.reflect.Array;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -172,5 +173,71 @@ public class Document {
      */
     public static ContentSpan getWelcomeDocument() {
         return new TextSpan("Welcome to Browsr!");
+    }
+
+//    /** 
+//     * Combine the current url with the given href
+//     *
+//     * @param hrefString: the String representation of the href.
+//     */
+//    public void loadDocumentFromHref(String hrefString) {
+//        try {
+//            URL newUrl = new URL(new URL(getUrlString()), hrefString);
+//            setUrlString(newUrl.toString());
+//            changeContentSpan(composeDocument(newUrl));
+//        } catch (MalformedURLException e) {		// really bad href, cannot be combined into url
+//        	changeContentSpan(getErrorDocument());
+//        	setUrlString(hrefString);
+//        } catch (Exception e) {					// url does not change for bad href
+//            changeContentSpan(getErrorDocument());
+//        }
+//    }
+//    
+//    /**
+//     * Load the document that is related to
+//     * the provided String that represents a URL or an href. 
+//     *
+//     * @param urlString: the String representation of the URL or href of the document to be loaded.
+//     */
+//    public void loadDocument(String urlOrHrefString) {
+//        try {
+//            URL newUrl = new URL(urlOrHrefString);
+//            changeContentSpan(composeDocument(newUrl));
+//            setUrlString(urlOrHrefString);
+//        } catch (MalformedURLException e) { 	// href instead of full url or really bad url?
+//        	loadDocumentFromHref(urlOrHrefString);
+//        } catch (Exception e) {
+//            changeContentSpan(getErrorDocument());
+//            setUrlString(urlOrHrefString);
+//        }
+//    }
+    
+    /**
+     * Load the document that is related to the provided String that represents a URL or can be combined
+     * using the current url and the provided String that represents a href.
+     * 
+     * @param urlOrHrefString: the String representation of the URL or href of the document to be loaded
+     */ 
+    public void loadDocument(String urlOrHrefString) {								// TODO is there a way to fix this fustercluck?
+    	try {																		// alternative are the commented-out methods above
+    		URL newUrl = new URL(urlOrHrefString); 									// url-case
+            changeContentSpan(composeDocument(newUrl));
+            setUrlString(urlOrHrefString);
+    	} catch (MalformedURLException e) {
+    		try {
+    			URL newUrl = new URL(new URL(getUrlString()), urlOrHrefString);		// href-case
+                setUrlString(newUrl.toString());
+                changeContentSpan(composeDocument(newUrl));
+    		} catch (MalformedURLException e2) { 									// very bad url/href
+    			changeContentSpan(getErrorDocument());
+            	setUrlString(urlOrHrefString);
+            	return;
+    		} catch (Exception e2) {												// IO exception
+                changeContentSpan(getErrorDocument());
+    		}
+    	} catch (Exception e2) {													// IO exception
+            changeContentSpan(getErrorDocument());
+            setUrlString(urlOrHrefString);
+    	}
     }
 }
