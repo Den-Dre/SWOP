@@ -179,19 +179,19 @@ public class Document {
      * A method to save a document to a file
      * Inspiration from: https://stackoverflow.com/questions/17440236/getting-java-to-save-a-html-file
      *
-     * @throws Exception: if the current document is the error document
+     * @throws Exception: if the current document is the Welcome document
      */
     // TODO change output file name
-    public void saveDocument() throws Exception {
-        if (this.contentSpan.equals(new TextSpan("Welcome to Browsr!"))) {
-            throw new Exception();
+    public void saveDocument(String fileName) throws Exception {
+        if (this.contentSpan.equals(getWelcomeDocument())) {
+            throw new Exception("Can't get the source code of a local Document.");
         } else {
             URL tmpUrl = new URL(this.urlString);
             URLConnection con = tmpUrl.openConnection();
             InputStream stream = con.getInputStream();
 
             BufferedReader buffer = new BufferedReader(new InputStreamReader(stream));
-            BufferedWriter outputFile = new BufferedWriter(new FileWriter("test.html"));
+            BufferedWriter outputFile = new BufferedWriter(new FileWriter(fileName));
             String line;
 
             while((line = buffer.readLine()) != null) {

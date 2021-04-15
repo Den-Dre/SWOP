@@ -1,7 +1,5 @@
 package domainmodel;
 
-import UserInterface.Frame;
-import UserInterface.IllegalDimensionException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,9 +20,9 @@ public class DocumentTest {
     public void testSaveDocument() {
         doc.setUrlString("https://people.cs.kuleuven.be/~bart.jacobs/browsrtest.html");
         try {
-            doc.saveDocument();
+            doc.saveDocument("test");
         } catch (Exception e) {
-            System.out.print(e);
+            e.printStackTrace();
         }
     }
 
@@ -32,8 +30,6 @@ public class DocumentTest {
     @DisplayName("Save invalid Document test")
     public void testInvalidSaveDocument(){
         doc.changeContentSpan(new TextSpan("Welcome to Browsr!"));
-        Exception exception = assertThrows(Exception.class, () -> {
-            doc.saveDocument();
-        });
+        assertThrows(Exception.class, () -> doc.saveDocument("test"));
     }
 }
