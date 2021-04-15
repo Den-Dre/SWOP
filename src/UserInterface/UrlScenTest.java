@@ -27,7 +27,7 @@ class UrlScenTest {
     private UIController ctrl;
     private int offset = 5;
     private final char undefChar = KeyEvent.CHAR_UNDEFINED;
-    private final int mouseClick = MouseEvent.MOUSE_CLICKED;
+    private final int mouseClick = MouseEvent.MOUSE_RELEASED;
     private final int keyPress = KeyEvent.KEY_PRESSED;
     private final int leftMouse = MouseEvent.BUTTON1;
     private final int shiftModifier = KeyEvent.SHIFT_DOWN_MASK;

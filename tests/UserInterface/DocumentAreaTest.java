@@ -92,7 +92,7 @@ class DocumentAreaTest {
         // The height of a cell is the size of the text. The width is the
         double ratio = doc.getContent().getHeightToWidthRatio();
         assertEquals(2*(textSize+ table.verticalOffset), doc.getContent().getMaxHeight());
-        assertEquals((int) ((Math.max(text.length(), hrefText.length())+text2.length())*textSize*ratio), doc.getContent().getMaxWidth());
+        assertEquals((int) ((Math.max(text.length(), hrefText.length())+text2.length())*textSize*ratio) + 2*table.horizontalOffset, doc.getContent().getMaxWidth());
 
         // Click on link and retrieve href attribute
         assertEquals(href, doc.getContent().getHandleMouse(MouseEvent.MOUSE_PRESSED, 1,textSize+6, 1, MouseEvent.BUTTON1, 0));
