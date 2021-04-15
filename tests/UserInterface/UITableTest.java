@@ -22,7 +22,7 @@ class UITableTest {
     String text = "oefentext";
     String text2 = "aa";
 
-    private final int mouseClick = MouseEvent.MOUSE_CLICKED;
+    private final int mouseClick = MouseEvent.MOUSE_RELEASED;
     private final int leftMouse = MouseEvent.BUTTON1;
 
     @BeforeEach
@@ -79,7 +79,7 @@ class UITableTest {
     void getMaxWidth() {
         double ratio = table1.getHeightToWidthRatio();
         int width = (int) ((Math.max(text.length(), hrefText.length())+text2.length())*textSize*ratio);
-        assertEquals(width, table1.getMaxWidth());
+        assertEquals(width+2*table1.horizontalOffset, table1.getMaxWidth());
     }
 
     @Test
@@ -112,7 +112,7 @@ class UITableTest {
         // Check if x-positions are set correctly
         assertEquals(table1.getxPos(), textField1.getxPos());
         assertEquals(table1.getxPos(), link.getxPos());
-        assertEquals(table1.getxPos()+width1, textField2.getxPos());
+        assertEquals(table1.getxPos()+width1+table1.horizontalOffset, textField2.getxPos());
     }
 
     @Test

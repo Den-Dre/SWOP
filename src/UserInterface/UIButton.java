@@ -90,6 +90,7 @@ public class UIButton extends DocumentCell{
             Graphics2D g2 = (Graphics2D) g;
             g2.setStroke(new BasicStroke(2));
             g.drawRoundRect(getxPos(), getyPos(), getWidth(), getHeight(), 3,3);
+            g2.setStroke(new BasicStroke(1));
         }
 
         @Override
