@@ -20,12 +20,12 @@ public class Document {
     /**
      * An {@link ArrayList} to hold all urlListeners.
      */
-    private List<DocumentListener> urlListeners = new ArrayList<>();
+    private final List<DocumentListener> urlListeners = new ArrayList<>();
 
     /**
      * An {@link ArrayList} to hold all documentListeners.
      */
-    private List<DocumentListener> documentListeners = new ArrayList<>();
+    private final List<DocumentListener> documentListeners = new ArrayList<>();
 
     private String urlString = "";
     private ContentSpan contentSpan = Document.getWelcomeDocument();

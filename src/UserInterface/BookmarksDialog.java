@@ -3,8 +3,6 @@ package UserInterface;
 import java.awt.*;
 import java.util.ArrayList;
 
-// TODO: Fix: Entered URL automatically loads after adding a bookmark
-
 public class BookmarksDialog extends GenericDialogScreen {
     /**
      * Initialise this Frame with the given parameters.
@@ -16,9 +14,11 @@ public class BookmarksDialog extends GenericDialogScreen {
      */
     public BookmarksDialog(int width, int height, String currentUrl, BookmarksBar bookmarksBar, Browsr browsr) throws IllegalDimensionException {
         // Must cover the entire screen:
-        super(0, 0, width, height, browsr);
+        super(0, 0, width, height, browsr, currentUrl);
+        int offset = getOffset();
+        int textSize = getTextSize();
+
         this.bookmarksBar = bookmarksBar;
-        this.currentUrl = currentUrl;
         this.nameInput = new UITextInputField(offset, offset,100,textSize, "Name");
         this.urlInput = new UITextInputField(offset, offset,100,textSize, "URL");
         this.content = getForm();
@@ -30,7 +30,7 @@ public class BookmarksDialog extends GenericDialogScreen {
      * @return form: the {@link UIForm} linked to this {@code BookmarksDialog}.
      */
     public UIForm getForm() {
-        return constructForm(currentUrl);
+        return constructForm(super.getCurrentUrl());
     }
 
     /**
@@ -40,7 +40,10 @@ public class BookmarksDialog extends GenericDialogScreen {
      *           The {@link String} representation of the URL currently entered in the {@link AddressBar}.
      * @return new UIForm: a {@link UIForm} object that represents the form of this {@code BookmarksDialog}.
      */
-    private UIForm constructForm(String currentUrl) {
+    UIForm constructForm(String currentUrl) {
+
+        int offset = getOffset();
+        int textSize = getTextSize();
 
         // Hard coded bookmarks dialog screen
         UITextField nameText = new UITextField(offset, offset,0,textSize, "Name");
@@ -48,6 +51,9 @@ public class BookmarksDialog extends GenericDialogScreen {
 
         // URL input must be prefilled:
         urlInput.setText(currentUrl);
+
+
+        UITextField formTitle = new UITextField(offset, offset, 0,textSize, "Add Bookmark");
 
         ArrayList<ArrayList<DocumentCell>> innerTableRows = new ArrayList<>();
         ArrayList<DocumentCell> innerTableRow1 = new ArrayList<>();
@@ -64,11 +70,14 @@ public class BookmarksDialog extends GenericDialogScreen {
         UIButton cancelButton = new UIButton(offset, offset,50,15, "Cancel", "Cancel");
 
         ArrayList<ArrayList<DocumentCell>> outerTableRows = new ArrayList<>();
+        ArrayList<DocumentCell> outerTableRow1 = new ArrayList<>();
+        outerTableRow1.add(formTitle);
         ArrayList<DocumentCell> outerTableRow2 = new ArrayList<>();
         outerTableRow2.add(innerTable);
         ArrayList<DocumentCell> outerTableRow3 = new ArrayList<>();
         outerTableRow3.add(addButton);
         outerTableRow3.add(cancelButton);
+        outerTableRows.add(outerTableRow1);
         outerTableRows.add(outerTableRow2);
         outerTableRows.add(outerTableRow3);
 
@@ -175,12 +184,6 @@ public class BookmarksDialog extends GenericDialogScreen {
     private final UIForm content;
 
     /**
-     * A string representation of the
-     * URL of the document currently loaded.
-     */
-    private final String currentUrl;
-
-    /**
      * The {@link BookmarksBar} associated
      * to this {@code BookmarksBarDialog}.
      */
@@ -197,16 +200,4 @@ public class BookmarksDialog extends GenericDialogScreen {
      * string form for the to be created bookmark.
      */
     private final UITextInputField urlInput;
-
-    /**
-     * The text size of the text displayed
-     * in this {@code BookmarksDialog}.
-     */
-    private final int textSize = 14;
-
-    /**
-     * The offset for the input, text fields and buttons
-     * displayed in this {@code BookmarksDialog}.
-     */
-    private final int offset = 5;
 }

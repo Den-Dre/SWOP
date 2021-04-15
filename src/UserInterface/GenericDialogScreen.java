@@ -6,7 +6,7 @@ import java.awt.*;
  * A class to represent an abstract dialog screen.
  * Examples of implementations are {@link BookmarksDialog} and {@code SaveDialog}.
  */
-public class GenericDialogScreen extends Frame {
+public abstract class GenericDialogScreen extends Frame {
     /**
      * Initialise this Frame with the given parameters.
      *
@@ -16,9 +16,10 @@ public class GenericDialogScreen extends Frame {
      * @param height : The height of this Frame
      * @throws IllegalDimensionException: When one of the dimensions of this Frame is negative
      */
-    public GenericDialogScreen(int x, int y, int width, int height, Browsr browsr) throws IllegalDimensionException {
+    public GenericDialogScreen(int x, int y, int width, int height, Browsr browsr, String currentUrl) throws IllegalDimensionException {
         super(x, y, width, height);
         this.browsr = browsr;
+        this.currentUrl = currentUrl;
     }
 
     /**
@@ -72,9 +73,56 @@ public class GenericDialogScreen extends Frame {
         return this.browsr;
     }
 
+    public UIForm getForm() {
+        return constructForm(currentUrl);
+    }
+
+    /**
+     * Return the form that should be displayed in the dialog screen.
+     *
+     * @param currentUrl: The url associated to the currently loaded webpage
+     *                  in the associated {@link Browsr} object.
+     * @return form: The UIForm that should be displayed in this dialog screen.
+     */
+    abstract UIForm constructForm(String currentUrl);
+
+    /**
+     * Return the url of the webpage associated
+     * to * this {@code GeneralDialogScreen}.
+     *
+     * @return url: The url of the webpage associated
+     *              to this {@code GeneralDialogScreen}.
+     */
+    public String getCurrentUrl() {
+        return this.currentUrl;
+    }
+
+    /**
+     * Get the offset for the input, text fields and buttons
+     * displayed in this {@code BookmarksDialog}.
+     */
+    public int getOffset() {
+        return 5;
+    }
+
+    /**
+     * Get the text size of the text displayed
+     * in this {@code BookmarksDialog}.
+     */
+    public int getTextSize() {
+        return 14;
+    }
+
     /**
      * A variable to represent the {@link Browsr}
      * object linked to this {@code GenericDialogScreen}.
      */
     private final Browsr browsr;
+
+    /**
+     * The url of the currently loaded document
+     * in the linked {@link Browsr} object.
+     */
+    private final String currentUrl;
+
 }
