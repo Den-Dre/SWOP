@@ -91,7 +91,11 @@ public class BookmarksDialog extends GenericDialogScreen {
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
         String result = form.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
-        handleClickResult(result);
+        try {
+			handleClickResult(result);
+		} catch (IllegalArgumentException e) {
+			System.out.println("bad arguments!!");
+		}
     }
 
     /**
@@ -105,7 +109,7 @@ public class BookmarksDialog extends GenericDialogScreen {
             return;
         switch (result) {
             case "Add Bookmark" ->
-                    bookmarksBar.addBookmark(nameInput.getText(), urlInput.getText());
+            		bookmarksBar.addBookmark(nameInput.getText(), urlInput.getText());
             case "Cancel" ->  // nothing needs to be done here
                     System.out.println("Cancel pressed.");
         }

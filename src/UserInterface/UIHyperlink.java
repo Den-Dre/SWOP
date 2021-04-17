@@ -18,6 +18,7 @@ public class UIHyperlink extends UITextHyperlink{
      * @param width: the width of this {@code UIHyperlink}
      * @param link_size: The height of this {@code UIHyperlink}
      * @param href: The value of the href attribute of this {@code UIHyperlink}
+     * @param text: the text to be shown on this {@code UIHyperlink}, meant for {@link UITextHyperlink} being it's superclass
      * @throws IllegalDimensionException: When negative dimensions are provided.
      */
     public UIHyperlink(int x, int y, int width, int link_size, String href, String text) throws IllegalDimensionException {
