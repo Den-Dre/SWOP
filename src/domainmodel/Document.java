@@ -1,18 +1,10 @@
 package domainmodel;
 
 import browsrhtml.ContentSpanBuilder;
-import com.sun.jdi.request.ClassUnloadRequest;
-import org.w3c.dom.Text;
-import org.w3c.dom.ls.LSOutput;
-
 import java.io.*;
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.file.Files;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -184,10 +176,14 @@ public class Document {
      *
      * @throws Exception: if the current document is the Welcome document
      */
-    public void saveDocument(String fileName, String url) throws Exception {
+    public void saveDocument(String fileName) throws Exception {
         if (contentSpan instanceof TextSpan && ((TextSpan) contentSpan).getText().equals(((TextSpan) getWelcomeDocument()).getText())) {
+            // We should only save a document when that document is currently *also* displayed in the DocumentArea
+            // Thus, if there's a URL typed in the AddressBar, but the Welcome Document is still displayed in the DocumentArea,
+            // no document should be saved.
             throw new Exception("Can't get the source code of a local Document.");
         } else {
+            String url = this.getUrlString();
             URL tmpUrl = new URL(url);
             URLConnection con = tmpUrl.openConnection();
             InputStream stream = con.getInputStream();
@@ -203,6 +199,7 @@ public class Document {
             String line;
             while((line = buffer.readLine()) != null)
                 outputWriter.write(line);
+            // Write out final remaining bytes that are still in buffer
             outputWriter.flush();
             outputWriter.close();
             buffer.close();
