@@ -74,7 +74,11 @@ public class SaveDialog extends GenericDialogScreen {
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
         String result = form.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
         String name = this.nameInput.getText();
-        handleClickResult(result, name);
+        try {
+            handleClickResult(result, name);
+        } catch (IllegalArgumentException e) {
+                System.out.println("Can't save document with empty file name.");
+            }
     }
 
     /**
@@ -88,7 +92,7 @@ public class SaveDialog extends GenericDialogScreen {
             return;
         switch (result) {
             case "Save" ->
-                    getBrowsr().getController().saveDocument(name, getCurrentUrl());
+                    getBrowsr().getController().saveDocument(name);
             case "Cancel" ->  // nothing needs to be done here
                     System.out.println("Cancel pressed.");
         }

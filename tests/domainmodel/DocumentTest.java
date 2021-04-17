@@ -20,7 +20,7 @@ public class DocumentTest {
     public void testSaveDocument() {
         doc.setUrlString("https://people.cs.kuleuven.be/~bart.jacobs/browsrtest.html");
         try {
-            doc.saveDocument("test", "https://people.cs.kuleuven.be/~bart.jacobs/browsrtest.html");
+            doc.saveDocument("test");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -30,6 +30,6 @@ public class DocumentTest {
     @DisplayName("Save invalid Document test")
     public void testInvalidSaveDocument(){
         doc.changeContentSpan(new TextSpan("Welcome to Browsr!"));
-        assertThrows(Exception.class, () -> doc.saveDocument("test", "https://people.cs.kuleuven.be/~bart.jacobs/browsrtest.html"));
+        assertThrows(Exception.class, () -> doc.saveDocument("test"));
     }
 }
