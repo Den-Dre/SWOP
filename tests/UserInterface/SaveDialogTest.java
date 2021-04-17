@@ -61,8 +61,12 @@ public class SaveDialogTest {
     @Test
     @DisplayName("Can correctly save a page")
     void savePageTest() throws IOException {
+        // Page should only be saved when it's loaded, not when only the URL is typed into the AddressBar
+        bar.changeTextTo(tableUrl);
+        assertThrows(Exception.class, () -> controller.getDocument().saveDocument("test"));
         // Simulate use case of pressing "Save Dialog" without creating a Browsr object
         controller.loadDocument(tableUrl);
+        // Now the document is loaded and it should be saved when pressing the save button
         String fileName = "test";
         controller.saveDocument(fileName);
         String projectDir = System.getProperty("user.dir");
@@ -113,15 +117,6 @@ public class SaveDialogTest {
     void saveWelcomeDocumentTest() {
         // No URL is set, so the welcome document is loaded by default
         assertThrows(Exception.class, () -> controller.getDocument().saveDocument("test"));
-    }
-
-    @Test
-    @DisplayName("Can load correctly formed bookmarks")
-    void loadCorrectBookmarkTest() {
-        bookmarksBar.addBookmark("test", tableUrl);
-        bookmarksBar.loadTextHyperlink("test");
-        ContentSpan resultContentSpan = controller.getDocument().getContentSpan();
-        ContentSpanBuilderTest.verifyContents(resultContentSpan);
     }
 }
 
