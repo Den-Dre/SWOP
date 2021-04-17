@@ -156,9 +156,9 @@ public class UIController {
     /**
      * Method to save a document
      */
-    public void saveDocument(String fileName){
-        try{
-            this.document.saveDocument(fileName);
+    public void saveDocument(String fileName, String url){
+        try {
+            this.document.saveDocument(fileName, url);
         } catch (Exception e) {
             System.out.println("Can't save this document!");
         }

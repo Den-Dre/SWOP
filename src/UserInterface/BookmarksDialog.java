@@ -21,16 +21,7 @@ public class BookmarksDialog extends GenericDialogScreen {
         this.bookmarksBar = bookmarksBar;
         this.nameInput = new UITextInputField(offset, offset,100,textSize, "Name");
         this.urlInput = new UITextInputField(offset, offset,100,textSize, "URL");
-        this.content = getForm();
-    }
-
-    /**
-     * Get the {@link UIForm} contents of this {@code BookmarksDialog}.
-     *
-     * @return form: the {@link UIForm} linked to this {@code BookmarksDialog}.
-     */
-    public UIForm getForm() {
-        return constructForm(super.getCurrentUrl());
+        this.form = getForm();
     }
 
     /**
@@ -93,22 +84,13 @@ public class BookmarksDialog extends GenericDialogScreen {
      */
     @Override
     public void Render(Graphics g) {
-        this.content.Render(g);
+        this.form.Render(g);
     }
 
-     /**
-     * Handle a mouseclick on this {@code BookmarksDialog}.
-     *
-     * @param id: The type of mouse activity.
-     * @param x: The x coordinate of the mouse activity.
-     * @param y: The y coordinate of the mouse activity.
-     * @param clickCount: The number of clicks.
-     * @param button: The mouse button that was clicked.
-     * @param modifiersEx: The control keys that were held on the click.
-     */
+
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-        String result = this.content.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
+        String result = form.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
         handleClickResult(result);
     }
 
@@ -118,7 +100,7 @@ public class BookmarksDialog extends GenericDialogScreen {
      * @param result:
      *              the string returned by the clicked element of the content of this {@code BookmarksDialog}.
      */
-    private void handleClickResult(String result) {
+    protected void handleClickResult(String result) {
         if (result.equals(""))
             return;
         switch (result) {
@@ -126,41 +108,11 @@ public class BookmarksDialog extends GenericDialogScreen {
                     bookmarksBar.addBookmark(nameInput.getText(), urlInput.getText());
             case "Cancel" ->  // nothing needs to be done here
                     System.out.println("Cancel pressed.");
-            case "Save" ->
-                    System.out.println("Save document not implemented yet.");
         }
 
         // Set the BrowsrLayout of the linked Browsr back to the regular Layout.
         Browsr browsr = getBrowsr();
         browsr.setBrowsrLayout(browsr.new RegularLayout());
-    }
-
-
-    /**
-     * Handle key presses on this {@code SaveDialogLayout}.
-     * This method does the right action when a key is pressed.
-     *
-     * @param id: The KeyEvent (Associated with type of KeyEvent).
-     * @param keyCode: The KeyEvent code (Determines the involved key).
-     * @param keyChar: The character representation of the involved key.
-     * @param modifiersEx: Specifies other keys that were involved in the event.
-     */
-    @Override
-    public void handleKey(int id, int keyCode, char keyChar, int modifiersEx) {
-        this.content.handleKey(id, keyCode, keyChar, modifiersEx);
-    }
-
-    /**
-     * This method handles resizes of this {@code BookmarksDialog}.
-     * It makes sure the {@code BookmarksDialog} is adjusted in width when the window shrinks or grows.
-     * It does not change its height (e.g. look at Firefox).
-     *
-     * @param newWindowHeight: parameter containing the new window-height
-     * @param newWindowWidth: parameter containing the new window-width
-     */
-    @Override
-    public void handleResize(int newWindowWidth, int newWindowHeight) {
-        this.content.handleResize(newWindowWidth, newWindowHeight);
     }
 
     public String getNameInput() {
@@ -177,7 +129,7 @@ public class BookmarksDialog extends GenericDialogScreen {
      * displays. The content is contained
      * in a {@link DocumentCell}.
      */
-    private final UIForm content;
+    private final UIForm form;
 
     /**
      * The {@link BookmarksBar} associated
