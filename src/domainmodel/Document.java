@@ -2,11 +2,14 @@ package domainmodel;
 
 import browsrhtml.ContentSpanBuilder;
 import com.sun.jdi.request.ClassUnloadRequest;
+import org.w3c.dom.Text;
+import org.w3c.dom.ls.LSOutput;
 
 import java.io.*;
 import java.lang.reflect.Array;
 import java.net.URL;
 import java.net.URLConnection;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -181,23 +184,27 @@ public class Document {
      *
      * @throws Exception: if the current document is the Welcome document
      */
-    // TODO change output file name
-    public void saveDocument(String fileName) throws Exception {
-        if (this.contentSpan.equals(getWelcomeDocument())) {
+    public void saveDocument(String fileName, String url) throws Exception {
+        if (contentSpan instanceof TextSpan && ((TextSpan) contentSpan).getText().equals(((TextSpan) getWelcomeDocument()).getText())) {
             throw new Exception("Can't get the source code of a local Document.");
         } else {
-            URL tmpUrl = new URL(this.urlString);
+            URL tmpUrl = new URL(url);
             URLConnection con = tmpUrl.openConnection();
             InputStream stream = con.getInputStream();
 
-            BufferedReader buffer = new BufferedReader(new InputStreamReader(stream));
-            BufferedWriter outputFile = new BufferedWriter(new FileWriter(fileName));
-            String line;
+            // Get absolute path of the project directory
+            // (this is platform independent, in contrary to using relative file paths).
+            String projectDir = System.getProperty("user.dir");
+            File outputFile = new File(projectDir + File.separator + "savedPages" + File.separator + fileName + ".html");
 
-            while((line = buffer.readLine()) != null) {
-                outputFile.write(line);
-            }
-            outputFile.close();
+            BufferedReader buffer = new BufferedReader(new InputStreamReader(stream));
+            BufferedWriter outputWriter = new BufferedWriter(new FileWriter(outputFile));
+
+            String line;
+            while((line = buffer.readLine()) != null)
+                outputWriter.write(line);
+            outputWriter.flush();
+            outputWriter.close();
             buffer.close();
         }
     }

@@ -1,6 +1,6 @@
 package UserInterface;
 
-import javax.swing.plaf.IconUIResource;
+import java.awt.*;
 import java.util.ArrayList;
 
 public class SaveDialog extends GenericDialogScreen {
@@ -8,36 +8,35 @@ public class SaveDialog extends GenericDialogScreen {
     /**
      * Initialise this Frame with the given parameters.
      *
-     * @param x      : The x coordinate of this Frame.
-     * @param y      : The y coordinate of this Frame.
      * @param width  : The width of this Frame
      * @param height : The height of this Frame
      * @param browsr : The {@link Browsr} object linked to this {@code SaveDialog}.
      * @throws IllegalDimensionException: When one of the dimensions of this Frame is negative
      */
-    public SaveDialog(int x, int y, int width, int height, Browsr browsr, String currentUrl) throws IllegalDimensionException {
-        super(x, y, width, height, browsr, currentUrl);
+    public SaveDialog(int width, int height, String currentUrl, Browsr browsr ) throws IllegalDimensionException {
+        super(0, 0, width, height, browsr, currentUrl);
         int offset = getOffset();
 
         this.nameInput = new UITextInputField(offset, offset, 100, getTextSize(), "Name");
-        this.content = getForm();
+        this.form = getForm();
     }
 
-    @Override
-    public UIForm getForm() {
-        return constructForm(getCurrentUrl());
-    }
 
+    /**
+     * Construct the hardcoded layout of this {@code SaveDialog}.
+     *
+     * @param currentUrl:
+     *           The {@link String} representation of the URL currently entered in the {@link AddressBar}.
+     * @return new UIForm: a {@link UIForm} object that represents the form of this {@code SaveDialog}.
+     */
     UIForm constructForm(String currentUrl) {
 
         int offset = getOffset();
         int textSize = getTextSize();
 
-        // Hard coded bookmarks dialog screen
-        UITextField nameText = new UITextField(offset, offset,0,textSize, "Name");
-        UITextField urlText = new UITextField(offset, offset,0,textSize, "URL");
-
+        // Hard coded save dialog screen
         UITextField formTitle = new UITextField(offset, offset, 0,textSize, "Save As");
+        UITextField nameText = new UITextField(offset, offset,0,textSize, "Name");
 
         ArrayList<ArrayList<DocumentCell>> innerTableRows = new ArrayList<>();
         ArrayList<DocumentCell> innerTableRow1 = new ArrayList<>();
@@ -46,7 +45,7 @@ public class SaveDialog extends GenericDialogScreen {
         innerTableRows.add(innerTableRow1);
         UITable innerTable = new UITable(offset, offset,0,0, innerTableRows);
 
-        UIButton saveButton = new UIButton(offset, offset,50,15, "Add Bookmark", "Save");
+        UIButton saveButton = new UIButton(offset, offset,50,15, "Save", "Save");
         UIButton cancelButton = new UIButton(offset, offset,50,15, "Cancel", "Cancel");
 
         ArrayList<ArrayList<DocumentCell>> outerTableRows = new ArrayList<>();
@@ -66,6 +65,50 @@ public class SaveDialog extends GenericDialogScreen {
         return new UIForm(offset, offset, "bookmarksDialog", outerTable);
     }
 
+    @Override
+    public void Render(Graphics g) {
+        this.form.Render(g);
+    }
+
+    @Override
+    public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
+        String result = form.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
+        String name = this.nameInput.getText();
+        handleClickResult(result, name);
+    }
+
+    /**
+     * Help method to handle mouse clicks on this {@code SaveDialog}.
+     *
+     * @param result:
+     *              the string returned by the clicked element of the content of this {@code SaveDialog}.
+     */
+    protected void handleClickResult(String result, String name) {
+        if (result.equals(""))
+            return;
+        switch (result) {
+            case "Save" ->
+                    getBrowsr().getController().saveDocument(name, getCurrentUrl());
+            case "Cancel" ->  // nothing needs to be done here
+                    System.out.println("Cancel pressed.");
+        }
+
+        // Set the BrowsrLayout of the linked Browsr back to the regular Layout.
+        Browsr browsr = getBrowsr();
+        browsr.setBrowsrLayout(browsr.new RegularLayout());
+    }
+
+    /**
+     * Return the contents of the name
+     * {@link UITextInputField} of this
+     * {@code SaveDialog}.
+     *
+      @return text: the contents of the name {@link UITextInputField} of this {@code SaveDialog}.
+     */
+    public String getNameInput() {
+        return this.nameInput.getText();
+    }
+
     /**
      * A {@link UITextInputField} to query the name
      * the user  wants to give to the URL being saved.
@@ -79,6 +122,6 @@ public class SaveDialog extends GenericDialogScreen {
      * displays. The content is contained
      * in a {@link DocumentCell}.
      */
-    private final UIForm content;
+    private final UIForm form;
 }
 

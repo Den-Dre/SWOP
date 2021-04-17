@@ -61,13 +61,13 @@ public class Browsr extends CanvasWindow {
             AddressBar   = new AddressBar(addressBarOffset, addressBarOffset, 100, addressBarHeight, addressBarOffset);
             bookmarksBar = new BookmarksBar(bookmarksBarOffset, addressBarHeight + 2 * bookmarksBarOffset, 100, bookmarksBarHeight, bookmarksBarOffset);
             DocumentArea = new DocumentArea(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100);
+            controller = new UIController();
             //DocumentArea =  new Frame(0,addressBarHeight, 100,100);
 
             this.Frames.add(this.AddressBar);
             this.Frames.add(this.DocumentArea);
             this.Frames.add(this.bookmarksBar);
 
-            UIController controller = new UIController();
             AddressBar.setUiController(controller);
             DocumentArea.setController(controller);
             bookmarksBar.setUIController(controller);
@@ -215,6 +215,7 @@ public class Browsr extends CanvasWindow {
          */
         @Override
         void Render(Graphics g) {
+            saveDialog.Render(g);
         }
 
         /**
@@ -229,6 +230,7 @@ public class Browsr extends CanvasWindow {
          */
         @Override
         void handleMouseEvent(int id, int x, int y, int clickCount, int button, int modifiersEx) {
+            saveDialog.handleMouse(id, x, y, clickCount, button, modifiersEx);
         }
 
         /**
@@ -244,6 +246,7 @@ public class Browsr extends CanvasWindow {
          */
         @Override
         void handleKeyEvent(int id, int keyCode, char keyChar, int modifiersEx) {
+            saveDialog.handleKey(id, keyCode, keyChar, modifiersEx);
         }
     }
 
@@ -291,7 +294,7 @@ public class Browsr extends CanvasWindow {
      */
     @Override
     protected void handleMouseEvent(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-        layout.handleMouseEvent(id, x, y, clickCount, button, modifiersEx);
+       layout.handleMouseEvent(id, x, y, clickCount, button, modifiersEx);
         repaint();
     }
 
@@ -309,7 +312,7 @@ public class Browsr extends CanvasWindow {
             if (keyCode == 68) // 68 == d
                 handleBookmarksDialog();
             else if (keyCode == 83) // 83 == s
-                System.out.println("Save dialog not implemented yet");
+                handleSaveDialog();
             else if (keyCode == 86)
                 handlePaste();
         }
@@ -326,6 +329,17 @@ public class Browsr extends CanvasWindow {
         this.layout = new BookmarksDialogLayout();
         String currentUrl = this.getAddressBar().getURL();
         this.bookmarksDialog = new BookmarksDialog(this.getWidth(), this.getHeight(), currentUrl, bookmarksBar, this);
+    }
+
+    /**
+     * A method that takes the required actions
+     * when the key combination CTRL + S is
+     * pressed by the user.
+     */
+    private void handleSaveDialog() {
+        this.layout = new SaveDialogLayout();
+        String currentUrl = this.getAddressBar().getURL();
+        this.saveDialog = new SaveDialog(this.getWidth(), this.getHeight(), currentUrl, this);
     }
 
     /**
@@ -372,9 +386,18 @@ public class Browsr extends CanvasWindow {
      *      if it exists, otherwise {@code null} is returned.
      */
     public BookmarksDialog getBookmarksDialog() {
-        if (bookmarksDialog != null)
-            return this.bookmarksDialog;
-        return null;
+        return this.bookmarksDialog;
+    }
+
+    /**
+     * Retrieve the current {@link SaveDialog} of this
+     * {@code Browsr} object if it exists, otherwise {@code null} is returned.
+     *
+     * @return dialog: The current {@link SaveDialog} of this {@code Browsr} object
+     *      if it exists, otherwise {@code null} is returned.
+     */
+    public SaveDialog getSaveDialog() {
+        return this.saveDialog;
     }
 
     /**
@@ -406,6 +429,12 @@ public class Browsr extends CanvasWindow {
     private DocumentArea DocumentArea;
 
     /**
+     * A variable that denotes the {@link UIController}
+     * associated to this UserInterface.Browsr.
+     */
+    private UIController controller;
+
+    /**
      * An {@link ArrayList} to hold all the
      * {@link Frame}'s associated to this UserInterface.Browsr.
      */
@@ -425,6 +454,10 @@ public class Browsr extends CanvasWindow {
 		return this.DocumentArea;
 	}
 
+	public UIController getController() {
+	    return this.controller;
+    }
+
     /**
      * A variable that denotes the current
      * {@link Layout} of this {@code UserInterface.Browsr}.
@@ -436,6 +469,12 @@ public class Browsr extends CanvasWindow {
      * associated to this UserInterface.Browsr.
      */
     private BookmarksDialog bookmarksDialog;
+
+    /**
+     * A variable that denotes the {@link BookmarksDialogLayout}
+     * associated to this UserInterface.Browsr.
+     */
+    private SaveDialog saveDialog;
 
     /**
      * A variable that denotes the {@link BookmarksBar}
