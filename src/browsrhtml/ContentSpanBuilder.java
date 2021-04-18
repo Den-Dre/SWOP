@@ -61,14 +61,55 @@ public class ContentSpanBuilder extends BrowsrDocumentValidator {
                 switch (lexer.getTokenValue()) {
                     case "a" -> { return getHyperlink(); }
                     case "table" -> { return getTable(); }
+                    case "form" -> { return getForm(); }
+                    case "input" -> { return getInput(); }
                     default -> fail();
                 }
             }
             default -> fail();
         }
-        throw new HtmlLexer.LexerException("Illegal parse: expected TextSpan, HyperLink or Table.");
+        throw new HtmlLexer.LexerException("Illegal parse: expected TextSpan, HyperLink, Table, form or input.");
     }
-
+    
+    /**
+     * Retrieve the {@link ContentSpan} that corresponds to the 
+     * next parsed {@link TextInputField} or {@link SubmitButton} (only two allowed input types)
+     * @return ContentSpan:
+     * 					The converted {@link ContentSpan}
+     */
+	ContentSpan getInput() {		// TODO what did I break here? Parsing crashes! Check origin with print statements!
+        consumeOpenStartTag("input");
+        String type = consumeAttribute("type");
+        switch (type) {
+        	case "text" -> { 
+        		String name = consumeAttribute("name");
+        		consumeToken(HtmlLexer.TokenType.CLOSE_TAG);
+        		return new TextInputField(name);
+        	}
+        	case "submit" -> { 
+        		consumeToken(HtmlLexer.TokenType.CLOSE_TAG);
+        		return new SubmitButton(); 
+        	}
+        	default -> fail();
+        }
+        throw new HtmlLexer.LexerException("Illegal parse: expected input types are text and submit.");
+    }
+    
+    /**
+     * Retrieve the {@link ContentSpan} that corresponds to 
+     * the next parsed {@link Form}
+     * @return contentSpan: 
+     * 					The converted {@link ContentSpan}
+     */
+    Form getForm() {
+    	consumeOpenStartTag("form");
+    	String action = consumeAttribute("action");		// extract the action of the form
+    	consumeToken(HtmlLexer.TokenType.CLOSE_TAG);	
+    	ContentSpan content = getContentSpan();
+    	consumeEndTag("form");
+    	return new Form(action, content);
+    }
+    
     /**
      * Retrieve the {@link ContentSpan} that corresponds to
      * the next parsed {@link HyperLink}.
