@@ -40,6 +40,14 @@ public class ContentSpanBuilderTest {
     	ContentSpan contentSpan = ContentSpanBuilder.buildContentSpan(url);
     	verifyContents(contentSpan);
 	}
+    
+    @Test
+    @DisplayName("Load document based on given URL containing a form!")
+    void testFormWithURL() throws IOException {
+    	URL url = new URL("file:/home/jakob/formTest.html");
+    	ContentSpan contentSpan = ContentSpanBuilder.buildContentSpan(url);
+    	verifyContentsForm(contentSpan);
+    }
 
 	public static void verifyContents(ContentSpan contentSpan) {
 		assertNotNull(contentSpan);
@@ -69,5 +77,30 @@ public class ContentSpanBuilderTest {
 		assertEquals("td.html", ((HyperLink) fourthInnerRow.get(0).getContent()).getHref());
 		assertEquals("td", ((HyperLink) fourthInnerRow.get(0).getContent()).getTextSpan().getText());
 		assertEquals("Table cells containing table data", ((TextSpan) fourthInnerRow.get(1).getContent()).getText());
+	}
+	
+	public static void verifyContentsForm(ContentSpan contentSpan) {
+		assertNotNull(contentSpan);
+		Form outerForm = ((Form) contentSpan);
+		assertEquals("browsrformactiontest.php", outerForm.getAction());
+		
+		ContentSpan content = outerForm.getContent();
+		assertTrue(content instanceof Table);
+		List<TableRow> outerRows = ((Table) content).getRows();
+		assertEquals("List words from the Woordenlijst Nederlandse Taal", ((TextSpan) outerRows.get(0).getCells().get(0).getContent()).getText());
+		
+		Table innerTable = (Table) outerRows.get(1).getCells().get(0).getContent();
+		List<TableRow> innerRows = innerTable.getRows();
+		
+		List<TableCell> firstInnerRow = innerRows.get(0).getCells();
+		assertEquals("Starts with:", ((TextSpan) firstInnerRow.get(0).getContent()).getText());
+		assertEquals("starts_with", ((TextInputField) firstInnerRow.get(1).getContent()).getName());
+		
+		List<TableCell> secondInnerRow = innerRows.get(1).getCells();
+		assertEquals("Max. results:", ((TextSpan) secondInnerRow.get(0).getContent()).getText());
+		assertEquals("max_nb_results", ((TextInputField) secondInnerRow.get(1).getContent()).getName());
+		
+		SubmitButton button = (SubmitButton) outerRows.get(2).getCells().get(0).getContent();
+		
 	}
 }
