@@ -102,6 +102,12 @@ public class DocumentArea extends Frame implements DocumentListener {
             newUIContents = translateHL((HyperLink) contents);
         else if (contents instanceof TextSpan)
             newUIContents = translateTextSpan((TextSpan) contents);
+        else if (contents instanceof TextInputField)
+        	newUIContents = translateTextInputField((TextInputField) contents);
+        else if (contents instanceof Form)
+        	newUIContents = translateForm((Form) contents);
+        else if (contents instanceof SubmitButton)
+        	newUIContents = translateSubmitButton((SubmitButton) contents);
         else
             System.out.println("unknown domainmodel representation class: "+contents.getClass().getCanonicalName());
         return newUIContents;
@@ -193,7 +199,19 @@ public class DocumentArea extends Frame implements DocumentListener {
         }
     }
 
+    private DocumentCell translateForm(Form content) {
+    	DocumentCell formContentsTranslated = translateToUIElements(content.getContent());
+    	return new UIForm(getxPos(), getyPos(), content.getAction(), formContentsTranslated);
+    }
+    
+    private DocumentCell translateTextInputField(TextInputField field) {
+    	return new UITextInputField(getxPos(), getyPos(), 100, textSize, field.getName());
+    }
 
+    private DocumentCell translateSubmitButton(SubmitButton button) {
+    	return new UIButton(getxPos(), getyPos(), 50, 15,"submit", "submit");
+    }    
+    
     /**
      * Renders the content. The content renders its sub-content recursively if existent
      * @param g: The graphics to be rendered
