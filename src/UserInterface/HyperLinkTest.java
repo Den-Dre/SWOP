@@ -1,4 +1,5 @@
-import UserInterface.*;
+package UserInterface;
+
 import domainmodel.ContentSpan;
 import domainmodel.TextSpan;
 import domainmodel.UIController;

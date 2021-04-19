@@ -17,7 +17,7 @@ public class DocumentArea extends Frame implements DocumentListener {
 //        // hard-coded Welcome document (for now!)
 //        ArrayList<ArrayList<DocumentCell>> rows = new ArrayList<>();
 //
-//        UITextField title = new UITextField(x, y, "Welcome to Browsr!".length(), 50, "Welcome to Browsr!");
+//        UITextField title = new UITextField(x, y, "Welcome to UserInterface.Browsr!".length(), 50, "Welcome to UserInterface.Browsr!");
 //        UITextField authors = new UITextField(x, y, width, 20,
 //	  		"By yours truly: Andreas Hinderyckx, Martijn Leplae, Thibault Van Win and Jakob Heirwegh");
 //        UITextField swopper = new UITextField(x, y, width, 20, "1st iteration Software-Ontwerp 2020-2021");

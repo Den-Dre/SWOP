@@ -107,11 +107,10 @@ public class UITable extends DocumentCell{
      */
     @Override
     public int getMaxHeight() {
-        int maxheight = 0;
-        for (int height :  rowHeights)
-            maxheight += height;
-        return maxheight +(verticalOffset*grid.get(0).size());
-//        return rowHeights.stream().mapToInt(Integer::intValue).sum();
+        int maxHeight = 0;
+        for (int height : rowHeights)
+            maxHeight += height + verticalOffset;
+        return maxHeight;
     }
 
     /**
@@ -120,11 +119,10 @@ public class UITable extends DocumentCell{
      */
     @Override
     public int getMaxWidth() {
-        int maxwidth = 0;
-        for (int width :  columnWidths)
-            maxwidth += width;
-        return maxwidth;
-//        return columnWidths.stream().mapToInt(Integer::intValue).sum();
+        int maxWidth = 0;
+        for (int width : columnWidths)
+            maxWidth += width + horizontalOffset;
+        return maxWidth;
     }
 
     /**
@@ -175,13 +173,9 @@ public class UITable extends DocumentCell{
                 if (columnWidths.size() <= i)
                     columnWidths.add(width);
                 // If there is, check to see whether this new cell is wider or not
-                else {
-                    if (columnWidths.get(i) < width) {
-                        // If it is wider, replace with newly found (wider) width
-                        columnWidths.remove(i);
-                        columnWidths.add(i, width);
-                    }
-                }
+                else if (columnWidths.get(i) < width)
+                    // If it is wider, replace with newly found (wider) width
+                    columnWidths.set(i, width);
             }
         }
         // Set the width of each cell to the maximum width in its column
@@ -192,9 +186,8 @@ public class UITable extends DocumentCell{
                 cell.setWidth(width);
                 // The x-position needs to be updated too. This is the x-pos of the table + the widths of all the cells to this cell's left
                 int offset = 0;
-                for (int j = 0; j < i; j++) offset += columnWidths.get(j);
+                for (int j = 0; j < i; j++) offset += columnWidths.get(j)+horizontalOffset;
                 cell.setxPos(getxPos()+offset);
-
             }
         }
         // Set the width of the table to the max width of the table
@@ -253,7 +246,34 @@ public class UITable extends DocumentCell{
         return namesAndValues;
     }
 
+
+    /**
+     * An integer variable to denote a horizontal
+     * offset that is added to each width of each
+     * {@link DocumentCell} in this {@code UITable}.
+     *
+     * <p>
+     * This is needed to properly separate
+     * {@link UITextInputField}'s from adjacent
+     * {@link UITextField}'s, such as presented in
+     * a {@link BookmarksDialog}.
+     * </p>
+     */
     int verticalOffset = 3;
+
+    /**
+     * An integer variable to denote a vertical
+     * offset that is added to each width of each
+     * {@link DocumentCell} in this {@code UITable}.
+     *
+     * <p>
+     * This is needed to properly separate
+     * {@link UITextInputField}'s from adjacent
+     * {@link UITextField}'s, such as presented in
+     * a {@link BookmarksDialog}.
+     * </p>
+     */
+    int horizontalOffset = 3;
 
     /**
      * An {@link ArrayList} that contains {@link ArrayList}'s
