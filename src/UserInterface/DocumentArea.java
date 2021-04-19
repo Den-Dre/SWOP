@@ -279,6 +279,51 @@ public class DocumentArea extends Frame implements DocumentListener {
     }
 
     /**
+     * Method to save the {@link DocumentArea} in a {@link DocumentAreaMemento}
+     * @return The memento of the current {@link DocumentArea}
+     */
+    public DocumentAreaMemento saveToMemento() {
+        return new DocumentAreaMemento(this.content);
+    }
+
+    /**
+     * Method to restore the {@link DocumentArea} from a given {@link DocumentAreaMemento}
+     * @param memento
+     *      The {@link DocumentAreaMemento} containing the previous state
+     */
+    public void restoreFromMemento(DocumentAreaMemento memento) {
+        this.content = memento.getState();
+    }
+
+    /**
+     * Nested class for a {@link DocumentArea} memento
+     */
+    public class DocumentAreaMemento {
+
+        /**
+         * Initialize a new memento given the state of the {@link DocumentArea}
+         *
+         * @param content
+         *      The content of the {@link DocumentArea} to be saved
+         */
+        public DocumentAreaMemento(DocumentCell content) {
+            this.content = content;
+        }
+
+        /**
+         * Get the saved state from this memento
+         *
+         * @return The content from the saved state
+         */
+        public DocumentCell getState(){
+            return this.content;
+        }
+
+        private final DocumentCell content;
+    }
+
+
+    /**
      * Set the content of this DocumentArea
      * to the provided {@link ContentSpan}.
      *
