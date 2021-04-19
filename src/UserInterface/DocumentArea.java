@@ -88,7 +88,7 @@ public class DocumentArea extends Frame implements DocumentListener {
     
     /**
      * Translates the contentSpan from the domainmodel into the simplified UI-representation objects.
-     * Distinction is made between domain-classes Table, HyperLink and TextSpan
+     * Distinction is made between domain-classes Table, HyperLink, TextSpan, TextInputField, Form and SubmitButton
      *
      * @param contents: The contents to be translated to UI elements.
      * @return a DocumentCell derived class that can be rendered on screen
@@ -138,6 +138,7 @@ public class DocumentArea extends Frame implements DocumentListener {
     
     /**
      * Translates a Cell from the domainmodel into the simplified UI-representation
+     * 
      * @param content: The content to be translated to UI elements
      * @return a DocumentCell with translated elements
      */
@@ -149,6 +150,7 @@ public class DocumentArea extends Frame implements DocumentListener {
     
     /**
      * Translates a Row from the domainmodel into the simplified UI-representation
+     * 
      * @param content: The content to be translated to UI elements
      * @return an ArrayList<DocumentCell> with translated elements
      */
@@ -165,6 +167,7 @@ public class DocumentArea extends Frame implements DocumentListener {
     
     /**
      * Translates a HyperLink from the domainmodel into the simplified UI-representation
+     * 
      * @param content: The content to be translated to UI elements
      * @return a UIHyperlink with translated elements
      */
@@ -198,18 +201,36 @@ public class DocumentArea extends Frame implements DocumentListener {
             return null;
         }
     }
-
+    
+    /**
+     * Translates a Form from the domainmodel into the simplified UI-representation
+     * 
+     * @param content: The content to be translated to UI elements.
+     * @return  a UIForm with translated elements
+     */
     private DocumentCell translateForm(Form content) {
     	DocumentCell formContentsTranslated = translateToUIElements(content.getContent());
     	return new UIForm(getxPos(), getyPos(), content.getAction(), formContentsTranslated);
     }
     
-    private DocumentCell translateTextInputField(TextInputField field) {
-    	return new UITextInputField(getxPos(), getyPos(), 100, textSize, field.getName());
+    /**
+     * Translates a TextInputField from the domainmodel into the simplified UI-representation
+     * 
+     * @param content: The content to be translated to UI elements.
+     * @return a UITextInputField with translated elements
+     */
+    private DocumentCell translateTextInputField(TextInputField content) {
+    	return new UITextInputField(getxPos(), getyPos(), 100, textSize, content.getName());
     }
-
-    private DocumentCell translateSubmitButton(SubmitButton button) {
-    	return new UIButton(getxPos(), getyPos(), 50, 15,"submit", "submit");
+    
+    /**
+     * Translates a SubmitButton from the domainmodel into the simplified UI-representation
+     *  
+     * @param content: The content to be translated to UI elements.
+     * @return a UIButton with translated elements
+     */
+    private DocumentCell translateSubmitButton(SubmitButton content) {
+    	return new UIButton(getxPos(), getyPos(), 50, 15, "Submit", "submit");
     }    
     
     /**
