@@ -110,6 +110,8 @@ class DocumentAreaTest {
     	Document doc2 = new Document();
     	UIController ctrl3 = new UIController(); 
     	Document doc3 = new Document();
+    	UIController ctrl4 = new UIController(); 
+    	Document doc4 = new Document();
     	
     	// a valid Browsr document
     	ContentSpan content1 = ContentSpanBuilder.buildContentSpan("""
@@ -163,5 +165,48 @@ class DocumentAreaTest {
 					</html>
 					""");
         });
+		
+		ContentSpan content4 = ContentSpanBuilder.buildContentSpan("""
+				<form action="browsrformactiontest.php">
+					<table>
+						<tr><td>List words from the Woordenlijst Nederlandse Taal
+						<tr><td>
+							<table>
+								<tr>
+									<td>Starts with:
+									<td><input type="text" name="starts_with">
+								<tr>
+									<td>Max. results:
+									<td><input type="text" name="max_nb_results">
+							</table>
+						<tr><td><input type="submit">
+					</table>
+				</form>
+				""");
+		
+		doc4.changeContentSpan(content4);
+		documentArea1.setController(ctrl4);
+		ctrl4.setDocument(doc4);
+		documentArea1.contentChanged();
+		assertTrue(documentArea1.getContent() instanceof UIForm);
+		UIForm form = (UIForm) documentArea1.getContent();
+		assertEquals(form.getAction(), "browsrformactiontest.php");
+		assertTrue(form.getFormContent() instanceof UITable);
+		UITable table2 = (UITable) form.getFormContent();
+		assertTrue(table2.getContent().get(0).get(0) instanceof UITextField);
+		assertEquals(((UITextField) table2.getContent().get(0).get(0)).getText(), "List words from the Woordenlijst Nederlandse Taal");
+		assertTrue(table2.getContent().get(1).get(0) instanceof UITable);
+		assertTrue(table2.getContent().get(2).get(0) instanceof UIButton);
+		UITable table3 = (UITable) table2.getContent().get(1).get(0);
+		assertTrue(table3.getContent().get(0).get(0) instanceof UITextField);
+		assertEquals(((UITextField) table3.getContent().get(0).get(0)).getText(), "Starts with:");
+		assertTrue(table3.getContent().get(0).get(1) instanceof UITextInputField);
+		assertEquals(((UITextInputField) table3.getContent().get(0).get(1)).getNamesAndValues().get(0), "starts_with=");
+		assertTrue(table3.getContent().get(1).get(0) instanceof UITextField);
+		assertEquals(((UITextField) table3.getContent().get(1).get(0)).getText(), "Max. results:");
+		assertTrue(table3.getContent().get(1).get(1) instanceof UITextInputField);
+		assertEquals(((UITextInputField) table3.getContent().get(1).get(1)).getNamesAndValues().get(0), "max_nb_results=");
+
+		
     }
 }
