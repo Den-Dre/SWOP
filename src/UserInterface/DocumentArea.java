@@ -298,7 +298,7 @@ public class DocumentArea extends Frame implements DocumentListener {
     /**
      * Nested class for a {@link DocumentArea} memento
      */
-    public class DocumentAreaMemento {
+    public static class DocumentAreaMemento {
 
         /**
          * Initialize a new memento given the state of the {@link DocumentArea}

@@ -141,6 +141,50 @@ public class AddressBar extends UITextInputField implements DocumentListener {
     }
 
     /**
+     * Method to save the state of the {@link AddressBar} into a {@link AddressBarMemento}
+     * @return A {@link AddressBarMemento} for the saved state
+     */
+    public AddressBarMemento saveToMemento(){
+        return new AddressBarMemento(this.getText());
+    }
+
+    /**
+     * Method to restore the state of the Addressbar to a given state
+     * @param memento
+     *      The given state in the form of a {@link AddressBarMemento}
+     */
+    public void restoreFromMemento(AddressBarMemento memento){
+        this.changeURLto(memento.getUrl());
+    }
+
+    /**
+     * A class for saving the state of the {@link AddressBar}
+     */
+    public static  class AddressBarMemento{
+
+        /**
+         * Initializes an {@link AddressBarMemento} given the current url of the {@link AddressBar}
+         *
+         * @param url
+         *      The current url of the {@link AddressBar}
+         */
+        public AddressBarMemento(String url) {
+            this.url = url;
+        }
+
+        /**
+         * Returns the url of the saved state
+         * @return The saved url
+         */
+        public String getUrl(){
+            return this.url;
+        }
+
+        private final String url;
+    }
+
+
+    /**
      * The {@link UIController} object that is
      * linked to this AddressBar.
      */
