@@ -42,11 +42,19 @@ public class ContentSpanBuilderTest {
 	}
     
     @Test
-    @DisplayName("Load document based on given URL containing a form!")
+    @DisplayName("Load document based on given URL containing a form!") // WORKS with a local copy of the html in the assignment!
     void testFormWithURL() throws IOException {
     	URL url = new URL("file:/home/jakob/formTest.html");
     	ContentSpan contentSpan = ContentSpanBuilder.buildContentSpan(url);
     	verifyContentsForm(contentSpan);
+    }
+    
+    @Test
+    @DisplayName("Load document based on given URL containing the given form!") // WORKS with a local copy of the html in the assignment!
+    void testForm2WithURL() throws IOException {
+    	URL url = new URL("https://people.cs.kuleuven.be/~bart.jacobs/swop/browsrformtest.html");
+    	ContentSpan contentSpan = ContentSpanBuilder.buildContentSpan(url);
+    	verifyContentsForm2(contentSpan);
     }
 
 	public static void verifyContents(ContentSpan contentSpan) {
@@ -99,6 +107,31 @@ public class ContentSpanBuilderTest {
 		List<TableCell> secondInnerRow = innerRows.get(1).getCells();
 		assertEquals("Max. results:", ((TextSpan) secondInnerRow.get(0).getContent()).getText());
 		assertEquals("max_nb_results", ((TextInputField) secondInnerRow.get(1).getContent()).getName());
+		
+		SubmitButton button = (SubmitButton) outerRows.get(2).getCells().get(0).getContent();
+		
+	}
+	
+	public static void verifyContentsForm2(ContentSpan contentSpan) {
+		assertNotNull(contentSpan);
+		Form outerForm = ((Form) contentSpan);
+		assertEquals("browsrformactiontest.php", outerForm.getAction());
+		
+		ContentSpan content = outerForm.getContent();
+		assertTrue(content instanceof Table);
+		List<TableRow> outerRows = ((Table) content).getRows();
+		assertEquals("List words from the Woordenlijst Nederlandse Taal", ((TextSpan) outerRows.get(0).getCells().get(0).getContent()).getText());
+		
+		Table innerTable = (Table) outerRows.get(1).getCells().get(0).getContent();
+		List<TableRow> innerRows = innerTable.getRows();
+		
+		List<TableCell> firstInnerRow = innerRows.get(0).getCells();
+		assertEquals("Words that start with",((TextSpan) firstInnerRow.get(0).getContent()).getText());
+		assertEquals("starts_with", ((TextInputField) firstInnerRow.get(1).getContent()).getName());
+		
+		List<TableCell> secondInnerRow = innerRows.get(1).getCells();
+		assertEquals("Maximum number of words to show", ((TextSpan) secondInnerRow.get(0).getContent()).getText());
+		assertEquals("max_nb_results",((TextInputField) secondInnerRow.get(1).getContent()).getName());
 		
 		SubmitButton button = (SubmitButton) outerRows.get(2).getCells().get(0).getContent();
 		

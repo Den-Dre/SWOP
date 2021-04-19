@@ -6,9 +6,6 @@ public class Form extends ContentSpan {
 	private ContentSpan content;
 	
 	public Form(String action, ContentSpan content) {
-		System.out.println("domain: FORM made");
-		System.out.println("action: " + action);
-		System.out.println("content: " + content);
 		this.action = action;
 		this.content = content;
 	} 

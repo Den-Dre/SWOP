@@ -62,11 +62,12 @@ public class UIForm extends DocumentCell{
      */
     private String handleSubmitPressed() {
         ArrayList<String> namesAndValues = formContent.getNamesAndValues();
-        StringBuilder link = new StringBuilder(action + " ");
+        StringBuilder link = new StringBuilder(action + "?");
         for (String nameAndValue : namesAndValues) {
             link.append(nameAndValue);
-            link.append(" ");
+            link.append("&");
         }
+        link.setLength(link.length() - 1); // cut off the last & character
         return link.toString();
     }
 
