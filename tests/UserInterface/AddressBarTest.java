@@ -149,4 +149,22 @@ class AddressBarTest {
         }
         catch(Exception e) { System.out.println(e);}
     }
+
+    @Test
+    @DisplayName("Save to memento")
+    void testMemento() {
+        bar.changeURLto("http://www.test.com");
+        AddressBar.AddressBarMemento memento = bar.saveToMemento();
+        assertEquals(bar.getURL(),memento.getUrl());
+    }
+
+    @Test
+    @DisplayName("Restore from memento")
+    void testRestoreFromMemento(){
+        bar.changeURLto("http://www.test.com");
+        AddressBar.AddressBarMemento memento = bar.saveToMemento();
+        bar.changeURLto("http://www.anothertest.com");
+        bar.restoreFromMemento(memento);
+        assertEquals("http://www.test.com", bar.getURL());
+    }
 }
