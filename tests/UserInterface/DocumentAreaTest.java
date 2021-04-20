@@ -164,4 +164,26 @@ class DocumentAreaTest {
 					""");
         });
     }
+
+    @Test
+    @DisplayName("Save To memento test")
+    void testMemento() {
+        DocumentCell testContent = new UIHyperlink(0,0,50,20,"http://www.ditiseentest","test");
+        documentArea1.setContent(testContent);
+        DocumentArea.DocumentAreaMemento memento = documentArea1.saveToMemento();
+        assertEquals(testContent, memento.getState());
+    }
+
+    @Test
+    @DisplayName("Restore from memento test")
+    void testRestoreFromMemento() {
+        DocumentCell testContent = new UIHyperlink(0,0,50,20,"http://www.ditiseentest","test");
+        documentArea1.setContent(testContent);
+        DocumentArea.DocumentAreaMemento memento = documentArea1.saveToMemento();
+        DocumentCell newContent = new UITextField(0,0,50,20,"Dit is een test");
+        documentArea1.setContent(newContent);
+        documentArea1.restoreFromMemento(memento);
+
+        assertEquals(testContent,documentArea1.getContent());
+    }
 }
