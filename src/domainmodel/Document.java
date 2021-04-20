@@ -1,14 +1,10 @@
 package domainmodel;
 
 import browsrhtml.ContentSpanBuilder;
-import com.sun.jdi.request.ClassUnloadRequest;
-
 import java.io.*;
-import java.lang.reflect.Array;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -19,12 +15,12 @@ public class Document {
     /**
      * An {@link ArrayList} to hold all urlListeners.
      */
-    private List<DocumentListener> urlListeners = new ArrayList<>();
+    private final List<DocumentListener> urlListeners = new ArrayList<>();
 
     /**
      * An {@link ArrayList} to hold all documentListeners.
      */
-    private List<DocumentListener> documentListeners = new ArrayList<>();
+    private final List<DocumentListener> documentListeners = new ArrayList<>();
 
     private String urlString = "";
     private ContentSpan contentSpan = Document.getWelcomeDocument();
@@ -172,5 +168,41 @@ public class Document {
      */
     public static ContentSpan getWelcomeDocument() {
         return new TextSpan("Welcome to Browsr!");
+    }
+
+    /**
+     * A method to save a document to a file
+     * Inspiration from: https://stackoverflow.com/questions/17440236/getting-java-to-save-a-html-file
+     *
+     * @throws Exception: if the current document is the Welcome document
+     */
+    public void saveDocument(String fileName) throws Exception {
+        if (contentSpan instanceof TextSpan && ((TextSpan) contentSpan).getText().equals(((TextSpan) getWelcomeDocument()).getText())) {
+            // We should only save a document when that document is currently *also* displayed in the DocumentArea
+            // Thus, if there's a URL typed in the AddressBar, but the Welcome Document is still displayed in the DocumentArea,
+            // no document should be saved.
+            throw new Exception("Can't get the source code of a local Document.");
+        } else {
+            String url = this.getUrlString();
+            URL tmpUrl = new URL(url);
+            URLConnection con = tmpUrl.openConnection();
+            InputStream stream = con.getInputStream();
+
+            // Get absolute path of the project directory
+            // (this is platform independent, in contrary to using relative file paths).
+            String projectDir = System.getProperty("user.dir");
+            File outputFile = new File(projectDir + File.separator + "savedPages" + File.separator + fileName + ".html");
+
+            BufferedReader buffer = new BufferedReader(new InputStreamReader(stream));
+            BufferedWriter outputWriter = new BufferedWriter(new FileWriter(outputFile));
+
+            String line;
+            while((line = buffer.readLine()) != null)
+                outputWriter.write(line);
+            // Write out final remaining bytes that are still in buffer
+            outputWriter.flush();
+            outputWriter.close();
+            buffer.close();
+        }
     }
 }

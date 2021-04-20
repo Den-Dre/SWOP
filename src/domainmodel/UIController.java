@@ -152,4 +152,15 @@ public class UIController {
     public void addHref(String name, String url) {
         this.bookmarksURLKeeper.addBookmarksHref(name, url);
     }
+
+    /**
+     * Method to save a document
+     */
+    public void saveDocument(String fileName){
+        try {
+            this.document.saveDocument(fileName);
+        } catch (Exception e) {
+            System.out.println("Can't save this document!");
+        }
+    }
 }
