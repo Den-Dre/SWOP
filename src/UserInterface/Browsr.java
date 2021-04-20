@@ -309,9 +309,9 @@ public class Browsr extends CanvasWindow {
     @Override
     protected void handleKeyEvent(int id, int keyCode, char keyChar, int modifiersEx) {
         if (modifiersEx == KeyEvent.CTRL_DOWN_MASK) {  // KeyEven.CTRL_DOWN_MASK == 128 == CTRL
-            if (keyCode == 68) // 68 == d
+            if (keyCode == 68 && layout instanceof RegularLayout) // 68 == d
                 handleBookmarksDialog();
-            else if (keyCode == 83) // 83 == s
+            else if (keyCode == 83 && layout instanceof RegularLayout) // 83 == s
                 handleSaveDialog();
             else if (keyCode == 86)
                 handlePaste();
