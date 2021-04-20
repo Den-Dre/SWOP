@@ -41,14 +41,14 @@ public class UIForm extends DocumentCell{
      * @return A representation of this UIForm's state. (action and name=value of UIInputFields)
      */
     @Override
-    public String getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
-        String response = this.formContent.getHandleMouse(id, x, y, clickCount, button, modifier);
-        if (response.equals("submit")) {
-            String link = handleSubmitPressed();
-            System.out.println(link);
-            return link;
+    public ReturnMessage getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
+        ReturnMessage response = this.formContent.getHandleMouse(id, x, y, clickCount, button, modifier);
+        if (response.getType() == ReturnMessage.Type.Button) {
+            if (response.getContent().equals("submit")) {
+                String link = handleSubmitPressed();
+                return new ReturnMessage(ReturnMessage.Type.Form, link);
+            }
         }
-
         return response;
     }
 

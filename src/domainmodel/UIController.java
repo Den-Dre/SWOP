@@ -35,13 +35,7 @@ public class UIController {
      * @param hrefString: the String representation of the href.
      */
     public void loadDocumentFromHref(String hrefString) {
-        try {
-            URL newUrl = new URL(new URL(document.getUrlString()), hrefString);
-            document.setUrlString(newUrl.toString());
-            document.changeContentSpan(this.document.composeDocument(newUrl));
-        } catch (Exception e) {
-            document.changeContentSpan(Document.getErrorDocument());
-        }
+        document.loadFromHref(hrefString);
     }
 
     /**
@@ -51,14 +45,7 @@ public class UIController {
      * @param urlString: the String representation of the URL of the document to be loaded.
      */
     public void loadDocument(String urlString) {
-        try {
-            URL newUrl = new URL(urlString);
-            document.changeContentSpan(this.document.composeDocument(newUrl));
-            document.setUrlString(urlString);
-        } catch (Exception e) {
-            document.changeContentSpan(Document.getErrorDocument());
-            document.setUrlString(urlString);
-        }
+        document.loadFromUrl(urlString);
     }
 
     /**

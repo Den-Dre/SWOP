@@ -1,8 +1,5 @@
 package UserInterface;
 
-import UserInterface.DocumentCell;
-import UserInterface.IllegalDimensionException;
-
 import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.text.AttributedString;
@@ -79,10 +76,10 @@ public class UITextHyperlink extends DocumentCell {
      *                      was clicked, "" otherwise.
      */
     @Override
-    public String getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
+    public ReturnMessage getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
         if (wasClicked(x,y))
-            return this.text;
-        return "";
+            return new ReturnMessage(ReturnMessage.Type.Hyperlink, this.text);
+        return new ReturnMessage(ReturnMessage.Type.Empty);
     }
 
     /**

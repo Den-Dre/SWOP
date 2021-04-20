@@ -34,7 +34,7 @@ public class UIButton extends DocumentCell{
 
     private static abstract class State {
         abstract void Render(Graphics g);
-        abstract String getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier);
+        abstract ReturnMessage getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier);
     }
 
     private class NotPressed extends State {
@@ -59,12 +59,11 @@ public class UIButton extends DocumentCell{
         }
 
         @Override
-        public String getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
-            if (!wasClicked(x, y)) return "";
-            if (id != MouseEvent.MOUSE_PRESSED) return "";
-            System.out.println("Button is pressed in!");
+        public ReturnMessage getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
+            if (!wasClicked(x, y)) return new ReturnMessage(ReturnMessage.Type.Empty);
+            if (id != MouseEvent.MOUSE_PRESSED) return new ReturnMessage(ReturnMessage.Type.Empty);
             state = new Pressed();
-            return "";
+            return new ReturnMessage(ReturnMessage.Type.Empty);
         }
     }
 
@@ -94,13 +93,11 @@ public class UIButton extends DocumentCell{
         }
 
         @Override
-        public String getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
-            if (id != MouseEvent.MOUSE_RELEASED) return "";
+        public ReturnMessage getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
+            if (id != MouseEvent.MOUSE_RELEASED) return new ReturnMessage(ReturnMessage.Type.Empty);
             state = new NotPressed();
-            System.out.println("button released -> ");
-            if (!wasClicked(x, y)) return "";
-            System.out.println("Returning content.");
-            return returnText;
+            if (!wasClicked(x, y)) return new ReturnMessage(ReturnMessage.Type.Empty);
+            return new ReturnMessage(ReturnMessage.Type.Button, returnText);
         }
     }
 
@@ -111,7 +108,7 @@ public class UIButton extends DocumentCell{
     }
 
     @Override
-    public String getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
+    public ReturnMessage getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
         return state.getHandleMouse(id, x, y, clickCount, button, modifier);
     }
 

@@ -83,8 +83,8 @@ public class DocumentCell extends Frame {
      * @param modifier: Extra control key that was held during the click.
      * @return "": the empty string.
      */
-    public String getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
-        return "";
+    public ReturnMessage getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
+        return new ReturnMessage(ReturnMessage.Type.Empty);
     }
 
     /**

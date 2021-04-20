@@ -60,12 +60,12 @@ class UITableTest {
         int linkY = link.getyPos();
         int linkWidth = link.getWidth();
         // Click outside the link-cell
-        String result;
+        ReturnMessage result;
         result = table1.getHandleMouse(mouseClick, linkX+linkWidth+10, linkY,1, leftMouse,0);
-        assertEquals("", result);
+        assertEquals("", result.getContent());
         // Click on the link-cell
         result = table1.getHandleMouse(mouseClick, linkX+linkWidth-1, linkY,1, leftMouse,0);
-        assertEquals(href, result);
+        assertEquals(href, result.getContent());
     }
 
     @Test
