@@ -1,5 +1,7 @@
 package UserInterface;
 
+import org.junit.platform.commons.annotation.Testable;
+
 import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.text.AttributedString;
@@ -7,7 +9,7 @@ import java.text.AttributedString;
 /**
  * A class to represent a hyperlink in the UI layer.
  */
-public class UIHyperlink extends DocumentCell{
+public class UIHyperlink extends UITextHyperlink{
     /**
      * Construct a new DocumentCell
      *
@@ -16,13 +18,14 @@ public class UIHyperlink extends DocumentCell{
      * @param width: the width of this {@code UIHyperlink}
      * @param link_size: The height of this {@code UIHyperlink}
      * @param href: The value of the href attribute of this {@code UIHyperlink}
+     * @param text: the text to be shown on this {@code UIHyperlink}, meant for {@link UITextHyperlink} being it's superclass
      * @throws IllegalDimensionException: When negative dimensions are provided.
      */
     public UIHyperlink(int x, int y, int width, int link_size, String href, String text) throws IllegalDimensionException {
-        super(x, y, width, link_size);
+        super(x, y, width, link_size, text);
+        this.textHeight = link_size;
+        this.textWidth = width;
         this.href = href;
-        this.text = text;
-        textHeight = link_size;
         updateSizes();
         setWidth(getMaxWidth());
     }
@@ -47,7 +50,7 @@ public class UIHyperlink extends DocumentCell{
         link.addAttribute(TextAttribute.FONT, hyperlinkFont);
         link.addAttribute(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
 
-        g.drawString(link.getIterator(), getxPos(), getyPos()+textHeight);
+        g.drawString(link.getIterator(), getxPos(), getyPos()+super.getMaxHeight());
 
         // Draw a rectangle around the text for debugging purposes
         //g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
@@ -57,7 +60,7 @@ public class UIHyperlink extends DocumentCell{
      * Update the {@code textWidth} based on this {@code UIHyperlink} {@code href} attribute.
      */
     private void updateSizes() {
-        if (!isCalculateActualWidth()) textWidth =  (int) (textHeight*text.length()*heightToWidthRatio);
+        if (!isCalculateActualWidth()) textWidth =  (int) (super.getMaxHeight()*text.length()*heightToWidthRatio);
         else {
             if (metrics == null) return;
             textWidth = metrics.stringWidth(href);
@@ -87,50 +90,56 @@ public class UIHyperlink extends DocumentCell{
     }
 
     /**
-     * Returns the max height of this {@code UIHyperlink}, which is the width of the string.
-     */
-    @Override
-    public int getMaxHeight() {
-        return textHeight; // the +3 can be deleted but what it does is account for the extra height from the underlining.
-    }
-
-    /**
-     * Returns the max width of this {@code UIHyperlink}, which is the height of the string
+     * Return the text width of this {@code UIHyperlink}
+     *
+     * @return textWidth: the width of this {@code UIHyperlink}.
      */
     @Override
     public int getMaxWidth() {
-        return textWidth;
+        return this.textWidth;
     }
 
     /**
-     * Retrieve the text displayed in this UIHyperlink
+     * Return the text height of this {@code UIHyperlink}
      *
-     * @return text:
-     *              The text displayed in this UIHyperlink.
+     * @return textHeight: the height of this {@code UIHyperlink}.
      */
-    public String getText() {
-        return text;
+    @Override
+    public int getMaxHeight() {
+        return this.textHeight;
     }
+
+    /**
+     * Get the {@code href} value of this {@code UITextHyperlink}.
+     *
+     * @return href: the href value of this {@code UITextHyperlink}.
+     */
+    public String getHref() {
+        return this.href;
+    }
+
 
     // =========== Contents of this UIHyperlink =============
     /**
      * A string variable to denote the href value of this UIHyperlink.
      */
-    private String href = "";
+    private final String href;
     /**
      * A string variable to denote the text value of this UIHyperlink.
      */
-    private final String text;
+    private final String text = super.getText();
 
     // ============== Dimension variables ====================
+
     /**
-     * An integer variable to denote the height of the text of this UIHyperlink.
-     */
-    private final int textHeight;
-    /**
-     * An integer variable to denote the width of the text of this UIHyperlink.
+     * An integer variable to denote the text height of this {@code UIHyperlink}.
      */
     private int textWidth;
+
+    /**
+     * An integer variable to denote the text height of this {@code UIHyperlink}.
+     */
+    private int textHeight;
 
     // ============== Font variables ===========================
     /**

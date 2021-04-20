@@ -31,7 +31,7 @@ public class Document {
 
     // Example of a hyperlink that can be clicked
 //    private String urlString = "https://people.cs.kuleuven.be/bart.jacobs/index.html";
-//    private ContentSpan contentSpan; //= new HyperLink("browsrtest.html", new TextSpan("Welcome to Browsr! Click here to see our features!"));//new TextSpan("Welkom in Browsr!");
+//    private ContentSpan contentSpan; //= new HyperLink("browsrtest.html", new TextSpan("Welcome to UserInterface.Browsr! Click here to see our features!"));//new TextSpan("Welkom in UserInterface.Browsr!");
     
 
     /**

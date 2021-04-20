@@ -92,7 +92,7 @@ class DocumentAreaTest {
         // The height of a cell is the size of the text. The width is the
         double ratio = doc.getContent().getHeightToWidthRatio();
         assertEquals(2*(textSize+ table.verticalOffset), doc.getContent().getMaxHeight());
-        assertEquals((int) ((Math.max(text.length(), hrefText.length())+text2.length())*textSize*ratio), doc.getContent().getMaxWidth());
+        assertEquals((int) ((Math.max(text.length(), hrefText.length())+text2.length())*textSize*ratio) + 2*table.horizontalOffset, doc.getContent().getMaxWidth());
 
         // Click on link and retrieve href attribute
         assertEquals(href, doc.getContent().getHandleMouse(MouseEvent.MOUSE_PRESSED, 1,textSize+6, 1, MouseEvent.BUTTON1, 0));
@@ -113,7 +113,7 @@ class DocumentAreaTest {
     	UIController ctrl4 = new UIController(); 
     	Document doc4 = new Document();
     	
-    	// a valid Browsr document
+    	// a valid UserInterface.Browsr document
     	ContentSpan content1 = ContentSpanBuilder.buildContentSpan("""
     			<a href="a.html">a</a>
     			"""); // only a HyperLink
@@ -126,7 +126,7 @@ class DocumentAreaTest {
     	
 		ContentSpan content2 = ContentSpanBuilder.buildContentSpan("""
 				<table>
-				  <tr><td>HTML elements partially supported by Browsr:
+				  <tr><td>HTML elements partially supported by UserInterface.Browsr:
 				</table>
 				"""); // only a Table
     	doc2.changeContentSpan(content2);
@@ -137,20 +137,20 @@ class DocumentAreaTest {
     	UITable table = (UITable) documentArea1.getContent(); 
     	assertEquals(table.getContent().size(), 1); // this table only contains one element
     	assertEquals(table.getContent().get(0).get(0).getClass(), UITextField.class); // and this is a UITextField
-    	assertEquals(((UITextField) table.getContent().get(0).get(0)).getText(), "HTML elements partially supported by Browsr:");
+    	assertEquals(((UITextField) table.getContent().get(0).get(0)).getText(), "HTML elements partially supported by UserInterface.Browsr:");
     	// the UITextField contains what we expect
     	
 		ContentSpan content3 = ContentSpanBuilder.buildContentSpan("""
-				  HTML elements partially supported by Browsr:
+				  HTML elements partially supported by UserInterface.Browsr:
 				"""); // only a piece of Text
     	doc3.changeContentSpan(content3);
     	documentArea1.setController(ctrl3);
     	ctrl3.setDocument(doc3);
     	documentArea1.contentChanged(); // would throw an exception if translation failed
     	assertEquals(documentArea1.getContent().getClass(), UITextField.class);	
-    	assertEquals(((UITextField) documentArea1.getContent()).getText(), "HTML elements partially supported by Browsr:");
+    	assertEquals(((UITextField) documentArea1.getContent()).getText(), "HTML elements partially supported by UserInterface.Browsr:");
     	
-        // not a valid Browsr document (yoinked from https://www.w3schools.com/html/tryit.asp?filename=tryhtml_basic_document)
+        // not a valid UserInterface.Browsr document (yoinked from https://www.w3schools.com/html/tryit.asp?filename=tryhtml_basic_document)
 		assertThrows(Exception.class, () -> {
 			ContentSpanBuilder.buildContentSpan("""
 					<!DOCTYPE html>

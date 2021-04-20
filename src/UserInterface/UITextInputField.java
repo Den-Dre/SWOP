@@ -145,7 +145,7 @@ public class UITextInputField extends DocumentCell{
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
         if (button != MouseEvent.BUTTON1) return; // Button1 is left mouse button
-        if (id != MouseEvent.MOUSE_CLICKED) return;
+        if (id != MouseEvent.MOUSE_RELEASED) return;
         if (this.wasClicked(x,y)) {
             if (!this.hasFocus) {
                 doSelect = true;
@@ -162,6 +162,8 @@ public class UITextInputField extends DocumentCell{
     }
 
     /**
+     * Retrieve the return value after the event of handling
+     * a mouse click on this {@code UITextInputField}.
      *
      * @param id: The id of the click
      * @param x: The x coordinate of the click
