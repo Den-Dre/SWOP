@@ -44,7 +44,7 @@ public class ContentSpanBuilderTest {
     @Test
     @DisplayName("Load document based on given URL containing a form!") // WORKS with a local copy of the html in the assignment!
     void testFormWithURL() throws IOException {
-    	URL url = new URL("file:/home/jakob/formTest.html");
+    	URL url = new URL("https://people.cs.kuleuven.be/~bart.jacobs/swop/browsrformtest.html");
     	ContentSpan contentSpan = ContentSpanBuilder.buildContentSpan(url);
     	verifyContentsForm(contentSpan);
     }
@@ -101,11 +101,11 @@ public class ContentSpanBuilderTest {
 		List<TableRow> innerRows = innerTable.getRows();
 		
 		List<TableCell> firstInnerRow = innerRows.get(0).getCells();
-		assertEquals("Starts with:", ((TextSpan) firstInnerRow.get(0).getContent()).getText());
+		assertEquals("Words that start with", ((TextSpan) firstInnerRow.get(0).getContent()).getText());
 		assertEquals("starts_with", ((TextInputField) firstInnerRow.get(1).getContent()).getName());
 		
 		List<TableCell> secondInnerRow = innerRows.get(1).getCells();
-		assertEquals("Max. results:", ((TextSpan) secondInnerRow.get(0).getContent()).getText());
+		assertEquals("Maximum number of words to show", ((TextSpan) secondInnerRow.get(0).getContent()).getText());
 		assertEquals("max_nb_results", ((TextInputField) secondInnerRow.get(1).getContent()).getName());
 		
 		SubmitButton button = (SubmitButton) outerRows.get(2).getCells().get(0).getContent();
