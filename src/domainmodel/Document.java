@@ -51,6 +51,27 @@ public class Document {
         this.documentListeners.add(doc);
     }
 
+    public void loadFromHref(String href) {
+        try {
+            URL newUrl = new URL(new URL(getUrlString()), href);
+            setUrlString(newUrl.toString());
+            changeContentSpan(composeDocument(newUrl));
+        } catch (Exception e) {
+            changeContentSpan(Document.getErrorDocument());
+        }
+    }
+
+    public void loadFromUrl(String urlString) {
+        try {
+            URL newUrl = new URL(urlString);
+            changeContentSpan(composeDocument(newUrl));
+            setUrlString(urlString);
+        } catch (Exception e) {
+            changeContentSpan(Document.getErrorDocument());
+            setUrlString(urlString);
+        }
+    }
+
     /**
      * Set the URL of this Document to the
      * provided string and alert the listeners.

@@ -95,7 +95,7 @@ class DocumentAreaTest {
         assertEquals((int) ((Math.max(text.length(), hrefText.length())+text2.length())*textSize*ratio) + 2*table.horizontalOffset, doc.getContent().getMaxWidth());
 
         // Click on link and retrieve href attribute
-        assertEquals(href, doc.getContent().getHandleMouse(MouseEvent.MOUSE_PRESSED, 1,textSize+6, 1, MouseEvent.BUTTON1, 0));
+        assertEquals(href, doc.getContent().getHandleMouse(MouseEvent.MOUSE_PRESSED, 1,textSize+6, 1, MouseEvent.BUTTON1, 0).getContent());
 
         // Check x and y positions: can't be accessed without adding additional getters ..
     }

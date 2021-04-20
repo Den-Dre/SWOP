@@ -174,9 +174,9 @@ public class UITextInputField extends DocumentCell{
      * @return empty String, an inputField does not return its content when clicked
      */
     @Override
-    public String getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
+    public ReturnMessage getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
         handleMouse(id, x, y, clickCount, button, modifier);
-        return "";
+        return new ReturnMessage(ReturnMessage.Type.Empty);
     }
 
     /**

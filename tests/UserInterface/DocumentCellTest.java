@@ -38,7 +38,7 @@ class DocumentCellTest {
     @Test
     @DisplayName("returns standard empty string when clicked")
     void getHandleMouse() {
-        assertEquals("", cell.getHandleMouse(mousePressed, x+1, y+1, 1, leftmouse,0));
+        assertEquals(ReturnMessage.Type.Empty, cell.getHandleMouse(mousePressed, x+1, y+1, 1, leftmouse,0).getType());
     }
 
     @Test
