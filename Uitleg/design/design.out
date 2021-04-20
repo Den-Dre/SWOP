@@ -1,0 +1,10 @@
+\BOOKMARK [1][-]{section.1}{Iteratie 1}{}% 1
+\BOOKMARK [2][-]{subsection.1.1}{Domeinlaag}{section.1}% 2
+\BOOKMARK [2][-]{subsection.1.2}{UI-laag}{section.1}% 3
+\BOOKMARK [2][-]{subsection.1.3}{System operations}{section.1}% 4
+\BOOKMARK [3][-]{subsubsection.1.3.1}{Document Loading}{subsection.1.3}% 5
+\BOOKMARK [3][-]{subsubsection.1.3.2}{URL clicking}{subsection.1.3}% 6
+\BOOKMARK [3][-]{subsubsection.1.3.3}{\(Malformed\) URL handling}{subsection.1.3}% 7
+\BOOKMARK [1][-]{section.2}{Iteratie 2}{}% 8
+\BOOKMARK [2][-]{subsection.2.1}{Domeinlaag}{section.2}% 9
+\BOOKMARK [2][-]{subsection.2.2}{UI-laag}{section.2}% 10
