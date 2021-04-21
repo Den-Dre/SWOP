@@ -46,7 +46,7 @@ public class BookmarksBar extends Frame {
      * @throws IllegalArgumentException: name or url parameter is empty
      */
     public void addBookmark(String name, String url) throws IllegalArgumentException{
-        if (name == "" || url == "")
+        if (name.equals("") || url.equals(""))
         	throw new IllegalArgumentException("name or url of new bookmark cannot be empty");
     	int[] coordinates = getNextPosition();
         UITextHyperlink textHyperlink = new UITextHyperlink(coordinates[0], coordinates[1], 0, 10, name);
