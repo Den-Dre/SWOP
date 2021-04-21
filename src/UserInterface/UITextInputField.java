@@ -67,7 +67,6 @@ public class UITextInputField extends DocumentCell{
      */
     private void printCursor(Graphics g) {
         if (!this.hasFocus) return;
-        g.setColor(cursorColor);
         g.fillRect(this.cursorPos[0], this.cursorPos[1], this.cursorDimensions[0], this.cursorDimensions[1]);
     }
 
@@ -81,7 +80,9 @@ public class UITextInputField extends DocumentCell{
     private void setFontMetrics(Graphics g) {
         this.metrics = g.getFontMetrics(font);
         int offset = 0;
-        if (getText().length() == 0) offset = cursorOffset;
+        if (getText().length() == 0) {
+        	offset = cursorOffset;
+        }
         this.cursorPos = new int[] {metrics.stringWidth(this.getText().substring(0,this.cursor))+this.getxPos()+(textStart)+offset, getCursorYPos()};
         this.textHeight = metrics.getHeight();
     }

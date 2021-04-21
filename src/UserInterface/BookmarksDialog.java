@@ -112,7 +112,7 @@ public class BookmarksDialog extends GenericDialogScreen {
         try {
 			handleClickResult(result);
 		} catch (IllegalArgumentException e) {
-			System.out.println("Can't save bookmark with empty name.");
+			System.out.println("Can't save bookmark with empty name or url.");
 		}
     }
 
