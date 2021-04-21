@@ -51,6 +51,11 @@ public class Document {
         this.documentListeners.add(doc);
     }
 
+    /**
+     * Combine the current url with the given href
+     *
+     * @param href: the String representation of the href.
+     */
     public void loadFromHref(String href) {
         try {
             URL newUrl = new URL(new URL(getUrlString()), href);
@@ -61,6 +66,12 @@ public class Document {
         }
     }
 
+    /**
+     * Load the document that is related to
+     * the provided String that represents a URL.
+     *
+     * @param urlString: the String representation of the URL of the document to be loaded.
+     */
     public void loadFromUrl(String urlString) {
         try {
             URL newUrl = new URL(urlString);

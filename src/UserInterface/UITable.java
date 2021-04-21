@@ -61,6 +61,9 @@ public class UITable extends DocumentCell{
      * @param clickCount: The number of times the mouse has clicked.
      * @param button: The mouse button that was clicked.
      * @param modifier: Possible other keys that were pressed during this mouse action.
+     *
+     * @return result: A {@link ReturnMessage} containing the appropriate result based on
+     *                  which {@link DocumentCell} contained in this {@code UITable} was clicked.
      */
     @Override
     public ReturnMessage getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
