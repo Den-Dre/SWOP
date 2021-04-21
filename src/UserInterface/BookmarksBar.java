@@ -6,10 +6,13 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/* TODO
-    - Fix width of BookmarksBar
+/**
+ *  A class to represent a graphical area
+ *  that displays the currently saved bookmarks,
+ *  along with providing the option of clicking
+ *  on one of the bookmarks to navigate to the
+ *  associated URL.
  */
-
 public class BookmarksBar extends Frame {
     /**
      * Initialise this Frame with the given parameters.
@@ -18,6 +21,7 @@ public class BookmarksBar extends Frame {
      * @param y      : The y coordinate of this Frame.
      * @param width  : The width of this Frame
      * @param height : The height of this Frame
+     * @param offset : The distance that will be used as padding in-between saved bookmarks.
      * @throws IllegalDimensionException: When one of the dimensions of this Frame is negative
      */
     public BookmarksBar(int x, int y, int width, int height, int offset) throws IllegalDimensionException {

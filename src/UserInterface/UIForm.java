@@ -3,12 +3,21 @@ package UserInterface;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class UIForm extends DocumentCell{
+/**
+ * A class to denote the graphical concept of a form.
+ * A {@code UIform} contains a {@link domainmodel.ContentSpan}
+ * as contents and an associated {@code action} attribute to
+ * denote how to URL must be formed in combination with the
+ * values that are input by the user.
+ */
+public class UIForm extends DocumentCell {
     /**
      * Create a new UIForm-object.
      *
-     * @param action The action attribute of the HTML-counterpart.
-     * @param formContent The content off the form. This should not directly
+     * @param x          : The x coordinate of this {@code UIForm}.
+     * @param y          : The y coordinate of this {@code UIForm}.
+     * @param action     : The action attribute of the HTML-counterpart.
+     * @param formContent: The content off the form. This should not directly
      *                    or indirectly contain other UIForm-objects.
      */
     public UIForm(int x, int y, String action, DocumentCell formContent) {
