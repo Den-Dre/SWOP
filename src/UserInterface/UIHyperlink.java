@@ -1,6 +1,7 @@
 package UserInterface;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.awt.font.TextAttribute;
 import java.text.AttributedString;
 
@@ -83,8 +84,10 @@ public class UIHyperlink extends UITextHyperlink{
      */
     @Override
     public ReturnMessage getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
-        if (wasClicked(x,y))
-            return new ReturnMessage(ReturnMessage.Type.Hyperlink, href);
+        if (id == MouseEvent.MOUSE_CLICKED) {
+            if (wasClicked(x,y))
+                return new ReturnMessage(ReturnMessage.Type.Hyperlink, href);
+        }
         return new ReturnMessage(ReturnMessage.Type.Empty);
     }
 
