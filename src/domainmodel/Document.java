@@ -4,6 +4,7 @@ import browsrhtml.ContentSpanBuilder;
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +65,41 @@ public class Document {
         } catch (Exception e) {
             changeContentSpan(Document.getErrorDocument());
         }
+    }
+
+    /**
+     * Load a new document by combining the current url with the given action and values.
+     *
+     * @param action The action associated with the form.
+     * @param values The values to be passed into the url separated with '='.
+     */
+    public void loadFromForm(String action, ArrayList<String> values) {
+        try {
+            URL newUrl = new URL(new URL(getUrlString()), action + getEncodedValues(values));
+            setUrlString(newUrl.toString());
+            changeContentSpan(composeDocument(newUrl));
+        } catch (Exception e) {
+            changeContentSpan(Document.getErrorDocument());
+        }
+    }
+
+    /**
+     * Encode the values into the correct format.
+     *
+     * @param list An arraylist in which each element corresponds to a name-value pair separated with the '=' character.
+     * @return An encoded version of the given name-value pairs separated by '&'.
+     */
+    private String getEncodedValues(ArrayList<String> list) {
+        StringBuilder values = new StringBuilder("");
+        for (String nameValue :  list) {
+            String[] nameAndValue = nameValue.split("=");
+            values.append(nameAndValue[0]);
+            values.append("=");
+            values.append(URLEncoder.encode(nameAndValue[1]));
+            values.append("&");
+        }
+        values.setLength(values.length() - 1); // remove last '&'
+        return values.toString();
     }
 
     /**
