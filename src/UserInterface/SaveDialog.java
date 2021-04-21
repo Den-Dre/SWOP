@@ -37,7 +37,7 @@ public class SaveDialog extends GenericDialogScreen {
 
         // Hard coded save dialog screen
         UITextField formTitle = new UITextField(offset, offset, 0,textSize, "Save As");
-        UITextField nameText = new UITextField(offset, offset,0,textSize, "Name");
+        UITextField nameText = new UITextField(offset, offset,0,textSize, "File name");
 
         ArrayList<ArrayList<DocumentCell>> innerTableRows = new ArrayList<>();
         ArrayList<DocumentCell> innerTableRow1 = new ArrayList<>();

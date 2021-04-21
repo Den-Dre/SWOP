@@ -105,6 +105,7 @@ public class UITextField extends DocumentCell{
      * A variable to denote the {@link Color} used for the text of this UITextField.
      */
     private final Color textFieldColor = Color.BLACK;
+    
     /**
      * A variable to denote the {@link FontMetrics} used for the text of this UITextField.
      */
