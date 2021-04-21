@@ -84,7 +84,7 @@ public class UIHyperlink extends UITextHyperlink{
      */
     @Override
     public ReturnMessage getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
-        if (id == MouseEvent.MOUSE_CLICKED) {
+        if (id == MouseEvent.MOUSE_RELEASED) {
             if (wasClicked(x,y))
                 return new ReturnMessage(ReturnMessage.Type.Hyperlink, href);
         }
