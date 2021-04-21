@@ -52,6 +52,38 @@ public class Document {
     }
 
     /**
+     * Combine the current url with the given href
+     *
+     * @param href: the String representation of the href.
+     */
+    public void loadFromHref(String href) {
+        try {
+            URL newUrl = new URL(new URL(getUrlString()), href);
+            setUrlString(newUrl.toString());
+            changeContentSpan(composeDocument(newUrl));
+        } catch (Exception e) {
+            changeContentSpan(Document.getErrorDocument());
+        }
+    }
+
+    /**
+     * Load the document that is related to
+     * the provided String that represents a URL.
+     *
+     * @param urlString: the String representation of the URL of the document to be loaded.
+     */
+    public void loadFromUrl(String urlString) {
+        try {
+            URL newUrl = new URL(urlString);
+            changeContentSpan(composeDocument(newUrl));
+            setUrlString(urlString);
+        } catch (Exception e) {
+            changeContentSpan(Document.getErrorDocument());
+            setUrlString(urlString);
+        }
+    }
+
+    /**
      * Set the URL of this Document to the
      * provided string and alert the listeners.
      *

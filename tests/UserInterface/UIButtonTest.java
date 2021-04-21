@@ -24,13 +24,13 @@ class UIButtonTest {
     @DisplayName("Handles mouse clicks.")
     void getHandleMouse() {
         // click and release
-        assertEquals("", button.getHandleMouse(mouseClick, 5,5, 1, leftMouse, 0));
-        assertEquals(returnText, button.getHandleMouse(mouseReleased, 5,5, 1, leftMouse, 0));
+        assertEquals("", button.getHandleMouse(mouseClick, 5,5, 1, leftMouse, 0).getContent());
+        assertEquals(returnText, button.getHandleMouse(mouseReleased, 5,5, 1, leftMouse, 0).getContent());
         // wrong button
-        assertEquals("", button.getHandleMouse(mouseClick, 5,100, 1, rightMouse, 0));
+        assertEquals("", button.getHandleMouse(mouseClick, 5,100, 1, rightMouse, 0).getContent());
         // click but release out of button
-        assertEquals("", button.getHandleMouse(mouseClick, 5,5, 1, leftMouse, 0));
-        assertEquals("", button.getHandleMouse(mouseReleased, 5,100, 1, leftMouse, 0));
+        assertEquals("", button.getHandleMouse(mouseClick, 5,5, 1, leftMouse, 0).getContent());
+        assertEquals("", button.getHandleMouse(mouseReleased, 5,100, 1, leftMouse, 0).getContent());
     }
 
     @Test

@@ -1,7 +1,5 @@
 package UserInterface;
 
-import org.junit.platform.commons.annotation.Testable;
-
 import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.text.AttributedString;
@@ -79,14 +77,15 @@ public class UIHyperlink extends UITextHyperlink{
      * @param clickCount: The number of times the mouse has clicked.
      * @param button: The mouse button that was clicked.
      * @param modifier: Possible other keys that were pressed during this mouse action.
-     * @return string: {@code href} attribute of this {@code UIHyperlink} object iff this {@code UIHyperlink} object was clicked
+     * @return string: {@code href} attribute of this {@code UIHyperlink} object iff this {@code UIHyperlink} object was clicked.
+     *              The result is encapsulated in a {@link ReturnMessage} object of the corresponding type:
+     *              {@link ReturnMessage.Type} {@code Hyperlink} or {@code Empty}.
      */
     @Override
-    public String getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
-        if (wasClicked(x,y)) {
-            return href;
-        }
-        return "";
+    public ReturnMessage getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
+        if (wasClicked(x,y))
+            return new ReturnMessage(ReturnMessage.Type.Hyperlink, href);
+        return new ReturnMessage(ReturnMessage.Type.Empty);
     }
 
     /**

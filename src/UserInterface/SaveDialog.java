@@ -2,6 +2,7 @@ package UserInterface;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class SaveDialog extends GenericDialogScreen {
 
@@ -72,7 +73,7 @@ public class SaveDialog extends GenericDialogScreen {
 
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-        String result = form.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
+        ReturnMessage result = form.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
         String name = this.nameInput.getText();
         try {
             handleClickResult(result, name);
@@ -87,10 +88,10 @@ public class SaveDialog extends GenericDialogScreen {
      * @param result:
      *              the string returned by the clicked element of the content of this {@code SaveDialog}.
      */
-    protected void handleClickResult(String result, String name) {
-        if (result.equals(""))
+    protected void handleClickResult(ReturnMessage result, String name) {
+        if (result.getType() != ReturnMessage.Type.Button)
             return;
-        switch (result) {
+        switch (result.getContent()) {
             case "Save" ->
                     getBrowsr().getController().saveDocument(name);
             case "Cancel" ->  // nothing needs to be done here

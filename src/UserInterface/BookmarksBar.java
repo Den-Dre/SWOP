@@ -92,11 +92,11 @@ public class BookmarksBar extends Frame {
      */
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-        String result;
+        ReturnMessage result;
         for (UITextHyperlink textHyperlink : textHyperLinks) {
             result = textHyperlink.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
-            if (!(result.equals(""))) {
-                loadTextHyperlink(result);
+            if (result.getType() == ReturnMessage.Type.Hyperlink) {
+                loadTextHyperlink(result.getContent());
                 return;
             }
         }

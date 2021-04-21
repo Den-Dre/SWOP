@@ -57,20 +57,20 @@ class HyperLinkTest{
         // Click not on link1
         int mouseClick = MouseEvent.MOUSE_CLICKED;
         int leftMouse = MouseEvent.BUTTON1;
-        String result = link1.getHandleMouse(mouseClick,link1Width+1, 5, 0, leftMouse, 0);
-        assertEquals("", result);
+        ReturnMessage result = link1.getHandleMouse(mouseClick,link1Width+1, 5, 0, leftMouse, 0);
+        assertEquals("", result.getContent());
         // Click on link1
-        String result2 = link1.getHandleMouse(mouseClick,link1Width-1, 5, 0, leftMouse, 0);
-        assertEquals(this.href1, result2);
+        ReturnMessage result2 = link1.getHandleMouse(mouseClick,link1Width-1, 5, 0, leftMouse, 0);
+        assertEquals(this.href1, result2.getContent());
         
         // LINK 2
         int link2Width = link2.getWidth();
         // Click not on link2
-        String result3 = link2.getHandleMouse(mouseClick,link2Width+1+10, 17, 0, leftMouse, 0);
-        assertEquals("", result3);
+        ReturnMessage result3 = link2.getHandleMouse(mouseClick,link2Width+1+10, 17, 0, leftMouse, 0);
+        assertEquals("", result3.getContent());
         // Click on link2
-        String result4 = link2.getHandleMouse(mouseClick,link2Width-1+10, 17, 0, leftMouse, 0);
-        assertEquals(this.href2, result4);
+        ReturnMessage result4 = link2.getHandleMouse(mouseClick,link2Width-1+10, 17, 0, leftMouse, 0);
+        assertEquals(this.href2, result4.getContent());
 	}
 	
 	// 2.1
