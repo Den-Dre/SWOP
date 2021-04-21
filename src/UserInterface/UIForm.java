@@ -46,8 +46,7 @@ public class UIForm extends DocumentCell{
     public ReturnMessage getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
         ReturnMessage response = this.formContent.getHandleMouse(id, x, y, clickCount, button, modifier);
         if (response.getType() == ReturnMessage.Type.Button && response.getContent().equals("submit")) {
-                String link = handleSubmitPressed();
-                return new ReturnMessage(ReturnMessage.Type.Form, link);
+                return handleSubmitPressed();
             }
         return response;
     }
@@ -60,15 +59,9 @@ public class UIForm extends DocumentCell{
      *
      * @return String that represents the action and the state of this UIForm-object.
      */
-    private String handleSubmitPressed() {
+    private ReturnMessage handleSubmitPressed() {
         ArrayList<String> namesAndValues = formContent.getNamesAndValues();
-        StringBuilder link = new StringBuilder(action + "?");
-        for (String nameAndValue : namesAndValues) {
-            link.append(nameAndValue);
-            link.append("&");
-        }
-        link.setLength(link.length() - 1); // cut off the last & character
-        return link.toString();
+        return new ReturnMessage(ReturnMessage.Type.Form, action + "?", namesAndValues);
     }
 
     /**

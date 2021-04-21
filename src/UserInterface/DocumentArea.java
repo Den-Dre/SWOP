@@ -276,7 +276,7 @@ public class DocumentArea extends Frame implements DocumentListener {
         switch (link.getType()) {
             case Empty: return;
             case Hyperlink: controller.loadDocumentFromHref(link.getContent());
-            case Form: controller.loadDocumentFromHref(link.getContent());
+            case Form: controller.loadDocumentFromForm(link.getContent(), link.getContentList());
         }
     }
 

@@ -1,5 +1,7 @@
 package UserInterface;
 
+import java.util.ArrayList;
+
 public class ReturnMessage {
     /**
      * Create a new ReturnMessage with the given parameters.
@@ -20,6 +22,12 @@ public class ReturnMessage {
     public ReturnMessage(Type type) {
         this.type = type;
         this.content = "";
+    }
+
+    public ReturnMessage(Type type, String content, ArrayList<String> contentList) {
+        this.type = type;
+        this.content = content;
+        this.contentList = contentList;
     }
 
     /**
@@ -50,6 +58,11 @@ public class ReturnMessage {
         return type;
     }
 
+    public ArrayList<String> getContentList() {
+        return contentList;
+    }
+
     private final String content;
     private final Type type;
+    private ArrayList<String> contentList;
 }
