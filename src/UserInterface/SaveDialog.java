@@ -19,7 +19,7 @@ public class SaveDialog extends GenericDialogScreen {
         int offset = getOffset();
 
         this.nameInput = new UITextInputField(offset, offset, 100, getTextSize(), "Name");
-        this.form = getForm();
+        this.form = getForm(currentUrl);
     }
 
 
@@ -30,7 +30,8 @@ public class SaveDialog extends GenericDialogScreen {
      *           The {@link String} representation of the URL currently entered in the {@link AddressBar}.
      * @return new UIForm: a {@link UIForm} object that represents the form of this {@code SaveDialog}.
      */
-    UIForm constructForm(String currentUrl) {
+//    UIForm constructForm(String currentUrl) {
+    public UIForm getForm(String currentUrl) {
 
         int offset = getOffset();
         int textSize = getTextSize();

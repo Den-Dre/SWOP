@@ -30,7 +30,7 @@ public abstract class GenericDialogScreen extends Frame {
      */
     @Override
     public void handleKey(int id, int keyCode, char keyChar, int modifiersEx) {
-        this.getForm().handleKey(id, keyCode, keyChar, modifiersEx);
+        this.getForm(currentUrl).handleKey(id, keyCode, keyChar, modifiersEx);
     }
 
     /**
@@ -43,7 +43,7 @@ public abstract class GenericDialogScreen extends Frame {
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
-        this.getForm().handleResize(newWindowWidth, newWindowHeight);
+        this.getForm(currentUrl).handleResize(newWindowWidth, newWindowHeight);
     }
 
     /**
@@ -72,18 +72,16 @@ public abstract class GenericDialogScreen extends Frame {
      *
      * @return form: The {@link UIForm} that contains the contents of this dialog screen.
      */
-    public UIForm getForm() {
-        return constructForm(currentUrl);
-    }
+    public abstract UIForm getForm(String currentUrl);
 
-    /**
-     * Return the form that should be displayed in the dialog screen.
-     *
-     * @param currentUrl: The url associated to the currently loaded webpage
-     *                  in the associated {@link Browsr} object.
-     * @return form: The UIForm that should be displayed in this dialog screen.
-     */
-    abstract UIForm constructForm(String currentUrl);
+//    /**
+//     * Return the form that should be displayed in the dialog screen.
+//     *
+//     * @param currentUrl: The url associated to the currently loaded webpage
+//     *                  in the associated {@link Browsr} object.
+//     * @return form: The UIForm that should be displayed in this dialog screen.
+//     */
+//    abstract UIForm constructForm(String currentUrl);
 
     /**
      * Get the offset for the input, text fields and buttons
