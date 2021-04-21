@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * A class to represent a graphical
@@ -227,10 +228,12 @@ public class UITextInputField extends DocumentCell{
      */
     @Override
     public void handleKey(int id, int keyCode, char keyChar, int modifiersEx) {
-        //System.out.println(Arrays.toString(new int[]{id, keyCode, modifiersEx}));
         if (!this.hasFocus) return;
         if (id != KeyEvent.KEY_PRESSED) return;
-
+        // System.out.println(Arrays.toString(new int[]{id, keyCode, modifiersEx}) + keyChar);
+        if (keyCode == 0) {
+            keyCode = KeyEvent.getExtendedKeyCodeForChar(keyChar);
+        }
         switch (keyCode) {
             case 27 -> handleEscape();
             case 10 -> handleEnter();
