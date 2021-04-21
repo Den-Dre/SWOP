@@ -73,7 +73,7 @@ public class UITextInputField extends DocumentCell{
 
     /**
      * This gets the metrics of the normalFont and uses it to determine the position of the cursor on screen.
-     * The metrics includes information about the width of the characters in that normalFont.
+     * The metrics include information about the width of the characters in that normalFont.
      * The idea here is to ask the distance from the beginning of the url to the cursorindex (=this.cursor)
      *
      * @param g: The graphics that contain the information to be printed
