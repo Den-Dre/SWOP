@@ -21,7 +21,10 @@ public class BookmarksDialog extends GenericDialogScreen {
         this.bookmarksBar = bookmarksBar;
         this.nameInput = new UITextInputField(offset, offset,100,textSize, "Name");
         this.urlInput = new UITextInputField(offset, offset,100,textSize, "URL");
-        this.form = getForm();
+
+        // URL input must be prefilled:
+        urlInput.changeTextTo(currentUrl);
+        this.form = getForm(currentUrl);
     }
 
     /**
@@ -31,18 +34,14 @@ public class BookmarksDialog extends GenericDialogScreen {
      *           The {@link String} representation of the URL currently entered in the {@link AddressBar}.
      * @return new UIForm: a {@link UIForm} object that represents the form of this {@code BookmarksDialog}.
      */
-    UIForm constructForm(String currentUrl) {
-
+//    UIForm constructForm(String currentUrl) {
+    public UIForm getForm(String currentUrl) {
+        // Hard coded bookmarks dialog screen
         int offset = getOffset();
         int textSize = getTextSize();
 
-        // Hard coded bookmarks dialog screen
         UITextField nameText = new UITextField(offset, offset,0,textSize, "Name");
         UITextField urlText = new UITextField(offset, offset,0,textSize, "URL");
-
-        // URL input must be prefilled:
-        urlInput.setText(currentUrl);
-
 
         UITextField formTitle = new UITextField(offset, offset, 0,textSize, "Add Bookmark");
 
