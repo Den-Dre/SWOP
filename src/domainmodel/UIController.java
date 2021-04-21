@@ -132,16 +132,32 @@ public class UIController {
     }
 
     // Temporary method for testing listeners
+
+    /**
+     * Set the URL of this {@code UIController}
+     * to the given value.
+     *
+     * @param url: the URL to be set for this {@code UIController}.
+     */
     public void changeURL(String url){
         this.document.setUrlString(url);
     }
 
-    public void addHref(String name, String url) {
-        this.bookmarksURLKeeper.addBookmarksHref(name, url);
+    /**
+     * Add a {@code href} value associated to a bookmark
+     * to the corresponding class in the domain layer.
+     *
+     * @param name: The name of the bookmark that's associated to the given {@code href} attribute.
+     * @param href: The href of the bookmark that will be added to the domain layer.
+     */
+    public void addHref(String name, String href) {
+        this.bookmarksURLKeeper.addBookmarksHref(name, href);
     }
 
     /**
      * Method to save a document
+     *
+     * @param fileName: the name to be given to the document to be saved.
      */
     public void saveDocument(String fileName){
         try {

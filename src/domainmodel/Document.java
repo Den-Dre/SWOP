@@ -174,7 +174,7 @@ public class Document {
      *
      * @param url: the url of the document that is to be composed.
      * @return a ContentSpan of the given {@code document}.
-     * @throws IOException: If one of the parts of the code isn't code that is currently supported.
+     * @throws java.io.IOException: If one of the parts of the code isn't code that is currently supported.
      */
     public ContentSpan composeDocument(URL url) throws IOException {
         return ContentSpanBuilder.buildContentSpan(url);
@@ -206,7 +206,8 @@ public class Document {
      * A method to save a document to a file
      * Inspiration from: https://stackoverflow.com/questions/17440236/getting-java-to-save-a-html-file
      *
-     * @throws Exception: if the current document is the Welcome document
+     * @param fileName: The name that will be given to the saved file.
+     * @throws IOException: if the current document is the Welcome document
      */
     public void saveDocument(String fileName) throws Exception {
         if (contentSpan instanceof TextSpan && ((TextSpan) contentSpan).getText().equals(((TextSpan) getWelcomeDocument()).getText())) {

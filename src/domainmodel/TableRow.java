@@ -34,6 +34,7 @@ public class TableRow {
 
     /**
      * Retrieve a list of the {@link TableCell's} contained in this TableRow.
+     *
      * @return cells:
      *              a list of the {@link TableCell}'s contained in this TableRow.
      */

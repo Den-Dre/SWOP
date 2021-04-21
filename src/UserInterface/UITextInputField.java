@@ -5,6 +5,18 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+/**
+ * A class to represent a graphical
+ * element in which the user can provide
+ * keyboard input and navigate to the
+ * entered URL.
+ *
+ * <p>
+ *     This input field displays a cursor and
+ *     the usual text navigation actions such as
+ *     moving the cursor and selecting text are supported.
+ * </p>
+ */
 public class UITextInputField extends DocumentCell{
     /**
      * Initialise this UITextInputField with the given parameters.
@@ -22,6 +34,16 @@ public class UITextInputField extends DocumentCell{
         //setWidth(inputFieldWidth);
     }
 
+    /**
+     * Create a {@code UITextInputField} with the given parameters.
+     *
+     * @param x     : The x coordinate of this {@code UITextinputField}.
+     * @param y     : The y coordinate of this {@code UITextinputField}.
+     * @param width : The width of this {@code UITextinputField}.
+     * @param height: The height of this {@code UITextinputField}.
+     * @param name  : The name to be given to this {@code UITextinputField}.
+     * @throws IllegalDimensionException: When one of the given dimensions is negative.
+     */
     public UITextInputField(int x, int y, int width, int height, String name) throws IllegalDimensionException {
         super(x, y, width, height);
         this.name = name;

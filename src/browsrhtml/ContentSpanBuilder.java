@@ -42,6 +42,7 @@ public class ContentSpanBuilder extends BrowsrDocumentValidator {
      *                The url referring to the page that needs to be converted.
      * @return contentSpan:
      *                The {@link ContentSpan} corresponding to the given URL.
+     * @throws IOException: When the given {@code URL} can't be fetched.
      */
     public static ContentSpan buildContentSpan(URL url) throws IOException {
         return new ContentSpanBuilder(new BufferedReader(new InputStreamReader(url.openStream()))).getContentSpan();

@@ -101,8 +101,35 @@ public class Browsr extends CanvasWindow {
      * to handle rendering, clicking and keyboard input of this {@code Browsr} object respectively.
      */
     protected static abstract class Layout {
+        /**
+         * Render this {@link Browsr.Layout}.
+         *
+         * @param g: the graphics to be rendered.
+         */
         abstract void Render(Graphics g);
+
+        /**
+         * Handle mouseEvents. Determine which part of this
+         * {@link Browsr.Layout} was pressed and do the right actions.
+         *
+         * @param id: The type of mouse activity
+         * @param x: The x coordinate of the mouse activity
+         * @param y: The y coordinate of the mouse activity
+         * @param clickCount: The number of clicks
+         * @param button: The mouse button that was clicked
+         * @param modifiersEx: The control keys that were held on the click
+         */
         abstract void handleMouseEvent(int id, int x, int y, int clickCount, int button, int modifiersEx);
+
+        /**
+         * Handle keyboard input on this {@link Browsr.Layout }.
+         * This method does the right action when a key is pressed.
+         *
+         * @param id: The KeyEvent (Associated with type of KeyEvent).
+         * @param keyCode: The KeyEvent code (Determines the involved key).
+         * @param keyChar: The character representation of the involved key.
+         * @param modifiersEx: Specifies other keys that were involved in the event.
+         */
         abstract void handleKeyEvent(int id, int keyCode, char keyChar, int modifiersEx);
     }
 
@@ -110,6 +137,10 @@ public class Browsr extends CanvasWindow {
      * A {@code Browsr Layout} that represents the
      * regular layout containing a an {@link AddressBar},
      * a {@link BookmarksBar} and a {@link DocumentArea}.
+     *
+     * <p> This layout provides specialised implementations
+     * for the {@code handleMouseEvent}, {@code handleKeyEvent}
+     * and {@code Render} methods.</p>
      */
     protected class RegularLayout extends Layout {
 
@@ -141,9 +172,7 @@ public class Browsr extends CanvasWindow {
         }
 
         /**
-         * Handle keyboard input on this {@code RegularLayout}.
-         *
-         * Handle key presses on this {@code BrowsrLayout}.
+         * Handle keyboard input on this {@link Browsr.RegularLayout}.
          * This method does the right action when a key is pressed.
          *
          * @param id: The KeyEvent (Associated with type of KeyEvent).
@@ -157,8 +186,18 @@ public class Browsr extends CanvasWindow {
         }
     }
 
+    /**
+     * A {@code Browsr.Layout} that represents the
+     * layout for this {@code Browsr} object when a
+     * {@link BookmarksDialog} is opened, containing
+     * a Name and URL {@link UITextInputField} and a
+     * Save and Cancel {@link UIButton}.
+     *
+     * <p> This layout provides specialised implementations
+     * for the {@code handleMouseEvent}, {@code handleKeyEvent}
+     * and {@code Render} methods.</p>
+     */
     protected class BookmarksDialogLayout extends Layout {
-
         /**
          * Render this {@code BookmarksDialogLayout} of
          * this {@code Browsr} object.
@@ -203,9 +242,18 @@ public class Browsr extends CanvasWindow {
         }
     }
 
+    /**
+     * A {@code Browsr.Layout} that represents the
+     * layout for this {@code Browsr} object when a
+     * {@link SaveDialog} is opened, containing a
+     * Name and URL {@link UITextInputField} and a
+     * Save and Cancel {@link UIButton}.
+     *
+     * <p> This layout provides specialised implementations
+     * for the {@code handleMouseEvent}, {@code handleKeyEvent}
+     * and {@code Render} methods.</p>
+     */
     protected class SaveDialogLayout extends Layout {
-        // TODO
-
         /**
          * Render this {@code SaveDialogLayout} of
          * this {@code Browsr} object.
@@ -454,6 +502,11 @@ public class Browsr extends CanvasWindow {
 		return this.DocumentArea;
 	}
 
+    /**
+     * Retrieve the {@link UIController} associated to this {@code Browsr} object.
+     *
+     * @return controller:  The {@link UIController} associated to this {@code Browsr} object.
+     */
 	public UIController getController() {
 	    return this.controller;
     }

@@ -18,7 +18,6 @@ public class UIHyperlink extends UITextHyperlink{
      * @param link_size: The height of this {@code UIHyperlink}
      * @param href: The value of the href attribute of this {@code UIHyperlink}
      * @param text: the text to be shown on this {@code UIHyperlink}, meant for {@link UITextHyperlink} being it's superclass
-     * @throws IllegalDimensionException: When negative dimensions are provided.
      */
     public UIHyperlink(int x, int y, int width, int link_size, String href, String text) throws IllegalDimensionException {
         super(x, y, width, link_size, text);
@@ -84,10 +83,8 @@ public class UIHyperlink extends UITextHyperlink{
      */
     @Override
     public ReturnMessage getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
-        if (id == MouseEvent.MOUSE_RELEASED) {
-            if (wasClicked(x,y))
-                return new ReturnMessage(ReturnMessage.Type.Hyperlink, href);
-        }
+        if (id == MouseEvent.MOUSE_RELEASED && wasClicked(x,y))
+            return new ReturnMessage(ReturnMessage.Type.Hyperlink, href);
         return new ReturnMessage(ReturnMessage.Type.Empty);
     }
 

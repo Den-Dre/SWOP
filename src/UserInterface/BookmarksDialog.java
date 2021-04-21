@@ -3,13 +3,28 @@ package UserInterface;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * A class to represent a dialog screen
+ * that's displayed when the user wants to
+ * save a bookmark.
+ *
+ * <p>
+ *     The dialog asks for a Name and URL value
+ *     of the bookmark to be saved, along with providing
+ *     two {@link UIButton}'s: one to save the bookmark
+ *     and one to cancel the current action of saving
+ *     a bookmark.
+ * </p>
+ */
 public class BookmarksDialog extends GenericDialogScreen {
     /**
      * Initialise this Frame with the given parameters.
      *
-     * @param width      : The width of this Frame.
-     * @param height     : The height of this Frame.
-     * @param currentUrl : The URL of the document currently loaded.
+     * @param width        : The width of this Frame.
+     * @param height       : The height of this Frame.
+     * @param currentUrl   : The URL of the document currently loaded.
+     * @param bookmarksBar : The {@link BookmarksBar} associated to this {@code BoomkarksDialog}.
+     * @param browsr       : The {@link Browsr} associated to this {@code BoomkarksDialog}.
      * @throws IllegalDimensionException: When one of the dimensions of this Frame is negative
      */
     public BookmarksDialog(int width, int height, String currentUrl, BookmarksBar bookmarksBar, Browsr browsr) throws IllegalDimensionException {

@@ -1,5 +1,18 @@
 package UserInterface;
 
+/**
+ * A class to represent a {@code ReturnMessage}.
+ *
+ * <p>This is a message that's returned by
+ * classes in the UI-layer upon being
+ * clicked. Different classes return
+ * different types of return messages,
+ * such that classes higher up in the
+ * hierarchy can differentiate between
+ * the different elements and decide what
+ * action needs to be taken when a user clicks
+ * a particular area of the application.</p>
+ */
 public class ReturnMessage {
     /**
      * Create a new ReturnMessage with the given parameters.

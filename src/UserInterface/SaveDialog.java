@@ -4,14 +4,27 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+/**
+ * A class to represent a dialog that
+ * is shown when the user wants to savej
+ * a page loaded in the Browsr application.
+ *
+ * <p>
+ *     The dialog asks for a Name and URL value
+ *     of the page to be saved, along with providing
+ *     two {@link UIButton}'s: one to save the page
+ *     and one to cancel the saving action.
+ * </p>
+ */
 public class SaveDialog extends GenericDialogScreen {
 
     /**
      * Initialise this Frame with the given parameters.
      *
-     * @param width  : The width of this Frame
-     * @param height : The height of this Frame
-     * @param browsr : The {@link Browsr} object linked to this {@code SaveDialog}.
+     * @param width     : The width of this Frame
+     * @param height    : The height of this Frame
+     * @param currentUrl: The URL of the page currently displayed in the associated {@link Browsr} object.
+     * @param browsr    : The {@link Browsr} object linked to this {@code SaveDialog}.
      * @throws IllegalDimensionException: When one of the dimensions of this Frame is negative
      */
     public SaveDialog(int width, int height, String currentUrl, Browsr browsr ) throws IllegalDimensionException {
@@ -67,11 +80,25 @@ public class SaveDialog extends GenericDialogScreen {
         return new UIForm(offset, offset, "bookmarksDialog", outerTable);
     }
 
+    /**
+     * Render the contents of this {@code SaveDialog}.
+     * @param g: The graphics to be rendered.
+     */
     @Override
     public void Render(Graphics g) {
         this.form.Render(g);
     }
 
+    /**
+     * Handle mouse clicks on the content of this {@code SaveDialog}.
+     *
+     * @param id: The type of mouse activity
+     * @param x: The x coordinate of the mouse activity
+     * @param y: The y coordinate of the mouse activity
+     * @param clickCount: The number of clicks
+     * @param button: The mouse button that was clicked
+     * @param modifiersEx: The control keys that were held on the click
+     */
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
         ReturnMessage result = form.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
