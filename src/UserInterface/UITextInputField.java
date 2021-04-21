@@ -171,7 +171,8 @@ public class UITextInputField extends DocumentCell{
      * @param clickCount: The number of clicks that occured.
      * @param button: Which mouse button was clicked.
      * @param modifier: Extra control key that was held during the click.
-     * @return empty String, an inputField does not return its content when clicked
+     * @return a {@link ReturnMessage} of the {@link ReturnMessage.Type} {@code Empty}
+     *         containing an empty String: an inputField does not return its content when clicked
      */
     @Override
     public ReturnMessage getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
