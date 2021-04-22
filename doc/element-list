@@ -1,4 +1,4 @@
 browsrhtml
 canvaswindow
-domainmodel
-UserInterface
+domainlayer
+userinterface

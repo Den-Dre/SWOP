@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="13.3">
   <help_text>GUI Framework Requirements analysis:
-	- UserInterface.DocumentArea:
+	- userinterface.DocumentArea:
 		-Hyperlink aan kunnen klikken: ✓
-	- UserInterface.AddressBar:
+	- userinterface.AddressBar:
 		- Characters invoegen: ✓				(in Address Bar)
 		- Cursor tonen: ✓							(in Address Bar)
 		- Cursor verplaatsen met toetsen: ✓ (in Address Bar)
@@ -202,7 +202,7 @@ m2=0..1</panel_attributes>
       <w>198</w>
       <h>54</h>
     </coordinates>
-    <panel_attributes>UserInterface.AddressBar
+    <panel_attributes>userinterface.AddressBar
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -290,7 +290,7 @@ m2=1</panel_attributes>
       <w>252</w>
       <h>54</h>
     </coordinates>
-    <panel_attributes>UserInterface.DocumentArea
+    <panel_attributes>userinterface.DocumentArea
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -325,7 +325,7 @@ m2=1</panel_attributes>
       <w>270</w>
       <h>306</h>
     </coordinates>
-    <panel_attributes>/UserInterface.Frame/
+    <panel_attributes>/userinterface.Frame/
 --
 --
 -coordinates
@@ -417,7 +417,7 @@ DocumentListener
       <w>198</w>
       <h>90</h>
     </coordinates>
-    <panel_attributes>UserInterface.Browsr
+    <panel_attributes>userinterface.Browsr
 --
 +paint()</panel_attributes>
     <additional_attributes/>
@@ -549,7 +549,7 @@ ActionListener
       <w>234</w>
       <h>54</h>
     </coordinates>
-    <panel_attributes>UserInterface.DocumentCell</panel_attributes>
+    <panel_attributes>userinterface.DocumentCell</panel_attributes>
     <additional_attributes/>
   </element>
   <element>

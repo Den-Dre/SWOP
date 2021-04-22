@@ -87,7 +87,7 @@ loadScripts(document, 'script');</script>
 extends browsrhtml.BrowsrDocumentValidator</pre>
 <div class="block">A class to handle the task of receiving
  tokens of <code>BrowsrDocumentValidator</code> and
- converting them to <a href="../domainmodel/ContentSpan.html" title="class in domainmodel"><code>ContentSpan</code></a>'s.</div>
+ converting them to <a href="../domainlayer/ContentSpan.html" title="class in domainlayer"><code>ContentSpan</code></a>'s.</div>
 </section>
 <section class="summary">
 <ul class="summary-list">
@@ -133,17 +133,17 @@ extends browsrhtml.BrowsrDocumentValidator</pre>
 </thead>
 <tbody>
 <tr class="alt-color" id="i0">
-<td class="col-first"><code>static <a href="../domainmodel/ContentSpan.html" title="class in domainmodel">ContentSpan</a></code></td>
+<td class="col-first"><code>static <a href="../domainlayer/ContentSpan.html" title="class in domainlayer">ContentSpan</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#buildContentSpan(java.lang.String)">buildContentSpan</a></span>&#8203;(java.lang.String&nbsp;document)</code></th>
 <td class="col-last">
-<div class="block">Convert the given HTML code into a <a href="../domainmodel/ContentSpan.html" title="class in domainmodel"><code>ContentSpan</code></a>.</div>
+<div class="block">Convert the given HTML code into a <a href="../domainlayer/ContentSpan.html" title="class in domainlayer"><code>ContentSpan</code></a>.</div>
 </td>
 </tr>
 <tr class="row-color" id="i1">
-<td class="col-first"><code>static <a href="../domainmodel/ContentSpan.html" title="class in domainmodel">ContentSpan</a></code></td>
+<td class="col-first"><code>static <a href="../domainlayer/ContentSpan.html" title="class in domainlayer">ContentSpan</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#buildContentSpan(java.net.URL)">buildContentSpan</a></span>&#8203;(java.net.URL&nbsp;url)</code></th>
 <td class="col-last">
-<div class="block">Convert the given URL into a <a href="../domainmodel/ContentSpan.html" title="class in domainmodel"><code>ContentSpan</code></a>.</div>
+<div class="block">Convert the given URL into a <a href="../domainlayer/ContentSpan.html" title="class in domainlayer"><code>ContentSpan</code></a>.</div>
 </td>
 </tr>
 </tbody>
@@ -190,31 +190,31 @@ extends browsrhtml.BrowsrDocumentValidator</pre>
 <li>
 <section class="detail" id="buildContentSpan(java.lang.String)">
 <h3>buildContentSpan</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../domainmodel/ContentSpan.html" title="class in domainmodel">ContentSpan</a></span>&nbsp;<span class="member-name">buildContentSpan</span>&#8203;(<span class="parameters">java.lang.String&nbsp;document)</span></div>
-<div class="block">Convert the given HTML code into a <a href="../domainmodel/ContentSpan.html" title="class in domainmodel"><code>ContentSpan</code></a>.</div>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../domainlayer/ContentSpan.html" title="class in domainlayer">ContentSpan</a></span>&nbsp;<span class="member-name">buildContentSpan</span>&#8203;(<span class="parameters">java.lang.String&nbsp;document)</span></div>
+<div class="block">Convert the given HTML code into a <a href="../domainlayer/ContentSpan.html" title="class in domainlayer"><code>ContentSpan</code></a>.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>document</code> - :
                 The HTML code to be converted</dd>
 <dt>Returns:</dt>
 <dd>contentSpan:
-                The <a href="../domainmodel/ContentSpan.html" title="class in domainmodel"><code>ContentSpan</code></a> corresponding to the given HTML code.</dd>
+                The <a href="../domainlayer/ContentSpan.html" title="class in domainlayer"><code>ContentSpan</code></a> corresponding to the given HTML code.</dd>
 </dl>
 </section>
 </li>
 <li>
 <section class="detail" id="buildContentSpan(java.net.URL)">
 <h3>buildContentSpan</h3>
-<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../domainmodel/ContentSpan.html" title="class in domainmodel">ContentSpan</a></span>&nbsp;<span class="member-name">buildContentSpan</span>&#8203;(<span class="parameters">java.net.URL&nbsp;url)</span>
+<div class="member-signature"><span class="modifiers">public static</span>&nbsp;<span class="return-type"><a href="../domainlayer/ContentSpan.html" title="class in domainlayer">ContentSpan</a></span>&nbsp;<span class="member-name">buildContentSpan</span>&#8203;(<span class="parameters">java.net.URL&nbsp;url)</span>
                                     throws <span class="exceptions">java.io.IOException</span></div>
-<div class="block">Convert the given URL into a <a href="../domainmodel/ContentSpan.html" title="class in domainmodel"><code>ContentSpan</code></a>.</div>
+<div class="block">Convert the given URL into a <a href="../domainlayer/ContentSpan.html" title="class in domainlayer"><code>ContentSpan</code></a>.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>url</code> - :
                 The url referring to the page that needs to be converted.</dd>
 <dt>Returns:</dt>
 <dd>contentSpan:
-                The <a href="../domainmodel/ContentSpan.html" title="class in domainmodel"><code>ContentSpan</code></a> corresponding to the given URL.</dd>
+                The <a href="../domainlayer/ContentSpan.html" title="class in domainlayer"><code>ContentSpan</code></a> corresponding to the given URL.</dd>
 <dt>Throws:</dt>
 <dd><code>java.io.IOException</code></dd>
 </dl>

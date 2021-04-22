@@ -6,7 +6,7 @@
 <title>DocumentArea</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <meta name="dc.created" content="2021-04-21">
-<meta name="description" content="declaration: package: UserInterface, class: DocumentArea">
+<meta name="description" content="declaration: package: userinterface, class: DocumentArea">
 <meta name="generator" content="javadoc/ClassWriterImpl">
 <link rel="stylesheet" type="text/css" href="../stylesheet.css" title="Style">
 <link rel="stylesheet" type="text/css" href="../script-dir/jquery-ui.min.css" title="Style">
@@ -73,23 +73,23 @@ loadScripts(document, 'script');</script>
 <main role="main">
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">UserInterface</a></div>
+<div class="sub-title"><span class="package-label-in-type">Package</span>&nbsp;<a href="package-summary.html">userinterface</a></div>
 <h1 title="Class DocumentArea" class="title">Class DocumentArea</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree">java.lang.Object
-<div class="inheritance"><a href="Frame.html" title="class in UserInterface">UserInterface.Frame</a>
-<div class="inheritance">UserInterface.DocumentArea</div>
+<div class="inheritance"><a href="Frame.html" title="class in userinterface">userinterface.Frame</a>
+<div class="inheritance">userinterface.DocumentArea</div>
 </div>
 </div>
 <section class="description">
 <dl class="notes">
 <dt>All Implemented Interfaces:</dt>
-<dd><code><a href="../domainmodel/DocumentListener.html" title="interface in domainmodel">DocumentListener</a></code></dd>
+<dd><code><a href="../domainlayer/DocumentListener.html" title="interface in domainlayer">DocumentListener</a></code></dd>
 </dl>
 <hr>
 <pre>public class <span class="type-name-label">DocumentArea</span>
-extends <a href="Frame.html" title="class in UserInterface">Frame</a>
-implements <a href="../domainmodel/DocumentListener.html" title="interface in domainmodel">DocumentListener</a></pre>
+extends <a href="Frame.html" title="class in userinterface">Frame</a>
+implements <a href="../domainlayer/DocumentListener.html" title="interface in domainlayer">DocumentListener</a></pre>
 <div class="block">A class to represent the portion of Broswr that renders the document</div>
 </section>
 <section class="summary">
@@ -110,17 +110,17 @@ implements <a href="../domainmodel/DocumentListener.html" title="interface in do
 </thead>
 <tbody>
 <tr class="alt-color">
-<td class="col-first"><code><a href="../domainmodel/UIController.html" title="class in domainmodel">UIController</a></code></td>
+<td class="col-first"><code><a href="../domainlayer/UIController.html" title="class in domainlayer">UIController</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#controller">controller</a></span></code></th>
 <td class="col-last">
-<div class="block">The <a href="../domainmodel/UIController.html" title="class in domainmodel"><code>UIController</code></a> related to this DocumentArea</div>
+<div class="block">The <a href="../domainlayer/UIController.html" title="class in domainlayer"><code>UIController</code></a> related to this DocumentArea</div>
 </td>
 </tr>
 </tbody>
 </table>
 </div>
 <div class="inherited-list">
-<h3 id="fields.inherited.from.class.UserInterface.Frame">Fields inherited from class&nbsp;UserInterface.<a href="Frame.html" title="class in UserInterface">Frame</a></h3>
+<h3 id="fields.inherited.from.class.userinterface.Frame">Fields inherited from class&nbsp;userinterface.<a href="Frame.html" title="class in userinterface">Frame</a></h3>
 <code><a href="Frame.html#hasFocus">hasFocus</a></code></div>
 </section>
 </li>
@@ -176,7 +176,7 @@ int&nbsp;height)</code></th>
 </td>
 </tr>
 <tr class="row-color" id="i1">
-<td class="col-first"><code><a href="DocumentCell.html" title="class in UserInterface">DocumentCell</a></code></td>
+<td class="col-first"><code><a href="DocumentCell.html" title="class in userinterface">DocumentCell</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#getContent()">getContent</a></span>()</code></th>
 <td class="col-last">
 <div class="block">Retrieve the contents of this DocumentArea.</div>
@@ -216,7 +216,7 @@ int&nbsp;modifiersEx)</code></th>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#handleResize(int,int)">handleResize</a></span>&#8203;(int&nbsp;newWindowWidth,
 int&nbsp;newWindowHeight)</code></th>
 <td class="col-last">
-<div class="block">If the new window dimensions are legal, the UserInterface.DocumentArea gets resized.</div>
+<div class="block">If the new window dimensions are legal, the userinterface.DocumentArea gets resized.</div>
 </td>
 </tr>
 <tr class="row-color" id="i5">
@@ -228,15 +228,15 @@ int&nbsp;newWindowHeight)</code></th>
 </tr>
 <tr class="alt-color" id="i6">
 <td class="col-first"><code>void</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#setContent(UserInterface.DocumentCell)">setContent</a></span>&#8203;(<a href="DocumentCell.html" title="class in UserInterface">DocumentCell</a>&nbsp;content)</code></th>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#setContent(userinterface.DocumentCell)">setContent</a></span>&#8203;(<a href="DocumentCell.html" title="class in userinterface">DocumentCell</a>&nbsp;content)</code></th>
 <td class="col-last">
 <div class="block">Set the content of this DocumentArea
- to the provided <a href="../domainmodel/ContentSpan.html" title="class in domainmodel"><code>ContentSpan</code></a>.</div>
+ to the provided <a href="../domainlayer/ContentSpan.html" title="class in domainlayer"><code>ContentSpan</code></a>.</div>
 </td>
 </tr>
 <tr class="row-color" id="i7">
 <td class="col-first"><code>void</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#setController(domainmodel.UIController)">setController</a></span>&#8203;(<a href="../domainmodel/UIController.html" title="class in domainmodel">UIController</a>&nbsp;controller)</code></th>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#setController(domainlayer.UIController)">setController</a></span>&#8203;(<a href="../domainlayer/UIController.html" title="class in domainlayer">UIController</a>&nbsp;controller)</code></th>
 <td class="col-last">
 <div class="block">Set the DocumentArea's controller to a given controller</div>
 </td>
@@ -246,7 +246,7 @@ int&nbsp;newWindowHeight)</code></th>
 </div>
 </div>
 <div class="inherited-list">
-<h3 id="methods.inherited.from.class.UserInterface.Frame">Methods inherited from class&nbsp;UserInterface.<a href="Frame.html" title="class in UserInterface">Frame</a></h3>
+<h3 id="methods.inherited.from.class.userinterface.Frame">Methods inherited from class&nbsp;userinterface.<a href="Frame.html" title="class in userinterface">Frame</a></h3>
 <code><a href="Frame.html#getBackgroundColor()">getBackgroundColor</a>, <a href="Frame.html#getHeight()">getHeight</a>, <a href="Frame.html#getWidth()">getWidth</a>, <a href="Frame.html#getxPos()">getxPos</a>, <a href="Frame.html#getyPos()">getyPos</a>, <a href="Frame.html#setHeight(int)">setHeight</a>, <a href="Frame.html#setWidth(int)">setWidth</a>, <a href="Frame.html#setxPos(int)">setxPos</a>, <a href="Frame.html#setyPos(int)">setyPos</a>, <a href="Frame.html#toggleFocus(boolean)">toggleFocus</a></code></div>
 <div class="inherited-list">
 <h3 id="methods.inherited.from.class.java.lang.Object">Methods inherited from class&nbsp;java.lang.Object</h3>
@@ -265,8 +265,8 @@ int&nbsp;newWindowHeight)</code></th>
 <li>
 <section class="detail" id="controller">
 <h3>controller</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../domainmodel/UIController.html" title="class in domainmodel">UIController</a></span>&nbsp;<span class="member-name">controller</span></div>
-<div class="block">The <a href="../domainmodel/UIController.html" title="class in domainmodel"><code>UIController</code></a> related to this DocumentArea</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="../domainlayer/UIController.html" title="class in domainlayer">UIController</a></span>&nbsp;<span class="member-name">controller</span></div>
+<div class="block">The <a href="../domainlayer/UIController.html" title="class in domainlayer"><code>UIController</code></a> related to this DocumentArea</div>
 </section>
 </li>
 </ul>
@@ -284,7 +284,7 @@ int&nbsp;newWindowHeight)</code></th>
 int&nbsp;y,
 int&nbsp;width,
 int&nbsp;height)</span>
-             throws <span class="exceptions"><a href="IllegalDimensionException.html" title="class in UserInterface">IllegalDimensionException</a></span></div>
+             throws <span class="exceptions"><a href="IllegalDimensionException.html" title="class in userinterface">IllegalDimensionException</a></span></div>
 <div class="block">Construct a <code>DocumentArea</code> with the given parameters.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
@@ -293,7 +293,7 @@ int&nbsp;height)</span>
 <dd><code>width</code> - : The width of the <code>DocumentArea</code>.</dd>
 <dd><code>height</code> - : The height of the <code>DocumentArea</code>.</dd>
 <dt>Throws:</dt>
-<dd><code><a href="IllegalDimensionException.html" title="class in UserInterface">IllegalDimensionException</a></code> - : When one of the dimensions is negative.</dd>
+<dd><code><a href="IllegalDimensionException.html" title="class in userinterface">IllegalDimensionException</a></code> - : When one of the dimensions is negative.</dd>
 </dl>
 </section>
 </li>
@@ -312,7 +312,7 @@ int&nbsp;height)</span>
 <div class="block">Renders the content. The content renders its sub-content recursively if existent</div>
 <dl class="notes">
 <dt>Overrides:</dt>
-<dd><code><a href="Frame.html#Render(java.awt.Graphics)">Render</a></code>&nbsp;in class&nbsp;<code><a href="Frame.html" title="class in UserInterface">Frame</a></code></dd>
+<dd><code><a href="Frame.html#Render(java.awt.Graphics)">Render</a></code>&nbsp;in class&nbsp;<code><a href="Frame.html" title="class in userinterface">Frame</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>g</code> - : The graphics to be rendered</dd>
 </dl>
@@ -323,11 +323,11 @@ int&nbsp;height)</span>
 <h3>handleResize</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">handleResize</span>&#8203;(<span class="parameters">int&nbsp;newWindowWidth,
 int&nbsp;newWindowHeight)</span></div>
-<div class="block">If the new window dimensions are legal, the UserInterface.DocumentArea gets resized.
- It also resizes its content.</div>
+<div class="block">If the new window dimensions are legal, the userinterface.DocumentArea gets resized.
+    It also resizes its content.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
-<dd><code><a href="Frame.html#handleResize(int,int)">handleResize</a></code>&nbsp;in class&nbsp;<code><a href="Frame.html" title="class in UserInterface">Frame</a></code></dd>
+<dd><code><a href="Frame.html#handleResize(int,int)">handleResize</a></code>&nbsp;in class&nbsp;<code><a href="Frame.html" title="class in userinterface">Frame</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>newWindowWidth</code> - : parameter containing the new window-width of this Frame.</dd>
 <dd><code>newWindowHeight</code> - : parameter containing the new window-height of this Frame.</dd>
@@ -353,7 +353,7 @@ int&nbsp;modifiersEx)</span></div>
  => If all yes, send the click to content. The result of this could be a href String or the Empty String.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
-<dd><code><a href="Frame.html#handleMouse(int,int,int,int,int,int)">handleMouse</a></code>&nbsp;in class&nbsp;<code><a href="Frame.html" title="class in UserInterface">Frame</a></code></dd>
+<dd><code><a href="Frame.html#handleMouse(int,int,int,int,int,int)">handleMouse</a></code>&nbsp;in class&nbsp;<code><a href="Frame.html" title="class in userinterface">Frame</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>id</code> - : The type of mouse activity</dd>
 <dd><code>x</code> - : The x coordinate of the mouse activity</dd>
@@ -375,7 +375,7 @@ int&nbsp;modifiersEx)</span></div>
 <div class="block">Handle key presses. This method does the right action when a key is pressed.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
-<dd><code><a href="Frame.html#handleKey(int,int,char,int)">handleKey</a></code>&nbsp;in class&nbsp;<code><a href="Frame.html" title="class in UserInterface">Frame</a></code></dd>
+<dd><code><a href="Frame.html#handleKey(int,int,char,int)">handleKey</a></code>&nbsp;in class&nbsp;<code><a href="Frame.html" title="class in userinterface">Frame</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>id</code> - : The KeyEvent (Associated with type of KeyEvent)</dd>
 <dd><code>keyCode</code> - : The KeyEvent code (Determines the involved key)</dd>
@@ -391,16 +391,16 @@ int&nbsp;modifiersEx)</span></div>
 <div class="block">Notify the DocumentArea that the contents have been changed</div>
 <dl class="notes">
 <dt>Specified by:</dt>
-<dd><code><a href="../domainmodel/DocumentListener.html#contentChanged()">contentChanged</a></code>&nbsp;in interface&nbsp;<code><a href="../domainmodel/DocumentListener.html" title="interface in domainmodel">DocumentListener</a></code></dd>
+<dd><code><a href="../domainlayer/DocumentListener.html#contentChanged()">contentChanged</a></code>&nbsp;in interface&nbsp;<code><a href="../domainlayer/DocumentListener.html" title="interface in domainlayer">DocumentListener</a></code></dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="setContent(UserInterface.DocumentCell)">
+<section class="detail" id="setContent(userinterface.DocumentCell)">
 <h3>setContent</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">setContent</span>&#8203;(<span class="parameters"><a href="DocumentCell.html" title="class in UserInterface">DocumentCell</a>&nbsp;content)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">setContent</span>&#8203;(<span class="parameters"><a href="DocumentCell.html" title="class in userinterface">DocumentCell</a>&nbsp;content)</span></div>
 <div class="block">Set the content of this DocumentArea
- to the provided <a href="../domainmodel/ContentSpan.html" title="class in domainmodel"><code>ContentSpan</code></a>.</div>
+ to the provided <a href="../domainlayer/ContentSpan.html" title="class in domainlayer"><code>ContentSpan</code></a>.</div>
 <dl class="notes">
 <dt>Parameters:</dt>
 <dd><code>content</code> - :
@@ -411,19 +411,19 @@ int&nbsp;modifiersEx)</span></div>
 <li>
 <section class="detail" id="getContent()">
 <h3>getContent</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="DocumentCell.html" title="class in UserInterface">DocumentCell</a></span>&nbsp;<span class="member-name">getContent</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type"><a href="DocumentCell.html" title="class in userinterface">DocumentCell</a></span>&nbsp;<span class="member-name">getContent</span>()</div>
 <div class="block">Retrieve the contents of this DocumentArea.</div>
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>contentSpan:
-              A <a href="../domainmodel/ContentSpan.html" title="class in domainmodel"><code>ContentSpan</code></a> that denotes the contents of this DocumentArea.</dd>
+              A <a href="../domainlayer/ContentSpan.html" title="class in domainlayer"><code>ContentSpan</code></a> that denotes the contents of this DocumentArea.</dd>
 </dl>
 </section>
 </li>
 <li>
-<section class="detail" id="setController(domainmodel.UIController)">
+<section class="detail" id="setController(domainlayer.UIController)">
 <h3>setController</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">setController</span>&#8203;(<span class="parameters"><a href="../domainmodel/UIController.html" title="class in domainmodel">UIController</a>&nbsp;controller)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">setController</span>&#8203;(<span class="parameters"><a href="../domainlayer/UIController.html" title="class in domainlayer">UIController</a>&nbsp;controller)</span></div>
 <div class="block">Set the DocumentArea's controller to a given controller</div>
 <dl class="notes">
 <dt>Parameters:</dt>

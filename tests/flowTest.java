@@ -1,17 +1,15 @@
-import UserInterface.AddressBar;
-import UserInterface.DocumentArea;
-import UserInterface.UITextField;
-import domainmodel.ContentSpan;
-import domainmodel.Document;
-import domainmodel.TextSpan;
-import domainmodel.UIController;
+import userinterface.AddressBar;
+import userinterface.DocumentArea;
+import userinterface.UITextField;
+import domainlayer.Document;
+import domainlayer.TextSpan;
+import domainlayer.UIController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 import java.awt.event.*;
-import java.net.URL;
 
 @DisplayName("total program flow when typing in addressbar")
 public class flowTest {
