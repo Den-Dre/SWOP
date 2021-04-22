@@ -84,7 +84,7 @@ public class ContentSpanBuilder extends BrowsrDocumentValidator {
      * @return ContentSpan:
      * 					The converted {@link ContentSpan}
      */
-	ContentSpan getInput() {		// TODO what did I break here? Parsing crashes! Check origin with print statements!
+	ContentSpan getInput() {
         consumeOpenStartTag("input");
         String type = consumeAttribute("type");
         switch (type) {

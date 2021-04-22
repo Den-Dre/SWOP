@@ -131,7 +131,7 @@ public class BookmarksBar extends Frame {
      * @param linkName: the name of the link that needs to be loaded.
      */
     public void loadTextHyperlink(String linkName) {
-        // TODO: This seems really redundant. Maybe we should change our approach of storing bookmarks.
+        // TODO: This seems redundant. Maybe we should change our approach of storing bookmarks.
         String url = controller.getURLFromBookmark(linkName);
         controller.loadDocument(url);
     }

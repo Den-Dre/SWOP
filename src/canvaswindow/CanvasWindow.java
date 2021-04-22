@@ -288,7 +288,7 @@ public class CanvasWindow {
 	}
 
 	private void handleMouseEvent_(MouseEvent e) {
-		// System.out.println(e);
+		 System.out.println(e);
 		if (recording != null)
 			recording.items.add(new MouseEventItem(e.getID(), e.getX(), e.getY(), e.getClickCount(), e.getButton(), e.getModifiersEx()));
 		handleMouseEvent(e.getID(), e.getX(), e.getY(), e.getClickCount(), e.getButton(), e.getModifiersEx());

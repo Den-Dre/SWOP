@@ -133,10 +133,22 @@ public class BookmarksDialog extends GenericDialogScreen {
         browsr.setBrowsrLayout(browsr.new RegularLayout());
     }
 
+    /**
+     * Get the text contained in the 'Name' {@link UITextField} of the content of this {@link BookmarksDialog}.
+     *
+     * @return text:
+     *          The text contained in the "Name" {@link UITextInputField} of this {@code BookmarksDialog}.
+     */
     public String getNameInput() {
         return this.nameInput.getText();
     }
 
+    /**
+     * Get the text contained in the 'URL' {@link UITextField} of the content of this {@link BookmarksDialog}.
+     *
+     * @return text:
+     *          The text contained in the "Name" {@link UITextInputField} of this {@code BookmarksDialog}.
+     */
     public String getURLInput() {
         return this.urlInput.getText();
     }
