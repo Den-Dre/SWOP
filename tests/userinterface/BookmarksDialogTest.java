@@ -9,6 +9,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 // Unfortunately, we can't run Browsr in test files. So the tests for BookmarksDialog can't cover
@@ -67,10 +70,62 @@ public class BookmarksDialogTest {
     }
 
     @Test
-    @DisplayName("Can add bookmarks")
+    @DisplayName("Can add bookmarks from within the BookmarksDialog")
     void addBookmarkTest() {
-        bookmarksBar.addBookmark("test", "http://www.test.be");
-        assertEquals("http://www.test.be", controller.getURLFromBookmark("test"));
+        String name = "TableURL";
+        // Simulate opening a BookmarkDialog
+        BookmarksDialog dialog = new BookmarksDialog(100, 100, tableUrl, bookmarksBar, browsr);
+        UITextInputField nameInput = (UITextInputField) ((UITable) ((UITable) dialog.getForm(tableUrl).getFormContent()).getContent().get(1).get(0)).getContent().get(0).get(1);
+        UIButton addBookmarkButton = (UIButton) ((UITable) dialog.getForm(tableUrl).getFormContent()).getContent().get(2).get(0);
+
+        // Select the Name input field
+        dialog.handleMouse(MouseEvent.MOUSE_RELEASED, nameInput.getxPos()+5, nameInput.getyPos()+5, 1, MouseEvent.BUTTON1, 0);
+        assertTrue(nameInput.hasFocus);
+
+        // And type in the name of the Bookmark
+        char[] chars = name.toCharArray();
+        for (char ch : chars)
+            dialog.handleKey(KeyEvent.KEY_PRESSED, KeyEvent.getExtendedKeyCodeForChar(ch), ch, 0);
+
+        // Finally, click the Add Bookmark button to add the bookmark
+        // First off, press in the button
+        dialog.handleMouse(MouseEvent.MOUSE_PRESSED,  addBookmarkButton.getxPos()+5, addBookmarkButton.getyPos()+5, 1, MouseEvent.BUTTON1, 0);
+        // Secondly, release the button which triggers its action
+        dialog.handleMouse(MouseEvent.MOUSE_RELEASED,  addBookmarkButton.getxPos()+5, addBookmarkButton.getyPos()+5, 1, MouseEvent.BUTTON1, 0);
+        // Check whether the bookmark is added successfully
+        assertEquals(tableUrl, controller.getURLFromBookmark(name));
+    }
+
+    @Test
+    @DisplayName("Can cancel saving action in BookmarksDialog")
+    void canCancelDialog() {
+        String name = "TableURL";
+        // Load in the document to be saved
+        controller.loadDocument(tableUrl);
+        // Now the document is loaded and it should be saved when pressing the save button
+        controller.saveDocument(name);
+        // Simulate opening a BookmarkDialog
+        BookmarksDialog dialog = new BookmarksDialog(100, 100, tableUrl, bookmarksBar, browsr);
+        // Set the correct layout as we can't emulate keyEvent's without having a running Browsr object
+        browsr.setBrowsrLayout(browsr.new BookmarksDialogLayout());
+        UIButton addBookmarkButton = (UIButton) ((UITable) dialog.getForm(tableUrl).getFormContent()).getContent().get(2).get(0);
+        UIButton cancelButton = (UIButton) ((UITable) dialog.getForm(tableUrl).getFormContent()).getContent().get(2).get(1);
+
+        // Pressing "save" shouldn't do anything as there's no name input in the name UITextInputField.
+        // First off, press in the button
+        dialog.handleMouse(MouseEvent.MOUSE_PRESSED,  addBookmarkButton.getxPos()+5, addBookmarkButton.getyPos()+5, 1, MouseEvent.BUTTON1, 0);
+        // Secondly, release the button which triggers its action
+        dialog.handleMouse(MouseEvent.MOUSE_RELEASED,  addBookmarkButton.getxPos()+5, addBookmarkButton.getyPos()+5, 1, MouseEvent.BUTTON1, 0);
+        System.out.println(browsr.getBrowsrLayout());
+        assertTrue(dialog.getBrowsr().getBrowsrLayout() instanceof Browsr.BookmarksDialogLayout);
+
+        // Finally, click the Cancel button to cancel the saving action
+        // First off, press in the button
+        dialog.handleMouse(MouseEvent.MOUSE_PRESSED,  cancelButton.getxPos()+5, cancelButton.getyPos()+5, 1, MouseEvent.BUTTON1, 0);
+        // Secondly, release the button which triggers its action
+        dialog.handleMouse(MouseEvent.MOUSE_RELEASED,  cancelButton.getxPos()+5, cancelButton.getyPos()+5, 1, MouseEvent.BUTTON1, 0);
+        // Check whether we're back at the original layout
+        assertTrue(dialog.getBrowsr().getBrowsrLayout() instanceof Browsr.RegularLayout);
     }
 
     @Test
@@ -80,7 +135,6 @@ public class BookmarksDialogTest {
         bookmarksBar.loadTextHyperlink("test");
         TextSpan error = (TextSpan) Document.getErrorDocument();
         TextSpan text = (TextSpan) controller.getDocument().getContentSpan();
-        UITextField areaText = (UITextField) area.getContent();
         assertEquals(error.getText(), text.getText());
     }
 
@@ -91,5 +145,11 @@ public class BookmarksDialogTest {
         bookmarksBar.loadTextHyperlink("test");
         ContentSpan resultContentSpan = controller.getDocument().getContentSpan();
         ContentSpanBuilderTest.verifyContents(resultContentSpan);
+    }
+
+    @Test
+    @DisplayName("Can handle clicks")
+    void canHandleClicks() {
+
     }
 }

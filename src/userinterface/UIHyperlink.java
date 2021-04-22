@@ -123,6 +123,7 @@ public class UIHyperlink extends UITextHyperlink{
      * A string variable to denote the href value of this UIHyperlink.
      */
     private final String href;
+
     /**
      * A string variable to denote the text value of this UIHyperlink.
      */

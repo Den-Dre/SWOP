@@ -132,7 +132,9 @@ public class UIController {
     /**
      * Method to save a document
      */
-    public void saveDocument(String fileName){
+    public void saveDocument(String fileName) throws IllegalArgumentException {
+        if (fileName.equals(""))
+            throw new IllegalArgumentException("Can't save page when no page is loaded");
         try {
             this.document.saveDocument(fileName);
         } catch (Exception e) {
