@@ -55,7 +55,7 @@ class HyperLinkTest{
         // LINK 1
         int link1Width = link1.getWidth();
         // Click not on link1
-        int mouseClick = MouseEvent.MOUSE_CLICKED;
+        int mouseClick = MouseEvent.MOUSE_RELEASED;
         int leftMouse = MouseEvent.BUTTON1;
         ReturnMessage result = link1.getHandleMouse(mouseClick,link1Width+1, 5, 0, leftMouse, 0);
         assertEquals("", result.getContent());

@@ -3,12 +3,21 @@ package UserInterface;
 import java.awt.*;
 import java.util.ArrayList;
 
-public class UIForm extends DocumentCell{
+/**
+ * A class to denote the graphical concept of a form.
+ * A {@code UIform} contains a {@link domainmodel.ContentSpan}
+ * as contents and an associated {@code action} attribute to
+ * denote how to URL must be formed in combination with the
+ * values that are input by the user.
+ */
+public class UIForm extends DocumentCell {
     /**
      * Create a new UIForm-object.
      *
-     * @param action The action attribute of the HTML-counterpart.
-     * @param formContent The content off the form. This should not directly
+     * @param x          : The x coordinate of this {@code UIForm}.
+     * @param y          : The y coordinate of this {@code UIForm}.
+     * @param action     : The action attribute of the HTML-counterpart.
+     * @param formContent: The content off the form. This should not directly
      *                    or indirectly contain other UIForm-objects.
      */
     public UIForm(int x, int y, String action, DocumentCell formContent) {
@@ -46,8 +55,7 @@ public class UIForm extends DocumentCell{
     public ReturnMessage getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
         ReturnMessage response = this.formContent.getHandleMouse(id, x, y, clickCount, button, modifier);
         if (response.getType() == ReturnMessage.Type.Button && response.getContent().equals("submit")) {
-                String link = handleSubmitPressed();
-                return new ReturnMessage(ReturnMessage.Type.Form, link);
+                return handleSubmitPressed();
             }
         return response;
     }
@@ -60,15 +68,9 @@ public class UIForm extends DocumentCell{
      *
      * @return String that represents the action and the state of this UIForm-object.
      */
-    private String handleSubmitPressed() {
+    private ReturnMessage handleSubmitPressed() {
         ArrayList<String> namesAndValues = formContent.getNamesAndValues();
-        StringBuilder link = new StringBuilder(action + "?");
-        for (String nameAndValue : namesAndValues) {
-            link.append(nameAndValue);
-            link.append("&");
-        }
-        link.setLength(link.length() - 1); // cut off the last & character
-        return link.toString();
+        return new ReturnMessage(ReturnMessage.Type.Form, action + "?", namesAndValues);
     }
 
     /**

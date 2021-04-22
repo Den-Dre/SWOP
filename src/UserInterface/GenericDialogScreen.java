@@ -8,10 +8,12 @@ public abstract class GenericDialogScreen extends Frame {
     /**
      * Initialise this Frame with the given parameters.
      *
-     * @param x      : The x coordinate of this Frame.
-     * @param y      : The y coordinate of this Frame.
-     * @param width  : The width of this Frame
-     * @param height : The height of this Frame
+     * @param x          : The x coordinate of this Frame.
+     * @param y          : The y coordinate of this Frame.
+     * @param width      : The width of this Frame
+     * @param height     : The height of this Frame
+     * @param browsr     : The {@link Browsr} object associated to this {@code GenericDialogScreen}.
+     * @param currentUrl : The URL of the doucment currently displayed in the associated {@link Browsr} object.
      * @throws IllegalDimensionException: When one of the dimensions of this Frame is negative
      */
     public GenericDialogScreen(int x, int y, int width, int height, Browsr browsr, String currentUrl) throws IllegalDimensionException {
@@ -70,6 +72,7 @@ public abstract class GenericDialogScreen extends Frame {
     /**
      * Get the contents of this dialog screen.
      *
+     * @param currentUrl: The URL of the current document displayed in the associated {@link Browsr} object.
      * @return form: The {@link UIForm} that contains the contents of this dialog screen.
      */
     public abstract UIForm getForm(String currentUrl);
@@ -86,6 +89,8 @@ public abstract class GenericDialogScreen extends Frame {
     /**
      * Get the offset for the input, text fields and buttons
      * displayed in this {@code BookmarksDialog}.
+     *
+     * @return 5: a fixed value of 5.
      */
     public int getOffset() {
         return 5;
@@ -94,6 +99,8 @@ public abstract class GenericDialogScreen extends Frame {
     /**
      * Get the text size of the text displayed
      * in this {@code BookmarksDialog}.
+     *
+     * @return 14: a fixed value of 14.
      */
     public int getTextSize() {
         return 14;

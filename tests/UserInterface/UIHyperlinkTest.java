@@ -20,7 +20,7 @@ class UIHyperlinkTest {
     private String href2 = "heeeel lange href!!!!!";
     private String text2 = "kort.";
 
-    private final int mouseClick = MouseEvent.MOUSE_CLICKED;
+    private final int mouseClick = MouseEvent.MOUSE_RELEASED;
     private final int leftMouse = MouseEvent.BUTTON1;
 
     @BeforeEach

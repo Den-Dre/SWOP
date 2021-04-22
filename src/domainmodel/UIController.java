@@ -1,6 +1,7 @@
 package domainmodel;
 
 import java.net.URL;
+import java.util.ArrayList;
 
 /**
  * A class to account for the "Controller" - GRASP principle.
@@ -43,6 +44,16 @@ public class UIController {
      */
     public void loadDocumentFromHref(String hrefString) {
         document.loadFromHref(hrefString);
+    }
+
+    /**
+     * Load the document using the given arguments associated with the form.
+     *
+     * @param action The action associated with the form.
+     * @param values An arraylist with the name-value pairs separated by "=".
+     */
+    public void loadDocumentFromForm(String action, ArrayList<String> values) {
+        document.loadFromForm(action, values);
     }
 
     /**
@@ -132,16 +143,32 @@ public class UIController {
     }
 
     // Temporary method for testing listeners
+
+    /**
+     * Set the URL of this {@code UIController}
+     * to the given value.
+     *
+     * @param url: the URL to be set for this {@code UIController}.
+     */
     public void changeURL(String url){
         this.document.setUrlString(url);
     }
 
-    public void addHref(String name, String url) {
-        this.bookmarksURLKeeper.addBookmarksHref(name, url);
+    /**
+     * Add a {@code href} value associated to a bookmark
+     * to the corresponding class in the domain layer.
+     *
+     * @param name: The name of the bookmark that's associated to the given {@code href} attribute.
+     * @param href: The href of the bookmark that will be added to the domain layer.
+     */
+    public void addHref(String name, String href) {
+        this.bookmarksURLKeeper.addBookmarksHref(name, href);
     }
 
     /**
      * Method to save a document
+     *
+     * @param fileName: the name to be given to the document to be saved.
      */
     public void saveDocument(String fileName){
         try {

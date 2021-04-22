@@ -1,5 +1,20 @@
 package UserInterface;
 
+/**
+ * A class to represent a {@code ReturnMessage}.
+ *
+ * <p>This is a message that's returned by
+ * classes in the UI-layer upon being
+ * clicked. Different classes return
+ * different types of return messages,
+ * such that classes higher up in the
+ * hierarchy can differentiate between
+ * the different elements and decide what
+ * action needs to be taken when a user clicks
+ * a particular area of the application.</p>
+ */
+import java.util.ArrayList;
+
 public class ReturnMessage {
     /**
      * Create a new ReturnMessage with the given parameters.
@@ -20,6 +35,12 @@ public class ReturnMessage {
     public ReturnMessage(Type type) {
         this.type = type;
         this.content = "";
+    }
+
+    public ReturnMessage(Type type, String content, ArrayList<String> contentList) {
+        this.type = type;
+        this.content = content;
+        this.contentList = contentList;
     }
 
     /**
@@ -50,6 +71,11 @@ public class ReturnMessage {
         return type;
     }
 
+    public ArrayList<String> getContentList() {
+        return contentList;
+    }
+
     private final String content;
     private final Type type;
+    private ArrayList<String> contentList;
 }

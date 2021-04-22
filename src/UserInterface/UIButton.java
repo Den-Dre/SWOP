@@ -3,15 +3,22 @@ package UserInterface;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
+/**
+ * A class to represent a graphical
+ * button that can be clicked and is
+ * contained within a {@link UIForm}.
+ */
 public class UIButton extends DocumentCell{
 
     /**
      * Initialise this {@code UIButton} with the given parameters.
      *
-     * @param x      : The x coordinate of this {@code UIButton}
-     * @param y      : The y coordinate of this {@code UIButton}
-     * @param width  : The width of this {@code UIButton}
-     * @param height : The height of this {@code UIButton}
+     * @param x          : The x coordinate of this {@code UIButton}
+     * @param y          : The y coordinate of this {@code UIButton}
+     * @param width      : The width of this {@code UIButton}
+     * @param height     : The height of this {@code UIButton}
+     * @param displayText: The text to be displayed on this {@code UIButton}.
+     * @param returnText : The text to be returned when this {@code UIButton} is clicked.
      * @throws IllegalDimensionException: When the dimensions of {@code super} are illegal.
      */
     public UIButton(int x, int y, int width, int height, String displayText, String returnText) throws IllegalDimensionException {

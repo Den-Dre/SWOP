@@ -11,6 +11,15 @@ import java.util.List;
  * A class to represent the portion of Broswr that renders the document
  */
 public class DocumentArea extends Frame implements DocumentListener {
+    /**
+     * Construct a {@code DocumentArea} with the given parameters.
+     *
+     * @param x      : The x coordinate of the {@code DocumentArea}.
+     * @param y      : The y coordinate of the {@code DocumentArea}.
+     * @param width  : The width of the {@code DocumentArea}.
+     * @param height : The height of the {@code DocumentArea}.
+     * @throws IllegalDimensionException : When one of the dimensions is negative.
+     */
     public DocumentArea(int x, int y, int width, int height) throws IllegalDimensionException {
         super(x, y, width, height);
 
@@ -276,7 +285,7 @@ public class DocumentArea extends Frame implements DocumentListener {
         switch (link.getType()) {
             case Empty: return;
             case Hyperlink: controller.loadDocumentFromHref(link.getContent());
-            case Form: controller.loadDocumentFromHref(link.getContent());
+            case Form: controller.loadDocumentFromForm(link.getContent(), link.getContentList());
         }
     }
 
