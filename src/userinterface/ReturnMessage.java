@@ -29,6 +29,7 @@ public class ReturnMessage {
 
     /**
      * Create a new ReturnMessage with the given type.
+     * 
      * The content will be set to the String "".
      * @param type: The desired type of the new ReturnMessage.
      */
@@ -36,7 +37,14 @@ public class ReturnMessage {
         this.type = type;
         this.content = "";
     }
-
+    
+    /**
+     * Create a new ReturnMessage with the given parameters
+     * 
+     * @param type: the desired type of the new ReturnMessage
+     * @param content: the content of the new ReturnMessage
+     * @param contentList: the list of contents of the new ReturnMessage
+     */
     public ReturnMessage(Type type, String content, ArrayList<String> contentList) {
         this.type = type;
         this.content = content;
@@ -70,12 +78,30 @@ public class ReturnMessage {
     public Type getType() {
         return type;
     }
-
+    
+    /**
+     * Get the list of contents of this ReturnMessage
+     * 
+     * @return ArrayList<String> contentList: 
+     * 			the list of contents
+     */
     public ArrayList<String> getContentList() {
         return contentList;
     }
-
+    
+    /**
+     * {@link} String holding the content of this ReturnMessage 
+     */
     private final String content;
+    
+    /**
+     * {@link Type} holding the type of this ReturnMessage
+     */
     private final Type type;
+    
+    /**
+     * {@link ArrayList} holding 
+     * the contents of this ReturnMessage
+     */
     private ArrayList<String> contentList;
 }
