@@ -9,7 +9,7 @@
       <w>608</w>
       <h>80</h>
     </coordinates>
-    <panel_attributes>UserInterface.Browsr
+    <panel_attributes>userinterface.Browsr
 valign=center
 halign=center</panel_attributes>
     <additional_attributes/>
@@ -35,7 +35,7 @@ halign=center</panel_attributes>
       <w>320</w>
       <h>80</h>
     </coordinates>
-    <panel_attributes>UserInterface.AddressBar
+    <panel_attributes>userinterface.AddressBar
 valign=center
 halign=center</panel_attributes>
     <additional_attributes/>

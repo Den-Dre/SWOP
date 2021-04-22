@@ -356,7 +356,7 @@ DocumentListener
       <w>110</w>
       <h>95</h>
     </coordinates>
-    <panel_attributes>UserInterface.Browsr
+    <panel_attributes>userinterface.Browsr
 --
 -addressBarHeight : int
 -addressBarOffset : int

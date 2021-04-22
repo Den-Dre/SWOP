@@ -1,6 +1,6 @@
 package browsrhtml;
 
-import domainmodel.*;
+import domainlayer.*;
 
 import java.io.*;
 import java.net.URL;
