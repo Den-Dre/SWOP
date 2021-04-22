@@ -21,6 +21,7 @@ public class ContentSpanBuilder extends BrowsrDocumentValidator {
      */
     public ContentSpanBuilder(Reader reader) {
         super(reader);
+        parsedForm = false;
     }
 
     /**
@@ -61,8 +62,13 @@ public class ContentSpanBuilder extends BrowsrDocumentValidator {
                 switch (lexer.getTokenValue()) {
                     case "a" -> { return getHyperlink(); }
                     case "table" -> { return getTable(); }
-                    case "form" -> { return getForm(); }
-                    case "input" -> { return getInput(); }
+                    case "form" -> { 
+                    	if (!parsedForm)
+                    		return getForm();  
+                    	else 
+                    		throw new HtmlLexer.LexerException("Illegal parse: nested Form detected");
+                    	}
+                    case "input" -> { return getInput(); } 
                     default -> fail();
                 }
             }
@@ -99,9 +105,10 @@ public class ContentSpanBuilder extends BrowsrDocumentValidator {
      * Retrieve the {@link ContentSpan} that corresponds to 
      * the next parsed {@link Form}
      * @return contentSpan: 
-     * 					The converted {@link ContentSpan}
+     * 					The converted {@link ContentSpan}, itself cannot be a form
      */
     Form getForm() {
+    	parsedForm = true;
     	consumeOpenStartTag("form");
     	String action = consumeAttribute("action");		// extract the action of the form
     	consumeToken(HtmlLexer.TokenType.CLOSE_TAG);	
@@ -168,4 +175,9 @@ public class ContentSpanBuilder extends BrowsrDocumentValidator {
         consumeStartTag("td");
         return new TableCell(getContentSpan());
     }
+    
+    /**
+     * Boolean used as reference to if {@link Form} is already parsed
+     */
+    private boolean parsedForm;
 }
