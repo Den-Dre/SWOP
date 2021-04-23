@@ -1,5 +1,6 @@
 package domainlayer;
 
+import browsrhtml.BrowsrDocumentValidator;
 import browsrhtml.ContentSpanBuilder;
 import java.io.*;
 import java.net.URL;
@@ -257,20 +258,23 @@ public class Document {
             URLConnection con = tmpUrl.openConnection();
             InputStream stream = con.getInputStream();
 
-            // Get absolute path of the project directory
-            // (this is platform independent, in contrary to using relative file paths).
-
-            // This approach saves a page in a directory called 'Saved pages'; this approach doesn't work
-            // when running Browsr as a .jar from a different directory.
-//            String projectDir = System.getProperty("user.dir");
-//            File outputFile = new File(projectDir + File.separator + "savedPages" + File.separator + fileName + ".html");
-
             BufferedReader buffer = new BufferedReader(new InputStreamReader(stream));
             BufferedWriter outputWriter = new BufferedWriter(new FileWriter(fileName + ".html"));
 
+            // First we download the HTML-code to verify whether it's valid
             String line;
+            StringBuilder lines = new StringBuilder();
             while((line = buffer.readLine()) != null)
-                outputWriter.write(line);
+                lines.append(line);
+            String document = lines.toString();
+
+            // Check whether the downloaded document only consists of HTML-code
+            // that our Browsr can parse.
+            BrowsrDocumentValidator.assertIsValidBrowsrDocument(document);
+
+            // Only if it is, we save the document to a file
+            outputWriter.write(document);
+
             // Write out final remaining bytes that are still in buffer
             outputWriter.flush();
             outputWriter.close();
