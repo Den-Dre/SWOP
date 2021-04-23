@@ -259,7 +259,6 @@ public class Document {
             InputStream stream = con.getInputStream();
 
             BufferedReader buffer = new BufferedReader(new InputStreamReader(stream));
-            BufferedWriter outputWriter = new BufferedWriter(new FileWriter(fileName + ".html"));
 
             // First we download the HTML-code to verify whether it's valid
             String line;
@@ -273,6 +272,7 @@ public class Document {
             BrowsrDocumentValidator.assertIsValidBrowsrDocument(document);
 
             // Only if it is, we save the document to a file
+            BufferedWriter outputWriter = new BufferedWriter(new FileWriter(fileName + ".html"));
             outputWriter.write(document);
 
             // Write out final remaining bytes that are still in buffer
