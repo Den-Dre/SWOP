@@ -89,7 +89,7 @@ class UrlScenTest {
         bar.toggleFocus(true);
         // press home
         bar.handleKey(keyPress, KeyEvent.VK_HOME, undefChar, 0);
-        // => shift-end + backspace
+        // => shift-end + backspace 
         bar.handleKey(keyPress, KeyEvent.VK_END,undefChar, shiftModifier);
         bar.handleKey(keyPress, KeyEvent.VK_BACK_SPACE, undefChar,0);
         assertEquals("", bar.getURL());
