@@ -259,11 +259,14 @@ public class Document {
 
             // Get absolute path of the project directory
             // (this is platform independent, in contrary to using relative file paths).
-            String projectDir = System.getProperty("user.dir");
-            File outputFile = new File(projectDir + File.separator + "savedPages" + File.separator + fileName + ".html");
+
+            // This approach saves a page in a directory called 'Saved pages'; this approach doesn't work
+            // when running Browsr as a .jar from a different directory.
+//            String projectDir = System.getProperty("user.dir");
+//            File outputFile = new File(projectDir + File.separator + "savedPages" + File.separator + fileName + ".html");
 
             BufferedReader buffer = new BufferedReader(new InputStreamReader(stream));
-            BufferedWriter outputWriter = new BufferedWriter(new FileWriter(outputFile));
+            BufferedWriter outputWriter = new BufferedWriter(new FileWriter(fileName + ".html"));
 
             String line;
             while((line = buffer.readLine()) != null)
