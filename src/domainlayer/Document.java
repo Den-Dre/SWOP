@@ -74,6 +74,7 @@ public class Document {
      * @param action The action associated with the form.
      * @param values The values to be passed into the url separated with '='.
      */
+    // TODO: Write a test for this method
     public void loadFromForm(String action, ArrayList<String> values) {
         try {
             URL newUrl = new URL(new URL(getUrlString()), action + getEncodedValues(values));
@@ -90,6 +91,7 @@ public class Document {
      * @param list An arraylist in which each element corresponds to a name-value pair separated with the '=' character.
      * @return An encoded version of the given name-value pairs separated by '&'.
      */
+    // TODO: Write a test for this method
     private String getEncodedValues(ArrayList<String> list) {
         StringBuilder values = new StringBuilder("");
         for (String nameValue :  list) {

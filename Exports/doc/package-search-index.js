@@ -1,1 +1,1 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"browsrhtml"},{"l":"canvaswindow"},{"l":"domainmodel"},{"l":"UserInterface"}];updateSearchResults();
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"browsrhtml"},{"l":"browsrhtml.tests"},{"l":"canvaswindow"},{"l":"domainlayer"},{"l":"userinterface"}];updateSearchResults();
