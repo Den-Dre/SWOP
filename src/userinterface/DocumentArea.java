@@ -54,6 +54,7 @@ public class DocumentArea extends Frame implements DocumentListener {
 //	    rows.add(row3);
 //	    rows.add(row4);
 //	    rows.add(row5);
+        content = new UITextInputField(50, 100, 100, 25, "test");
     }
     
     /**
@@ -238,24 +239,24 @@ public class DocumentArea extends Frame implements DocumentListener {
      */
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-        if (button != MouseEvent.BUTTON1) return;
+        //if (button != MouseEvent.BUTTON1) return;
         // if (id != MouseEvent.MOUSE_CLICKED) return;
         ReturnMessage result = content.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
         linkPressed(result);
     }
 
-    /**
-     * Returns true if and only if (x,y) is in this UserInterface.DocumentArea.
-     *
-     * @param x: The x coordinate to check
-     * @param y: the y coordinate to check
-     */
-    private boolean wasClicked(int x, int y) {
-//    	System.out.println("DocArea: on: "+x+","+y);
-//    	System.out.println("getX: "+this.getxPos()+", getY: "+this.getyPos());
-//    	System.out.println("width: "+this.getWidth()+", height: "+this.getHeight());
-        return x >= this.getxPos() && x <= (this.getxPos() + this.getWidth()) && y >= this.getyPos() && y <= (this.getyPos() + this.getHeight());
-    }
+//    /**
+//     * Returns true if and only if (x,y) is in this UserInterface.DocumentArea.
+//     *
+//     * @param x: The x coordinate to check
+//     * @param y: the y coordinate to check
+//     */
+//    private boolean wasClicked(int x, int y) {
+////    	System.out.println("DocArea: on: "+x+","+y);
+////    	System.out.println("getX: "+this.getxPos()+", getY: "+this.getyPos());
+////    	System.out.println("width: "+this.getWidth()+", height: "+this.getHeight());
+//        return x >= this.getxPos() && x <= (this.getxPos() + this.getWidth()) && y >= this.getyPos() && y <= (this.getyPos() + this.getHeight());
+//    }
 
     @Override
     public void handleKey(int id, int keyCode, char keyChar, int modifiersEx) {

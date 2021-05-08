@@ -94,6 +94,9 @@ public class Frame {
      */
     private int yPos;
 
+    private int basexPos;
+
+    private int baseyPos;
     /**
      * A boolean variable to denote whether this Frame has focus right now.
      */
@@ -132,6 +135,22 @@ public class Frame {
      */
     public int getyPos() {
         return yPos;
+    }
+
+    public int getBasexPos() {
+        return basexPos;
+    }
+
+    public int getBaseyPos() {
+        return baseyPos;
+    }
+
+    public void setBaseyPos(int baseyPos) {
+        this.baseyPos = baseyPos;
+    }
+
+    public void setBasexPos(int basexPos) {
+        this.basexPos = basexPos;
     }
 
     /**
@@ -202,5 +221,18 @@ public class Frame {
      */
     public Color getBackgroundColor() {
         return backgroundColor;
+    }
+
+    /**
+     * Method to determine if the click was in this DocumentCells area
+     * @param x: the x-position of the click
+     * @param y: the y-position of the click
+     * @return True iff the given point lies in this DocumentCells area including the edges
+     */
+    public boolean wasClicked(int x, int y) {
+//    	System.out.println("docCell: on: "+x+","+y);
+//    	System.out.println("getX: "+this.getxPos()+", getY: "+this.getyPos());
+//    	System.out.println("width: "+this.getWidth()+", height: "+this.getHeight());
+        return x >= this.getxPos() && x <= (this.getxPos() + this.getWidth()) && y >= this.getyPos() && y <= (this.getyPos() + this.getHeight());
     }
 }
