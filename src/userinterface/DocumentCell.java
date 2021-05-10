@@ -28,9 +28,7 @@ public class DocumentCell extends Frame {
      * @param g: The graphics to be rendered.
      */
     @Override
-    public void Render(Graphics g) {
-        super.Render(g);
-    }
+    public void Render(Graphics g) { }
 
     /**
      * Handle a mouse click on this DocumentCell.
@@ -43,9 +41,10 @@ public class DocumentCell extends Frame {
      * @param modifiersEx: Extra control keys that were held during the click.
      */
     @Override
-    public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-        super.handleMouse(id, x, y, clickCount, button, modifiersEx);
-    }
+    public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) { }
+
+    @Override
+    public void handleKey(int id, int keyCode, char keyChar, int modifiersEx) { }
 
     /**
      * Handle a resize of this DocumentCell.
@@ -54,9 +53,7 @@ public class DocumentCell extends Frame {
      * @param newWindowHeight: The height the DocumentCell will be resized to.
      */
     @Override
-    public void handleResize(int newWindowWidth, int newWindowHeight) {
-        super.handleResize(newWindowWidth, newWindowHeight);
-    }
+    public void handleResize(int newWindowWidth, int newWindowHeight) { }
 
     /**
      * Method to determine if the click was in this DocumentCells area

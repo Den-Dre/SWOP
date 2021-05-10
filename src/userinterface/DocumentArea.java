@@ -240,7 +240,7 @@ public class DocumentArea extends Frame implements DocumentListener {
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
         if (button != MouseEvent.BUTTON1) return;
         // if (id != MouseEvent.MOUSE_CLICKED) return;
-        ReturnMessage result = content.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
+        ReturnMessage result = getContent().getHandleMouse(id, x, y, clickCount, button, modifiersEx);
         linkPressed(result);
     }
 
@@ -301,7 +301,8 @@ public class DocumentArea extends Frame implements DocumentListener {
      * @param content:
      *               The content that should be set.
      */
-    public void setContent(DocumentCell content) {
+    public void setContent(Frame content) {
+    // public void setContent(DocumentCell content) {
         this.content = content;
     }
 
@@ -312,7 +313,7 @@ public class DocumentArea extends Frame implements DocumentListener {
      *              A {@link ContentSpan} that denotes the contents of this DocumentArea.
      */
     public DocumentCell getContent() {
-        return this.content;
+        return (DocumentCell) this.content;
     }
 
     /**
@@ -327,7 +328,7 @@ public class DocumentArea extends Frame implements DocumentListener {
 
     /**
      * The {@link UIController} related to this DocumentArea
-      */
+     */
     public UIController controller;
 
     /**
@@ -338,7 +339,8 @@ public class DocumentArea extends Frame implements DocumentListener {
     /**
      * The content that is represented by this DocumentArea.
      */
-    private DocumentCell content;
+    // private DocumentCell content
+    private Frame content;
 }
 
 

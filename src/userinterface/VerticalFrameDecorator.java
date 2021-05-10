@@ -6,14 +6,11 @@ public class VerticalFrameDecorator extends FrameDecorator {
     /**
      * Initialise this Frame with the given parameters.
      *
-     * @param x      : The x coordinate of this Frame.
-     * @param y      : The y coordinate of this Frame.
-     * @param width  : The width of this Frame
-     * @param height : The height of this Frame
+     * @param frame: The {@link Frame} to be decorated.
      * @throws IllegalDimensionException: When one of the dimensions of this Frame is negative
      */
-    public VerticalFrameDecorator(int x, int y, int width, int height) throws IllegalDimensionException {
-        super(x, y, width, height);
+    public VerticalFrameDecorator(Frame frame) throws IllegalDimensionException {
+        super(frame);
     }
 
     /**

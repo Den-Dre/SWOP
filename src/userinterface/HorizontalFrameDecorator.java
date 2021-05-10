@@ -6,14 +6,11 @@ public class HorizontalFrameDecorator extends FrameDecorator {
     /**
      * Initialise this Frame with the given parameters.
      *
-     * @param x      : The x coordinate of this Frame.
-     * @param y      : The y coordinate of this Frame.
-     * @param width  : The width of this Frame
-     * @param height : The height of this Frame
+     * @param frame: The {@link Frame} to be decorated.
      * @throws IllegalDimensionException: When one of the dimensions of this Frame is negative
      */
-    public HorizontalFrameDecorator(int x, int y, int width, int height) throws IllegalDimensionException {
-        super(x, y, width, height);
+    public HorizontalFrameDecorator(Frame frame) throws IllegalDimensionException {
+        super(frame);
     }
 
     /**
@@ -22,7 +19,9 @@ public class HorizontalFrameDecorator extends FrameDecorator {
      * @param g : The graphics to be rendered.
      */
     @Override
-    public void Render(Graphics g) { }
+    public void Render(Graphics g) {
+        g.drawRect(getxPos()+getWidth()-5, getyPos()+getHeight(), 5, getHeight());
+    }
 
     /**
      * Handle mouseEvents. Determine if this Frame was pressed and do the right actions.

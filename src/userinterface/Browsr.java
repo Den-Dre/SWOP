@@ -75,6 +75,7 @@ public class Browsr extends CanvasWindow {
             controller.addUrlListener(AddressBar);
             controller.addDocumentListener(DocumentArea);
 
+            DocumentArea.setContent(new HorizontalFrameDecorator(new UITextInputField(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100)));
             // For testing purposes
 //            AddressBar.changeTextTo("https://people.cs.kuleuven.be/bart.jacobs/browsrtest.html");
         }

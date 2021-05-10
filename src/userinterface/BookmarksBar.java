@@ -105,6 +105,9 @@ public class BookmarksBar extends Frame {
         }
     }
 
+    @Override
+    public void handleKey(int id, int keyCode, char keyChar, int modifiersEx) { }
+
     /**
      * This method handles resizes.
      * It makes sure the addressBar is adjusted in width when the window shrinks or grows.
