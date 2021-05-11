@@ -218,7 +218,7 @@ public class Document {
     }
 
     /**
-     * Retrieve the contents of a docoument
+     * Retrieve the contents of a document
      * that should be displayed when a malformed
      * URL is entered by the user.
      *
