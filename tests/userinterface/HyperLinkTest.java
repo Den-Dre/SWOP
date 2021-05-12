@@ -98,8 +98,9 @@ class HyperLinkTest{
 		ctrl.loadDocumentFromHref(href);
 		
 		// check if document has changed
-		assertTrue(((HorizontalScrollBarDecorator) doc.getContent()).getContent() instanceof UITable);
-		assertEquals(((UITextField) ((UITable) doc.getContent()).getContent().get(0).get(0)).getText(),
+		assertTrue(((DocumentCellDecorator) doc.getContent()).getContentWithoutScrollbars() instanceof UITable);
+		UITable table = (UITable) ((DocumentCellDecorator) doc.getContent()).getContentWithoutScrollbars();
+        assertEquals(((UITextField) table.getContent().get(0).get(0)).getText(),
 				"HTML elements partially supported by Browsr:");
 	}
 	

@@ -1,7 +1,4 @@
-import userinterface.AddressBar;
-import userinterface.HorizontalScrollBarDecorator;
-import userinterface.LeafPane;
-import userinterface.UITextField;
+import userinterface.*;
 import domainlayer.Document;
 import domainlayer.TextSpan;
 import domainlayer.UIController;
@@ -45,7 +42,7 @@ public class flowTest {
     @DisplayName("Shows correct welcome message")
     void startMessage() {
         TextSpan welcome = (TextSpan) Document.getWelcomeDocument();
-        UITextField areaText = (UITextField) ((HorizontalScrollBarDecorator) area.getContent()).getContent();
+        UITextField areaText = (UITextField) ((DocumentCellDecorator) area.getContent()).getContentWithoutScrollbars();
         assertEquals(welcome.getText(), areaText.getText());
     }
 
@@ -91,7 +88,7 @@ public class flowTest {
         assertEquals(badUrl, bar.getURL());
         // 4. Show error document
         TextSpan error = (TextSpan) Document.getErrorDocument();
-        UITextField areaText = (UITextField) ((HorizontalScrollBarDecorator) area.getContent()).getContent();
+        UITextField areaText = (UITextField) ((DocumentCellDecorator) area.getContent()).getContentWithoutScrollbars();
         assertEquals(error.getText(), areaText.getText());
     }
 
@@ -157,7 +154,7 @@ public class flowTest {
         area.handleMouse(mouseClick, 5, 40, 1, leftMouse, 0);
         // 5. The link leads nowhere so show error document
         TextSpan error = (TextSpan) Document.getErrorDocument();
-        UITextField areaText = (UITextField) ((HorizontalScrollBarDecorator) area.getContent()).getContent();
+        UITextField areaText = (UITextField) ((DocumentCellDecorator) area.getContent()).getContentWithoutScrollbars();
         assertEquals(error.getText(), areaText.getText());
         // 6. The bar should show the new url, although it is bad
         String badLink = "https://people.cs.kuleuven.be/bart.jacobs/a.html";

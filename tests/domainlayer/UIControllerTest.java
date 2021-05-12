@@ -1,9 +1,6 @@
 package domainlayer;
 
-import userinterface.AddressBar;
-import userinterface.HorizontalScrollBarDecorator;
-import userinterface.LeafPane;
-import userinterface.UITextField;
+import userinterface.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -89,7 +86,7 @@ public class UIControllerTest {
         assertEquals(link, bar.getURL());
 
         TextSpan errorText = (TextSpan) Document.getErrorDocument();
-        UITextField areaText = (UITextField) ((HorizontalScrollBarDecorator) area.getContent()).getContent();
+        UITextField areaText = (UITextField) ((DocumentCellDecorator) area.getContent()).getContentWithoutScrollbars();
         assertEquals(errorText.getText(), areaText.getText());
 
     }

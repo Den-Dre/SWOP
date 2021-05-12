@@ -140,7 +140,9 @@ public abstract class DocumentCellDecorator extends DocumentCell {
             return ((VerticalScrollBarDecorator) this.cellToBeDecorated).getContentWithoutScrollbars();
         else if (this.cellToBeDecorated instanceof HorizontalScrollBarDecorator)
             return ((HorizontalScrollBarDecorator) this.cellToBeDecorated).getContentWithoutScrollbars();
-        return cellToBeDecorated;
+        // In this case we have peeled off both the potentially added scroll bars
+        // and are left with the wrapper `UITable` from which we extract the encapsulated element:
+        return ((UITable) cellToBeDecorated).getContent().get(0).get(0);
     }
 
     /**

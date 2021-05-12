@@ -89,7 +89,7 @@ public class BookmarksBarTest {
     public void verifyUIContents(DocumentCell cell) {
 
         assertNotNull(cell);
-        UITable outerTable = ((UITable) ((HorizontalScrollBarDecorator) cell).getContent());
+        UITable outerTable = (UITable) ((DocumentCellDecorator) cell).getContentWithoutScrollbars();
         List<DocumentCell> outerRow1 = outerTable.getContent().get(0);
         assertEquals("HTML elements partially supported by Browsr:", ((UITextField) outerRow1.get(0)).getText());
 
@@ -120,8 +120,7 @@ public class BookmarksBarTest {
 
     private void errorDocumentIsLoaded() {
         TextSpan error = (TextSpan) Document.getErrorDocument();
-        UITable table = (UITable) ((DocumentCellDecorator) area.getContent()).getContentWithoutScrollbars();
-        UITextField areaText = (UITextField) table.getContent().get(0).get(0);
+        UITextField areaText = (UITextField) ((DocumentCellDecorator) area.getContent()).getContentWithoutScrollbars();
         assertEquals(error.getText(), areaText.getText());
     }
 }
