@@ -23,7 +23,7 @@ public class DocumentCell extends Frame {
     }
 
     /**
-     * Render the graphics {@code g} of this DocumentCell.
+     * render the graphics {@code g} of this DocumentCell.
      *
      * @param g: The graphics to be rendered.
      */

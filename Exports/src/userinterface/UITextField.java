@@ -25,7 +25,7 @@ public class UITextField extends DocumentCell{
     }
 
     /**
-     * Render this UITextField.
+     * render this UITextField.
      * => Get information about the width of the text in the textFieldFont.
      * => Set the color, normalFont and then draw the string on the window.
      *

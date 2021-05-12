@@ -72,7 +72,7 @@ public class BookmarksBar extends Frame {
     }
 
     /**
-     * Render this {@code BookmarksBar}.
+     * render this {@code BookmarksBar}.
      * @param g: The graphics to be rendered.
      */
     @Override

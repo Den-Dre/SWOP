@@ -81,7 +81,7 @@ public class SaveDialog extends GenericDialogScreen {
     }
 
     /**
-     * Render the contents of this {@code SaveDialog}.
+     * render the contents of this {@code SaveDialog}.
      * @param g: The graphics to be rendered.
      */
     @Override

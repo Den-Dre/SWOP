@@ -30,11 +30,11 @@ public abstract class Frame {
     }
 
     /**
-     * Render the contents of this Frame.
+     * render the contents of this Frame.
      *
      * @param g: The graphics to be rendered.
      */
-    public abstract void Render(Graphics g);
+    public abstract void render(Graphics g);
 
      /**
      * Handle mouseEvents. Determine if this Frame was pressed and do the right actions.

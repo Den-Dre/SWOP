@@ -62,7 +62,7 @@ public class Browsr extends CanvasWindow {
             bookmarksBar = new BookmarksBar(bookmarksBarOffset, addressBarHeight + 2 * bookmarksBarOffset, 100, bookmarksBarHeight, bookmarksBarOffset);
             DocumentArea = new DocumentArea(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100);
             controller = new UIController();
-            //DocumentArea =  new Frame(0,addressBarHeight, 100,100);
+            //LeafPane =  new Frame(0,addressBarHeight, 100,100);
 
             this.Frames.add(this.AddressBar);
             this.Frames.add(this.DocumentArea);
@@ -97,12 +97,12 @@ public class Browsr extends CanvasWindow {
      * the possible layouts of a {@code Browsr} object.
      *
      * Classes that extend this method, need to implement
-     * a {@code Render}, {@code handleMouseEvent} and {@code handleKeyEvent} method,
+     * a {@code render}, {@code handleMouseEvent} and {@code handleKeyEvent} method,
      * to handle rendering, clicking and keyboard input of this {@code Browsr} object respectively.
      */
     protected static abstract class Layout {
         /**
-         * Render this {@link Browsr.Layout}.
+         * render this {@link Browsr.Layout}.
          *
          * @param g: the graphics to be rendered.
          */
@@ -140,12 +140,12 @@ public class Browsr extends CanvasWindow {
      *
      * <p> This layout provides specialised implementations
      * for the {@code handleMouseEvent}, {@code handleKeyEvent}
-     * and {@code Render} methods.</p>
+     * and {@code render} methods.</p>
      */
     protected class RegularLayout extends Layout {
 
         /**
-         * Render this {@code RegularLayout} of
+         * render this {@code RegularLayout} of
          * this {@code Browsr} object.
          *
          * @param g:
@@ -195,11 +195,11 @@ public class Browsr extends CanvasWindow {
      *
      * <p> This layout provides specialised implementations
      * for the {@code handleMouseEvent}, {@code handleKeyEvent}
-     * and {@code Render} methods.</p>
+     * and {@code render} methods.</p>
      */
     protected class BookmarksDialogLayout extends Layout {
         /**
-         * Render this {@code BookmarksDialogLayout} of
+         * render this {@code BookmarksDialogLayout} of
          * this {@code Browsr} object.
          *
          * @param g:
@@ -251,11 +251,11 @@ public class Browsr extends CanvasWindow {
      *
      * <p> This layout provides specialised implementations
      * for the {@code handleMouseEvent}, {@code handleKeyEvent}
-     * and {@code Render} methods.</p>
+     * and {@code render} methods.</p>
      */
     protected class SaveDialogLayout extends Layout {
         /**
-         * Render this {@code SaveDialogLayout} of
+         * render this {@code SaveDialogLayout} of
          * this {@code Browsr} object.
          *
          * @param g:
@@ -299,7 +299,7 @@ public class Browsr extends CanvasWindow {
     }
 
     /**
-     * (Re)Render the elements of this Broswr window.
+     * (Re)render the elements of this Broswr window.
      *
      * @param g:
      *       The graphics that will be rendered.

@@ -38,7 +38,7 @@ public class Document {
     public Document() { }
 
     /**
-     * Initialize a new Document given a url, and two DocumentListeners representing the DocumentArea and AddressBar
+     * Initialize a new Document given a url, and two DocumentListeners representing the LeafPane and AddressBar
      *
      * @param url
      *        The url for this document
@@ -248,8 +248,8 @@ public class Document {
      */
     public void saveDocument(String fileName) throws Exception {
         if (contentSpan instanceof TextSpan && ((TextSpan) contentSpan).getText().equals(((TextSpan) getWelcomeDocument()).getText())) {
-            // We should only save a document when that document is currently *also* displayed in the DocumentArea
-            // Thus, if there's a URL typed in the AddressBar, but the Welcome Document is still displayed in the DocumentArea,
+            // We should only save a document when that document is currently *also* displayed in the LeafPane
+            // Thus, if there's a URL typed in the AddressBar, but the Welcome Document is still displayed in the LeafPane,
             // no document should be saved.
             throw new Exception("Can't get the source code of a local Document.");
         } else {

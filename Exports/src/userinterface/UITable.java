@@ -30,7 +30,7 @@ public class UITable extends DocumentCell{
     }
 
     /**
-     * Render every cell in the grid.
+     * render every cell in the grid.
      *
      * @param g: The graphics to be updated.
      */

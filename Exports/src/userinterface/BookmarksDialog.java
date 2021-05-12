@@ -92,7 +92,7 @@ public class BookmarksDialog extends GenericDialogScreen {
     }
 
     /**
-     * Render this {@code BookmarksDialog}.
+     * render this {@code BookmarksDialog}.
      *
      * @param g: The graphics used to render this {@code BookmarksDialog}.
      */

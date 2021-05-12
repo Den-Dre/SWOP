@@ -14,17 +14,17 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("DocumentArea:")
-class DocumentAreaTest {
-    private DocumentArea documentArea1;
-    private DocumentArea documentArea2;
+@DisplayName("LeafPane:")
+class LeafPaneTest {
+    private LeafPane leafPane1;
+    private LeafPane leafPane2;
     private final int doc2Xpos = 10;
     private final int doc2Ypos = 15;
 
     @BeforeEach
     void setUp() throws Exception {
-        documentArea1 = new DocumentArea(0,0,100,100);
-        documentArea2 = new DocumentArea(doc2Xpos,doc2Ypos,150,500);
+        leafPane1 = new LeafPane(0,0,100,100);
+        leafPane2 = new LeafPane(doc2Xpos,doc2Ypos,150,500);
     }
 
     @Test
@@ -33,21 +33,21 @@ class DocumentAreaTest {
         // Make doc1 smaller
         int newWidth1 = 20;
         int newHeight1 = 20;
-        documentArea1.handleResize(newWidth1,newHeight1);
-        assertEquals(newHeight1,documentArea1.getHeight());
-        assertEquals(newWidth1, documentArea1.getWidth());
+        leafPane1.handleResize(newWidth1,newHeight1);
+        assertEquals(newHeight1, leafPane1.getHeight());
+        assertEquals(newWidth1, leafPane1.getWidth());
         // Make doc2 larger
         int newWidth2 = 600;
         int newHeight2 = 1000;
-        documentArea2.handleResize(newWidth2,newHeight2);
-        assertEquals(newHeight2-doc2Ypos,documentArea2.getHeight());
-        assertEquals(newWidth2-doc2Xpos, documentArea2.getWidth());
+        leafPane2.handleResize(newWidth2,newHeight2);
+        assertEquals(newHeight2-doc2Ypos, leafPane2.getHeight());
+        assertEquals(newWidth2-doc2Xpos, leafPane2.getWidth());
         // Make the window smaller than the xpos and ypos of doc2
         int newWidth3 = 5;
         int newHeight3 = 3;
-        documentArea2.handleResize(newWidth3,newHeight3);
-        assertEquals(newHeight2-doc2Ypos,documentArea2.getHeight());
-        assertEquals(newWidth2-doc2Xpos, documentArea2.getWidth());
+        leafPane2.handleResize(newWidth3,newHeight3);
+        assertEquals(newHeight2-doc2Ypos, leafPane2.getHeight());
+        assertEquals(newWidth2-doc2Xpos, leafPane2.getWidth());
     }
 
     @Test
@@ -62,7 +62,7 @@ class DocumentAreaTest {
         String text2 = "aa";
         String href = "/wiki/Java";
         String hrefText = "Java";
-        DocumentArea doc = new DocumentArea(x,y,500,500);
+        LeafPane doc = new LeafPane(x,y,500,500);
 
         // Texfields and hyperlink
         UITextField textField3 = new UITextField(x, y, width, textSize, text);
@@ -116,11 +116,11 @@ class DocumentAreaTest {
     			<a href="a.html">a</a>
     			"""); // only a HyperLink
     	doc1.changeContentSpan(content1);
-    	documentArea1.setController(ctrl1);
+    	leafPane1.setController(ctrl1);
     	ctrl1.setDocument(doc1);
-    	documentArea1.contentChanged(); // would throw an exception if translation failed
-    	assertEquals(documentArea1.getContent().getClass(), UIHyperlink.class);
-    	assertEquals(((UIHyperlink) documentArea1.getContent()).getText(), "a");
+    	leafPane1.contentChanged(); // would throw an exception if translation failed
+    	assertEquals(leafPane1.getContent().getClass(), UIHyperlink.class);
+    	assertEquals(((UIHyperlink) leafPane1.getContent()).getText(), "a");
     	
 		ContentSpan content2 = ContentSpanBuilder.buildContentSpan("""
 				<table>
@@ -128,11 +128,11 @@ class DocumentAreaTest {
 				</table>
 				"""); // only a Table
     	doc2.changeContentSpan(content2);
-    	documentArea1.setController(ctrl2);
+    	leafPane1.setController(ctrl2);
     	ctrl2.setDocument(doc2);	
-    	documentArea1.contentChanged(); // would throw an exception if translation failed
-    	assertEquals(documentArea1.getContent().getClass(), UITable.class); // content is translated into a UITable
-    	UITable table = (UITable) documentArea1.getContent(); 
+    	leafPane1.contentChanged(); // would throw an exception if translation failed
+    	assertEquals(leafPane1.getContent().getClass(), UITable.class); // content is translated into a UITable
+    	UITable table = (UITable) leafPane1.getContent();
     	assertEquals(table.getContent().size(), 1); // this table only contains one element
     	assertEquals(table.getContent().get(0).get(0).getClass(), UITextField.class); // and this is a UITextField
     	assertEquals(((UITextField) table.getContent().get(0).get(0)).getText(), "HTML elements partially supported by UserInterface.Browsr:");
@@ -142,11 +142,11 @@ class DocumentAreaTest {
 				  HTML elements partially supported by UserInterface.Browsr:
 				"""); // only a piece of Text
     	doc3.changeContentSpan(content3);
-    	documentArea1.setController(ctrl3);
+    	leafPane1.setController(ctrl3);
     	ctrl3.setDocument(doc3);
-    	documentArea1.contentChanged(); // would throw an exception if translation failed
-    	assertEquals(documentArea1.getContent().getClass(), UITextField.class);	
-    	assertEquals(((UITextField) documentArea1.getContent()).getText(), "HTML elements partially supported by UserInterface.Browsr:");
+    	leafPane1.contentChanged(); // would throw an exception if translation failed
+    	assertEquals(leafPane1.getContent().getClass(), UITextField.class);
+    	assertEquals(((UITextField) leafPane1.getContent()).getText(), "HTML elements partially supported by UserInterface.Browsr:");
     	
         // not a valid userinterface.Browsr document (yoinked from https://www.w3schools.com/html/tryit.asp?filename=tryhtml_basic_document)
 		assertThrows(Exception.class, () -> {
@@ -183,11 +183,11 @@ class DocumentAreaTest {
 				""");
 		
 		doc4.changeContentSpan(content4);
-		documentArea1.setController(ctrl4);
+		leafPane1.setController(ctrl4);
 		ctrl4.setDocument(doc4);
-		documentArea1.contentChanged();
-		assertTrue(documentArea1.getContent() instanceof UIForm);
-		UIForm form = (UIForm) documentArea1.getContent();
+		leafPane1.contentChanged();
+		assertTrue(leafPane1.getContent() instanceof UIForm);
+		UIForm form = (UIForm) leafPane1.getContent();
 		assertEquals(form.getAction(), "browsrformactiontest.php");
 		assertTrue(form.getFormContent() instanceof UITable);
 		UITable table2 = (UITable) form.getFormContent();

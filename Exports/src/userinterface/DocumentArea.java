@@ -12,12 +12,12 @@ import java.util.List;
  */
 public class DocumentArea extends Frame implements DocumentListener {
     /**
-     * Construct a {@code DocumentArea} with the given parameters.
+     * Construct a {@code LeafPane} with the given parameters.
      *
-     * @param x      : The x coordinate of the {@code DocumentArea}.
-     * @param y      : The y coordinate of the {@code DocumentArea}.
-     * @param width  : The width of the {@code DocumentArea}.
-     * @param height : The height of the {@code DocumentArea}.
+     * @param x      : The x coordinate of the {@code LeafPane}.
+     * @param y      : The y coordinate of the {@code LeafPane}.
+     * @param width  : The width of the {@code LeafPane}.
+     * @param height : The height of the {@code LeafPane}.
      * @throws IllegalDimensionException : When one of the dimensions is negative.
      */
     public DocumentArea(int x, int y, int width, int height) throws IllegalDimensionException {
@@ -215,7 +215,7 @@ public class DocumentArea extends Frame implements DocumentListener {
     }
 
     /**
-     * If the new window dimensions are legal, the UserInterface.DocumentArea gets resized.
+     * If the new window dimensions are legal, the UserInterface.LeafPane gets resized.
      * It also resizes its content.
      */
     @Override
@@ -245,7 +245,7 @@ public class DocumentArea extends Frame implements DocumentListener {
     }
 
     /**
-     * Returns true if and only if (x,y) is in this UserInterface.DocumentArea.
+     * Returns true if and only if (x,y) is in this UserInterface.LeafPane.
      *
      * @param x: The x coordinate to check
      * @param y: the y coordinate to check
@@ -263,7 +263,7 @@ public class DocumentArea extends Frame implements DocumentListener {
     }
 
     /**
-     * Notify the DocumentArea that the contents have been changed
+     * Notify the LeafPane that the contents have been changed
      */
     public void contentChanged() {
         try{
@@ -295,7 +295,7 @@ public class DocumentArea extends Frame implements DocumentListener {
     }
 
     /**
-     * Set the content of this DocumentArea
+     * Set the content of this LeafPane
      * to the provided {@link ContentSpan}.
      *
      * @param content:
@@ -306,17 +306,17 @@ public class DocumentArea extends Frame implements DocumentListener {
     }
 
     /**
-     * Retrieve the contents of this DocumentArea.
+     * Retrieve the contents of this LeafPane.
      *
      * @return contentSpan:
-     *              A {@link ContentSpan} that denotes the contents of this DocumentArea.
+     *              A {@link ContentSpan} that denotes the contents of this LeafPane.
      */
     public DocumentCell getContent() {
         return this.content;
     }
 
     /**
-     * Set the DocumentArea's controller to a given controller
+     * Set the LeafPane's controller to a given controller
      *
      * @param controller
      *        The new controller
@@ -326,17 +326,17 @@ public class DocumentArea extends Frame implements DocumentListener {
     }
 
     /**
-     * The {@link UIController} related to this DocumentArea
+     * The {@link UIController} related to this LeafPane
       */
     public UIController controller;
 
     /**
-     * The text size of the {@code Url} of this DocumentArea.
+     * The text size of the {@code Url} of this LeafPane.
      */
     private final int textSize = 14;
 
     /**
-     * The content that is represented by this DocumentArea.
+     * The content that is represented by this LeafPane.
      */
     private DocumentCell content;
 }

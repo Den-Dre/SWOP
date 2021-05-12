@@ -59,7 +59,7 @@ public class UITextInputField extends DocumentCell{
      * @param g: The graphics object that is used to draw this {@code AddressBar}
      */
     @Override
-    public void Render(Graphics g) {
+    public void render(Graphics g) {
         setFontMetrics(g);
         updateSelectStart();
         drawSelection(g);

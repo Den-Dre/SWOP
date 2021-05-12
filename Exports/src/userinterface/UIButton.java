@@ -91,7 +91,7 @@ public class UIButton extends DocumentCell{
     private static abstract class State {
 
         /**
-         * Render the button given its current state
+         * render the button given its current state
          *
          * @param g: the {@link Graphics} to be rendered.
          */
@@ -131,7 +131,7 @@ public class UIButton extends DocumentCell{
         }
 
         /**
-         * Render the button given its current {@code notPressed} state.
+         * render the button given its current {@code notPressed} state.
          *
          * @param g: the {@link Graphics} to be rendered.
          */
@@ -194,7 +194,7 @@ public class UIButton extends DocumentCell{
         }
 
         /**
-         * Render the button given its current {@code Pressed} state.
+         * render the button given its current {@code Pressed} state.
          *
          * @param g: the {@link Graphics} to be rendered.
          */
@@ -243,7 +243,7 @@ public class UIButton extends DocumentCell{
     }
 
     /**
-     * Render this button depending on which {@link State} it's in.
+     * render this button depending on which {@link State} it's in.
      *
      * @param g: The graphics to be rendered.
      */

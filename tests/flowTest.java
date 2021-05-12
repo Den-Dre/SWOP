@@ -1,5 +1,6 @@
 import userinterface.AddressBar;
-import userinterface.DocumentArea;
+import userinterface.HorizontalScrollBarDecorator;
+import userinterface.LeafPane;
 import userinterface.UITextField;
 import domainlayer.Document;
 import domainlayer.TextSpan;
@@ -14,7 +15,7 @@ import java.awt.event.*;
 @DisplayName("total program flow when typing in addressbar")
 public class flowTest {
 
-    private DocumentArea area;
+    private LeafPane area;
     private AddressBar bar;
     private UIController controller;
     private final String goodUrl = "https://people.cs.kuleuven.be/bart.jacobs/browsrtest.html";
@@ -29,7 +30,7 @@ public class flowTest {
     @BeforeEach
     void setup(){
         // Make a total browsr without the gui class (=browsr.java)
-        area = new DocumentArea(0,20,100,100);
+        area = new LeafPane(0,20,100,100);
         bar = new AddressBar(0,0,100,20,0);
         controller = new UIController(); // The document is created within uicontroller
         // Couple the uicontoller to the documentarea and addressbar
@@ -44,7 +45,7 @@ public class flowTest {
     @DisplayName("Shows correct welcome message")
     void startMessage() {
         TextSpan welcome = (TextSpan) Document.getWelcomeDocument();
-        UITextField areaText = (UITextField) area.getContent();
+        UITextField areaText = (UITextField) ((HorizontalScrollBarDecorator) area.getContent()).getContent();
         assertEquals(welcome.getText(), areaText.getText());
     }
 
@@ -90,7 +91,7 @@ public class flowTest {
         assertEquals(badUrl, bar.getURL());
         // 4. Show error document
         TextSpan error = (TextSpan) Document.getErrorDocument();
-        UITextField areaText = (UITextField) area.getContent();
+        UITextField areaText = (UITextField) ((HorizontalScrollBarDecorator) area.getContent()).getContent();
         assertEquals(error.getText(), areaText.getText());
     }
 
@@ -156,7 +157,7 @@ public class flowTest {
         area.handleMouse(mouseClick, 5, 40, 1, leftMouse, 0);
         // 5. The link leads nowhere so show error document
         TextSpan error = (TextSpan) Document.getErrorDocument();
-        UITextField areaText = (UITextField) area.getContent();
+        UITextField areaText = (UITextField) ((HorizontalScrollBarDecorator) area.getContent()).getContent();
         assertEquals(error.getText(), areaText.getText());
         // 6. The bar should show the new url, although it is bad
         String badLink = "https://people.cs.kuleuven.be/bart.jacobs/a.html";

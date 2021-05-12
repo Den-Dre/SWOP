@@ -30,7 +30,7 @@ public class Frame {
     }
 
     /**
-     * Render the contents of this Frame.
+     * render the contents of this Frame.
      *
      * @param g: The graphics to be rendered.
      */

@@ -1,7 +1,6 @@
 package userinterface;
 
 import java.awt.*;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 /**
@@ -18,6 +17,7 @@ import java.util.ArrayList;
  */
 public class SaveDialog extends GenericDialogScreen {
 
+
     /**
      * Initialise this Frame with the given parameters.
      *
@@ -31,8 +31,9 @@ public class SaveDialog extends GenericDialogScreen {
         super(0, 0, width, height, browsr, currentUrl);
         int offset = getOffset();
 
-        this.nameInput = new UITextInputField(offset, offset, 100, getTextSize(), "Name");
-        this.form = getForm(currentUrl);
+        this.nameInput = new HorizontalScrollBarDecorator(new UITextInputField(offset, offset, 100, getTextSize(), "Name"));
+        this.nameInputContents = (UITextInputField) nameInput.getContent();
+        this.form = new HorizontalScrollBarDecorator(new VerticalScrollBarDecorator(getForm(currentUrl)));
     }
 
 
@@ -81,12 +82,12 @@ public class SaveDialog extends GenericDialogScreen {
     }
 
     /**
-     * Render the contents of this {@code SaveDialog}.
+     * render the contents of this {@code SaveDialog}.
      * @param g: The graphics to be rendered.
      */
     @Override
-    public void Render(Graphics g) {
-        this.form.Render(g);
+    public void render(Graphics g) {
+        this.form.render(g);
     }
 
     /**
@@ -102,7 +103,7 @@ public class SaveDialog extends GenericDialogScreen {
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
         ReturnMessage result = form.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
-        String name = this.nameInput.getText();
+        String name = this.nameInputContents.getText();
         try {
             handleClickResult(result, name);
         } catch (IllegalArgumentException e) {
@@ -139,15 +140,16 @@ public class SaveDialog extends GenericDialogScreen {
       @return text: the contents of the name {@link UITextInputField} of this {@code SaveDialog}.
      */
     public String getNameInput() {
-        return this.nameInput.getText();
+        return this.nameInputContents.getText();
     }
 
     /**
      * A {@link UITextInputField} to query the name
      * the user  wants to give to the URL being saved.
      */
-    private final UITextInputField nameInput;
+    private final HorizontalScrollBarDecorator nameInput;
 
+    private final UITextInputField nameInputContents;
 
     /**
      * A variable to represent the content
@@ -155,6 +157,6 @@ public class SaveDialog extends GenericDialogScreen {
      * displays. The content is contained
      * in a {@link DocumentCell}.
      */
-    private final UIForm form;
+    private final DocumentCellDecorator form;
 }
 
