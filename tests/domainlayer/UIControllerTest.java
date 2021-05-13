@@ -1,8 +1,6 @@
 package domainlayer;
 
-import userinterface.AddressBar;
-import userinterface.DocumentArea;
-import userinterface.UITextField;
+import userinterface.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -58,7 +56,7 @@ public class UIControllerTest {
     void newDocument() {
         UIController controller = new UIController();
         AddressBar bar = new AddressBar(0,0,10,10,0);
-        DocumentArea area = new DocumentArea(0,10,10,10);
+        LeafPane area = new LeafPane(0,10,10,10);
         Document document = new Document("www.test.be", area, bar);
 
         // set the document of controller to be the new document
@@ -71,7 +69,7 @@ public class UIControllerTest {
         // Setup
         UIController controller = new UIController();
         AddressBar bar = new AddressBar(0,0,10,10,0);
-        DocumentArea area = new DocumentArea(0,10,10,10);
+        LeafPane area = new LeafPane(0,10,10,10);
         bar.setUiController(controller);
         area.setController(controller);
         Document document = new Document();
@@ -88,7 +86,7 @@ public class UIControllerTest {
         assertEquals(link, bar.getURL());
 
         TextSpan errorText = (TextSpan) Document.getErrorDocument();
-        UITextField areaText = (UITextField) area.getContent();
+        UITextField areaText = (UITextField) ((DocumentCellDecorator) area.getContent()).getContentWithoutScrollbars();
         assertEquals(errorText.getText(), areaText.getText());
 
     }

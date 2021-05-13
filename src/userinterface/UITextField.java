@@ -25,14 +25,14 @@ public class UITextField extends DocumentCell{
     }
 
     /**
-     * Render this UITextField.
+     * render this UITextField.
      * => Get information about the width of the text in the textFieldFont.
      * => Set the color, normalFont and then draw the string on the window.
      *
      * @param g: The graphics to be updated.
      */
     @Override
-    public void Render(Graphics g) {
+    public void render(Graphics g) {
         metrics = g.getFontMetrics(textFieldFont);
         updateSizes();
         g.setColor(textFieldColor);

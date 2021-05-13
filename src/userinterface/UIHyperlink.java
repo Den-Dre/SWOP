@@ -38,7 +38,7 @@ public class UIHyperlink extends UITextHyperlink{
      * @param g: The graphics that will be updated
      */
     @Override
-    public void Render(Graphics g) {
+    public void render(Graphics g) {
         metrics = g.getFontMetrics(hyperlinkFont);
         updateSizes();
         g.setColor(hyperlinkColor);

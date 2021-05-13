@@ -5,22 +5,23 @@ import domainlayer.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
  * A class to represent the portion of Broswr that renders the document
  */
-public class DocumentArea extends Frame implements DocumentListener {
+public class LeafPane extends Frame implements DocumentListener {
     /**
-     * Construct a {@code DocumentArea} with the given parameters.
+     * Construct a {@code LeafPane} with the given parameters.
      *
-     * @param x      : The x coordinate of the {@code DocumentArea}.
-     * @param y      : The y coordinate of the {@code DocumentArea}.
-     * @param width  : The width of the {@code DocumentArea}.
-     * @param height : The height of the {@code DocumentArea}.
+     * @param x      : The x coordinate of the {@code LeafPane}.
+     * @param y      : The y coordinate of the {@code LeafPane}.
+     * @param width  : The width of the {@code LeafPane}.
+     * @param height : The height of the {@code LeafPane}.
      * @throws IllegalDimensionException : When one of the dimensions is negative.
      */
-    public DocumentArea(int x, int y, int width, int height) throws IllegalDimensionException {
+    public LeafPane(int x, int y, int width, int height) throws IllegalDimensionException {
         super(x, y, width, height);
 
 //        // hard-coded Welcome document (for now!)
@@ -77,22 +78,22 @@ public class DocumentArea extends Frame implements DocumentListener {
         else if (contents instanceof Form)
         	newUIContents = translateForm((Form) contents);
         else if (contents instanceof SubmitButton)
-        	newUIContents = translateSubmitButton((SubmitButton) contents);
+        	newUIContents = translateSubmitButton();
         else
-            System.out.println("unknown domainmodel representation class: "+contents.getClass().getCanonicalName());
+            System.out.println("unknown domainmodel representation class: " + contents.getClass().getCanonicalName());
         return newUIContents;
     }
-    
+
     /**
      * Translates a Table from the domainmodel into the simplified UI-representation
      *
      * @param content: The content to be translated to UI elements.
      * @return a UITable with the translated elements
      */
-    private UITable translateTable(Table content) {
+    private DocumentCell translateTable(Table content) {
     	try {
             // get sub elements
-            ArrayList<ArrayList<DocumentCell>> UIrows = new ArrayList<ArrayList<DocumentCell>>();
+            ArrayList<ArrayList<DocumentCell>> UIrows = new ArrayList<>();
             // draw the table
             List<TableRow> rows = content.getRows();
             for (TableRow row : rows)
@@ -126,7 +127,7 @@ public class DocumentArea extends Frame implements DocumentListener {
      */
     private ArrayList<DocumentCell> translateRow(TableRow content) {
 		// get sub elements
-    	ArrayList<DocumentCell> row = new ArrayList<DocumentCell>();
+    	ArrayList<DocumentCell> row = new ArrayList<>();
     	List<TableCell> cells = content.getCells();
     	// draw the row
     	for (TableCell cell : cells) {
@@ -184,22 +185,22 @@ public class DocumentArea extends Frame implements DocumentListener {
     }
     
     /**
-     * Translates a TextInputField from the domainmodel into the simplified UI-representation
+     * Translates a {@link TextInputField} from the domainmodel into the simplified UI-representation
+     * The created {@link UITextInputField} should also have a horizontal scroll bar and is decorated as such.
      * 
      * @param content: The content to be translated to UI elements.
      * @return a UITextInputField with translated elements
      */
     private DocumentCell translateTextInputField(TextInputField content) {
-    	return new UITextInputField(getxPos(), getyPos(), 100, textSize, content.getName());
+    	return new HorizontalScrollBarDecorator(new UITextInputField(getxPos(), getyPos(), 100, textSize, content.getName()));
     }
     
     /**
      * Translates a SubmitButton from the domainmodel into the simplified UI-representation
      *  
-     * @param content: The content to be translated to UI elements.
      * @return a UIButton with translated elements
      */
-    private DocumentCell translateSubmitButton(SubmitButton content) {
+    private DocumentCell translateSubmitButton() {
     	return new UIButton(getxPos(), getyPos(), 50, 15, "Submit", "submit");
     }    
     
@@ -208,14 +209,14 @@ public class DocumentArea extends Frame implements DocumentListener {
      * @param g: The graphics to be rendered
      */
     @Override
-    public void Render(Graphics g) {
-        content.Render(g);
+    public void render(Graphics g) {
+        content.render(g);
         g.setColor(Color.green);
         //g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
     }
 
     /**
-     * If the new window dimensions are legal, the UserInterface.DocumentArea gets resized.
+     * If the new window dimensions are legal, the UserInterface.LeafPane gets resized.
      * It also resizes its content.
      */
     @Override
@@ -245,7 +246,7 @@ public class DocumentArea extends Frame implements DocumentListener {
     }
 
     /**
-     * Returns true if and only if (x,y) is in this UserInterface.DocumentArea.
+     * Returns true if and only if (x,y) is in this UserInterface.LeafPane.
      *
      * @param x: The x coordinate to check
      * @param y: the y coordinate to check
@@ -263,15 +264,16 @@ public class DocumentArea extends Frame implements DocumentListener {
     }
 
     /**
-     * Notify the DocumentArea that the contents have been changed
+     * Notify the LeafPane that the contents have been changed
      */
     public void contentChanged() {
         try{
             ContentSpan newContentSpan = controller.getContentSpan();
-            this.setContent(this.translateToUIElements(newContentSpan));
+            DocumentCell newContents = translateToUIElements(newContentSpan);
+            setContent(newContents);
         }
         catch(Exception e){
-            System.out.print(e);
+            e.printStackTrace();
         }
     }
 
@@ -295,28 +297,50 @@ public class DocumentArea extends Frame implements DocumentListener {
     }
 
     /**
-     * Set the content of this DocumentArea
+     * Wrap the given {@link DocumentCell} in a
+     * {@link UITable} s.t. it can be easily decorated
+     * by means of the decorator pattern which is implemented by
+     * {@link VerticalScrollBarDecorator} and {@link HorizontalScrollBarDecorator}.
+     *
+     *
+     * @param cell: The {@link DocumentCell} to be wrapped.
+     * @return wrapped: The given {@link DocumentCell} wrapped in a {@link UITable}.
+     */
+    private DocumentCell wrapInDocumentCell(DocumentCell cell) {
+        ArrayList<ArrayList<DocumentCell>> overlayContents =
+                new ArrayList<>(Collections.singletonList(new ArrayList<>(Collections.singletonList(cell))));
+        return new UITable(cell.getxPos(), cell.getyPos(), cell.getWidth(), cell.getHeight(), overlayContents);
+    }
+
+    /**
+     * Set the content of this LeafPane
      * to the provided {@link ContentSpan}.
+     *
+     * The content to be set is wrapped in a
+     * {@link UITable} for easy decoration using the
+     * {@link HorizontalScrollBarDecorator} and
+     * {@link VerticalScrollBarDecorator} decorators.
      *
      * @param content:
      *               The content that should be set.
      */
     public void setContent(DocumentCell content) {
-        this.content = content;
+        DocumentCell wrapped = wrapInDocumentCell(content);
+        this.content = new HorizontalScrollBarDecorator(new VerticalScrollBarDecorator(wrapped));
     }
 
     /**
-     * Retrieve the contents of this DocumentArea.
+     * Retrieve the contents of this LeafPane.
      *
      * @return contentSpan:
-     *              A {@link ContentSpan} that denotes the contents of this DocumentArea.
+     *              A {@link ContentSpan} that denotes the contents of this LeafPane.
      */
     public DocumentCell getContent() {
         return this.content;
     }
 
     /**
-     * Set the DocumentArea's controller to a given controller
+     * Set the LeafPane's controller to a given controller
      *
      * @param controller
      *        The new controller
@@ -326,17 +350,17 @@ public class DocumentArea extends Frame implements DocumentListener {
     }
 
     /**
-     * The {@link UIController} related to this DocumentArea
+     * The {@link UIController} related to this LeafPane
       */
     public UIController controller;
 
     /**
-     * The text size of the {@code Url} of this DocumentArea.
+     * The text size of the {@code Url} of this LeafPane.
      */
     private final int textSize = 14;
 
     /**
-     * The content that is represented by this DocumentArea.
+     * The content that is represented by this LeafPane.
      */
     private DocumentCell content;
 }

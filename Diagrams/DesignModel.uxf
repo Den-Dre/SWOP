@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="13.3">
   <help_text>GUI Framework Requirements analysis:
-	- userinterface.DocumentArea:
+	- userinterface.LeafPane:
 		-Hyperlink aan kunnen klikken: ✓
 	- userinterface.AddressBar:
 		- Characters invoegen: ✓				(in Address Bar)
@@ -290,7 +290,7 @@ m2=1</panel_attributes>
       <w>252</w>
       <h>54</h>
     </coordinates>
-    <panel_attributes>userinterface.DocumentArea
+    <panel_attributes>userinterface.LeafPane
 </panel_attributes>
     <additional_attributes/>
   </element>

@@ -34,8 +34,8 @@ public class UIForm extends DocumentCell {
      * @param g: The graphics to be rendered with.
      */
     @Override
-    public void Render(Graphics g) {
-        this.formContent.Render(g);
+    public void render(Graphics g) {
+        this.formContent.render(g);
     }
 
     /**
