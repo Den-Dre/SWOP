@@ -24,6 +24,6 @@ public class HorizontalScrollBarDecorator extends DocumentCellDecorator {
         g.setColor(Color.RED);
         // Simulate a scrollbar. TODO: Replace this with a working scroll bar
         g.fillRect(getxPos(), getyPos() + getHeight() - SCROLLBAR_HEIGHT, cellToBeDecorated.getWidth(), SCROLLBAR_HEIGHT);
-        System.out.println("Created HSB of: " + cellToBeDecorated.getClass());
+//        System.out.println("Created HSB of: " + cellToBeDecorated.getClass());
     }
 }

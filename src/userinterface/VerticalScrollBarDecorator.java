@@ -28,6 +28,6 @@ public class VerticalScrollBarDecorator extends DocumentCellDecorator {
         // in this method, the width of the button is re-estimated, but only when it's rendered.
         // Commenting out that `setWidth()` call will result in correctly placed scrollbars.
         g.fillRect(getxPos() + getWidth() - SCROLLBAR_WIDTH, getyPos(), SCROLLBAR_WIDTH, getHeight());
-        System.out.println("Created VSB of: " + cellToBeDecorated.getClass().getCanonicalName());
+//        System.out.println("Created VSB of: " + cellToBeDecorated.getClass().getCanonicalName());
     }
 }
