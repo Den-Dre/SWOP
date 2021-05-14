@@ -36,16 +36,10 @@ public class BookmarksDialog extends GenericDialogScreen {
         this.bookmarksBar = bookmarksBar;
         this.nameInput = new UITextInputField(offset, offset,100,textSize, "Name");
         this.urlInput = new UITextInputField(offset, offset,100,textSize, "URL");
-        this.content = getForm();
-    }
 
-    /**
-     * Get the {@link UIForm} contents of this {@code BookmarksDialog}.
-     *
-     * @return form: the {@link UIForm} linked to this {@code BookmarksDialog}.
-     */
-    public UIForm getForm() {
-        return constructForm(super.getCurrentUrl());
+        // URL input must be prefilled:
+        urlInput.changeTextTo(currentUrl);
+        this.form = getForm(currentUrl);
     }
 
     /**
@@ -55,18 +49,14 @@ public class BookmarksDialog extends GenericDialogScreen {
      *           The {@link String} representation of the URL currently entered in the {@link AddressBar}.
      * @return new UIForm: a {@link UIForm} object that represents the form of this {@code BookmarksDialog}.
      */
-    UIForm constructForm(String currentUrl) {
-
+//    UIForm constructForm(String currentUrl) {
+    public UIForm getForm(String currentUrl) {
+        // Hard coded bookmarks dialog screen
         int offset = getOffset();
         int textSize = getTextSize();
 
-        // Hard coded bookmarks dialog screen
         UITextField nameText = new UITextField(offset, offset,0,textSize, "Name");
         UITextField urlText = new UITextField(offset, offset,0,textSize, "URL");
-
-        // URL input must be prefilled:
-        urlInput.setText(currentUrl);
-
 
         UITextField formTitle = new UITextField(offset, offset, 0,textSize, "Add Bookmark");
 
@@ -108,22 +98,13 @@ public class BookmarksDialog extends GenericDialogScreen {
      */
     @Override
     public void Render(Graphics g) {
-        this.content.Render(g);
+        this.form.Render(g);
     }
 
-     /**
-     * Handle a mouseclick on this {@code BookmarksDialog}.
-     *
-     * @param id: The type of mouse activity.
-     * @param x: The x coordinate of the mouse activity.
-     * @param y: The y coordinate of the mouse activity.
-     * @param clickCount: The number of clicks.
-     * @param button: The mouse button that was clicked.
-     * @param modifiersEx: The control keys that were held on the click.
-     */
+
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-        String result = this.content.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
+        ReturnMessage result = form.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
         try {
 			handleClickResult(result);
 		} catch (IllegalArgumentException e) {
@@ -137,16 +118,14 @@ public class BookmarksDialog extends GenericDialogScreen {
      * @param result:
      *              the string returned by the clicked element of the content of this {@code BookmarksDialog}.
      */
-    private void handleClickResult(String result) {
-        if (result.equals(""))
+    protected void handleClickResult(ReturnMessage result) {
+        if (result.getType() != ReturnMessage.Type.Button)
             return;
-        switch (result) {
+        switch (result.getContent()) {
             case "Add Bookmark" ->
             		bookmarksBar.addBookmark(nameInput.getText(), urlInput.getText());
             case "Cancel" ->  // nothing needs to be done here
                     System.out.println("Cancel pressed.");
-            case "Save" ->
-                    System.out.println("Save document not implemented yet."); // TODO also needs to check whether the input differs from ""
         }
 
         // Set the BrowsrLayout of the linked Browsr back to the regular Layout.
@@ -154,38 +133,22 @@ public class BookmarksDialog extends GenericDialogScreen {
         browsr.setBrowsrLayout(browsr.new RegularLayout());
     }
 
-
     /**
-     * Handle key presses on this {@code SaveDialogLayout}.
-     * This method does the right action when a key is pressed.
+     * Get the text contained in the 'Name' {@link UITextField} of the content of this {@link BookmarksDialog}.
      *
-     * @param id: The KeyEvent (Associated with type of KeyEvent).
-     * @param keyCode: The KeyEvent code (Determines the involved key).
-     * @param keyChar: The character representation of the involved key.
-     * @param modifiersEx: Specifies other keys that were involved in the event.
+     * @return text:
+     *          The text contained in the "Name" {@link UITextInputField} of this {@code BookmarksDialog}.
      */
-    @Override
-    public void handleKey(int id, int keyCode, char keyChar, int modifiersEx) {
-        this.content.handleKey(id, keyCode, keyChar, modifiersEx);
-    }
-
-    /**
-     * This method handles resizes of this {@code BookmarksDialog}.
-     * It makes sure the {@code BookmarksDialog} is adjusted in width when the window shrinks or grows.
-     * It does not change its height (e.g. look at Firefox).
-     *
-     * @param newWindowHeight: parameter containing the new window-height
-     * @param newWindowWidth: parameter containing the new window-width
-     */
-    @Override
-    public void handleResize(int newWindowWidth, int newWindowHeight) {
-        this.content.handleResize(newWindowWidth, newWindowHeight);
-    }
-
     public String getNameInput() {
         return this.nameInput.getText();
     }
 
+    /**
+     * Get the text contained in the 'URL' {@link UITextField} of the content of this {@link BookmarksDialog}.
+     *
+     * @return text:
+     *          The text contained in the "Name" {@link UITextInputField} of this {@code BookmarksDialog}.
+     */
     public String getURLInput() {
         return this.urlInput.getText();
     }
@@ -196,7 +159,7 @@ public class BookmarksDialog extends GenericDialogScreen {
      * displays. The content is contained
      * in a {@link DocumentCell}.
      */
-    private final UIForm content;
+    private final UIForm form;
 
     /**
      * The {@link BookmarksBar} associated

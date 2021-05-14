@@ -16,9 +16,15 @@ public class UIController {
 
     /**
      * The {@link Document} that is linked
-     * to this Controller.
+     * to this {@code Controller}.
      */
     private Document document;
+
+    /**
+     * The {@link BookmarksURLKeeper} that is
+     * linked to this {@code Controller}.
+     */
+    private final BookmarksURLKeeper bookmarksURLKeeper;
 
     /**
      * Initialise this Controller
@@ -26,6 +32,7 @@ public class UIController {
      */
     public UIController() {
         this.document = new Document();
+        this.bookmarksURLKeeper = new BookmarksURLKeeper();
     }
 
 
@@ -123,14 +130,44 @@ public class UIController {
         this.document.addURLListener(d);
     }
 
+    /**
+     * Get the Href value associated to this bookmark
+     * from this {@code Controller}'s {@link BookmarksURLKeeper}.
+     *
+     * @param bookmarkName: the name of the bookmark to be retrieved.
+     * @return href: The href value of the requested {@code bookmarkName}.
+     */
+    public String getURLFromBookmark(String bookmarkName) {
+        return this.bookmarksURLKeeper.getHrefFromBookmark(bookmarkName);
+    }
+
     // Temporary method for testing listeners
+
+    /**
+     * Set the URL of this {@code UIController}
+     * to the given value.
+     *
+     * @param url: the URL to be set for this {@code UIController}.
+     */
     public void changeURL(String url){
         this.document.setUrlString(url);
     }
 
+    /**
+     * Add a {@code href} value associated to a bookmark
+     * to the corresponding class in the domain layer.
+     *
+     * @param name: The name of the bookmark that's associated to the given {@code href} attribute.
+     * @param href: The href of the bookmark that will be added to the domain layer.
+     */
+    public void addHref(String name, String href) {
+        this.bookmarksURLKeeper.addBookmarksHref(name, href);
+    }
 
     /**
      * Method to save a document
+     *
+     * @param fileName: the name to be given to the document to be saved.
      */
     public void saveDocument(String fileName) throws IllegalArgumentException {
         if (fileName.equals(""))
@@ -141,5 +178,4 @@ public class UIController {
             System.out.println("Can't save this document!");
         }
     }
-
 }
