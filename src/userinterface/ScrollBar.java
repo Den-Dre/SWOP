@@ -13,9 +13,12 @@ public class ScrollBar extends Frame {
     private int innerBarLength;
     private int length;
     private final int offset = 2;
-    private Orientation orientation;
+    private final Orientation orientation;
     private int[] prevMouse;
-    private int[] currentMouse;
+
+    private final Color innerColorNormal = Color.gray;
+    private final Color innerColorDragging = Color.blue;
+    private Color currentColor = innerColorNormal;
 
     public ScrollBar(int x, int y, int length, boolean isHorizontal, double ratio, ScrollListener listener) {
         super(x, y, 0, 0);
@@ -41,37 +44,22 @@ public class ScrollBar extends Frame {
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
         orientation.init();
-
+        int[] currentMouse;
         if (id == MouseEvent.MOUSE_PRESSED) {
             if (!wasClicked(x, y)) return;
             prevMouse = new int[] {x, y};
-            currentMouse = new int[] {x, y};
+            currentColor = innerColorDragging;
         }
         else if (id == MouseEvent.MOUSE_DRAGGED) {
             if (prevMouse == null) return;
-            System.out.println(Arrays.toString(prevMouse));
-            System.out.println(Arrays.toString(currentMouse));
             currentMouse = new int[] {x, y};
             orientation.dragged(currentMouse[0]-prevMouse[0], currentMouse[1]-prevMouse[1]);
             prevMouse = new int[] {x, y};
         }
         else if (id == MouseEvent.MOUSE_RELEASED) {
             prevMouse = null;
-            currentMouse = null;
+            currentColor = innerColorNormal;
         }
-
-//        if (button == MouseEvent.BUTTON1) {
-//            fraction += 0.1;
-//            if (fraction > 1.0)
-//                fraction = 1.0;
-//            orientation.moved();
-//        }
-//        else if (button == MouseEvent.BUTTON3) {
-//            fraction -= 0.1;
-//            if (fraction < 0.0)
-//                fraction = 0.0;
-//            orientation.moved();
-//        }
     }
 
     public double getFraction() {
@@ -108,7 +96,7 @@ public class ScrollBar extends Frame {
         void Render(Graphics g) {
             g.setColor(Color.BLACK);
             g.drawRect(getxPos() + offset, getyPos() - 2, length - 2 * offset, thicknessOuterBar - 1);
-            g.setColor(Color.GRAY);
+            g.setColor(currentColor);
             g.fillRect((int) (getxPos() + 2 * offset + fraction * (length - innerBarLength)), getyPos(), innerBarLength - 4 * offset, thicknessInnerBar);
         }
 
@@ -127,9 +115,7 @@ public class ScrollBar extends Frame {
 
         @Override
         void dragged(int dx, int dy) {
-//            int innerX = (int) (getxPos() + fraction * (length - innerBarLength))+dx;
-//            double newFraction = (double) (innerX+innerBarLength)/length;
-            setFraction((double) dx / length + fraction);
+            setFraction((double) dx / (length-innerBarLength) + fraction);
         }
     }
 
@@ -138,7 +124,7 @@ public class ScrollBar extends Frame {
         void Render(Graphics g) {
             g.setColor(Color.BLACK);
             g.drawRect(getxPos()-2*offset, getyPos(), thicknessOuterBar, length-5);
-            g.setColor(Color.GRAY);
+            g.setColor(currentColor);
             g.fillRect(getxPos()-offset, (int) (getyPos() + offset + fraction * (length - innerBarLength)), thicknessInnerBar, innerBarLength - 4 * offset);
         }
 
@@ -157,7 +143,7 @@ public class ScrollBar extends Frame {
 
         @Override
         void dragged(int dx, int dy) {
-            setFraction((double) dy/length + fraction);
+            setFraction((double) dy/(length - innerBarLength) + fraction);
         }
     }
 }
