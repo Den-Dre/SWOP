@@ -1,11 +1,12 @@
 package domainlayer;
 
-import browsrhtml.BrowsrDocumentValidator;
 import browsrhtml.ContentSpanBuilder;
+
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class Document {
     public Document() { }
 
     /**
-     * Initialize a new Document given a url, and two DocumentListeners representing the DocumentArea and AddressBar
+     * Initialize a new Document given a url, and two DocumentListeners representing the LeafPane and AddressBar
      *
      * @param url
      *        The url for this document
@@ -91,12 +92,12 @@ public class Document {
      * @return An encoded version of the given name-value pairs separated by '&'.
      */
     private String getEncodedValues(ArrayList<String> list) {
-        StringBuilder values = new StringBuilder("");
+        StringBuilder values = new StringBuilder();
         for (String nameValue :  list) {
             String[] nameAndValue = nameValue.split("=");
             values.append(nameAndValue[0]);
             values.append("=");
-            values.append(URLEncoder.encode(nameAndValue[1]));
+            values.append(URLEncoder.encode(nameAndValue[1], StandardCharsets.UTF_8));
             values.append("&");
         }
         values.setLength(values.length() - 1); // remove last '&'
@@ -248,8 +249,8 @@ public class Document {
      */
     public void saveDocument(String fileName) throws Exception {
         if (contentSpan instanceof TextSpan && ((TextSpan) contentSpan).getText().equals(((TextSpan) getWelcomeDocument()).getText())) {
-            // We should only save a document when that document is currently *also* displayed in the DocumentArea
-            // Thus, if there's a URL typed in the AddressBar, but the Welcome Document is still displayed in the DocumentArea,
+            // We should only save a document when that document is currently *also* displayed in the LeafPane
+            // Thus, if there's a URL typed in the AddressBar, but the Welcome Document is still displayed in the LeafPane,
             // no document should be saved.
             throw new Exception("Can't get the source code of a local Document.");
         } else {
@@ -270,7 +271,12 @@ public class Document {
 
             // Check whether the downloaded document only consists of HTML-code
             // that our Browsr can parse.
-            BrowsrDocumentValidator.assertIsValidBrowsrDocument(document);
+
+            //BrowsrDocumentValidator.assertIsValidBrowsrDocument(document);
+
+            // If it's not valid, `buildContentSpan` will throw an exception,
+            // causing the method that called `saveDocument` to handle the exception in its `catch`-block
+            ContentSpanBuilder.buildContentSpan(document);
 
             // Only if it is, we save the document to a file
             outputWriter.write(document);

@@ -12,13 +12,13 @@ import java.util.ArrayList;
 
 /**
  * A class to represent the UserInterface.Browsr window,
- * with an {@link AddressBar} and a {@link DocumentArea}.
+ * with an {@link AddressBar} and a {@link LeafPane}.
  */
 public class Browsr extends CanvasWindow {
     /**
      * Initializes this {@code Browsr} as CanvasWindow object:
      * the initial layout consists of: an {@link AddressBar},
-     * a {@link BookmarksBar} and a {@link DocumentArea}
+     * a {@link BookmarksBar} and a {@link LeafPane}
      *
      * @param title:
      *            The Window title
@@ -36,7 +36,7 @@ public class Browsr extends CanvasWindow {
      * <ul>
      *     <li>an {@link AddressBar} object where URL's are entered,</li>
      *     <li>a {@link BookmarksBar} object to display the bookmarks added by the user, and </li>
-     *     <li>a {@link DocumentArea} object to display the content of the requested sites.</li>
+     *     <li>a {@link LeafPane} object to display the content of the requested sites.</li>
      *     <li>a {@link UIController} which is linked to the above three objects. </li>
      * </ul>
      */
@@ -58,23 +58,24 @@ public class Browsr extends CanvasWindow {
             // that is linked to this UserInterface.Browsr.
             int bookmarksBarHeight = 20;
 
-            AddressBar   = new AddressBar(addressBarOffset, addressBarOffset, 100, addressBarHeight, addressBarOffset);
+            HorizontalScrollBarDecorator addressBar = new HorizontalScrollBarDecorator(new AddressBar(addressBarOffset, addressBarOffset, 100, addressBarHeight, addressBarOffset));
+            addressBarInput = (AddressBar) addressBar.getContent();
             bookmarksBar = new BookmarksBar(bookmarksBarOffset, addressBarHeight + 2 * bookmarksBarOffset, 100, bookmarksBarHeight, bookmarksBarOffset);
-            DocumentArea = new DocumentArea(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100);
+            leafPane = new LeafPane(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100);
             controller = new UIController();
-            //DocumentArea =  new Frame(0,addressBarHeight, 100,100);
 
-            this.Frames.add(this.AddressBar);
-            this.Frames.add(this.DocumentArea);
+            this.Frames.add(addressBar);
+            this.Frames.add(this.leafPane);
             this.Frames.add(this.bookmarksBar);
 
-            AddressBar.setUiController(controller);
-            DocumentArea.setController(controller);
+            addressBarInput.setUiController(controller);
+            leafPane.setController(controller);
             bookmarksBar.setUIController(controller);
 
-            controller.addUrlListener(AddressBar);
-            controller.addDocumentListener(DocumentArea);
+            controller.addUrlListener(addressBarInput);
+            controller.addDocumentListener(leafPane);
 
+//            leafPane.setContent(new VerticalScrollBarDecorator(new HorizontalScrollBarDecorator(new UITextInputField(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100))));
             // For testing purposes
 //            AddressBar.changeTextTo("https://people.cs.kuleuven.be/bart.jacobs/browsrtest.html");
         }
@@ -97,12 +98,12 @@ public class Browsr extends CanvasWindow {
      * the possible layouts of a {@code Browsr} object.
      *
      * Classes that extend this method, need to implement
-     * a {@code Render}, {@code handleMouseEvent} and {@code handleKeyEvent} method,
+     * a {@code render}, {@code handleMouseEvent} and {@code handleKeyEvent} method,
      * to handle rendering, clicking and keyboard input of this {@code Browsr} object respectively.
      */
     protected static abstract class Layout {
         /**
-         * Render this {@link Browsr.Layout}.
+         * render this {@link Browsr.Layout}.
          *
          * @param g: the graphics to be rendered.
          */
@@ -136,16 +137,16 @@ public class Browsr extends CanvasWindow {
     /**
      * A {@code Browsr Layout} that represents the
      * regular layout containing a an {@link AddressBar},
-     * a {@link BookmarksBar} and a {@link DocumentArea}.
+     * a {@link BookmarksBar} and a {@link LeafPane}.
      *
      * <p> This layout provides specialised implementations
      * for the {@code handleMouseEvent}, {@code handleKeyEvent}
-     * and {@code Render} methods.</p>
+     * and {@code render} methods.</p>
      */
     protected class RegularLayout extends Layout {
 
         /**
-         * Render this {@code RegularLayout} of
+         * render this {@code RegularLayout} of
          * this {@code Browsr} object.
          *
          * @param g:
@@ -153,7 +154,7 @@ public class Browsr extends CanvasWindow {
          */
         @Override
         void Render(Graphics g) {
-            Frames.forEach(f -> f.Render(g));
+            Frames.forEach(f -> f.render(g));
         }
 
         /**
@@ -195,11 +196,11 @@ public class Browsr extends CanvasWindow {
      *
      * <p> This layout provides specialised implementations
      * for the {@code handleMouseEvent}, {@code handleKeyEvent}
-     * and {@code Render} methods.</p>
+     * and {@code render} methods.</p>
      */
     protected class BookmarksDialogLayout extends Layout {
         /**
-         * Render this {@code BookmarksDialogLayout} of
+         * render this {@code BookmarksDialogLayout} of
          * this {@code Browsr} object.
          *
          * @param g:
@@ -207,7 +208,7 @@ public class Browsr extends CanvasWindow {
          */
         @Override
         void Render(Graphics g) {
-            bookmarksDialog.Render(g);
+            bookmarksDialog.render(g);
         }
 
         /**
@@ -251,11 +252,11 @@ public class Browsr extends CanvasWindow {
      *
      * <p> This layout provides specialised implementations
      * for the {@code handleMouseEvent}, {@code handleKeyEvent}
-     * and {@code Render} methods.</p>
+     * and {@code render} methods.</p>
      */
     protected class SaveDialogLayout extends Layout {
         /**
-         * Render this {@code SaveDialogLayout} of
+         * render this {@code SaveDialogLayout} of
          * this {@code Browsr} object.
          *
          * @param g:
@@ -263,7 +264,7 @@ public class Browsr extends CanvasWindow {
          */
         @Override
         void Render(Graphics g) {
-            saveDialog.Render(g);
+            saveDialog.render(g);
         }
 
         /**
@@ -299,7 +300,7 @@ public class Browsr extends CanvasWindow {
     }
 
     /**
-     * (Re)Render the elements of this Broswr window.
+     * (Re)render the elements of this Browsr window.
      *
      * @param g:
      *       The graphics that will be rendered.
@@ -314,7 +315,7 @@ public class Browsr extends CanvasWindow {
      * and its sub windows.
      *
      * <p>
-     * N.B.: without this method, {@code BookmakrBar} would be rendered with
+     * N.B.: without this method, {@code BookmarksBar} would be rendered with
      *       the given absolute width, and thus one would need to guess the
      *       correct initial size of the window. Using this method, widths are
      *       automatically adjusted: both at initialization and at runtime.
@@ -400,7 +401,7 @@ public class Browsr extends CanvasWindow {
         if (t == null)
             return;
         try {
-            this.AddressBar.changeTextTo((String) t.getTransferData(DataFlavor.stringFlavor));
+            this.addressBarInput.changeTextTo((String) t.getTransferData(DataFlavor.stringFlavor));
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -468,13 +469,13 @@ public class Browsr extends CanvasWindow {
      * A variable that denotes the {@link AddressBar}
      * associated to this UserInterface.Browsr.
      */
-    private userinterface.AddressBar AddressBar;
+    private AddressBar addressBarInput;
 
-     /**
-     * A variable that denotes the {@link DocumentArea}
+    /**
+     * A variable that denotes the {@link LeafPane}
      * associated to this UserInterface.Browsr.
      */
-    private DocumentArea DocumentArea;
+    private LeafPane leafPane;
 
     /**
      * A variable that denotes the {@link UIController}
@@ -492,14 +493,14 @@ public class Browsr extends CanvasWindow {
      * @return the {@link AddressBar} of this {@link Browsr}, for testing/debug purposes
      */
 	public AddressBar getAddressBar() {
-		return this.AddressBar;
+		return this.addressBarInput;
 	}
 	
     /**
-     * @return the {@link DocumentArea} of this {@link Browsr}, for testing/debug purposes
+     * @return the {@link LeafPane} of this {@link Browsr}, for testing/debug purposes
      */
-	public DocumentArea getDocumentArea() {
-		return this.DocumentArea;
+	public LeafPane getDocumentArea() {
+		return this.leafPane;
 	}
 
     /**

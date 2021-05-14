@@ -38,7 +38,7 @@ public class UITextHyperlink extends DocumentCell {
      * @param g: The graphics that will be updated
      */
     @Override
-    public void Render(Graphics g) {
+    public void render(Graphics g) {
         metrics = g.getFontMetrics(hyperlinkFont);
         updateSizes();
         AttributedString link = new AttributedString(text);

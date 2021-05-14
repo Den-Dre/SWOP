@@ -34,12 +34,15 @@ public class BookmarksDialog extends GenericDialogScreen {
         int textSize = getTextSize();
 
         this.bookmarksBar = bookmarksBar;
-        this.nameInput = new UITextInputField(offset, offset,100,textSize, "Name");
-        this.urlInput = new UITextInputField(offset, offset,100,textSize, "URL");
+        this.nameInput = new HorizontalScrollBarDecorator(new UITextInputField(offset, offset,100,textSize, "Name"));
+        this.urlInput = new HorizontalScrollBarDecorator(new UITextInputField(offset, offset,100,textSize, "URL"));
+
+        this.nameInputContents = (UITextInputField) nameInput.getContent();
+        this.urlInputContents = (UITextInputField) urlInput.getContent();
 
         // URL input must be prefilled:
-        urlInput.changeTextTo(currentUrl);
-        this.form = getForm(currentUrl);
+        this.urlInputContents.changeTextTo(currentUrl);
+        this.form = new HorizontalScrollBarDecorator(new VerticalScrollBarDecorator(getForm(currentUrl)));
     }
 
     /**
@@ -49,7 +52,6 @@ public class BookmarksDialog extends GenericDialogScreen {
      *           The {@link String} representation of the URL currently entered in the {@link AddressBar}.
      * @return new UIForm: a {@link UIForm} object that represents the form of this {@code BookmarksDialog}.
      */
-//    UIForm constructForm(String currentUrl) {
     public UIForm getForm(String currentUrl) {
         // Hard coded bookmarks dialog screen
         int offset = getOffset();
@@ -92,13 +94,13 @@ public class BookmarksDialog extends GenericDialogScreen {
     }
 
     /**
-     * Render this {@code BookmarksDialog}.
+     * render this {@code BookmarksDialog}.
      *
      * @param g: The graphics used to render this {@code BookmarksDialog}.
      */
     @Override
-    public void Render(Graphics g) {
-        this.form.Render(g);
+    public void render(Graphics g) {
+        this.form.render(g);
     }
 
 
@@ -123,7 +125,7 @@ public class BookmarksDialog extends GenericDialogScreen {
             return;
         switch (result.getContent()) {
             case "Add Bookmark" ->
-            		bookmarksBar.addBookmark(nameInput.getText(), urlInput.getText());
+            		bookmarksBar.addBookmark(nameInputContents.getText(), urlInputContents.getText());
             case "Cancel" ->  // nothing needs to be done here
                     System.out.println("Cancel pressed.");
         }
@@ -140,7 +142,7 @@ public class BookmarksDialog extends GenericDialogScreen {
      *          The text contained in the "Name" {@link UITextInputField} of this {@code BookmarksDialog}.
      */
     public String getNameInput() {
-        return this.nameInput.getText();
+        return this.nameInputContents.getText();
     }
 
     /**
@@ -150,7 +152,7 @@ public class BookmarksDialog extends GenericDialogScreen {
      *          The text contained in the "Name" {@link UITextInputField} of this {@code BookmarksDialog}.
      */
     public String getURLInput() {
-        return this.urlInput.getText();
+        return this.urlInputContents.getText();
     }
 
     /**
@@ -159,7 +161,7 @@ public class BookmarksDialog extends GenericDialogScreen {
      * displays. The content is contained
      * in a {@link DocumentCell}.
      */
-    private final UIForm form;
+    private final DocumentCellDecorator form;
 
     /**
      * The {@link BookmarksBar} associated
@@ -171,11 +173,15 @@ public class BookmarksDialog extends GenericDialogScreen {
      * The input field which takes a name for
      * the to be created bookmark.
      */
-    private final UITextInputField nameInput;
+    private final HorizontalScrollBarDecorator nameInput;
 
     /**
      * The input field which takes an URL in
      * string form for the to be created bookmark.
      */
-    private final UITextInputField urlInput;
+    private final HorizontalScrollBarDecorator urlInput;
+
+    private final UITextInputField nameInputContents;
+
+    private final UITextInputField urlInputContents;
 }

@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class BookmarksBarTest {
 
-    private DocumentArea area;
+    private LeafPane area;
     private AddressBar addressBar;
     private BookmarksBar bookmarksBar;
     private UIController controller;
@@ -37,7 +37,7 @@ public class BookmarksBarTest {
         // Make a total browsr without the gui class (=browsr.java)
         addressBar = new AddressBar(addressBarOffset, addressBarOffset, 100, addressBarHeight, addressBarOffset);
         bookmarksBar = new BookmarksBar(bookmarksBarOffset, addressBarHeight + 2 * bookmarksBarOffset, 100, bookmarksBarHeight, bookmarksBarOffset);
-        area = new DocumentArea(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100);
+        area = new LeafPane(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100);
         controller = new UIController(); // The document is created within uicontroller
         // Couple the uicontoller to the documentarea and addressbar
         area.setController(controller);
@@ -89,7 +89,7 @@ public class BookmarksBarTest {
     public void verifyUIContents(DocumentCell cell) {
 
         assertNotNull(cell);
-        UITable outerTable = ((UITable) cell);
+        UITable outerTable = (UITable) ((DocumentCellDecorator) cell).getContentWithoutScrollbars();
         List<DocumentCell> outerRow1 = outerTable.getContent().get(0);
         assertEquals("HTML elements partially supported by Browsr:", ((UITextField) outerRow1.get(0)).getText());
 
@@ -120,7 +120,7 @@ public class BookmarksBarTest {
 
     private void errorDocumentIsLoaded() {
         TextSpan error = (TextSpan) Document.getErrorDocument();
-        UITextField areaText = (UITextField) area.getContent();
+        UITextField areaText = (UITextField) ((DocumentCellDecorator) area.getContent()).getContentWithoutScrollbars();
         assertEquals(error.getText(), areaText.getText());
     }
 }
