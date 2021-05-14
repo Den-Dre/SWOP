@@ -95,9 +95,10 @@ public class ScrollBar extends Frame {
         @Override
         void Render(Graphics g) {
             g.setColor(Color.BLACK);
-            g.drawRect(getxPos() + offset, getyPos() - 2, length - 2 * offset, thicknessOuterBar - 1);
+            g.drawRect(getxPos() + offset, getyPos(), length - (4 * offset), thicknessOuterBar);
             g.setColor(currentColor);
-            g.fillRect((int) (getxPos() + 2 * offset + fraction * (length - innerBarLength)), getyPos(), innerBarLength - 4 * offset, thicknessInnerBar);
+            g.fillRoundRect((int) (getxPos() + (2 * offset) + fraction * (length - innerBarLength)),
+                    getyPos()+(thicknessOuterBar)/4, innerBarLength - (8 * offset), thicknessInnerBar, 2, 2);
         }
 
         @Override
@@ -123,9 +124,10 @@ public class ScrollBar extends Frame {
         @Override
         void Render(Graphics g) {
             g.setColor(Color.BLACK);
-            g.drawRect(getxPos()-2*offset, getyPos(), thicknessOuterBar, length-5);
+            g.drawRect(getxPos()-2*offset, getyPos(), thicknessOuterBar, length-(4*offset));
             g.setColor(currentColor);
-            g.fillRect(getxPos()-offset, (int) (getyPos() + offset + fraction * (length - innerBarLength)), thicknessInnerBar, innerBarLength - 4 * offset);
+            g.fillRoundRect(getxPos()-(thicknessOuterBar/4), (int) (getyPos() + (2 * offset) + fraction * (length - innerBarLength)),
+                    thicknessInnerBar, innerBarLength - (8 * offset), 2, 2);
         }
 
         @Override
