@@ -85,7 +85,7 @@ public class Frame {
     }
 
     public boolean outOfArea() {
-        return ((getyPos() - Math.abs(getyOffset())) < getyReference()); //(getxPos() - Math.abs(getxOffset())) < getxReference() |
+        return (getyPos() < getyReference()); //(getxPos() - Math.abs(getxOffset())) < getxReference() |
     }
 
     /**

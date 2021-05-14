@@ -282,7 +282,7 @@ public class UIButton extends DocumentCell{
         int centerY = getyPos()+textHeight;
         int textWidth = g.getFontMetrics().stringWidth(displayText);
         int centerX = getxPos() + (getWidth()-textWidth)/2;
-        g.drawString(displayText, centerX+getxOffset(), centerY+getyOffset());
+        g.drawString(displayText, centerX, centerY);
     }
 
     /**

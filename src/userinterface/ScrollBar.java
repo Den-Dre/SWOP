@@ -3,6 +3,7 @@ package userinterface;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ScrollBar extends Frame {
@@ -13,6 +14,8 @@ public class ScrollBar extends Frame {
     private int length;
     private final int offset = 2;
     private Orientation orientation;
+    private int[] prevMouse;
+    private int[] currentMouse;
 
     public ScrollBar(int x, int y, int length, boolean isHorizontal, double ratio, ScrollListener listener) {
         super(x, y, 0, 0);
@@ -37,20 +40,38 @@ public class ScrollBar extends Frame {
 
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-        if (id != MouseEvent.MOUSE_CLICKED) return;
-        if (!wasClicked(x, y)) return;
-        if (button == MouseEvent.BUTTON1) {
-            fraction += 0.1;
-            if (fraction > 1.0)
-                fraction = 1.0;
-            orientation.moved();
+        orientation.init();
+
+        if (id == MouseEvent.MOUSE_PRESSED) {
+            if (!wasClicked(x, y)) return;
+            prevMouse = new int[] {x, y};
+            currentMouse = new int[] {x, y};
         }
-        else if (button == MouseEvent.BUTTON3) {
-            fraction -= 0.1;
-            if (fraction < 0.0)
-                fraction = 0.0;
-            orientation.moved();
+        else if (id == MouseEvent.MOUSE_DRAGGED) {
+            if (prevMouse == null) return;
+            System.out.println(Arrays.toString(prevMouse));
+            System.out.println(Arrays.toString(currentMouse));
+            currentMouse = new int[] {x, y};
+            orientation.dragged(currentMouse[0]-prevMouse[0], currentMouse[1]-prevMouse[1]);
+            prevMouse = new int[] {x, y};
         }
+        else if (id == MouseEvent.MOUSE_RELEASED) {
+            prevMouse = null;
+            currentMouse = null;
+        }
+
+//        if (button == MouseEvent.BUTTON1) {
+//            fraction += 0.1;
+//            if (fraction > 1.0)
+//                fraction = 1.0;
+//            orientation.moved();
+//        }
+//        else if (button == MouseEvent.BUTTON3) {
+//            fraction -= 0.1;
+//            if (fraction < 0.0)
+//                fraction = 0.0;
+//            orientation.moved();
+//        }
     }
 
     public double getFraction() {
@@ -59,6 +80,10 @@ public class ScrollBar extends Frame {
 
     public void setFraction(double fraction) {
         if (Double.isNaN(fraction)) return;
+        if (fraction > 1.0)
+            fraction = 1.0;
+        if (fraction < 0.0)
+            fraction = 0.0;
         this.fraction = fraction;
         orientation.moved();
     }
@@ -75,6 +100,7 @@ public class ScrollBar extends Frame {
         abstract void Render(Graphics g);
         abstract void init();
         abstract void moved();
+        abstract void dragged(int dx, int dy);
     }
 
     private class Horizontal extends Orientation {
@@ -98,6 +124,13 @@ public class ScrollBar extends Frame {
                 listener.horizontalScrolled();
             }
         }
+
+        @Override
+        void dragged(int dx, int dy) {
+//            int innerX = (int) (getxPos() + fraction * (length - innerBarLength))+dx;
+//            double newFraction = (double) (innerX+innerBarLength)/length;
+            setFraction((double) dx / length + fraction);
+        }
     }
 
     private class Vertical extends Orientation {
@@ -120,6 +153,11 @@ public class ScrollBar extends Frame {
             for (ScrollListener listener : scrollListeners) {
                 listener.verticalScrolled();
             }
+        }
+
+        @Override
+        void dragged(int dx, int dy) {
+            setFraction((double) dy/length + fraction);
         }
     }
 }
