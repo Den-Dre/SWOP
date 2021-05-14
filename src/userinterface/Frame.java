@@ -84,6 +84,10 @@ public class Frame {
         this.hasFocus = newState;
     }
 
+    public boolean outOfArea() {
+        return ((getyPos() - Math.abs(getyOffset())) < getyReference()); //(getxPos() - Math.abs(getxOffset())) < getxReference() |
+    }
+
     /**
      * An integer variable to denote the x coordinate of this Frame.
      */
@@ -94,9 +98,13 @@ public class Frame {
      */
     private int yPos;
 
-    private int basexPos;
+    private int xOffset;
 
-    private int baseyPos;
+    private int yOffset;
+
+    private int xReference = xPos;
+
+    private int yReference = yPos;
     /**
      * A boolean variable to denote whether this Frame has focus right now.
      */
@@ -137,20 +145,36 @@ public class Frame {
         return yPos;
     }
 
-    public int getBasexPos() {
-        return basexPos;
+    public int getxOffset() {
+        return xOffset;
     }
 
-    public int getBaseyPos() {
-        return baseyPos;
+    public int getyOffset() {
+        return yOffset;
     }
 
-    public void setBaseyPos(int baseyPos) {
-        this.baseyPos = baseyPos;
+    public void setyOffset(int yOffset) {
+        this.yOffset = yOffset;
     }
 
-    public void setBasexPos(int basexPos) {
-        this.basexPos = basexPos;
+    public void setxOffset(int xOffset) {
+        this.xOffset = xOffset;
+    }
+
+    public int getxReference() {
+        return xReference;
+    }
+
+    public int getyReference() {
+        return yReference;
+    }
+
+    public void setxReference(int xReference) {
+        this.xReference = xReference;
+    }
+
+    public void setyReference(int yReference) {
+        this.yReference = yReference;
     }
 
     /**

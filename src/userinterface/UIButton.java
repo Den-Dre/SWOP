@@ -249,6 +249,7 @@ public class UIButton extends DocumentCell{
      */
     @Override
     public void Render(Graphics g) {
+        if (outOfArea()) return;
         setWidth(g.getFontMetrics().stringWidth(displayText)*3/2);
         state.Render(g);
     }
@@ -281,7 +282,7 @@ public class UIButton extends DocumentCell{
         int centerY = getyPos()+textHeight;
         int textWidth = g.getFontMetrics().stringWidth(displayText);
         int centerX = getxPos() + (getWidth()-textWidth)/2;
-        g.drawString(displayText, centerX, centerY);
+        g.drawString(displayText, centerX+getxOffset(), centerY+getyOffset());
     }
 
     /**

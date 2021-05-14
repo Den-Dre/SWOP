@@ -33,11 +33,12 @@ public class UITextField extends DocumentCell{
      */
     @Override
     public void Render(Graphics g) {
+        if (outOfArea()) return;
         metrics = g.getFontMetrics(textFieldFont);
         updateSizes();
         g.setColor(textFieldColor);
         g.setFont(textFieldFont);
-        g.drawString(textField, getxPos(), getyPos()+textHeight);
+        g.drawString(textField, getxPos()+getxOffset(), getyPos()+textHeight+getyOffset());
         // Draw a rectangle around the text for debugging purposes
         //g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
     }

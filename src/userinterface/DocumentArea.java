@@ -3,14 +3,13 @@ package userinterface;
 import domainlayer.*;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * A class to represent the portion of Broswr that renders the document
  */
-public class DocumentArea extends Frame implements DocumentListener {
+public class DocumentArea extends Frame implements DocumentListener, ScrollListener {
     /**
      * Construct a {@code DocumentArea} with the given parameters.
      *
@@ -212,7 +211,8 @@ public class DocumentArea extends Frame implements DocumentListener {
     public void Render(Graphics g) {
         content.Render(g);
         g.setColor(Color.green);
-        //g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
+        g.drawRect(getxPos(), getyPos(), getWidth()-10, getHeight()-10);
+        verticalScrollBar.Render(g);
     }
 
     /**
@@ -241,6 +241,7 @@ public class DocumentArea extends Frame implements DocumentListener {
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
         //if (button != MouseEvent.BUTTON1) return;
         // if (id != MouseEvent.MOUSE_CLICKED) return;
+        verticalScrollBar.handleMouse(id, x, y, clickCount, button, modifiersEx);
         ReturnMessage result = content.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
         linkPressed(result);
     }
@@ -270,6 +271,7 @@ public class DocumentArea extends Frame implements DocumentListener {
         try{
             ContentSpan newContentSpan = controller.getContentSpan();
             this.setContent(this.translateToUIElements(newContentSpan));
+            verticalScrollBar.ratioChanged((double) content.getMaxHeight()/getHeight());
         }
         catch(Exception e){
             System.out.print(e);
@@ -293,6 +295,46 @@ public class DocumentArea extends Frame implements DocumentListener {
                 controller.loadDocumentFromForm(link.getContent(), link.getContentList());
                 break;
         }
+    }
+
+    @Override
+    public void horizontalScrolled() {
+
+    }
+
+    @Override
+    public void verticalScrolled() {
+        double newFraction = verticalScrollBar.getFraction();
+        double totalHeight = content.getMaxHeight();
+        if (totalHeight > getHeight()) {
+            int newYBase = - (int) Math.round((newFraction * (totalHeight - getHeight())));
+            content.setyOffset(newYBase);
+        }
+    }
+
+
+    @Override
+    public void setxPos(int xPos) {
+        super.setxPos(xPos);
+        verticalScrollBar.setxPos(getxPos());
+    }
+
+    @Override
+    public void setyPos(int yPos) {
+        super.setyPos(yPos);
+        verticalScrollBar.setyPos(getyPos());
+    }
+
+    @Override
+    public void setWidth(int newWidth) {
+        super.setWidth(newWidth);
+        verticalScrollBar.setxPos(getWidth());
+    }
+
+    @Override
+    public void setHeight(int newHeight) {
+        super.setHeight(newHeight);
+        verticalScrollBar.setHeight(getHeight());
     }
 
     /**
@@ -340,6 +382,9 @@ public class DocumentArea extends Frame implements DocumentListener {
      * The content that is represented by this DocumentArea.
      */
     private DocumentCell content;
+
+    private final ScrollBar verticalScrollBar = new ScrollBar(getxPos()+getWidth(), getyPos(),
+            getHeight(), false, 1.0, this);
 }
 
 

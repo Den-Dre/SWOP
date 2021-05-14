@@ -1,52 +1,38 @@
 package userinterface;
 
-import domainlayer.DocumentListener;
-
 import java.awt.*;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class ScrollBar extends Frame {
-    private List<ScrollListener> scrollListeners = new ArrayList<>();
     private final static int thicknessOuterBar = 8;
     private final static int thicknessInnerBar = 4;
     private double fraction = 0.0;
     private int innerBarLength;
     private int length;
-    private final boolean isHorizontal;
     private final int offset = 2;
+    private Orientation orientation;
 
     public ScrollBar(int x, int y, int length, boolean isHorizontal, double ratio, ScrollListener listener) {
         super(x, y, 0, 0);
-        int width = thicknessOuterBar;
-        int height = length;
-        if (isHorizontal) {
-            width = length;
-            height = thicknessOuterBar;
-        }
-        setHeight(height);
-        setWidth(width);
+        if (isHorizontal)
+            orientation = new Horizontal();
+        else
+            orientation = new Vertical();
+        orientation.init();
         innerBarLength = (int) Math.round(length/ratio);
         this.length = length;
-        scrollListeners.add(listener);
-        this.isHorizontal = isHorizontal;
+        orientation.addListener(listener);
     }
 
     @Override
     public void Render(Graphics g) {
-        g.drawRect(getxPos()+offset, getyPos()-2, getWidth()-2*offset, getHeight()-1);
-        g.setColor(Color.GRAY);
-        g.fillRect((int) (getxPos()+2*offset+fraction*(length-innerBarLength)), getyPos(), innerBarLength-4*offset, thicknessInnerBar);
+        orientation.Render(g);
     }
 
-    @Override
-    public void setWidth(int newWidth) {
-        super.setWidth(newWidth);
-        if (isHorizontal)
-            length = newWidth;
+    public void setLength(int newLength) {
+        length = newLength;
     }
 
     @Override
@@ -57,19 +43,13 @@ public class ScrollBar extends Frame {
             fraction += 0.1;
             if (fraction > 1.0)
                 fraction = 1.0;
-            moved();
+            orientation.moved();
         }
         else if (button == MouseEvent.BUTTON3) {
             fraction -= 0.1;
             if (fraction < 0.0)
                 fraction = 0.0;
-            moved();
-        }
-    }
-
-    private void moved() {
-        for (ScrollListener listener : scrollListeners) {
-            listener.scrolled();
+            orientation.moved();
         }
     }
 
@@ -80,12 +60,66 @@ public class ScrollBar extends Frame {
     public void setFraction(double fraction) {
         if (Double.isNaN(fraction)) return;
         this.fraction = fraction;
-        moved();
+        orientation.moved();
     }
 
     public void ratioChanged(double newRatio) {
         if (newRatio < 1.0)
             newRatio = 1.0;
         innerBarLength = (int) Math.round(length/newRatio);
+    }
+
+    private abstract static class Orientation {
+        final List<ScrollListener> scrollListeners = new ArrayList<>();
+        void addListener(ScrollListener listener) { scrollListeners.add(listener);}
+        abstract void Render(Graphics g);
+        abstract void init();
+        abstract void moved();
+    }
+
+    private class Horizontal extends Orientation {
+        @Override
+        void Render(Graphics g) {
+            g.setColor(Color.BLACK);
+            g.drawRect(getxPos() + offset, getyPos() - 2, length - 2 * offset, thicknessOuterBar - 1);
+            g.setColor(Color.GRAY);
+            g.fillRect((int) (getxPos() + 2 * offset + fraction * (length - innerBarLength)), getyPos(), innerBarLength - 4 * offset, thicknessInnerBar);
+        }
+
+        @Override
+        void init() {
+            setHeight(thicknessOuterBar);
+            setWidth(length);
+        }
+
+        @Override
+        void moved() {
+            for (ScrollListener listener : scrollListeners) {
+                listener.horizontalScrolled();
+            }
+        }
+    }
+
+    private class Vertical extends Orientation {
+        @Override
+        void Render(Graphics g) {
+            g.setColor(Color.BLACK);
+            g.drawRect(getxPos()-2*offset, getyPos(), thicknessOuterBar, length-5);
+            g.setColor(Color.GRAY);
+            g.fillRect(getxPos()-offset, (int) (getyPos() + offset + fraction * (length - innerBarLength)), thicknessInnerBar, innerBarLength - 4 * offset);
+        }
+
+        @Override
+        void init() {
+            setHeight(length);
+            setWidth(thicknessOuterBar);
+        }
+
+        @Override
+        void moved() {
+            for (ScrollListener listener : scrollListeners) {
+                listener.verticalScrolled();
+            }
+        }
     }
 }

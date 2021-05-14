@@ -132,6 +132,30 @@ public class UIForm extends DocumentCell {
         formContent.setxPos(xPos);
     }
 
+    @Override
+    public void setxOffset(int xOffset) {
+        super.setxOffset(xOffset);
+        formContent.setxOffset(xOffset);
+    }
+
+    @Override
+    public void setyOffset(int yOffset) {
+        super.setyOffset(yOffset);
+        formContent.setyOffset(yOffset);
+    }
+
+    @Override
+    public void setxReference(int xReference) {
+        super.setxReference(xReference);
+        formContent.setxReference(xReference);
+    }
+
+    @Override
+    public void setyReference(int yReference) {
+        super.setyReference(yReference);
+        formContent.setyReference(yReference);
+    }
+
     /**
      * Get the {@link DocumentCell} encapsulated in this {@code UIForm}.
      *

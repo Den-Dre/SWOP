@@ -1,5 +1,6 @@
 package userinterface;
 
 public interface ScrollListener {
-    void scrolled();
+    void horizontalScrolled();
+    void verticalScrolled();
 }

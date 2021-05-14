@@ -39,6 +39,7 @@ public class UIHyperlink extends UITextHyperlink{
      */
     @Override
     public void Render(Graphics g) {
+        if (outOfArea()) return;
         metrics = g.getFontMetrics(hyperlinkFont);
         updateSizes();
         g.setColor(hyperlinkColor);
@@ -48,7 +49,7 @@ public class UIHyperlink extends UITextHyperlink{
         link.addAttribute(TextAttribute.FONT, hyperlinkFont);
         link.addAttribute(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
 
-        g.drawString(link.getIterator(), getxPos(), getyPos()+super.getMaxHeight());
+        g.drawString(link.getIterator(), getxPos()+getxOffset(), getyPos()+super.getMaxHeight()+getyOffset());
 
         // Draw a rectangle around the text for debugging purposes
         //g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());

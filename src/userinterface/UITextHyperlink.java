@@ -39,12 +39,14 @@ public class UITextHyperlink extends DocumentCell {
      */
     @Override
     public void Render(Graphics g) {
+        if (outOfArea()) return;
         metrics = g.getFontMetrics(hyperlinkFont);
         updateSizes();
         AttributedString link = new AttributedString(text);
         g.setColor(Color.BLUE);
         link.addAttribute(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-        g.drawString(link.getIterator(), getxPos(), getyPos()+textHeight);
+        g.drawString(link.getIterator(), getxPos()+getxOffset(), getyPos()+textHeight+getyOffset());
+        //g.drawString(link.getIterator(), getxPos()+getxOffset(), getyPos()+super.getMaxHeight()+getyOffset());
 
         // Draw a rectangle around the text for debugging purposes
 //        g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());

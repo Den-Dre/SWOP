@@ -27,6 +27,9 @@ public class UITable extends DocumentCell{
         // => 2. Set the dimensions of the table contents
         setColumnWidths();
         setRowHeights();
+
+        setxReference(x);
+        setyReference(y);
     }
 
     /**
@@ -207,6 +210,7 @@ public class UITable extends DocumentCell{
     public void setxPos(int xPos) {
         super.setxPos(xPos);
         setColumnWidths();
+        setxReference(xPos);
     }
 
     /**
@@ -219,6 +223,47 @@ public class UITable extends DocumentCell{
     public void setyPos(int yPos) {
         super.setyPos(yPos);
         setRowHeights();
+        setyReference(yPos);
+    }
+
+    @Override
+    public void setxReference(int xReference) {
+        //super.setxReference(xReference);
+        for (ArrayList<DocumentCell> row : grid) {
+            for (DocumentCell cell : row) {
+                cell.setxReference(xReference);
+            }
+        }
+    }
+
+    @Override
+    public void setyReference(int yReference) {
+        //super.setyReference(yReference);
+        for (ArrayList<DocumentCell> row : grid) {
+            for (DocumentCell cell : row) {
+                cell.setyReference(yReference);
+            }
+        }
+    }
+
+    @Override
+    public void setxOffset(int xOffset) {
+        super.setxOffset(xOffset);
+        for (ArrayList<DocumentCell> row : grid) {
+            for (DocumentCell cell : row) {
+                cell.setxOffset(xOffset);
+            }
+        }
+    }
+
+    @Override
+    public void setyOffset(int yOffset) {
+        super.setyOffset(yOffset);
+        for (ArrayList<DocumentCell> row : grid) {
+            for (DocumentCell cell : row) {
+                cell.setyOffset(yOffset);
+            }
+        }
     }
 
     /**
