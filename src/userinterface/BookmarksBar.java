@@ -12,22 +12,42 @@ import java.util.ArrayList;
  *  on one of the bookmarks to navigate to the
  *  associated URL.
  */
-public class BookmarksBar extends Frame {
+public class BookmarksBar extends AbstractFrame {
     /**
-     * Initialise this Frame with the given parameters.
+     * Initialise this AbstractFrame with the given parameters.
      *
-     * @param x      : The x coordinate of this Frame.
-     * @param y      : The y coordinate of this Frame.
-     * @param width  : The width of this Frame
-     * @param height : The height of this Frame
+     * @param x      : The x coordinate of this AbstractFrame.
+     * @param y      : The y coordinate of this AbstractFrame.
+     * @param width  : The width of this AbstractFrame
+     * @param height : The height of this AbstractFrame
      * @param offset : The distance that will be used as padding in-between saved bookmarks.
-     * @throws IllegalDimensionException: When one of the dimensions of this Frame is negative
+     * @throws IllegalDimensionException: When one of the dimensions of this AbstractFrame is negative
      */
     public BookmarksBar(int x, int y, int width, int height, int offset) throws IllegalDimensionException {
         super(x, y, width, height);
         this.yCoordinate = y;
         this.height = height;
         this.offset = offset;
+    }
+
+    public BookmarksBar(BookmarksBar bar) {
+        super(bar.getxPos(), bar.getyPos(), bar.getWidth(), bar.getHeight());
+        this.yCoordinate = bar.yCoordinate;
+        this.height = bar.height;
+        this.offset = bar.offset;
+        // Keep a reference to the same controller object
+        this.controller = bar.controller;
+    }
+
+    /**
+     * Create a deep copy of this {@code AbstractFrame} object.
+     *
+     * @return copy: a deep copied version of this {@code AbstractFrame}
+     * object which thus does not point to the original object.
+     */
+    @Override
+    protected BookmarksBar deepCopy() {
+        return new BookmarksBar(this);
     }
 
     /**

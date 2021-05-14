@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * A class to represent a graphical
@@ -48,6 +49,21 @@ public class UITextInputField extends DocumentCell{
         super(x, y, width, height);
         this.name = name;
     }
+
+    public UITextInputField(UITextInputField textInputField) {
+        super(textInputField.getxPos(), textInputField.getyPos(), textInputField.getMaxWidth(), textInputField.getMaxHeight());
+        this.name = textInputField.name;
+        this.text = textInputField.text;
+        this.cursor = textInputField.cursor;
+        this.doSelect = textInputField.doSelect;
+        this.font = textInputField.font;
+        this.metrics = textInputField.metrics;
+        this.cursorPos = Arrays.copyOf(textInputField.cursorPos, textInputField.cursorPos.length);
+        this.textHeight = textInputField.textHeight;
+        this.selectStartPos = textInputField.selectStartPos;
+        this.selectStart = textInputField.selectStart;
+    }
+
 
     /**
      * Renders this {@code AddressBar} using the given {@code Graphics} parameter

@@ -39,7 +39,7 @@ public class Document {
     public Document() { }
 
     /**
-     * Initialize a new Document given a url, and two DocumentListeners representing the LeafPane and AddressBar
+     * Initialize a new Document given a url, and two DocumentListeners representing the ContentFrame and AddressBar
      *
      * @param url
      *        The url for this document
@@ -249,8 +249,8 @@ public class Document {
      */
     public void saveDocument(String fileName) throws Exception {
         if (contentSpan instanceof TextSpan && ((TextSpan) contentSpan).getText().equals(((TextSpan) getWelcomeDocument()).getText())) {
-            // We should only save a document when that document is currently *also* displayed in the LeafPane
-            // Thus, if there's a URL typed in the AddressBar, but the Welcome Document is still displayed in the LeafPane,
+            // We should only save a document when that document is currently *also* displayed in the ContentFrame
+            // Thus, if there's a URL typed in the AddressBar, but the Welcome Document is still displayed in the ContentFrame,
             // no document should be saved.
             throw new Exception("Can't get the source code of a local Document.");
         } else {
@@ -271,13 +271,10 @@ public class Document {
 
             // Check whether the downloaded document only consists of HTML-code
             // that our Browsr can parse.
-<<<<<<< HEAD
-            BrowsrDocumentValidator.assertIsValidBrowsrDocument(document);
-=======
+
             // If it's not valid, `buildContentSpan` will throw an exception,
             // causing the method that called `saveDocument` to handle the exception in its `catch`-block
             ContentSpanBuilder.buildContentSpan(document);
->>>>>>> decorator
 
             // Only if it is, we save the document to a file
             outputWriter.write(document);

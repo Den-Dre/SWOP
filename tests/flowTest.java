@@ -12,7 +12,7 @@ import java.awt.event.*;
 @DisplayName("total program flow when typing in addressbar")
 public class flowTest {
 
-    private LeafPane area;
+    private ContentFrame area;
     private AddressBar bar;
     private UIController controller;
     private final String goodUrl = "https://people.cs.kuleuven.be/bart.jacobs/browsrtest.html";
@@ -27,7 +27,7 @@ public class flowTest {
     @BeforeEach
     void setup(){
         // Make a total browsr without the gui class (=browsr.java)
-        area = new LeafPane(0,20,100,100);
+        area = new ContentFrame(0,20,100,100);
         bar = new AddressBar(0,0,100,20,0);
         controller = new UIController(); // The document is created within uicontroller
         // Couple the uicontoller to the documentarea and addressbar

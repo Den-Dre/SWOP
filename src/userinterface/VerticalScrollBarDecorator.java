@@ -4,17 +4,32 @@ import java.awt.*;
 
 public class VerticalScrollBarDecorator extends DocumentCellDecorator {
     /**
-     * Initialise this Frame with the given parameters.
+     * Initialise this AbstractFrame with the given parameters.
      *
      * @param cell: The {@link DocumentCell} to be decorated.
-     * @throws IllegalDimensionException: When one of the dimensions of this Frame is negative
+     * @throws IllegalDimensionException: When one of the dimensions of this AbstractFrame is negative
      */
     public VerticalScrollBarDecorator(DocumentCell cell) throws IllegalDimensionException {
         super(cell);
     }
 
+    public VerticalScrollBarDecorator(VerticalScrollBarDecorator decorator) {
+        super(decorator.getContent().deepCopy());
+    }
+
     /**
-     * render the contents of this Frame.
+     * Create a deep copy of this {@code VerticalScrollBarDecorator} object.
+     *
+     * @return copy: a deep copied version of this {@code VerticalScrollBarDecorator}
+     * object which thus does not point to the original object.
+     */
+    @Override
+    protected VerticalScrollBarDecorator deepCopy() {
+        return new VerticalScrollBarDecorator(this);
+    }
+
+    /**
+     * render the contents of this AbstractFrame.
      *
      * @param g : The graphics to be rendered.
      */

@@ -27,6 +27,12 @@ public class UIButton extends DocumentCell{
         this.returnText = returnText;
     }
 
+    public UIButton(UIButton button) {
+        super(button.getxPos(), button.getyPos(), button.getWidth(), button.getHeight());
+        this.displayText = button.getDisplayText();
+        this.returnText = button.getReturnText();
+    }
+
     /**
      * A {@link State} variable that represents the state of a
      * button that is not pressed in.
@@ -302,5 +308,17 @@ public class UIButton extends DocumentCell{
      */
     public String getDisplayText() {
         return displayText;
+    }
+
+    /**
+     * Get the text that is returned when
+     * this {@code UIButton} is clicked.
+     *
+     * @return returnText: the text that is
+     *                     returned when this {@code UIButton} is clicked.
+     *
+     */
+    public String getReturnText() {
+        return this.returnText;
     }
 }

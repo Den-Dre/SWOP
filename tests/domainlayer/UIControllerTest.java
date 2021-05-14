@@ -56,7 +56,7 @@ public class UIControllerTest {
     void newDocument() {
         UIController controller = new UIController();
         AddressBar bar = new AddressBar(0,0,10,10,0);
-        LeafPane area = new LeafPane(0,10,10,10);
+        ContentFrame area = new ContentFrame(0,10,10,10);
         Document document = new Document("www.test.be", area, bar);
 
         // set the document of controller to be the new document
@@ -69,7 +69,7 @@ public class UIControllerTest {
         // Setup
         UIController controller = new UIController();
         AddressBar bar = new AddressBar(0,0,10,10,0);
-        LeafPane area = new LeafPane(0,10,10,10);
+        ContentFrame area = new ContentFrame(0,10,10,10);
         bar.setUiController(controller);
         area.setController(controller);
         Document document = new Document();

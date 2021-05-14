@@ -25,7 +25,7 @@ import javax.print.Doc;
 class UrlScenTest {
 
     private AddressBar bar;
-    private LeafPane doc;
+    private Pane doc;
     private UIController ctrl;
     private int offset = 5;
     private final char undefChar = KeyEvent.CHAR_UNDEFINED;
@@ -47,7 +47,7 @@ class UrlScenTest {
         bar = browsr.getAddressBar();
         doc = browsr.getDocumentArea();
         
-		ctrl = doc.controller;
+		ctrl = doc.getController();
 
     }
 	
@@ -197,7 +197,7 @@ class UrlScenTest {
 	@DisplayName("user clicks outside AddressBar")
 	void clickOutsideBar() {
         assertFalse(bar.hasFocus);
-        // click inside UserInterface.Frame
+        // click inside UserInterface.AbstractFrame
         bar.handleMouse(mouseClick, 10,15,1, leftMouse,0);
         assertTrue(bar.hasFocus);
         // click outside addressbar

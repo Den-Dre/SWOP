@@ -1,5 +1,6 @@
 package userinterface;
 
+import javax.print.Doc;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -7,7 +8,7 @@ import java.util.ArrayList;
  * A class to represent individual UI
  * elements that need to be rendered.
  */
-public class DocumentCell extends Frame {
+public class DocumentCell extends AbstractFrame {
 
 	/**
      * Initialise this DocumentCell with the given parameters.
@@ -20,6 +21,21 @@ public class DocumentCell extends Frame {
      */
     public DocumentCell(int x, int y, int width, int height) throws IllegalDimensionException {
         super(x, y, width, height);
+    }
+
+    public DocumentCell(DocumentCell documentCell) {
+        super(documentCell.getxPos(), documentCell.getyPos(), documentCell.getWidth(), documentCell.getHeight());
+    }
+
+    /**
+     * Create a deep copy of this {@code AbstractFrame} object.
+     *
+     * @return copy: a deep copied version of this {@code AbstractFrame}
+     * object which thus does not point to the original object.
+     */
+    @Override
+    protected DocumentCell deepCopy() {
+        return new DocumentCell(this);
     }
 
     /**

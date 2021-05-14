@@ -7,7 +7,7 @@ public abstract class DocumentCellDecorator extends DocumentCell {
      * Initialise this decorator with the given parameters.
      *
      * @param cell: The {@link DocumentCell} to be decorated
-     * @throws IllegalDimensionException: When one of the dimensions of this Frame is negative
+     * @throws IllegalDimensionException: When one of the dimensions of this AbstractFrame is negative
      */
     public DocumentCellDecorator(DocumentCell cell) throws IllegalDimensionException {
         super(cell.getxPos(), cell.getyPos(), cell.getWidth(), cell.getHeight());
@@ -29,7 +29,7 @@ public abstract class DocumentCellDecorator extends DocumentCell {
     }
 
     /**
-     * Handle mouseEvents. Determine if this Frame was pressed and do the right actions.
+     * Handle mouseEvents. Determine if this AbstractFrame was pressed and do the right actions.
      *
      * @param id          : The type of mouse activity
      * @param x           : The x coordinate of the mouse activity
@@ -75,7 +75,7 @@ public abstract class DocumentCellDecorator extends DocumentCell {
 
     /**
      * This method handles resizes.
-     * It makes sure the Frame is adjusted in width when the window shrinks or grows.
+     * It makes sure the AbstractFrame is adjusted in width when the window shrinks or grows.
      * It does not change its height (e.g. look at Firefox).
      *
      * <p>N.B.: without this method, {@code BookmarksBar} would be rendered with
@@ -83,8 +83,8 @@ public abstract class DocumentCellDecorator extends DocumentCell {
      * correct initial size of the window. Using this method, widths are
      * automatically adjusted: both at initialization and at runtime.</p>
      *
-     * @param newWindowWidth  : parameter containing the new window-width of this Frame.
-     * @param newWindowHeight : parameter containing the new window-height of this Frame.
+     * @param newWindowWidth  : parameter containing the new window-width of this AbstractFrame.
+     * @param newWindowHeight : parameter containing the new window-height of this AbstractFrame.
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
@@ -96,10 +96,10 @@ public abstract class DocumentCellDecorator extends DocumentCell {
     // after adding a `DocumentCellDecorator` to a UITable,
     // but the coordinates of `cellToBeDecorated` weren't updated yet.
     /**
-     * Set the x position of this Frame to the given value
+     * Set the x position of this AbstractFrame to the given value
      *
      * @param xPos :
-     *             The value this Frame's x position should be set to.
+     *             The value this AbstractFrame's x position should be set to.
      */
     @Override
     public void setxPos(int xPos) {
@@ -108,10 +108,10 @@ public abstract class DocumentCellDecorator extends DocumentCell {
     }
 
     /**
-     * Set the y position of this Frame to the given value
+     * Set the y position of this AbstractFrame to the given value
      *
      * @param yPos :
-     *             The value this Frame's y position should be set to.
+     *             The value this AbstractFrame's y position should be set to.
      */
     @Override
     public void setyPos(int yPos) {

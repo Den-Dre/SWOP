@@ -21,7 +21,7 @@ public class BookmarksDialogTest {
 
     private Browsr browsr;
     private AddressBar bar;
-    private LeafPane area;
+    private Pane area;
     private BookmarksBar bookmarksBar;
     private UIController controller;
 
@@ -36,7 +36,8 @@ public class BookmarksDialogTest {
 
         bar = new AddressBar(addressBarOffset, addressBarOffset, 100, addressBarHeight, addressBarOffset);
         bookmarksBar = new BookmarksBar(bookmarksBarOffset, addressBarHeight + 2 * bookmarksBarOffset, 100, bookmarksBarHeight, bookmarksBarOffset);
-        area = new LeafPane(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100);
+        ContentFrame areaContents = new ContentFrame(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100);
+        area = new LeafPane(areaContents, null);
 
         // Couple the uicontoller to the documentarea and addressbar
         controller = new UIController(); // The document is created within uicontroller

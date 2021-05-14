@@ -32,7 +32,7 @@ public class SaveDialogTest {
 
         bar = new AddressBar(addressBarOffset, addressBarOffset, 100, addressBarHeight, addressBarOffset);
         bookmarksBar = new BookmarksBar(bookmarksBarOffset, addressBarHeight + 2 * bookmarksBarOffset, 100, bookmarksBarHeight, bookmarksBarOffset);
-        LeafPane area = new LeafPane(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100);
+        ContentFrame area = new ContentFrame(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100);
 
         // Couple the uicontoller to the documentarea and addressbar
         controller = new UIController(); // The document is created within uicontroller

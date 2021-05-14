@@ -1,6 +1,9 @@
 package userinterface;
 
+import domainlayer.Document;
+
 import java.awt.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -27,6 +30,24 @@ public class UITable extends DocumentCell{
         // => 2. Set the dimensions of the table contents
         setColumnWidths();
         setRowHeights();
+    }
+
+    public UITable(UITable table) {
+        super(table.getxPos(), table.getyPos(), table.getMaxWidth(), table.getMaxHeight());
+        this.grid = gridDeepCopy(table.grid);
+        setColumnWidths();
+        setRowHeights();
+    }
+
+    private ArrayList<ArrayList<DocumentCell>> gridDeepCopy(ArrayList<ArrayList<DocumentCell>> grid) {
+        ArrayList<ArrayList<DocumentCell>> result = new ArrayList<>();
+        for (ArrayList<DocumentCell> row : grid) {
+            ArrayList<DocumentCell> newRow = new ArrayList<>();
+            for (DocumentCell cell : row)
+                newRow.add(cell.deepCopy());
+            result.add(newRow);
+        }
+        return result;
     }
 
     /**

@@ -15,6 +15,12 @@ import java.util.ArrayList;
 public class UIController {
 
     /**
+     * The {@link DocumentKeeper} that is linked
+     * to this {@code Controller}.
+     */
+    private final DocumentKeeper documentsKeeper;
+
+    /**
      * The {@link Document} that is linked
      * to this {@code Controller}.
      */
@@ -31,8 +37,9 @@ public class UIController {
      * with the given {@link Document}.
      */
     public UIController() {
-        this.document = new Document();
         this.bookmarksURLKeeper = new BookmarksURLKeeper();
+        this.documentsKeeper = new DocumentKeeper(new Document());
+        this.document = documentsKeeper.getDocument();
     }
 
 
@@ -162,6 +169,18 @@ public class UIController {
      */
     public void addHref(String name, String href) {
         this.bookmarksURLKeeper.addBookmarksHref(name, href);
+    }
+
+    public void addPaneDocument(String name) {
+        this.documentsKeeper.addPaneDocument(name);
+    }
+
+    public void removePaneDocument(String name) {
+        this.documentsKeeper.removePaneDocument(name);
+    }
+
+    public ContentSpan getPaneDocument(String name) {
+        return this.documentsKeeper.getPaneContentSpan(name);
     }
 
     /**

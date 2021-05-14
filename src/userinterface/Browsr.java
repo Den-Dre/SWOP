@@ -12,13 +12,13 @@ import java.util.ArrayList;
 
 /**
  * A class to represent the UserInterface.Browsr window,
- * with an {@link AddressBar} and a {@link LeafPane}.
+ * with an {@link AddressBar} and a {@link ContentFrame}.
  */
 public class Browsr extends CanvasWindow {
     /**
      * Initializes this {@code Browsr} as CanvasWindow object:
      * the initial layout consists of: an {@link AddressBar},
-     * a {@link BookmarksBar} and a {@link LeafPane}
+     * a {@link BookmarksBar} and a {@link ContentFrame}
      *
      * @param title:
      *            The Window title
@@ -36,7 +36,7 @@ public class Browsr extends CanvasWindow {
      * <ul>
      *     <li>an {@link AddressBar} object where URL's are entered,</li>
      *     <li>a {@link BookmarksBar} object to display the bookmarks added by the user, and </li>
-     *     <li>a {@link LeafPane} object to display the content of the requested sites.</li>
+     *     <li>a {@link ContentFrame} object to display the content of the requested sites.</li>
      *     <li>a {@link UIController} which is linked to the above three objects. </li>
      * </ul>
      */
@@ -61,19 +61,20 @@ public class Browsr extends CanvasWindow {
             HorizontalScrollBarDecorator addressBar = new HorizontalScrollBarDecorator(new AddressBar(addressBarOffset, addressBarOffset, 100, addressBarHeight, addressBarOffset));
             addressBarInput = (AddressBar) addressBar.getContent();
             bookmarksBar = new BookmarksBar(bookmarksBarOffset, addressBarHeight + 2 * bookmarksBarOffset, 100, bookmarksBarHeight, bookmarksBarOffset);
-            leafPane = new LeafPane(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100);
+            ContentFrame rootPaneContents = new ContentFrame(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100);
+            rootPane = new LeafPane(rootPaneContents, null);
             controller = new UIController();
 
             this.Frames.add(addressBar);
-            this.Frames.add(this.leafPane);
+            this.Frames.add(this.rootPane);
             this.Frames.add(this.bookmarksBar);
 
             addressBarInput.setUiController(controller);
-            leafPane.setController(controller);
+            rootPane.setController(controller);
             bookmarksBar.setUIController(controller);
 
             controller.addUrlListener(addressBarInput);
-            controller.addDocumentListener(leafPane);
+            controller.addDocumentListener(rootPane);
 
 //            leafPane.setContent(new VerticalScrollBarDecorator(new HorizontalScrollBarDecorator(new UITextInputField(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100))));
             // For testing purposes
@@ -137,7 +138,7 @@ public class Browsr extends CanvasWindow {
     /**
      * A {@code Browsr Layout} that represents the
      * regular layout containing a an {@link AddressBar},
-     * a {@link BookmarksBar} and a {@link LeafPane}.
+     * a {@link BookmarksBar} and a {@link ContentFrame}.
      *
      * <p> This layout provides specialised implementations
      * for the {@code handleMouseEvent}, {@code handleKeyEvent}
@@ -324,9 +325,8 @@ public class Browsr extends CanvasWindow {
     @Override
     protected void handleResize() {
         //ook laten weten aan de frames om zichzelf intern aan te passen!
-        for (userinterface.Frame frame : Frames) {
+        for (AbstractFrame frame : Frames)
             frame.handleResize(this.getWidth(), this.getHeight());
-        }
         repaint();
     }
 
@@ -362,7 +362,13 @@ public class Browsr extends CanvasWindow {
                 handleBookmarksDialog();
             else if (keyCode == 83 && layout instanceof RegularLayout) // 83 == s
                 handleSaveDialog();
+            else if (keyCode == 72)
+                splitHorizontally();
             else if (keyCode == 86)
+                splitVertically();
+            else if (keyCode == 88)
+                closeCurrentLeafPane();
+            else if (keyCode == 80) // 80 == p
                 handlePaste();
         }
         this.layout.handleKeyEvent(id, keyCode, keyChar, modifiersEx);
@@ -390,6 +396,29 @@ public class Browsr extends CanvasWindow {
         String currentUrl = this.getAddressBar().getURL();
         this.saveDialog = new SaveDialog(this.getWidth(), this.getHeight(), currentUrl, this);
     }
+
+    /**
+     * Takes the necessary actions to split
+     * the {@link ContentFrame} that currently
+     * has focus horizontally.
+     */
+    private void splitHorizontally() {
+        rootPane.getFocusedPane().handleHorizontalSplit();
+    }
+
+    /**
+     * Takes the necessary actions to split
+     * the {@link ContentFrame} that currently
+     * has focus vertically.
+     */
+    private void splitVertically() {}
+
+    /**
+     * Takes the necessary actions to close
+     * the {@link ContentFrame} that currently
+     * has focus.
+     */
+    private void closeCurrentLeafPane() {}
 
     /**
      * For testing purposes: paste contents
@@ -472,10 +501,10 @@ public class Browsr extends CanvasWindow {
     private AddressBar addressBarInput;
 
     /**
-     * A variable that denotes the {@link LeafPane}
+     * A variable that denotes the {@link ContentFrame}
      * associated to this UserInterface.Browsr.
      */
-    private LeafPane leafPane;
+    private Pane rootPane;
 
     /**
      * A variable that denotes the {@link UIController}
@@ -485,9 +514,9 @@ public class Browsr extends CanvasWindow {
 
     /**
      * An {@link ArrayList} to hold all the
-     * {@link Frame}'s associated to this UserInterface.Browsr.
+     * {@link AbstractFrame}'s associated to this UserInterface.Browsr.
      */
-    private final ArrayList<userinterface.Frame> Frames = new ArrayList<>();
+    private final ArrayList<AbstractFrame> Frames = new ArrayList<>();
     
     /**
      * @return the {@link AddressBar} of this {@link Browsr}, for testing/debug purposes
@@ -497,10 +526,10 @@ public class Browsr extends CanvasWindow {
 	}
 	
     /**
-     * @return the {@link LeafPane} of this {@link Browsr}, for testing/debug purposes
+     * @return the {@link ContentFrame} of this {@link Browsr}, for testing/debug purposes
      */
-	public LeafPane getDocumentArea() {
-		return this.leafPane;
+	public Pane getDocumentArea() {
+		return this.rootPane;
 	}
 
     /**

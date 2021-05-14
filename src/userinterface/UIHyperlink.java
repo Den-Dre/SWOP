@@ -28,6 +28,15 @@ public class UIHyperlink extends UITextHyperlink{
         setWidth(getMaxWidth());
     }
 
+    public UIHyperlink(UIHyperlink hyperlink) {
+        super(hyperlink.getxPos(), hyperlink.getyPos(), hyperlink.getMaxWidth(), hyperlink.getMaxHeight(), hyperlink.getText());
+        this.textHeight = hyperlink.getMaxHeight();
+        this.textWidth = hyperlink.getMaxWidth();
+        this.href = hyperlink.getHref();
+        updateSizes();
+        setWidth(getMaxWidth());
+    }
+
     /**
      * Renders the link onto the window.
      * -> Update information about the dimensions of the string

@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class HyperLinkTest{
 	
     private AddressBar bar;
-    private LeafPane doc;
+    private Pane doc;
     private UIController ctrl;
 
     private UIHyperlink link1;
@@ -30,7 +30,7 @@ class HyperLinkTest{
         bar = browsr.getAddressBar();
         doc = browsr.getDocumentArea();
         
-		ctrl = doc.controller;
+		ctrl = doc.getController();
 
         int height1 = 10;
         String text1 = "klik hier voor swop";

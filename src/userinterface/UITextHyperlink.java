@@ -29,6 +29,14 @@ public class UITextHyperlink extends DocumentCell {
         setWidth(getMaxWidth());
     }
 
+    public UITextHyperlink(UITextHyperlink hyperlink) {
+        super(hyperlink.getxPos(), hyperlink.getyPos(), hyperlink.getMaxWidth(), hyperlink.getMaxHeight());
+        this.text = hyperlink.getText();
+        this.textHeight = hyperlink.getMaxHeight();
+        updateSizes();
+        setWidth(getMaxWidth());
+    }
+
     /**
      * Renders the link onto the window.
      * -> Update information about the dimensions of the string
