@@ -39,6 +39,7 @@ public class UIController {
     public UIController() {
         this.bookmarksURLKeeper = new BookmarksURLKeeper();
         this.documentsKeeper = new DocumentKeeper(new Document());
+        // TODO replace calls to `document` field with calls to documentsKeeper
         this.document = documentsKeeper.getDocument();
     }
 

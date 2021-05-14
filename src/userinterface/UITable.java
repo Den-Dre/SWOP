@@ -99,6 +99,27 @@ public class UITable extends DocumentCell{
         return new ReturnMessage(ReturnMessage.Type.Empty);
     }
 
+
+    /**
+     * Handle mouse events by forwarding the click to each cell.
+     *
+     * @param id: The type of mouse action
+     * @param x: The x coordinate of the mouse action.
+     * @param y: The y coordinate of the mouse action.
+     * @param clickCount: The number of times the mouse has clicked.
+     * @param button: The mouse button that was clicked.
+     * @param modifier: Possible other keys that were pressed during this mouse action.
+     */
+    @Override
+    public void handleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
+//        grid.forEach(row -> row.forEach(cell -> cell.getHandleMouse(id, x, y, clickCount, button, modifier)));
+        for (ArrayList<DocumentCell> row : grid) {
+            for (DocumentCell cell : row)
+                // Let all the cells handle their click, and if the click ended up on a hyperlink, the href is passed into result
+                cell.getHandleMouse(id, x, y, clickCount, button, modifier);
+        }
+    }
+
     /**
      * Send the given KeyEvent to the {@code DocumentCells} of this {@code UITable}.
      *

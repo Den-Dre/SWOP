@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * A class to represent the portion of Broswr that renders the document
  */
-public class ContentFrame extends AbstractFrame {
+public class ContentFrame extends AbstractFrame implements DocumentListener {
     /**
      * Construct a {@code ContentFrame} with the given parameters.
      *
@@ -23,6 +23,8 @@ public class ContentFrame extends AbstractFrame {
      */
     public ContentFrame(int x, int y, int width, int height) throws IllegalDimensionException {
         super(x, y, width, height);
+//        DocumentCellDecorator decoratedDocCell = new HorizontalScrollBarDecorator(new VerticalScrollBarDecorator(getContent()));
+//        setContent(decoratedDocCell);
 
 //        // hard-coded Welcome document (for now!)
 //        ArrayList<ArrayList<DocumentCell>> rows = new ArrayList<>();
@@ -60,6 +62,7 @@ public class ContentFrame extends AbstractFrame {
     public ContentFrame(ContentFrame frame) {
         super(frame.getxPos(), frame.getyPos(), frame.getWidth(), frame.getHeight());
         this.content = frame.content.deepCopy();
+        this.controller = frame.controller;
     }
 
     /**
@@ -298,20 +301,19 @@ public class ContentFrame extends AbstractFrame {
         }
     }
 
+
     /**
-     * Wrap the given {@link DocumentCell} in a
-     * {@link UITable} s.t. it can be easily decorated
-     * by means of the decorator pattern which is implemented by
-     * {@link VerticalScrollBarDecorator} and {@link HorizontalScrollBarDecorator}.
-     *
-     *
-     * @param cell: The {@link DocumentCell} to be wrapped.
-     * @return wrapped: The given {@link DocumentCell} wrapped in a {@link UITable}.
+     * Notify the LeafPane that the contents have been changed
      */
-    private DocumentCell wrapInDocumentCell(DocumentCell cell) {
-        ArrayList<ArrayList<DocumentCell>> overlayContents =
-                new ArrayList<>(Collections.singletonList(new ArrayList<>(Collections.singletonList(cell))));
-        return new UITable(cell.getxPos(), cell.getyPos(), cell.getWidth(), cell.getHeight(), overlayContents);
+    public void contentChanged() {
+        try{
+            ContentSpan newContentSpan = controller.getContentSpan();
+            DocumentCell newContents = translateToUIElements(newContentSpan);
+            setContent(newContents);
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -327,8 +329,7 @@ public class ContentFrame extends AbstractFrame {
      *               The content that should be set.
      */
     public void setContent(DocumentCell content) {
-        DocumentCell wrapped = wrapInDocumentCell(content);
-        this.content = new HorizontalScrollBarDecorator(new VerticalScrollBarDecorator(wrapped));
+        this.content = new HorizontalScrollBarDecorator(new VerticalScrollBarDecorator(content));
     }
 
     /**

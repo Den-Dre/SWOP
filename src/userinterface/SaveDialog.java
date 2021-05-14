@@ -32,8 +32,17 @@ public class SaveDialog extends GenericDialogScreen {
         int offset = getOffset();
 
         this.nameInput = new HorizontalScrollBarDecorator(new UITextInputField(offset, offset, 100, getTextSize(), "Name"));
-        this.nameInputContents = (UITextInputField) nameInput.getContent();
+        this.nameInputContents = (UITextInputField) nameInput.getContentWithoutScrollbars();
         this.form = new HorizontalScrollBarDecorator(new VerticalScrollBarDecorator(getForm(currentUrl)));
+    }
+
+    public SaveDialog(SaveDialog dialog) {
+        super(0, 0, dialog.getWidth(), dialog.getHeight(), dialog.getBrowsr(), dialog.getCurrentUrl());
+        int offset = dialog.getOffset();
+
+        this.nameInput = new HorizontalScrollBarDecorator(new UITextInputField(offset, offset, 100, dialog.getTextSize(), "Name"));
+        this.nameInputContents = (UITextInputField) nameInput.getContentWithoutScrollbars();
+        this.form = new HorizontalScrollBarDecorator(new VerticalScrollBarDecorator(getForm(dialog.getCurrentUrl())));
     }
 
 
@@ -109,6 +118,17 @@ public class SaveDialog extends GenericDialogScreen {
         } catch (IllegalArgumentException e) {
                 System.out.println("Can't save document with empty file name.");
             }
+    }
+
+    /**
+     * Create a deep copy of this {@code AbstractFrame} object.
+     *
+     * @return copy: a deep copied version of this {@code AbstractFrame}
+     * object which thus does not point to the original object.
+     */
+    @Override
+    protected SaveDialog deepCopy() {
+        return new SaveDialog(this);
     }
 
     /**

@@ -1,5 +1,7 @@
 package userinterface;
 
+import domainlayer.UIController;
+
 import java.awt.*;
 
 public class VerticalSplitPane extends GenericSplitPane {
@@ -12,14 +14,15 @@ public class VerticalSplitPane extends GenericSplitPane {
      * @param height : The height of this AbstractFrame
      * @throws IllegalDimensionException: When one of the dimensions of this AbstractFrame is negative
      */
-    public VerticalSplitPane(int x, int y, int width, int height, Pane pane) throws IllegalDimensionException {
+    public VerticalSplitPane(int x, int y, int width, int height, Pane childPane, Pane parentPane) throws IllegalDimensionException {
         super(x, y, width, height);
+        this.parentPane = parentPane;
 
         // Associate the original `Pane` object to the `leftPane` attribute...
-        leftPane = pane;
+        leftPane = childPane;
         // ... and associate a deep copy of the original `Pane` object to the `rightPane` attribute
         // This way we ensure that changing one `Pane` doesn't change the other ´Pane` object, too.
-        rightPane = pane.deepCopy();
+        rightPane = childPane.deepCopy();
 
         // Set the sizes & position of the sub-panes
         leftPane.setxPos(x);
@@ -81,29 +84,27 @@ public class VerticalSplitPane extends GenericSplitPane {
     }
 
     /**
-     * Set the {@link ContentFrame} object that currently has focus.
-     *
-     * @param contentFrame : The {@code ContentFrame} object to be set.
-     */
-    @Override
-    public void setFocusedPane(ContentFrame contentFrame) {
-        super.setFocusedPane(contentFrame);
-    }
-
-    /**
      * Handle a horizontal split of the contents of this {@code Pane}.
      */
     @Override
-    public void handleHorizontalSplit() {
-
+    public Pane getHorizontalSplit() {
+        if (leftPane.hasFocus())
+            return leftPane.getHorizontalSplit();
+        else if (rightPane.hasFocus())
+            return rightPane.getHorizontalSplit();
+        return null;
     }
 
     /**
      * Handle a vertical split of the contents of this {@code Pane}.
      */
     @Override
-    public void handleVerticalSplit() {
-
+    public Pane getVerticalSplit() {
+        if (leftPane.hasFocus())
+            return leftPane.getHorizontalSplit();
+        else if (rightPane.hasFocus())
+            return rightPane.getHorizontalSplit();
+        return null;
     }
 
     @Override
@@ -126,7 +127,8 @@ public class VerticalSplitPane extends GenericSplitPane {
      */
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-
+        leftPane.handleMouse(id, x, y, clickCount, button, modifiersEx);
+        rightPane.handleMouse(id, x, y, clickCount, button, modifiersEx);
     }
 
     /**
@@ -157,7 +159,45 @@ public class VerticalSplitPane extends GenericSplitPane {
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
+    }
 
+
+    /**
+     * Set the {@link UIController} of the sub panes
+     * of this split Pane.
+     *
+     * @param controller: the {@link UIController} to be set.
+     */
+    @Override
+    public void setController(UIController controller) {
+        rightPane.setController(controller);
+        leftPane.setController(controller);
+    }
+
+    /**
+     * Define what the class that implements
+     * this {@link domainlayer.DocumentListener} Interface
+     * should do when the contents of the
+     * linked child {@link Pane}s change.
+     */
+    @Override
+    public void contentChanged() {
+        leftPane.contentChanged();
+        rightPane.contentChanged();
+    }
+
+    @Override
+    protected void setParentPane(Pane pane) {
+    }
+
+    /**
+     * Check whether this {@code Pane} currently has focus.
+     *
+     * @return focus: True iff. this {@code Pane} currently has focus.
+     */
+    @Override
+    public boolean hasFocus() {
+        return (leftPane.hasFocus() || rightPane.hasFocus());
     }
 
     private Pane leftPane;

@@ -59,15 +59,16 @@ public class Browsr extends CanvasWindow {
             int bookmarksBarHeight = 20;
 
             HorizontalScrollBarDecorator addressBar = new HorizontalScrollBarDecorator(new AddressBar(addressBarOffset, addressBarOffset, 100, addressBarHeight, addressBarOffset));
-            addressBarInput = (AddressBar) addressBar.getContent();
+            addressBarInput = (AddressBar) addressBar.getContentWithoutScrollbars();
             bookmarksBar = new BookmarksBar(bookmarksBarOffset, addressBarHeight + 2 * bookmarksBarOffset, 100, bookmarksBarHeight, bookmarksBarOffset);
-            ContentFrame rootPaneContents = new ContentFrame(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100);
-            rootPane = new LeafPane(rootPaneContents, null);
+
+            ContentFrame contentFrame = new ContentFrame(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100);
+            rootPane = new LeafPane(contentFrame);
             controller = new UIController();
 
-            this.Frames.add(addressBar);
-            this.Frames.add(this.rootPane);
-            this.Frames.add(this.bookmarksBar);
+            this.frames.add(addressBar);
+            this.frames.add(rootPane);
+            this.frames.add(bookmarksBar);
 
             addressBarInput.setUiController(controller);
             rootPane.setController(controller);
@@ -75,6 +76,9 @@ public class Browsr extends CanvasWindow {
 
             controller.addUrlListener(addressBarInput);
             controller.addDocumentListener(rootPane);
+
+            DocumentCellDecorator decoratedDocCell = new HorizontalScrollBarDecorator(new VerticalScrollBarDecorator(contentFrame.getContent()));
+            contentFrame.setContent(decoratedDocCell);
 
 //            leafPane.setContent(new VerticalScrollBarDecorator(new HorizontalScrollBarDecorator(new UITextInputField(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100))));
             // For testing purposes
@@ -108,7 +112,7 @@ public class Browsr extends CanvasWindow {
          *
          * @param g: the graphics to be rendered.
          */
-        abstract void Render(Graphics g);
+        abstract void render(Graphics g);
 
         /**
          * Handle mouseEvents. Determine which part of this
@@ -154,8 +158,8 @@ public class Browsr extends CanvasWindow {
          *      The graphics used to render this {@code RegularLayout}.
          */
         @Override
-        void Render(Graphics g) {
-            Frames.forEach(f -> f.render(g));
+        void render(Graphics g) {
+            frames.forEach(f -> f.render(g));
         }
 
         /**
@@ -170,7 +174,7 @@ public class Browsr extends CanvasWindow {
          */
         @Override
         void handleMouseEvent(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-            Frames.forEach(f -> f.handleMouse(id, x, y, clickCount, button, modifiersEx));
+            frames.forEach(f -> f.handleMouse(id, x, y, clickCount, button, modifiersEx));
         }
 
         /**
@@ -184,7 +188,7 @@ public class Browsr extends CanvasWindow {
          */
         @Override
         void handleKeyEvent(int id, int keyCode, char keyChar, int modifiersEx) {
-            Frames.forEach(f -> f.handleKey(id, keyCode, keyChar, modifiersEx));
+            frames.forEach(f -> f.handleKey(id, keyCode, keyChar, modifiersEx));
         }
     }
 
@@ -208,7 +212,7 @@ public class Browsr extends CanvasWindow {
          *      The graphics used to render this {@code BookmarksDialogLayout}.
          */
         @Override
-        void Render(Graphics g) {
+        void render(Graphics g) {
             bookmarksDialog.render(g);
         }
 
@@ -264,7 +268,7 @@ public class Browsr extends CanvasWindow {
          *      The graphics used to render this {@code SaveDialogLayout}.
          */
         @Override
-        void Render(Graphics g) {
+        void render(Graphics g) {
             saveDialog.render(g);
         }
 
@@ -308,7 +312,7 @@ public class Browsr extends CanvasWindow {
      */
     @Override
     protected void paint(Graphics g) {
-        layout.Render(g);
+        layout.render(g);
     }
 
     /**
@@ -325,7 +329,7 @@ public class Browsr extends CanvasWindow {
     @Override
     protected void handleResize() {
         //ook laten weten aan de frames om zichzelf intern aan te passen!
-        for (AbstractFrame frame : Frames)
+        for (AbstractFrame frame : frames)
             frame.handleResize(this.getWidth(), this.getHeight());
         repaint();
     }
@@ -343,7 +347,7 @@ public class Browsr extends CanvasWindow {
      */
     @Override
     protected void handleMouseEvent(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-       layout.handleMouseEvent(id, x, y, clickCount, button, modifiersEx);
+        layout.handleMouseEvent(id, x, y, clickCount, button, modifiersEx);
         repaint();
     }
 
@@ -362,11 +366,11 @@ public class Browsr extends CanvasWindow {
                 handleBookmarksDialog();
             else if (keyCode == 83 && layout instanceof RegularLayout) // 83 == s
                 handleSaveDialog();
-            else if (keyCode == 72)
+            else if (keyCode == 72) // 72 == h
                 splitHorizontally();
-            else if (keyCode == 86)
+            else if (keyCode == 86) // 86 == v
                 splitVertically();
-            else if (keyCode == 88)
+            else if (keyCode == 88) // 88 == x
                 closeCurrentLeafPane();
             else if (keyCode == 80) // 80 == p
                 handlePaste();
@@ -403,7 +407,9 @@ public class Browsr extends CanvasWindow {
      * has focus horizontally.
      */
     private void splitHorizontally() {
-        rootPane.getFocusedPane().handleHorizontalSplit();
+        Pane focused = rootPane.getFocusedPane();
+        focused.setFocusedPane(focused.getHorizontalSplit());
+        repaint();
     }
 
     /**
@@ -411,7 +417,11 @@ public class Browsr extends CanvasWindow {
      * the {@link ContentFrame} that currently
      * has focus vertically.
      */
-    private void splitVertically() {}
+    private void splitVertically() {
+        Pane focused = rootPane.getFocusedPane();
+        focused.setFocusedPane(focused.getVerticalSplit());
+        repaint();
+    }
 
     /**
      * Takes the necessary actions to close
@@ -422,7 +432,7 @@ public class Browsr extends CanvasWindow {
 
     /**
      * For testing purposes: paste contents
-     * in the {@link AddressBar} using CTRL+v.
+     * in the {@link AddressBar} using CTRL+p.
      */
     private void handlePaste() {
         Clipboard c = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -516,7 +526,7 @@ public class Browsr extends CanvasWindow {
      * An {@link ArrayList} to hold all the
      * {@link AbstractFrame}'s associated to this UserInterface.Browsr.
      */
-    private final ArrayList<AbstractFrame> Frames = new ArrayList<>();
+    private final ArrayList<AbstractFrame> frames = new ArrayList<>();
     
     /**
      * @return the {@link AddressBar} of this {@link Browsr}, for testing/debug purposes

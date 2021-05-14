@@ -1,5 +1,7 @@
 package userinterface;
 
+import domainlayer.UIController;
+
 import java.awt.*;
 
 public class HorizontalSplitPane extends GenericSplitPane {
@@ -12,14 +14,16 @@ public class HorizontalSplitPane extends GenericSplitPane {
      * @param height : The height of this AbstractFrame
      * @throws IllegalDimensionException: When one of the dimensions of this AbstractFrame is negative
      */
-    public HorizontalSplitPane(int x, int y, int width, int height, Pane pane) throws IllegalDimensionException {
+    public HorizontalSplitPane(int x, int y, int width, int height, LeafPane childPane, Pane parentPane) throws IllegalDimensionException {
         super(x, y, width, height);
+        this.parentPane = parentPane;
 
         // Associate the original `Pane` object to the `lowerPane` attribute...
-        lowerPane = pane;
+        lowerPane = childPane;
         // ... and associate a deep copy of the original `Pane` object to the `upperPane` attribute
         // This way we ensure that changing one `Pane` doesn't change the other ´Pane` object, too.
-        upperPane = pane.deepCopy();
+        upperPane = childPane.deepCopy();
+
 
         // Set the sizes & position of the sub-panes
         lowerPane.setxPos(x);
@@ -32,6 +36,7 @@ public class HorizontalSplitPane extends GenericSplitPane {
         upperPane.setyPos(y);
         upperPane.setWidth(width);
         upperPane.setHeight(height/2);
+        upperPane.setParentPane(this);
     }
 
     /**
@@ -78,36 +83,34 @@ public class HorizontalSplitPane extends GenericSplitPane {
      */
     @Override
     void drawSeparator(Graphics g) {
-        g.fillRect(lowerPane.getxPos(), lowerPane.getyPos(), getWidth(), SEPARATOR_THICKNESS);
-    }
-
-
-    /**
-     * Set the {@link ContentFrame} object that currently has focus.
-     *
-     * @param contentFrame : The {@code ContentFrame} object to be set.
-     */
-    @Override
-    public void setFocusedPane(ContentFrame contentFrame) {
-        super.setFocusedPane(contentFrame);
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(5));
+        g2.setColor(Color.BLACK);
+        g2.fillRect(lowerPane.getxPos(), lowerPane.getyPos(), getWidth(), SEPARATOR_THICKNESS);
     }
 
     /**
      * Handle a horizontal split of the contents of this {@code Pane}.
      */
     @Override
-    public void handleHorizontalSplit() {
-        lowerPane.handleHorizontalSplit();
-        upperPane.handleHorizontalSplit();
+    public Pane getHorizontalSplit() {
+        if (lowerPane.hasFocus())
+            return lowerPane.getHorizontalSplit();
+        else if (upperPane.hasFocus())
+            return upperPane.getHorizontalSplit();
+        return null;
     }
 
     /**
      * Handle a vertical split of the contents of this {@code Pane}.
      */
     @Override
-    public void handleVerticalSplit() {
-        lowerPane.handleVerticalSplit();
-        upperPane.handleVerticalSplit();
+    public Pane getVerticalSplit() {
+        if (lowerPane.hasFocus())
+            return lowerPane.getHorizontalSplit();
+        else if (upperPane.hasFocus())
+            return upperPane.getHorizontalSplit();
+        return null;
     }
 
     @Override
@@ -130,7 +133,8 @@ public class HorizontalSplitPane extends GenericSplitPane {
      */
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-
+        lowerPane.handleMouse(id, x, y, clickCount, button, modifiersEx);
+        upperPane.handleMouse(id, x, y, clickCount, button, modifiersEx);
     }
 
     /**
@@ -161,12 +165,40 @@ public class HorizontalSplitPane extends GenericSplitPane {
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
+        this.lowerPane.handleResize(newWindowWidth, newWindowHeight/2);
+        this.upperPane.handleResize(newWindowWidth, newWindowHeight/2);
+    }
 
+    @Override
+    public void setController(UIController controller) {
+        lowerPane.setController(controller);
+        upperPane.setController(controller);
+    }
+
+    /**
+     * Define what the class that implements
+     * this {@link domainlayer.DocumentListener} Interface
+     * should do when the contents of the
+     * child {@link Pane}s change.
+     */
+    @Override
+    public void contentChanged() {
+        lowerPane.contentChanged();
+        upperPane.contentChanged();
+    }
+
+    /**
+     * Check whether this {@code Pane} currently has focus.
+     *
+     * @return focus: True iff. this {@code Pane} currently has focus.
+     */
+    @Override
+    public boolean hasFocus() {
+        return (upperPane.hasFocus() || lowerPane.hasFocus());
     }
 
     @Override
     protected void setParentPane(Pane pane) {
-
     }
 
     private Pane upperPane;

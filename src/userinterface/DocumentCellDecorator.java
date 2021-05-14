@@ -1,6 +1,9 @@
 package userinterface;
 
+import javax.swing.text.AbstractDocument;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public abstract class DocumentCellDecorator extends DocumentCell {
     /**
@@ -11,7 +14,22 @@ public abstract class DocumentCellDecorator extends DocumentCell {
      */
     public DocumentCellDecorator(DocumentCell cell) throws IllegalDimensionException {
         super(cell.getxPos(), cell.getyPos(), cell.getWidth(), cell.getHeight());
-        this.cellToBeDecorated = cell;
+        if (cell instanceof DocumentCellDecorator)
+            this.cellToBeDecorated = cell;
+        else
+            this.cellToBeDecorated = wrapInDocumentCell(cell);
+
+    }
+
+    /**
+     * Initialise this decorator with the given parameters.
+     *
+     * @param frame: The {@link ContentFrame} to be decorated
+     * @throws IllegalDimensionException: When one of the dimensions of this AbstractFrame is negative
+     */
+    public DocumentCellDecorator(ContentFrame frame) throws IllegalDimensionException {
+        super(frame.getContent().getxPos(), frame.getContent().getyPos(), frame.getContent().getWidth(), frame.getContent().getHeight());
+        this.cellToBeDecorated = frame.getContent();
     }
 
     /**
@@ -89,6 +107,7 @@ public abstract class DocumentCellDecorator extends DocumentCell {
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
         this.cellToBeDecorated.handleResize(newWindowWidth, newWindowHeight);
+        getContentWithoutScrollbars().handleResize(newWindowWidth, newWindowHeight);
     }
 
     // These setters are overridden to fix the issue
@@ -143,6 +162,22 @@ public abstract class DocumentCellDecorator extends DocumentCell {
         // In this case we have peeled off both the potentially added scroll bars
         // and are left with the wrapper `UITable` from which we extract the encapsulated element:
         return ((UITable) cellToBeDecorated).getContent().get(0).get(0);
+    }
+
+    /**
+     * Wrap the given {@link DocumentCell} in a
+     * {@link UITable} s.t. it can be easily decorated
+     * by means of the decorator pattern which is implemented by
+     * {@link VerticalScrollBarDecorator} and {@link HorizontalScrollBarDecorator}.
+     *
+     *
+     * @param cell: The {@link DocumentCell} to be wrapped.
+     * @return wrapped: The given {@link DocumentCell} wrapped in a {@link UITable}.
+     */
+    protected DocumentCell wrapInDocumentCell(DocumentCell cell) {
+        ArrayList<ArrayList<DocumentCell>> overlayContents =
+                new ArrayList<>(Collections.singletonList(new ArrayList<>(Collections.singletonList(cell))));
+        return new UITable(cell.getxPos(), cell.getyPos(), cell.getMaxWidth(), cell.getMaxHeight(), overlayContents);
     }
 
     /**

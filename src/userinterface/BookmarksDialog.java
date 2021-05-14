@@ -38,8 +38,8 @@ public class BookmarksDialog extends GenericDialogScreen {
         this.nameInput = new HorizontalScrollBarDecorator(new UITextInputField(offset, offset,100,textSize, "Name"));
         this.urlInput = new HorizontalScrollBarDecorator(new UITextInputField(offset, offset,100,textSize, "URL"));
 
-        this.nameInputContents = (UITextInputField) nameInput.getContent();
-        this.urlInputContents = (UITextInputField) urlInput.getContent();
+        this.nameInputContents = (UITextInputField) nameInput.getContentWithoutScrollbars();
+        this.urlInputContents = (UITextInputField) urlInput.getContentWithoutScrollbars();
 
         // URL input must be prefilled:
         this.urlInputContents.changeTextTo(currentUrl);
@@ -105,8 +105,8 @@ public class BookmarksDialog extends GenericDialogScreen {
         this.nameInput = new HorizontalScrollBarDecorator(new UITextInputField(offset, offset,100,textSize, "Name"));
         this.urlInput = new HorizontalScrollBarDecorator(new UITextInputField(offset, offset,100,textSize, "URL"));
 
-        this.nameInputContents = (UITextInputField) nameInput.getContent();
-        this.urlInputContents = (UITextInputField) urlInput.getContent();
+        this.nameInputContents = (UITextInputField) nameInput.getContentWithoutScrollbars();
+        this.urlInputContents = (UITextInputField) urlInput.getContentWithoutScrollbars();
 
         // URL input must be prefilled:
         this.urlInputContents.changeTextTo(dialog.getCurrentUrl());

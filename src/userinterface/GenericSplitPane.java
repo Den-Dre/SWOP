@@ -23,6 +23,16 @@ public abstract class GenericSplitPane extends Pane {
     abstract void drawSeparator(Graphics g);
 
     /**
+     * Set the {@link ContentFrame} object that currently has focus.
+     *
+     * @param pane : The {@code ContentFrame} object to be set.
+     */
+    @Override
+    public void setFocusedPane(Pane pane) {
+        this.focusedPane = pane;
+    }
+
+    /**
      * A constant that denotes the thickness
      * of the separator drawn between split windows.
      */

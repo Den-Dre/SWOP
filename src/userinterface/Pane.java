@@ -26,21 +26,22 @@ public abstract class Pane extends AbstractFrame implements DocumentListener {
      */
     public Pane(Pane p) {
         super(p.getxPos(), p.getyPos(), p.getWidth(), p.getHeight());
+        this.parentPane = p.parentPane.deepCopy();
+        this.subPane = p.subPane.deepCopy();
+        this.focusedPane = p.focusedPane.deepCopy();
     }
 
     public abstract Pane deepCopy();
 
-    public Pane getFocusedPane() {
-        return this.subPane.getFocusedPane();
-    }
-
     /**
      * Set the {@link ContentFrame} object that currently has focus.
      *
-     * @param contentFrame: The {@code ContentFrame} object to be set.
+     * @param pane: The {@code ContentFrame} object to be set.
      */
-    public void setFocusedPane(ContentFrame contentFrame) {
-        this.focusedPane = contentFrame;
+    public void setFocusedPane(Pane pane) {
+        this.focusedPane = pane;
+        if (parentPane != null)
+            parentPane.setFocusedPane(pane);
     }
 
     public UIController getController() {
@@ -51,6 +52,12 @@ public abstract class Pane extends AbstractFrame implements DocumentListener {
         return this.subPane.getContent();
     }
 
+    public Pane getRootPane() {
+        if (this.parentPane == null)
+            return this;
+        return parentPane.getRootPane();
+    }
+
     /**
      * Define what the class that implements
      * this {@link DocumentListener} Interface
@@ -58,23 +65,17 @@ public abstract class Pane extends AbstractFrame implements DocumentListener {
      * linked {@link domainlayer.Document} change.
      */
     @Override
-    public void contentChanged() {
-        this.subPane.contentChanged();
-    }
-
-    public void setController(UIController controller) {
-        this.subPane.setController(controller);
-    }
+    public abstract void contentChanged();
 
     /**
      * Handle a horizontal split of the contents of this {@code Pane}.
      */
-    public abstract void handleHorizontalSplit();
+    public abstract Pane getHorizontalSplit();
 
     /**
      * Handle a vertical split of the contents of this {@code Pane}.
      */
-    public abstract void handleVerticalSplit();
+    public abstract Pane getVerticalSplit();
 
     public abstract void replaceChildPane(Pane oldPane, Pane newPane);
 
@@ -118,10 +119,28 @@ public abstract class Pane extends AbstractFrame implements DocumentListener {
     @Override
     public abstract void handleResize(int newWindowWidth, int newWindowHeight);
 
+    /**
+     * Check whether this {@code Pane} currently has focus.
+     *
+     * @return focus: True iff. this {@code Pane} currently has focus.
+     */
+    public boolean hasFocus() {
+        return this.hasFocus;
+    }
+
+
+    public abstract void setController(UIController controller);
+
     protected abstract void setParentPane(Pane pane);
 
     private Pane subPane;
 
-    private ContentFrame focusedPane;
+    protected Pane focusedPane;
+
+    protected Pane parentPane;
+
+    public Pane getFocusedPane() {
+        return this.focusedPane;
+    };
 
 }

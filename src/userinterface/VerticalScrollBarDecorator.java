@@ -13,6 +13,16 @@ public class VerticalScrollBarDecorator extends DocumentCellDecorator {
         super(cell);
     }
 
+    /**
+     * Initialise this AbstractFrame with the given parameters.
+     *
+     * @param frame: The {@link ContentFrame} to be decorated.
+     * @throws IllegalDimensionException: When one of the dimensions of this AbstractFrame is negative
+     */
+    public VerticalScrollBarDecorator(ContentFrame frame) throws IllegalDimensionException {
+        super(frame);
+    }
+
     public VerticalScrollBarDecorator(VerticalScrollBarDecorator decorator) {
         super(decorator.getContent().deepCopy());
     }

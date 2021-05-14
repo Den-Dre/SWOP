@@ -1,5 +1,7 @@
 package userinterface;
 
+import domainlayer.UIController;
+
 import java.awt.*;
 
 /**
@@ -8,17 +10,30 @@ import java.awt.*;
 public class LeafPane extends Pane {
     /**
      * Construct a {@code ContentFrame} with the given parameters.
+     * The coordinates and dimensions are copied from the given {@link ContentFrame}.
      *
-     * @param x      : The x coordinate of the {@code ContentFrame}.
-     * @param y      : The y coordinate of the {@code ContentFrame}.
-     * @param width  : The width of the {@code ContentFrame}.
-     * @param height : The height of the {@code ContentFrame}.
+     * @param contentFrame: The contents of this {@code LeafPane} in a {@link ContentFrame} object.
+     * @param parentPane: The parent {@link Pane} of this {@code LeafPane}.
      * @throws IllegalDimensionException : When one of the dimensions is negative.
      */
     public LeafPane(ContentFrame contentFrame, Pane parentPane) throws IllegalDimensionException {
         super(contentFrame.getxPos(), contentFrame.getyPos(), contentFrame.getWidth(), contentFrame.getHeight());
         this.contentFrame = contentFrame;
         this.parentPane = parentPane;
+    }
+
+
+    /**
+     * Construct a {@code ContentFrame} with the given parameters.
+     *
+     * @param contentFrame: The contents of this {@code LeafPane} in a {@link ContentFrame} object.
+     * @throws IllegalDimensionException : When one of the dimensions is negative.
+     */
+    public LeafPane(ContentFrame contentFrame) throws IllegalDimensionException {
+        super(contentFrame.getxPos(), contentFrame.getyPos(), contentFrame.getWidth(), contentFrame.getHeight());
+        this.contentFrame = contentFrame;
+        this.parentPane = null;
+        setFocusedPane(this);
     }
 
     /**
@@ -31,39 +46,54 @@ public class LeafPane extends Pane {
     public LeafPane(LeafPane p) {
         super(p.getxPos(), p.getyPos(), p.getWidth(), p.getHeight());
         this.contentFrame = p.contentFrame.deepCopy();
+        if (p.parentPane == null)
+            this.parentPane = null;
+        else
+            this.parentPane = p.parentPane.deepCopy();
     }
 
     @Override
-    public Pane deepCopy() {
-        return null;
+    public LeafPane deepCopy() {
+        return new LeafPane(this);
     }
 
     /**
-     * render the contents of this AbstractFrame.
+     * Render the contents of this AbstractFrame.
      *
      * @param g : The graphics to be rendered.
      */
     @Override
     public void render(Graphics g) {
         contentFrame.render(g);
+        setHeight(contentFrame.getHeight());
+        setWidth(contentFrame.getWidth());
+        drawFocusedBorder(g);
+    }
+
+    private void drawFocusedBorder(Graphics g) {
+        int offset = 5;
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(2));
+        g2.setColor(Color.BLUE);
+        g2.drawRect(getxPos(), getyPos(), getWidth()-offset, getHeight()-offset);
     }
 
     /**
      * Handle a horizontal split of the contents of this {@code Pane}.
      */
     @Override
-    public void handleHorizontalSplit() {
-        HorizontalSplitPane hsPane = new HorizontalSplitPane(getxPos(), getyPos(), getWidth(), getHeight(), this);
-        parentPane.replaceChildPane(this, hsPane);
+    public Pane getHorizontalSplit() {
+        return new HorizontalSplitPane(getxPos(), getyPos(), getWidth(), getHeight(), this, parentPane);
+//        parentPane.replaceChildPane(this, hsPane);
     }
 
     /**
      * Handle a vertical split of the contents of this {@code Pane}.
      */
     @Override
-    public void handleVerticalSplit() {
-        VerticalSplitPane hsPane = new VerticalSplitPane(getxPos(), getyPos(), getWidth(), getHeight(), this);
-        parentPane.replaceChildPane(this, hsPane);
+    public Pane getVerticalSplit() {
+        return new VerticalSplitPane(getxPos(), getyPos(), getWidth(), getHeight(), this, parentPane);
+//        parentPane.replaceChildPane(this, hsPane);
     }
 
     @Override
@@ -84,6 +114,12 @@ public class LeafPane extends Pane {
      */
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
+        if (!contentFrame.getContent().wasClicked(x, y)) {
+            toggleFocus(false);
+            return;
+        }
+        setFocusedPane(this);
+        toggleFocus(true);
         contentFrame.handleMouse(id, x, y, clickCount, button, modifiersEx);
     }
 
@@ -115,11 +151,28 @@ public class LeafPane extends Pane {
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
+        setWidth(newWindowWidth);
+        setHeight(newWindowHeight);
         contentFrame.handleResize(newWindowWidth, newWindowHeight);
+    }
+
+    /**
+     * Define what the class that implements
+     * this {@link domainlayer.DocumentListener} Interface
+     * should do when the contents of the
+     * linked {@link ContentFrame} changes.
+     */
+    @Override
+    public void contentChanged() {
+        this.contentFrame.contentChanged();
     }
 
     protected void setParentPane(Pane parentPane) {
         this.parentPane = parentPane;
+    }
+
+    public void setController(UIController controller) {
+        this.contentFrame.setController(controller);
     }
 
     public ContentFrame getContentFrame() {

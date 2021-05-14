@@ -97,8 +97,10 @@ public class BookmarksBar extends AbstractFrame {
      */
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.GRAY);
-        g.drawLine(getxPos() + offset, getyPos() + height, getWidth() - offset, getyPos() + height);
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(2));
+        g2.setColor(Color.GRAY);
+        g2.drawLine(getxPos() + offset, getyPos() + height, getWidth() - offset, getyPos() + height);
 //        g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
         this.textHyperLinks.forEach(t -> t.render(g));
     }
