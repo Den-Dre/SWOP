@@ -31,9 +31,9 @@ public class SaveDialog extends GenericDialogScreen {
         super(0, 0, width, height, browsr, currentUrl);
         int offset = getOffset();
 
-        this.nameInput = new HorizontalScrollBarDecorator(new UITextInputField(offset, offset, 100, getTextSize(), "Name"));
-        this.nameInputContents = (UITextInputField) nameInput.getContent();
-        this.form = new HorizontalScrollBarDecorator(new VerticalScrollBarDecorator(getForm(currentUrl)));
+        this.nameInput = new UITextInputField(offset, offset, 100, getTextSize(), "Name");
+        this.nameInputContents = (UITextInputField) nameInput;
+        this.form = getForm(currentUrl);
     }
 
 
@@ -147,7 +147,7 @@ public class SaveDialog extends GenericDialogScreen {
      * A {@link UITextInputField} to query the name
      * the user  wants to give to the URL being saved.
      */
-    private final HorizontalScrollBarDecorator nameInput;
+    private final UITextInputField nameInput;
 
     private final UITextInputField nameInputContents;
 
@@ -157,6 +157,6 @@ public class SaveDialog extends GenericDialogScreen {
      * displays. The content is contained
      * in a {@link DocumentCell}.
      */
-    private final DocumentCellDecorator form;
+    private final UIForm form;
 }
 

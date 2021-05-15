@@ -30,6 +30,27 @@ public class UITable extends DocumentCell{
 
         setxReference(x);
         setyReference(y);
+
+        setParentWidth(getWidth());
+        setParentHeight(getHeight());
+    }
+
+    @Override
+    public void setParentWidth(int parentWidth) {
+        for (ArrayList<DocumentCell> row : grid) {
+            for (DocumentCell cell : row) {
+                cell.setParentWidth(parentWidth);
+            }
+        }
+    }
+
+    @Override
+    public void setParentHeight(int parentHeight) {
+        for (ArrayList<DocumentCell> row : grid) {
+            for (DocumentCell cell : row) {
+                cell.setParentHeight(parentHeight);
+            }
+        }
     }
 
     /**
@@ -52,6 +73,7 @@ public class UITable extends DocumentCell{
         g.setColor(Color.BLACK);
         //g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
     }
+
 
     /**
      * Handle mouse events by forwarding the click to each cell.
@@ -103,8 +125,11 @@ public class UITable extends DocumentCell{
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
+        System.out.println("resizing");
         setColumnWidths();
         setRowHeights();
+        setParentHeight(getHeight());
+        setParentWidth(getWidth());
     }
 
     /**
@@ -246,25 +271,45 @@ public class UITable extends DocumentCell{
         }
     }
 
-//    @Override
-//    public void setxOffset(int xOffset) {
-//        super.setxOffset(xOffset);
-//        for (ArrayList<DocumentCell> row : grid) {
-//            for (DocumentCell cell : row) {
-//                cell.setxOffset(xOffset);
-//            }
-//        }
-//    }
-//
-//    @Override
-//    public void setyOffset(int yOffset) {
-//        super.setyOffset(yOffset);
-//        for (ArrayList<DocumentCell> row : grid) {
-//            for (DocumentCell cell : row) {
-//                cell.setyOffset(yOffset);
-//            }
-//        }
-//    }
+    @Override
+    public void setWidth(int newWidth) {
+        super.setWidth(newWidth);
+        for (ArrayList<DocumentCell> row : grid) {
+            for (DocumentCell cell : row) {
+                cell.parentWidth = newWidth;
+            }
+        }
+    }
+
+    @Override
+    public void setHeight(int newHeight) {
+        super.setHeight(newHeight);
+        for (ArrayList<DocumentCell> row : grid) {
+            for (DocumentCell cell : row) {
+                cell.parentHeight = newHeight;
+            }
+        }
+    }
+
+    @Override
+    public void setxOffset(int xOffset) {
+        super.setxOffset(xOffset);
+        for (ArrayList<DocumentCell> row : grid) {
+            for (DocumentCell cell : row) {
+                cell.setxOffset(xOffset);
+            }
+        }
+    }
+
+    @Override
+    public void setyOffset(int yOffset) {
+        super.setyOffset(yOffset);
+        for (ArrayList<DocumentCell> row : grid) {
+            for (DocumentCell cell : row) {
+                cell.setyOffset(yOffset);
+            }
+        }
+    }
 
     /**
      * simple getter, only for debug purposes

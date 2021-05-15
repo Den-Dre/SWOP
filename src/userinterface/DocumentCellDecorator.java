@@ -1,8 +1,23 @@
 package userinterface;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.util.Arrays;
 
 public abstract class DocumentCellDecorator extends DocumentCell {
+
+    final static int thicknessOuterBar = 8;
+    final static int thicknessInnerBar = 4;
+    double fraction = 0.0;
+    int innerBarLength;
+    int length;
+    final int offset = 2;
+    int[] prevMouse;
+
+    final Color innerColorNormal = Color.gray;
+    final Color innerColorDragging = Color.blue;
+    Color currentColor = innerColorNormal;
+
     /**
      * Initialise this decorator with the given parameters.
      *
@@ -14,6 +29,32 @@ public abstract class DocumentCellDecorator extends DocumentCell {
         this.cellToBeDecorated = cell;
     }
 
+
+    public void setLength(int newLength) {
+        length = newLength;
+    }
+
+    public double getFraction() {
+        return fraction;
+    }
+
+    public void setFraction(double fraction) {
+        if (Double.isNaN(fraction)) return;
+        if (fraction > 1.0)
+            fraction = 1.0;
+        if (fraction < 0.0)
+            fraction = 0.0;
+        this.fraction = fraction;
+        moved();
+    }
+
+    public void ratioChanged(double newRatio) {
+        if (newRatio < 1.0)
+            newRatio = 1.0;
+        innerBarLength = (int) Math.round(length/newRatio);
+    }
+
+
     /**
      * render the graphics {@code g} of this DocumentCell.
      *
@@ -21,10 +62,6 @@ public abstract class DocumentCellDecorator extends DocumentCell {
      */
     @Override
     public void render(Graphics g) {
-        // The two lines below are no longer needed as
-        // the issue is addressed in the setters below
-//        cellToBeDecorated.setxPos(this.getxPos());
-//        cellToBeDecorated.setyPos(this.getyPos());
         cellToBeDecorated.render(g);
     }
 
@@ -41,6 +78,35 @@ public abstract class DocumentCellDecorator extends DocumentCell {
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
         this.cellToBeDecorated.handleMouse(id, x, y, clickCount, button, modifiersEx);
+        init();
+        int[] currentMouse;
+        if (id == MouseEvent.MOUSE_PRESSED && (wasClicked(x, y))) {
+            prevMouse = new int[] {x, y};
+            currentColor = innerColorDragging;
+            System.out.println("pressed");
+        }
+        else if (id == MouseEvent.MOUSE_DRAGGED) {
+            if (prevMouse == null) return;
+            System.out.println("dragged");
+            currentMouse = new int[] {x, y};
+            dragged(currentMouse[0]-prevMouse[0], currentMouse[1]-prevMouse[1]);
+            prevMouse = new int[] {x, y};
+        }
+        else if (id == MouseEvent.MOUSE_RELEASED) {
+            prevMouse = null;
+            currentColor = innerColorNormal;
+        }
+    }
+
+    void init() {
+
+    }
+
+    void moved() {
+
+    }
+    void dragged(int dx, int dy) {
+
     }
 
     /**
@@ -57,7 +123,9 @@ public abstract class DocumentCellDecorator extends DocumentCell {
      */
     @Override
     public ReturnMessage getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
-        return this.cellToBeDecorated.getHandleMouse(id, x, y, clickCount, button, modifier);
+        handleMouse(id, x, y, clickCount, button, modifier);
+        ReturnMessage message = cellToBeDecorated.getHandleMouse(id, x, y, clickCount, button, modifier);
+        return message;
     }
 
     /**
@@ -119,6 +187,17 @@ public abstract class DocumentCellDecorator extends DocumentCell {
         this.cellToBeDecorated.setyPos(yPos);
     }
 
+    @Override
+    public void setWidth(int newWidth) {
+        super.setWidth(newWidth);
+        cellToBeDecorated.setWidth(newWidth);
+    }
+
+    @Override
+    public void setxOffset(int xOffset) {
+        super.setxOffset(xOffset);
+    }
+
     /**
      * Get the contents that are being decorated.
      *
@@ -142,6 +221,8 @@ public abstract class DocumentCellDecorator extends DocumentCell {
             return ((HorizontalScrollBarDecorator) this.cellToBeDecorated).getContentWithoutScrollbars();
         // In this case we have peeled off both the potentially added scroll bars
         // and are left with the wrapper `UITable` from which we extract the encapsulated element:
+        if (cellToBeDecorated instanceof UITextField)
+            return cellToBeDecorated;
         return ((UITable) cellToBeDecorated).getContent().get(0).get(0);
     }
 

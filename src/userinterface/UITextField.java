@@ -37,7 +37,7 @@ public class UITextField extends DocumentCell{
         updateSizes();
         g.setColor(textFieldColor);
         g.setFont(textFieldFont);
-        g.drawString(textField, getxPos(), getyPos()+textHeight);
+        g.drawString(textField, getxPos()+getxOffset(), getyPos()+textHeight);
         // Draw a rectangle around the text for debugging purposes
         //g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
     }
@@ -46,11 +46,16 @@ public class UITextField extends DocumentCell{
      * Update the textWidth of this UserInterface.UITextField in the textFieldFont.
      */
     private void updateSizes() {
-        if (!isCalculateActualWidth()) textWidth =  (int) (textHeight*textField.length()*heightToWidthRatio);
-        else {
-            if (metrics == null) return;
-            textWidth = metrics.stringWidth(textField);
+//        if (!isCalculateActualWidth()) textWidth =  (int) (textHeight*textField.length()*heightToWidthRatio);
+//        else {
+//            if (metrics == null) return;
+//            textWidth = metrics.stringWidth(textField);
+//        }
+        if (metrics == null) {
+            textWidth = (int) (textHeight * textField.length() * heightToWidthRatio);
+            return;
         }
+        textWidth = metrics.stringWidth(textField);
     }
 
     /**
@@ -69,6 +74,7 @@ public class UITextField extends DocumentCell{
         return textHeight;
     }
 
+
     /**
      * Retrieve a String representation of the text that this UITextField contains
      *
@@ -77,6 +83,10 @@ public class UITextField extends DocumentCell{
      */
     public String getText() {
         return this.textField;
+    }
+
+    public void setText(String text) {
+        textField = text;
     }
 
     /**
@@ -100,7 +110,7 @@ public class UITextField extends DocumentCell{
     /**
      * A variable to denote the {@link Font} used for the text of this UITextField.
      */
-    private final Font textFieldFont = new Font(Font.SANS_SERIF, Font.PLAIN, getHeight());
+    private final Font textFieldFont = new Font(Font.DIALOG_INPUT, Font.PLAIN, getHeight());
     /**
      * A variable to denote the {@link Color} used for the text of this UITextField.
      */

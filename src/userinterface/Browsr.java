@@ -58,8 +58,8 @@ public class Browsr extends CanvasWindow {
             // that is linked to this UserInterface.Browsr.
             int bookmarksBarHeight = 20;
 
-            HorizontalScrollBarDecorator addressBar = new HorizontalScrollBarDecorator(new AddressBar(addressBarOffset, addressBarOffset, 100, addressBarHeight, addressBarOffset));
-            addressBarInput = (AddressBar) addressBar.getContent();
+            AddressBar addressBar = new AddressBar(addressBarOffset, addressBarOffset, 100, addressBarHeight, addressBarOffset);
+            addressBarInput = addressBar;//(AddressBar) addressBar.getContent();
             bookmarksBar = new BookmarksBar(bookmarksBarOffset, addressBarHeight + 2 * bookmarksBarOffset, 100, bookmarksBarHeight, bookmarksBarOffset);
             leafPane = new LeafPane(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100);
             controller = new UIController();
@@ -323,7 +323,6 @@ public class Browsr extends CanvasWindow {
      */
     @Override
     protected void handleResize() {
-        //ook laten weten aan de frames om zichzelf intern aan te passen!
         for (userinterface.Frame frame : Frames) {
             frame.handleResize(this.getWidth(), this.getHeight());
         }

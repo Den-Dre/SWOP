@@ -11,6 +11,9 @@ public class HorizontalScrollBarDecorator extends DocumentCellDecorator {
      */
     public HorizontalScrollBarDecorator(DocumentCell cell) throws IllegalDimensionException {
         super(cell);
+        double ratio = (double) cell.getMaxWidth()/cell.getWidth();
+        length = cell.parentWidth;
+        innerBarLength = (int) Math.round(length/ratio);
     }
 
     /**
@@ -21,9 +24,51 @@ public class HorizontalScrollBarDecorator extends DocumentCellDecorator {
     @Override
     public void render(Graphics g) {
         super.render(g);
-        g.setColor(Color.RED);
-        // Simulate a scrollbar. TODO: Replace this with a working scroll bar
-        g.fillRect(getxPos(), getyPos() + getHeight() - SCROLLBAR_HEIGHT, cellToBeDecorated.getWidth(), SCROLLBAR_HEIGHT);
-//        System.out.println("Created HSB of: " + cellToBeDecorated.getClass());
+        double ratio = (double) cellToBeDecorated.getMaxWidth()/parentWidth;
+        if (ratio < 1.0)
+            ratio = 1.0;
+        setLength(parentWidth);
+        innerBarLength = (int) Math.round(length/ratio);
+        g.setColor(Color.BLACK);
+        g.drawRect(getxPos() + offset + getxOffset(), getyPos(), length - (4 * offset), thicknessOuterBar);
+        g.setColor(currentColor);
+        g.fillRoundRect((int) (getxPos() + (2 * offset) + fraction * (length - innerBarLength) + getxOffset()),
+                getyPos()+(thicknessOuterBar)/4, innerBarLength - (8 * offset), thicknessInnerBar, 2, 2);
+    }
+
+    void init() {
+        setHeight(thicknessOuterBar);
+        setWidth(length);
+    }
+
+    @Override
+    void moved() {
+        System.out.println("moved");
+        cellToBeDecorated.setxOffset(- (int) Math.round(fraction*Math.abs(cellToBeDecorated.getMaxWidth() - length)));
+    }
+
+//    @Override
+//    public void setWidth(int newWidth) {
+//        super.setWidth(newWidth);
+//        setLength(newWidth);
+//    }
+
+    @Override
+    void dragged(int dx, int dy) {
+        setFraction((double) dx / (length-innerBarLength) + fraction);
+    }
+
+    /**
+     * Handle key presses. This method does the right action when a key is pressed.
+     *
+     * @param id          : The KeyEvent (Associated with type of KeyEvent)
+     * @param keyCode     : The KeyEvent code (Determines the involved key)
+     * @param keyChar     : The character representation of the involved key
+     * @param modifiersEx : Specifies other keys that were involved in the event
+     */
+    @Override
+    public void handleKey(int id, int keyCode, char keyChar, int modifiersEx) {
+        this.cellToBeDecorated.handleKey(id, keyCode, keyChar, modifiersEx);
+        ratioChanged((double) parentWidth/cellToBeDecorated.getMaxWidth());
     }
 }

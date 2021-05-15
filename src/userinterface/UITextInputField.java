@@ -32,6 +32,7 @@ public class UITextInputField extends DocumentCell{
         // An inputfield has a fixed width as denoted in the assignment on page 7
         //int inputFieldWidth = 50;
         //setWidth(inputFieldWidth);
+        textField.parentWidth = getWidth();
     }
 
     /**
@@ -80,7 +81,8 @@ public class UITextInputField extends DocumentCell{
     private void printText(Graphics g){
         g.setColor(textColor);
         g.setFont(font);
-        g.drawString(this.getText(), this.textStart+getxPos(), this.getyPos()+this.getHeight()-(this.getHeight()/5));
+        //g.drawString(this.getText(), this.textStart+getxPos(), this.getyPos()+this.getHeight()-(this.getHeight()/5));
+        textField.render(g);
     }
 
     /**
@@ -105,7 +107,9 @@ public class UITextInputField extends DocumentCell{
         if (getText().length() == 0) {
         	offset = cursorOffset;
         }
-        this.cursorPos = new int[] {metrics.stringWidth(this.getText().substring(0,this.cursor))+this.getxPos()+(textStart)+offset, getCursorYPos()};
+        int textFieldOffset = (textField.getContentWithoutScrollbars()).getxOffset();
+        this.cursorPos = new int[] {metrics.stringWidth(this.getText().substring(0,this.cursor))+textField.getxPos()+
+                (textStart)+offset+getxOffset()+ textFieldOffset, getCursorYPos()};
         this.textHeight = metrics.getHeight();
     }
 
@@ -119,7 +123,9 @@ public class UITextInputField extends DocumentCell{
         if (metrics == null) return;
         int offset = 0;
         if (getText().length() == 0) offset = cursorOffset;
-        this.selectStartPos = new int[] {metrics.stringWidth(this.getText().substring(0,this.selectStart))+this.getxPos()+(textStart), this.getyPos()};
+        int textFieldOffset = (textField.getContentWithoutScrollbars()).getxOffset();
+        this.selectStartPos = new int[] {metrics.stringWidth(this.getText().substring(0,this.selectStart))+
+                this.getxPos()+(textStart)+getxOffset()+textFieldOffset, this.getyPos()};
     }
 
     /**
@@ -151,7 +157,7 @@ public class UITextInputField extends DocumentCell{
         }
         // Draw a normal rectangle or a rectangle with rounded corners
         //g.drawRect(this.getxPos(), this.getyPos(), this.getWidth(), this.getHeight());
-        g.drawRoundRect(this.getxPos(), this.getyPos(), this.getWidth(), this.getHeight(), 3,3);
+        g.drawRoundRect(this.getxPos()+getxOffset(), this.getyPos(), this.getWidth(), this.getHeight(), 3,3);
         g2.setStroke(new BasicStroke(1));
     }
 
@@ -167,6 +173,7 @@ public class UITextInputField extends DocumentCell{
      */
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
+        textField.handleMouse(id, x, y, clickCount, button, modifiersEx);
         if (button != MouseEvent.BUTTON1) return; // Button1 is left mouse button
         if (id != MouseEvent.MOUSE_RELEASED) return;
         if (this.wasClicked(x,y)) {
@@ -199,7 +206,7 @@ public class UITextInputField extends DocumentCell{
      */
     @Override
     public ReturnMessage getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
-        handleMouse(id, x, y, clickCount, button, modifier);
+        this.handleMouse(id, x, y, clickCount, button, modifier);
         return new ReturnMessage(ReturnMessage.Type.Empty);
     }
 
@@ -331,7 +338,7 @@ public class UITextInputField extends DocumentCell{
      * @return the url string of this AddressBar.
      */
     public String getText() {
-        return text;
+        return ((UITextField) textField.getContentWithoutScrollbars()).getText();
     }
 
     /**
@@ -340,7 +347,8 @@ public class UITextInputField extends DocumentCell{
      *        The new text for this Document
      */
     public void setText(String text) {
-        this.text = text;
+        UITextField field = (UITextField) textField.getContentWithoutScrollbars();
+        field.setText(text);
     }
 
     /**
@@ -349,7 +357,7 @@ public class UITextInputField extends DocumentCell{
      *        The String representation of the url to be set
      */
     public void changeTextTo(String text) {
-        this.text = text;
+        setText(text);
         moveCursor(this.getText().length());
         updateSelectStart();
         toggleFocus(false);
@@ -384,8 +392,37 @@ public class UITextInputField extends DocumentCell{
     @Override
     public ArrayList<String> getNamesAndValues() {
         ArrayList<String> nameAndValue = new ArrayList<>();
-        nameAndValue.add(name + "=" + text);
+        nameAndValue.add(name + "=" + getText());
         return nameAndValue;
+    }
+
+    @Override
+    public void setWidth(int newWidth) {
+        super.setWidth(newWidth);
+        textField.parentWidth = newWidth;
+    }
+
+    @Override
+    public void setHeight(int newHeight) {
+        super.setHeight(newHeight);
+    }
+
+    @Override
+    public void setxPos(int xPos) {
+        super.setxPos(xPos);
+        textField.setxPos(xPos);
+    }
+
+    @Override
+    public void setyPos(int yPos) {
+        super.setyPos(yPos);
+        textField.setyPos(yPos);
+    }
+
+    @Override
+    public void setxOffset(int xOffset) {
+        super.setxOffset(xOffset);
+        textField.setxOffset(xOffset);
     }
 
     /**
@@ -398,6 +435,7 @@ public class UITextInputField extends DocumentCell{
      * current contents of this AddressBar
      */
     private String text = ""; // The url starts off empty
+
 
     /**
      * An integer variable to denote the position
@@ -505,5 +543,7 @@ public class UITextInputField extends DocumentCell{
      * when hasFocus is true
      */
     private final Color focusColor = Color.BLUE;
+
+    private DocumentCellDecorator textField = new HorizontalScrollBarDecorator(new UITextField(getxPos()+textStart, getyPos(), getWidth(), this.getHeight()*3/4, ""));
 
 }

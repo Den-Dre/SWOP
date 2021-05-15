@@ -34,15 +34,15 @@ public class BookmarksDialog extends GenericDialogScreen {
         int textSize = getTextSize();
 
         this.bookmarksBar = bookmarksBar;
-        this.nameInput = new HorizontalScrollBarDecorator(new UITextInputField(offset, offset,100,textSize, "Name"));
-        this.urlInput = new HorizontalScrollBarDecorator(new UITextInputField(offset, offset,100,textSize, "URL"));
+        this.nameInput = new UITextInputField(offset, offset,100,textSize, "Name");
+        this.urlInput = new UITextInputField(offset, offset,100,textSize, "URL");
 
-        this.nameInputContents = (UITextInputField) nameInput.getContent();
-        this.urlInputContents = (UITextInputField) urlInput.getContent();
+        this.nameInputContents = (UITextInputField) nameInput;
+        this.urlInputContents = (UITextInputField) urlInput;
 
         // URL input must be prefilled:
-        this.urlInputContents.changeTextTo(currentUrl);
-        this.form = new HorizontalScrollBarDecorator(new VerticalScrollBarDecorator(getForm(currentUrl)));
+        this.urlInput.changeTextTo(currentUrl);
+        this.form = getForm(currentUrl);
     }
 
     /**
@@ -161,7 +161,7 @@ public class BookmarksDialog extends GenericDialogScreen {
      * displays. The content is contained
      * in a {@link DocumentCell}.
      */
-    private final DocumentCellDecorator form;
+    private final UIForm form;
 
     /**
      * The {@link BookmarksBar} associated
@@ -173,13 +173,13 @@ public class BookmarksDialog extends GenericDialogScreen {
      * The input field which takes a name for
      * the to be created bookmark.
      */
-    private final HorizontalScrollBarDecorator nameInput;
+    private final UITextInputField nameInput;
 
     /**
      * The input field which takes an URL in
      * string form for the to be created bookmark.
      */
-    private final HorizontalScrollBarDecorator urlInput;
+    private final UITextInputField urlInput;
 
     private final UITextInputField nameInputContents;
 

@@ -192,7 +192,7 @@ public class LeafPane extends Frame implements DocumentListener {
      * @return a UITextInputField with translated elements
      */
     private DocumentCell translateTextInputField(TextInputField content) {
-    	return new HorizontalScrollBarDecorator(new UITextInputField(getxPos(), getyPos(), 100, textSize, content.getName()));
+    	return new UITextInputField(getxPos(), getyPos(), 100, textSize, content.getName());
     }
     
     /**
@@ -223,8 +223,11 @@ public class LeafPane extends Frame implements DocumentListener {
     public void handleResize(int newWindowWidth, int newWindowHeight) {
         if ((newWindowWidth - getxPos()) >= 0) setWidth(newWindowWidth - getxPos());
         if ((newWindowHeight - getyPos()) >= 0) setHeight(newWindowHeight - getyPos());
-        if (content != null)
+        if (content != null) {
             content.handleResize(newWindowWidth, newWindowHeight);
+            content.setParentWidth(getWidth());
+            content.setParentHeight(getHeight());
+        }
     }
 
     /**
@@ -239,24 +242,24 @@ public class LeafPane extends Frame implements DocumentListener {
      */
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-        if (button != MouseEvent.BUTTON1) return;
+        if (button != MouseEvent.BUTTON1 && id != MouseEvent.MOUSE_DRAGGED) return;
         // if (id != MouseEvent.MOUSE_CLICKED) return;
         ReturnMessage result = content.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
         linkPressed(result);
     }
 
-    /**
-     * Returns true if and only if (x,y) is in this UserInterface.LeafPane.
-     *
-     * @param x: The x coordinate to check
-     * @param y: the y coordinate to check
-     */
-    private boolean wasClicked(int x, int y) {
-//    	System.out.println("DocArea: on: "+x+","+y);
-//    	System.out.println("getX: "+this.getxPos()+", getY: "+this.getyPos());
-//    	System.out.println("width: "+this.getWidth()+", height: "+this.getHeight());
-        return x >= this.getxPos() && x <= (this.getxPos() + this.getWidth()) && y >= this.getyPos() && y <= (this.getyPos() + this.getHeight());
-    }
+//    /**
+//     * Returns true if and only if (x,y) is in this UserInterface.LeafPane.
+//     *
+//     * @param x: The x coordinate to check
+//     * @param y: the y coordinate to check
+//     */
+//    private boolean wasClicked(int x, int y) {
+////    	System.out.println("DocArea: on: "+x+","+y);
+////    	System.out.println("getX: "+this.getxPos()+", getY: "+this.getyPos());
+////    	System.out.println("width: "+this.getWidth()+", height: "+this.getHeight());
+//        return x >= this.getxPos() && x <= (this.getxPos() + this.getWidth()) && y >= this.getyPos() && y <= (this.getyPos() + this.getHeight());
+//    }
 
     @Override
     public void handleKey(int id, int keyCode, char keyChar, int modifiersEx) {
@@ -325,8 +328,11 @@ public class LeafPane extends Frame implements DocumentListener {
      *               The content that should be set.
      */
     public void setContent(DocumentCell content) {
-        DocumentCell wrapped = wrapInDocumentCell(content);
-        this.content = new HorizontalScrollBarDecorator(new VerticalScrollBarDecorator(wrapped));
+        this.content = new HorizontalScrollBarDecorator(content);
+        this.content.setParentWidth(getWidth());
+        this.content.setParentHeight(getHeight());
+//        DocumentCell wrapped = wrapInDocumentCell(content);
+//        this.content = new HorizontalScrollBarDecorator(new VerticalScrollBarDecorator(wrapped));
     }
 
     /**
@@ -336,7 +342,7 @@ public class LeafPane extends Frame implements DocumentListener {
      *              A {@link ContentSpan} that denotes the contents of this LeafPane.
      */
     public DocumentCell getContent() {
-        return this.content;
+        return this.content.getContentWithoutScrollbars();
     }
 
     /**
@@ -357,12 +363,12 @@ public class LeafPane extends Frame implements DocumentListener {
     /**
      * The text size of the {@code Url} of this LeafPane.
      */
-    private final int textSize = 14;
+    static final int textSize = 14;
 
     /**
      * The content that is represented by this LeafPane.
      */
-    private DocumentCell content;
+    private DocumentCellDecorator content;
 }
 
 

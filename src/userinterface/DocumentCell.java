@@ -53,7 +53,8 @@ public class DocumentCell extends Frame {
      * @param newWindowHeight: The height the DocumentCell will be resized to.
      */
     @Override
-    public void handleResize(int newWindowWidth, int newWindowHeight) { }
+    public void handleResize(int newWindowWidth, int newWindowHeight) {
+    }
 
     /**
      * Method to determine if the click was in this DocumentCells area

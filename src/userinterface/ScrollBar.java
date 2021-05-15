@@ -33,7 +33,7 @@ public class ScrollBar extends Frame {
     }
 
     @Override
-    public void Render(Graphics g) {
+    public void render(Graphics g) {
         orientation.Render(g);
     }
 
@@ -60,6 +60,16 @@ public class ScrollBar extends Frame {
             prevMouse = null;
             currentColor = innerColorNormal;
         }
+    }
+
+    @Override
+    public void handleKey(int id, int keyCode, char keyChar, int modifiersEx) {
+
+    }
+
+    @Override
+    public void handleResize(int newWindowWidth, int newWindowHeight) {
+
     }
 
     public double getFraction() {

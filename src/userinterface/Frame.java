@@ -105,6 +105,7 @@ public abstract class Frame {
     private int xReference = xPos;
 
     private int yReference = yPos;
+
     /**
      * A boolean variable to denote whether this Frame has focus right now.
      */
@@ -119,6 +120,9 @@ public abstract class Frame {
      * An integer variable to denote the height of this Frame.
      */
     private int height;
+
+    int parentWidth = width;
+    int parentHeight = height;
 
     /**
      * A variable to denote the background {@link Color} of this Frame.
@@ -177,6 +181,14 @@ public abstract class Frame {
         this.yReference = yReference;
     }
 
+    public void setParentHeight(int parentHeight) {
+        this.parentHeight = parentHeight;
+    }
+
+    public void setParentWidth(int parentWidth) {
+        this.parentWidth = parentWidth;
+    }
+
     /**
      * Set the x position of this Frame to the given value
      *
@@ -215,6 +227,9 @@ public abstract class Frame {
      */
     public void setWidth(int newWidth){
         this.width = newWidth;
+        if (newWidth > parentWidth) {
+            parentWidth = newWidth;
+        }
     }
 
      /**
@@ -235,6 +250,9 @@ public abstract class Frame {
      */
     public void setHeight(int newHeight){
         this.height = newHeight;
+        if (newHeight > parentHeight) {
+            parentHeight = newHeight;
+        }
     }
 
     /**
