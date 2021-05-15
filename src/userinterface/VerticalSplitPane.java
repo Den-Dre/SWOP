@@ -22,18 +22,26 @@ public class VerticalSplitPane extends GenericSplitPane {
         leftPane = childPane;
         // ... and associate a deep copy of the original `Pane` object to the `rightPane` attribute
         // This way we ensure that changing one `Pane` doesn't change the other ´Pane` object, too.
-        rightPane = childPane.deepCopy();
+        ContentFrame c = new ContentFrame(leftPane.getxPos(), leftPane.getyPos(), leftPane.getWidth(), leftPane.getHeight());
+        rightPane = new LeafPane(c, leftPane.getController());
 
         // Set the sizes & position of the sub-panes
         leftPane.setxPos(x);
         leftPane.setyPos(y);
         leftPane.setWidth(width/2);
         leftPane.setHeight(height);
+        // Assign focus to one of the child `Pane`s
+        leftPane.toggleFocus(true);
 
         rightPane.setxPos(x + width/2);
         rightPane.setyPos(y);
         rightPane.setWidth(width/2);
         rightPane.setHeight(height);
+        rightPane.toggleFocus(false);
+
+        // Update domain layer knowledge
+        UIController controller = rightPane.getController();
+        controller.addDocumentListener(rightPane);
     }
 
     /**
@@ -80,7 +88,10 @@ public class VerticalSplitPane extends GenericSplitPane {
      */
     @Override
     void drawSeparator(Graphics g) {
-        g.fillRect(rightPane.getxPos(), rightPane.getyPos(), SEPARATOR_THICKNESS, getHeight());
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(5));
+        g2.setColor(Color.BLACK);
+        g2.fillRect(rightPane.getxPos()-SEPARATOR_THICKNESS-3, rightPane.getyPos(), SEPARATOR_THICKNESS, rightPane.getHeight()-getxPos());
     }
 
     /**
@@ -101,9 +112,9 @@ public class VerticalSplitPane extends GenericSplitPane {
     @Override
     public Pane getVerticalSplit() {
         if (leftPane.hasFocus())
-            return leftPane.getHorizontalSplit();
+            return leftPane.getVerticalSplit();
         else if (rightPane.hasFocus())
-            return rightPane.getHorizontalSplit();
+            return rightPane.getVerticalSplit();
         return null;
     }
 
@@ -141,7 +152,10 @@ public class VerticalSplitPane extends GenericSplitPane {
      */
     @Override
     public void handleKey(int id, int keyCode, char keyChar, int modifiersEx) {
-
+        if (leftPane.hasFocus())
+            leftPane.handleKey(id, keyCode, keyChar, modifiersEx);
+        else if (rightPane.hasFocus())
+            rightPane.handleKey(id, keyCode, keyChar, modifiersEx);
     }
 
     /**
@@ -159,6 +173,8 @@ public class VerticalSplitPane extends GenericSplitPane {
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
+        leftPane.handleResize(newWindowWidth, newWindowHeight);
+        rightPane.handleResize(newWindowWidth, newWindowHeight);
     }
 
 
@@ -188,6 +204,7 @@ public class VerticalSplitPane extends GenericSplitPane {
 
     @Override
     protected void setParentPane(Pane pane) {
+        parentPane = pane;
     }
 
     /**

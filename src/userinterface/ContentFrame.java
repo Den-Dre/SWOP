@@ -270,7 +270,7 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
      * @param x: The x coordinate to check
      * @param y: the y coordinate to check
      */
-    private boolean wasClicked(int x, int y) {
+    boolean wasClicked(int x, int y) {
 //    	System.out.println("DocArea: on: "+x+","+y);
 //    	System.out.println("getX: "+this.getxPos()+", getY: "+this.getyPos());
 //    	System.out.println("width: "+this.getWidth()+", height: "+this.getHeight());

@@ -71,7 +71,7 @@ public class LeafPane extends Pane {
         contentFrame.render(g);
         setHeight(contentFrame.getHeight());
         setWidth(contentFrame.getWidth());
-        if (hasFocus)
+        if (hasFocus())
             drawFocusedBorder(g);
     }
 
@@ -119,13 +119,13 @@ public class LeafPane extends Pane {
      */
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-        if (!contentFrame.getContent().wasClicked(x, y)) {
+        if (!contentFrame.wasClicked(x, y))
             toggleFocus(false);
-            return;
+        else {
+            setFocusedPane(this);
+            toggleFocus(true);
+            contentFrame.handleMouse(id, x, y, clickCount, button, modifiersEx);
         }
-        setFocusedPane(this);
-        toggleFocus(true);
-        contentFrame.handleMouse(id, x, y, clickCount, button, modifiersEx);
     }
 
     /**

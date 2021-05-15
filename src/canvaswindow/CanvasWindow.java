@@ -288,7 +288,7 @@ public class CanvasWindow {
 	}
 
 	private void handleMouseEvent_(MouseEvent e) {
-		 System.out.println(e);
+//		 System.out.println(e);
 		if (recording != null)
 			recording.items.add(new MouseEventItem(e.getID(), e.getX(), e.getY(), e.getClickCount(), e.getButton(), e.getModifiersEx()));
 		handleMouseEvent(e.getID(), e.getX(), e.getY(), e.getClickCount(), e.getButton(), e.getModifiersEx());
@@ -311,7 +311,7 @@ public class CanvasWindow {
 	 * @param e Details about the event
 	 */
 	protected void handleMouseEvent(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-		 System.out.println("Mouse event " + id + " (x=" + x + ", y = " + y + ", clickCount=" + clickCount + ", button=" + button + ")" + modifiersExToString(modifiersEx));
+//		 System.out.println("Mouse event " + id + " (x=" + x + ", y = " + y + ", clickCount=" + clickCount + ", button=" + button + ")" + modifiersExToString(modifiersEx));
 	}
 
 	private void handleKeyEvent_(KeyEvent e) {
@@ -327,7 +327,7 @@ public class CanvasWindow {
 	 * @param e
 	 */
 	protected void handleKeyEvent(int id, int keyCode, char keyChar, int modifiersEx) {
-		 System.out.println("Key event " + id + " (keyCode=" + keyCode + ", keyChar='" + keyChar + "'=" + (int)keyChar + ")" + modifiersExToString(modifiersEx));
+//		 System.out.println("Key event " + id + " (keyCode=" + keyCode + ", keyChar='" + keyChar + "'=" + (int)keyChar + ")" + modifiersExToString(modifiersEx));
 	}
 
 	BufferedImage captureImage() {

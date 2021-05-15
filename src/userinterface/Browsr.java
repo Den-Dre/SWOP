@@ -9,6 +9,9 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 /**
  * A class to represent the UserInterface.Browsr window,
@@ -69,6 +72,8 @@ public class Browsr extends CanvasWindow {
             this.frames.add(addressBar);
             this.frames.add(rootPane);
             this.frames.add(bookmarksBar);
+
+            this.rootPaneIndex = frames.indexOf(rootPane);
 
             addressBarInput.setUiController(controller);
             bookmarksBar.setUIController(controller);
@@ -360,13 +365,18 @@ public class Browsr extends CanvasWindow {
      */
     @Override
     protected void handleKeyEvent(int id, int keyCode, char keyChar, int modifiersEx) {
+//        long current = System.currentTimeMillis();
+//        long diff = current - lastCall;
+//        lastCall = current;
         if (modifiersEx == KeyEvent.CTRL_DOWN_MASK) {  // KeyEven.CTRL_DOWN_MASK == 128 == CTRL
             if (keyCode == 68 && layout instanceof RegularLayout) // 68 == d
                 handleBookmarksDialog();
             else if (keyCode == 83 && layout instanceof RegularLayout) // 83 == s
                 handleSaveDialog();
-            else if (keyCode == 72) // 72 == h
-                splitHorizontally();
+            else if (keyCode == 72) {// 72 == h
+//                if (diff > 200)
+                    splitHorizontally();
+            }
             else if (keyCode == 86) // 86 == v
                 splitVertically();
             else if (keyCode == 88) // 88 == x
@@ -406,11 +416,22 @@ public class Browsr extends CanvasWindow {
      * has focus.
      */
     private void splitHorizontally() {
+        System.out.println("[SplitHorizontally called] caller: ");
         Pane focused = rootPane.getFocusedPane();
+        printCallStack();
         focused.setFocusedPane(focused.getHorizontalSplit());
-//        if (focused.getParentPane() == null)
-//            rootPane = focused;
+        frames.set(rootPaneIndex, rootPane.getRootPane());
         repaint();
+    }
+
+    /**
+     * Print the call stack at the time the method is called.
+     * Useful for debugging purposes.
+     */
+    private void printCallStack() {
+        Arrays.stream(Thread.currentThread().getStackTrace()).forEach(s -> System.out.println(
+                "\tat " + s.getClassName() + "." + s.getMethodName() + "(" + s.getFileName() + ":" + s
+                        .getLineNumber() + ")"));
     }
 
     /**
@@ -419,8 +440,11 @@ public class Browsr extends CanvasWindow {
      * has focus.
      */
     private void splitVertically() {
+        System.out.println("[SplitVertically called] caller: ");
         Pane focused = rootPane.getFocusedPane();
+        printCallStack();
         focused.setFocusedPane(focused.getVerticalSplit());
+        frames.set(rootPaneIndex, rootPane.getRootPane());
         repaint();
     }
 
@@ -575,4 +599,11 @@ public class Browsr extends CanvasWindow {
      * associated to this UserInterface.Browsr.
      */
     private BookmarksBar bookmarksBar;
+
+    /**
+     * Keep the index of the rootPane in the frames list
+     */
+    private int rootPaneIndex;
+
+    private long lastCall = 0;
 }

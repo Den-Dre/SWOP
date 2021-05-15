@@ -44,7 +44,6 @@ public class HorizontalSplitPane extends GenericSplitPane {
 
         // Update domain layer knowledge
         UIController controller = upperPane.getController();
-//        ((LeafPane) upperPane).id = controller.addPaneDocument();
         controller.addDocumentListener(upperPane);
     }
 
@@ -95,7 +94,7 @@ public class HorizontalSplitPane extends GenericSplitPane {
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(5));
         g2.setColor(Color.BLACK);
-        g2.fillRect(lowerPane.getxPos(), lowerPane.getyPos(), getWidth(), SEPARATOR_THICKNESS);
+        g2.fillRect(lowerPane.getxPos(), lowerPane.getyPos()-SEPARATOR_THICKNESS-3, getWidth()-getxPos(), SEPARATOR_THICKNESS);
     }
 
     /**
@@ -116,9 +115,9 @@ public class HorizontalSplitPane extends GenericSplitPane {
     @Override
     public Pane getVerticalSplit() {
         if (lowerPane.hasFocus())
-            return lowerPane.getHorizontalSplit();
+            return lowerPane.getVerticalSplit();
         else if (upperPane.hasFocus())
-            return upperPane.getHorizontalSplit();
+            return upperPane.getVerticalSplit();
         return null;
     }
 
