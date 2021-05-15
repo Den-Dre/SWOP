@@ -30,6 +30,7 @@ public class VerticalSplitPane extends GenericSplitPane {
         leftPane.setyPos(y);
         leftPane.setWidth(width/2);
         leftPane.setHeight(height);
+        leftPane.setParentPane(this);
         // Assign focus to one of the child `Pane`s
         leftPane.toggleFocus(true);
 
@@ -37,6 +38,7 @@ public class VerticalSplitPane extends GenericSplitPane {
         rightPane.setyPos(y);
         rightPane.setWidth(width/2);
         rightPane.setHeight(height);
+        rightPane.setParentPane(this);
         rightPane.toggleFocus(false);
 
         // Update domain layer knowledge
