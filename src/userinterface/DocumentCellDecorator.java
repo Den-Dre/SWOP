@@ -157,6 +157,7 @@ public abstract class DocumentCellDecorator extends DocumentCell {
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
         this.cellToBeDecorated.handleResize(newWindowWidth, newWindowHeight);
+        moved();
     }
 
     // These setters are overridden to fix the issue

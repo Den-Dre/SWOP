@@ -66,7 +66,7 @@ public class DocumentCell extends Frame {
 //    	System.out.println("docCell: on: "+x+","+y);
 //    	System.out.println("getX: "+this.getxPos()+", getY: "+this.getyPos());
 //    	System.out.println("width: "+this.getWidth()+", height: "+this.getHeight());
-        return x >= this.getxPos() && x <= (this.getxPos() + this.getWidth()) && y >= this.getyPos() && y <= (this.getyPos() + this.getHeight());
+        return (x >= this.getxPos()+getxOffset()) && x <= (this.getxPos() + this.getWidth()+getxOffset()) && y >= this.getyPos() && y <= (this.getyPos() + this.getHeight());
     }
 
     /**

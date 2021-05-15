@@ -109,7 +109,7 @@ public class UITextInputField extends DocumentCell{
         }
         int textFieldOffset = (textField.getContentWithoutScrollbars()).getxOffset();
         this.cursorPos = new int[] {metrics.stringWidth(this.getText().substring(0,this.cursor))+textField.getxPos()+
-                (textStart)+offset+getxOffset()+ textFieldOffset, getCursorYPos()};
+                (textStart)+offset+ textFieldOffset, getCursorYPos()};
         this.textHeight = metrics.getHeight();
     }
 
@@ -125,7 +125,7 @@ public class UITextInputField extends DocumentCell{
         if (getText().length() == 0) offset = cursorOffset;
         int textFieldOffset = (textField.getContentWithoutScrollbars()).getxOffset();
         this.selectStartPos = new int[] {metrics.stringWidth(this.getText().substring(0,this.selectStart))+
-                this.getxPos()+(textStart)+getxOffset()+textFieldOffset, this.getyPos()};
+                this.getxPos()+(textStart)+textFieldOffset, this.getyPos()};
     }
 
     /**
@@ -422,7 +422,7 @@ public class UITextInputField extends DocumentCell{
     @Override
     public void setxOffset(int xOffset) {
         super.setxOffset(xOffset);
-        textField.setxOffset(xOffset);
+        textField.setxPos(getxPos()+xOffset);
     }
 
     /**

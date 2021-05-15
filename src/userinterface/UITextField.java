@@ -74,7 +74,6 @@ public class UITextField extends DocumentCell{
         return textHeight;
     }
 
-
     /**
      * Retrieve a String representation of the text that this UITextField contains
      *
