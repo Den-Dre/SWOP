@@ -9,13 +9,12 @@ import org.junit.jupiter.api.Test;
 
 import java.awt.event.MouseEvent;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 class HyperLinkTest{
 	
     private AddressBar bar;
-    private DocumentArea doc;
+    private LeafPane doc;
     private UIController ctrl;
 
     private UIHyperlink link1;
@@ -99,8 +98,9 @@ class HyperLinkTest{
 		ctrl.loadDocumentFromHref(href);
 		
 		// check if document has changed
-		assertEquals(doc.getContent().getClass(), UITable.class);
-		assertEquals(((UITextField) ((UITable) doc.getContent()).getContent().get(0).get(0)).getText(),
+		assertTrue(((DocumentCellDecorator) doc.getContent()).getContentWithoutScrollbars() instanceof UITable);
+		UITable table = (UITable) ((DocumentCellDecorator) doc.getContent()).getContentWithoutScrollbars();
+        assertEquals(((UITextField) table.getContent().get(0).get(0)).getText(),
 				"HTML elements partially supported by Browsr:");
 	}
 	

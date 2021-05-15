@@ -15,14 +15,14 @@ public class UITable extends DocumentCell{
      * @param y: The y coordinate of this {@code UITable}.
      * @param width: The width of this {@code UITable}.
      * @param height: The height of this {@code UITable}.
-     * @param rows: The number of rows of this {@code UITable}.
+     * @param grid: The number of grid of this {@code UITable}.
      * @throws IllegalDimensionException: When negative dimensions are supplied.
      */
-    public UITable(int x, int y, int width, int height, ArrayList<ArrayList<DocumentCell>> rows) throws IllegalDimensionException {
+    public UITable(int x, int y, int width, int height, ArrayList<ArrayList<DocumentCell>> grid) throws IllegalDimensionException {
         super(x, y, width, height);
 
         // => 1. Initialise the grid
-        this.grid = rows;
+        this.grid = grid;
 
         // => 2. Set the dimensions of the table contents
         setColumnWidths();
@@ -33,15 +33,15 @@ public class UITable extends DocumentCell{
     }
 
     /**
-     * Render every cell in the grid.
+     * render every cell in the grid.
      *
      * @param g: The graphics to be updated.
      */
     @Override
-    public void Render(Graphics g) {
+    public void render(Graphics g) {
         for (ArrayList<DocumentCell> row : grid) {
             for (DocumentCell cell : row) {
-                cell.Render(g);
+                cell.render(g);
             }
         }
         if (isCalculateActualWidth()) {

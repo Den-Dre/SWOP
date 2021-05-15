@@ -17,7 +17,7 @@ import java.util.ArrayList;
  *     moving the cursor and selecting text are supported.
  * </p>
  */
-public class UITextInputField extends DocumentCell implements ScrollListener {
+public class UITextInputField extends DocumentCell{
     /**
      * Initialise this UITextInputField with the given parameters.
      *
@@ -29,7 +29,6 @@ public class UITextInputField extends DocumentCell implements ScrollListener {
      */
     public UITextInputField(int x, int y, int width, int height) throws IllegalDimensionException {
         super(x, y, width, height);
-        setHeight(height+ scrollBar.getHeight());
         // An inputfield has a fixed width as denoted in the assignment on page 7
         //int inputFieldWidth = 50;
         //setWidth(inputFieldWidth);
@@ -47,7 +46,6 @@ public class UITextInputField extends DocumentCell implements ScrollListener {
      */
     public UITextInputField(int x, int y, int width, int height, String name) throws IllegalDimensionException {
         super(x, y, width, height);
-        setHeight(height+ scrollBar.getHeight());
         this.name = name;
     }
 
@@ -61,19 +59,13 @@ public class UITextInputField extends DocumentCell implements ScrollListener {
      * @param g: The graphics object that is used to draw this {@code AddressBar}
      */
     @Override
-    public void Render(Graphics g) {
-        if (outOfArea()) return;
+    public void render(Graphics g) {
         setFontMetrics(g);
         updateSelectStart();
         drawSelection(g);
         drawBox(g);
         printText(g);
         printCursor(g);
-
-        // Scrollbar stuff
-        scrollBar.setLength(getWidth());
-        scrollBar.ratioChanged((double) (textWidth)/getWidth());
-        scrollBar.Render(g);
     }
 
     /**
@@ -88,8 +80,7 @@ public class UITextInputField extends DocumentCell implements ScrollListener {
     private void printText(Graphics g){
         g.setColor(textColor);
         g.setFont(font);
-        g.drawString(getText(), getxOffset()+this.textStart+getxPos(),
-                this.getyPos()+this.getHeight()-(this.getHeight()/5)- scrollBar.getHeight()+getyOffset());
+        g.drawString(this.getText(), this.textStart+getxPos(), this.getyPos()+this.getHeight()-(this.getHeight()/5));
     }
 
     /**
@@ -98,7 +89,7 @@ public class UITextInputField extends DocumentCell implements ScrollListener {
      */
     private void printCursor(Graphics g) {
         if (!this.hasFocus) return;
-        g.fillRect(getxOffset()+this.cursorPos[0], this.cursorPos[1]+getyOffset(), this.cursorDimensions[0], this.cursorDimensions[1]);
+        g.fillRect(this.cursorPos[0], this.cursorPos[1], this.cursorDimensions[0], this.cursorDimensions[1]);
     }
 
     /**
@@ -114,9 +105,8 @@ public class UITextInputField extends DocumentCell implements ScrollListener {
         if (getText().length() == 0) {
         	offset = cursorOffset;
         }
-        cursorPos = new int[] {metrics.stringWidth(getText().substring(0,cursor))+getxPos()+textStart+offset, getCursorYPos()};
-        textHeight = metrics.getHeight();
-        textWidth = metrics.stringWidth(text);
+        this.cursorPos = new int[] {metrics.stringWidth(this.getText().substring(0,this.cursor))+this.getxPos()+(textStart)+offset, getCursorYPos()};
+        this.textHeight = metrics.getHeight();
     }
 
     /**
@@ -124,13 +114,12 @@ public class UITextInputField extends DocumentCell implements ScrollListener {
      * anything. When the user does, it stays in place to determine the characters that are selected.
      */
     private void updateSelectStart() {
-        if (doSelect) return;
-        selectStart = cursor;
+        if (this.doSelect) return;
+        this.selectStart = this.cursor;
         if (metrics == null) return;
         int offset = 0;
         if (getText().length() == 0) offset = cursorOffset;
-        selectStartPos = new int[] {metrics.stringWidth(getText().substring(0,selectStart))+getxPos()+textStart+getxOffset(),
-                getyPos()+getyOffset()};
+        this.selectStartPos = new int[] {metrics.stringWidth(this.getText().substring(0,this.selectStart))+this.getxPos()+(textStart), this.getyPos()};
     }
 
     /**
@@ -144,7 +133,7 @@ public class UITextInputField extends DocumentCell implements ScrollListener {
             g.setColor(this.highlightColor);
             int start = Math.min(this.cursorPos[0], this.selectStartPos[0]);
             int stop = Math.max(this.cursorPos[0], this.selectStartPos[0])-start;
-            g.fillRect(start, getyPos()+getyOffset(), stop, textHeight);
+            g.fillRect(start, this.getyPos(), stop, textHeight);
         }
     }
 
@@ -162,7 +151,7 @@ public class UITextInputField extends DocumentCell implements ScrollListener {
         }
         // Draw a normal rectangle or a rectangle with rounded corners
         //g.drawRect(this.getxPos(), this.getyPos(), this.getWidth(), this.getHeight());
-        g.drawRoundRect(getxPos(), getyPos()+getyOffset(), getWidth(), getHeight()- scrollBar.getHeight(), 3,3);
+        g.drawRoundRect(this.getxPos(), this.getyPos(), this.getWidth(), this.getHeight(), 3,3);
         g2.setStroke(new BasicStroke(1));
     }
 
@@ -178,8 +167,6 @@ public class UITextInputField extends DocumentCell implements ScrollListener {
      */
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-        scrollBar.handleMouse(id, x, y, clickCount, button, modifiersEx);
-        if (scrollBar.wasClicked(x,y)) return;
         if (button != MouseEvent.BUTTON1) return; // Button1 is left mouse button
         if (id != MouseEvent.MOUSE_RELEASED) return;
         if (this.wasClicked(x,y)) {
@@ -259,9 +246,6 @@ public class UITextInputField extends DocumentCell implements ScrollListener {
         }
         this.doSelect = (keyCode == 39 || keyCode == 37 || keyCode == 35 || keyCode == 36) && modifiersEx == 64;
         updateSelectStart();
-        if (textWidth < getWidth())
-            setxOffset(0);
-        //scrollBar.setFraction(1.0);
     }
 
     /**
@@ -369,7 +353,6 @@ public class UITextInputField extends DocumentCell implements ScrollListener {
         moveCursor(this.getText().length());
         updateSelectStart();
         toggleFocus(false);
-        scrollBar.ratioChanged((double) textWidth/getWidth());
     }
 
     /**
@@ -384,14 +367,13 @@ public class UITextInputField extends DocumentCell implements ScrollListener {
         if (newCursor > textLength) newCursor = textLength;
         if (newCursor < 0) newCursor = 0;
         this.cursor = newCursor;
-        scrollBar.setFraction((double) cursor/textLength);
     }
 
     /**
      * Returns the y-position of the cursor, in a way that the cursor is vertically centered in the addressbar.
      */
     private int getCursorYPos() {
-        return getyPos()+(getHeight()-cursorDimensions[1]- scrollBar.getHeight())/2 + getyOffset();
+        return getyPos()+(getHeight()-cursorDimensions[1])/2;
     }
 
     /**
@@ -405,55 +387,6 @@ public class UITextInputField extends DocumentCell implements ScrollListener {
         nameAndValue.add(name + "=" + text);
         return nameAndValue;
     }
-
-    @Override
-    public void horizontalScrolled() {
-        double newFraction = scrollBar.getFraction();
-        // To account for the offset of the addressBar, the 10 is added (yes, that is hacky :( )
-        double totalLengthText = textWidth+15;  //text.length()*heightToWidthRatio*textHeight;
-        if (totalLengthText > getWidth()) {
-            int newXBase = - (int) Math.round((newFraction * (totalLengthText - getWidth())));
-            setxOffset(newXBase);
-        }
-    }
-
-    @Override
-    public void verticalScrolled() { }
-
-    @Override
-    public void setxPos(int xPos) {
-        super.setxPos(xPos);
-        scrollBar.setxPos(getxPos());
-    }
-
-    @Override
-    public void setyPos(int yPos) {
-        super.setyPos(yPos);
-        scrollBar.setyPos(getyPos()+ 2*scrollBar.getHeight());
-    }
-
-    public String visibleText() {
-        String text = getText();
-        if (metrics == null) return text;
-        int left_trim = Math.abs(getxOffset());
-        int i = 0;
-        while (i < (text.length()-1) && metrics.stringWidth(text.substring(0, i)) < left_trim) {
-            i++;
-            text = text.substring(i-1);
-        }
-        i = text.length();
-        while (i > 0 && metrics.stringWidth(text.substring(0, i)) > getWidth()) {
-            i--;
-            text = text.substring(0, i);
-        }
-
-        return text;
-    }
-
-
-    int textWidth;
-    private final ScrollBar scrollBar = new ScrollBar(getxPos(), getyPos()+getHeight(), getWidth(),
-            true, (textWidth) / (double) getWidth(), this);
 
     /**
      * The name of this UITextInputField.
@@ -500,7 +433,7 @@ public class UITextInputField extends DocumentCell implements ScrollListener {
      *     <li>The current y coordinate of the cursor</li>
      * </ul>
      */
-    private int[] cursorPos = new int[] {this.getxPos() + (textStart) + cursorOffset+getxOffset(), getCursorYPos()};
+    private int[] cursorPos = new int[] {this.getxPos() + (textStart) + cursorOffset, getCursorYPos()};
 
     /**
      * A variable that holds the {@link Color}
@@ -572,4 +505,5 @@ public class UITextInputField extends DocumentCell implements ScrollListener {
      * when hasFocus is true
      */
     private final Color focusColor = Color.BLUE;
+
 }

@@ -6,7 +6,7 @@ import java.awt.*;
  * A class to denote the concept of a graphical
  * window within which content can be displayed.
  */
-public class Frame {
+public abstract class Frame {
 
     /**
      * Initialise this Frame with the given parameters.
@@ -30,11 +30,11 @@ public class Frame {
     }
 
     /**
-     * Render the contents of this Frame.
+     * render the contents of this Frame.
      *
      * @param g: The graphics to be rendered.
      */
-    public void Render(Graphics g) { }
+    public abstract void render(Graphics g);
 
      /**
      * Handle mouseEvents. Determine if this Frame was pressed and do the right actions.
@@ -46,7 +46,7 @@ public class Frame {
      * @param button: The mouse button that was clicked
      * @param modifiersEx: The control keys that were held on the click
      */
-    public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) { }
+    public abstract void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx);
 
     /**
      * Handle key presses. This method does the right action when a key is pressed.
@@ -56,7 +56,7 @@ public class Frame {
      * @param keyChar: The character representation of the involved key
      * @param modifiersEx: Specifies other keys that were involved in the event
      */
-    public void handleKey(int id, int keyCode, char keyChar, int modifiersEx) { }
+    public abstract void handleKey(int id, int keyCode, char keyChar, int modifiersEx);
 
 
     /**
@@ -72,7 +72,7 @@ public class Frame {
      * @param newWindowHeight: parameter containing the new window-height of this Frame.
      * @param newWindowWidth: parameter containing the new window-width of this Frame.
      */
-    public void handleResize(int newWindowWidth, int newWindowHeight) { }
+    public abstract void handleResize(int newWindowWidth, int newWindowHeight);
 
     /**
      * Toggle whether this Frame has focus right now.

@@ -32,7 +32,7 @@ public class SaveDialogTest {
 
         bar = new AddressBar(addressBarOffset, addressBarOffset, 100, addressBarHeight, addressBarOffset);
         bookmarksBar = new BookmarksBar(bookmarksBarOffset, addressBarHeight + 2 * bookmarksBarOffset, 100, bookmarksBarHeight, bookmarksBarOffset);
-        DocumentArea area = new DocumentArea(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100);
+        LeafPane area = new LeafPane(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100);
 
         // Couple the uicontoller to the documentarea and addressbar
         controller = new UIController(); // The document is created within uicontroller
@@ -125,7 +125,7 @@ public class SaveDialogTest {
         controller.saveDocument(name);
         // Simulate opening a BookmarkDialog
         SaveDialog dialog = new SaveDialog(100, 100, tableUrl, browsr);
-        UITextInputField nameInput = (UITextInputField) ((UITable) ((UITable) dialog.getForm(tableUrl).getFormContent()).getContent().get(1).get(0)).getContent().get(0).get(1);
+        UITextInputField nameInput = (UITextInputField) ((HorizontalScrollBarDecorator) ((UITable) ((UITable) dialog.getForm(tableUrl).getFormContent()).getContent().get(1).get(0)).getContent().get(0).get(1)).getContent();
         UIButton saveButton = (UIButton) ((UITable) dialog.getForm(tableUrl).getFormContent()).getContent().get(2).get(0);
 
         // Select the Name input field

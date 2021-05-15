@@ -72,15 +72,15 @@ public class BookmarksBar extends Frame {
     }
 
     /**
-     * Render this {@code BookmarksBar}.
+     * render this {@code BookmarksBar}.
      * @param g: The graphics to be rendered.
      */
     @Override
-    public void Render(Graphics g) {
+    public void render(Graphics g) {
         g.setColor(Color.GRAY);
         g.drawLine(getxPos() + offset, getyPos() + height, getWidth() - offset, getyPos() + height);
 //        g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
-        this.textHyperLinks.forEach(t -> t.Render(g));
+        this.textHyperLinks.forEach(t -> t.render(g));
     }
 
     /**
@@ -104,6 +104,9 @@ public class BookmarksBar extends Frame {
             }
         }
     }
+
+    @Override
+    public void handleKey(int id, int keyCode, char keyChar, int modifiersEx) { }
 
     /**
      * This method handles resizes.

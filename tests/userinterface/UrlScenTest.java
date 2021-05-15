@@ -13,6 +13,8 @@ import domainlayer.ContentSpan;
 import domainlayer.TextSpan;
 import domainlayer.UIController;
 
+import javax.print.Doc;
+
 /**
  * A class with tests for the "Enter URL" use-case. These tests are far from complete and only meant to 
  * check all the boxes in the assignment. Bigger and more elaborate tests can be found in the tests 
@@ -23,7 +25,7 @@ import domainlayer.UIController;
 class UrlScenTest {
 
     private AddressBar bar;
-    private DocumentArea doc;
+    private LeafPane doc;
     private UIController ctrl;
     private int offset = 5;
     private final char undefChar = KeyEvent.CHAR_UNDEFINED;
@@ -216,8 +218,9 @@ class UrlScenTest {
 		browsr.handleKeyEvent(keyPress, KeyEvent.VK_ENTER, undefChar, 0);
 		
 		// something must be visible, contents have changed!
-		assertEquals(doc.getContent().getClass(), UITable.class);
-		assertEquals(((UITextField) ((UITable) doc.getContent()).getContent().get(0).get(0)).getText(),
+        DocumentCell table = ((DocumentCellDecorator) doc.getContent()).getContentWithoutScrollbars();
+        assertTrue(table instanceof UITable);
+		assertEquals(((UITextField) ((UITable) table).getContent().get(0).get(0)).getText(),
 				"HTML elements partially supported by Browsr:");
 	}
 	
