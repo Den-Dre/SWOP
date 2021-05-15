@@ -62,23 +62,22 @@ public class Browsr extends CanvasWindow {
             addressBarInput = (AddressBar) addressBar.getContentWithoutScrollbars();
             bookmarksBar = new BookmarksBar(bookmarksBarOffset, addressBarHeight + 2 * bookmarksBarOffset, 100, bookmarksBarHeight, bookmarksBarOffset);
 
-            ContentFrame contentFrame = new ContentFrame(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100);
-            rootPane = new LeafPane(contentFrame);
             controller = new UIController();
+            ContentFrame contentFrame = new ContentFrame(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100);
+            rootPane = new LeafPane(contentFrame, controller);
 
             this.frames.add(addressBar);
             this.frames.add(rootPane);
             this.frames.add(bookmarksBar);
 
             addressBarInput.setUiController(controller);
-            rootPane.setController(controller);
             bookmarksBar.setUIController(controller);
 
             controller.addUrlListener(addressBarInput);
             controller.addDocumentListener(rootPane);
 
-            DocumentCellDecorator decoratedDocCell = new HorizontalScrollBarDecorator(new VerticalScrollBarDecorator(contentFrame.getContent()));
-            contentFrame.setContent(decoratedDocCell);
+//            DocumentCellDecorator decoratedDocCell = new HorizontalScrollBarDecorator(new VerticalScrollBarDecorator(contentFrame.getContent()));
+//            contentFrame.setContent(decoratedDocCell);
 
 //            leafPane.setContent(new VerticalScrollBarDecorator(new HorizontalScrollBarDecorator(new UITextInputField(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100))));
             // For testing purposes
@@ -402,20 +401,22 @@ public class Browsr extends CanvasWindow {
     }
 
     /**
-     * Takes the necessary actions to split
-     * the {@link ContentFrame} that currently
-     * has focus horizontally.
+     * Takes the necessary actions to horizontally
+     * split the {@link ContentFrame} that currently
+     * has focus.
      */
     private void splitHorizontally() {
         Pane focused = rootPane.getFocusedPane();
         focused.setFocusedPane(focused.getHorizontalSplit());
+//        if (focused.getParentPane() == null)
+//            rootPane = focused;
         repaint();
     }
 
     /**
-     * Takes the necessary actions to split
-     * the {@link ContentFrame} that currently
-     * has focus vertically.
+     * Takes the necessary actions to vertically
+     * split the {@link ContentFrame} that currently
+     * has focus.
      */
     private void splitVertically() {
         Pane focused = rootPane.getFocusedPane();

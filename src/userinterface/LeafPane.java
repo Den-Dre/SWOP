@@ -20,6 +20,7 @@ public class LeafPane extends Pane {
         super(contentFrame.getxPos(), contentFrame.getyPos(), contentFrame.getWidth(), contentFrame.getHeight());
         this.contentFrame = contentFrame;
         this.parentPane = parentPane;
+        this.id = getController().addPaneDocument();
     }
 
 
@@ -29,10 +30,12 @@ public class LeafPane extends Pane {
      * @param contentFrame: The contents of this {@code LeafPane} in a {@link ContentFrame} object.
      * @throws IllegalDimensionException : When one of the dimensions is negative.
      */
-    public LeafPane(ContentFrame contentFrame) throws IllegalDimensionException {
+    public LeafPane(ContentFrame contentFrame, UIController controller) throws IllegalDimensionException {
         super(contentFrame.getxPos(), contentFrame.getyPos(), contentFrame.getWidth(), contentFrame.getHeight());
         this.contentFrame = contentFrame;
         this.parentPane = null;
+        this.contentFrame.setController(controller);
+        this.id = getController().addPaneDocument();
         setFocusedPane(this);
     }
 
@@ -46,6 +49,7 @@ public class LeafPane extends Pane {
     public LeafPane(LeafPane p) {
         super(p.getxPos(), p.getyPos(), p.getWidth(), p.getHeight());
         this.contentFrame = p.contentFrame.deepCopy();
+        this.id = getController().addPaneDocument();
         if (p.parentPane == null)
             this.parentPane = null;
         else
@@ -67,7 +71,8 @@ public class LeafPane extends Pane {
         contentFrame.render(g);
         setHeight(contentFrame.getHeight());
         setWidth(contentFrame.getWidth());
-        drawFocusedBorder(g);
+        if (hasFocus)
+            drawFocusedBorder(g);
     }
 
     private void drawFocusedBorder(Graphics g) {
@@ -167,8 +172,8 @@ public class LeafPane extends Pane {
         this.contentFrame.contentChanged();
     }
 
-    protected void setParentPane(Pane parentPane) {
-        this.parentPane = parentPane;
+    public UIController getController() {
+        return contentFrame.getController();
     }
 
     public void setController(UIController controller) {
@@ -179,13 +184,62 @@ public class LeafPane extends Pane {
         return contentFrame;
     }
 
+    /**
+     * Set the x position of this LeafPane and its contents to the given value
+     *
+     * @param xPos :
+     *             The value this LeafPane's x position should be set to.
+     */
+    @Override
+    public void setxPos(int xPos) {
+        super.setxPos(xPos);
+        contentFrame.setxPos(xPos);
+    }
+
+    /**
+     * Set the y position of this LeafPane and its contents to the given value
+     *
+     * @param yPos :
+     *             The value this LeafPane and its contents' y position should be set to.
+     */
+    @Override
+    public void setyPos(int yPos) {
+        super.setyPos(yPos);
+        contentFrame.setyPos(yPos);
+    }
+
+    /**
+     * Set the width of this LeafPane and its contents to the given value.
+     *
+     * @param newWidth :
+     *                 The new value of this LeafPane and its contents" width should be set to.
+     */
+    @Override
+    public void setWidth(int newWidth) {
+        super.setWidth(newWidth);
+        contentFrame.setWidth(newWidth);
+    }
+
+    /**
+     * Set the height of this LeafPane and its contents to the given value.
+     *
+     * @param newHeight :
+     *                  The new value of this LeafPane and its contents' height should be set to.
+     */
+    @Override
+    public void setHeight(int newHeight) {
+        super.setHeight(newHeight);
+        contentFrame.setHeight(newHeight);
+    }
 
     /**
      * The content that is represented by this ContentFrame.
      */
-    private ContentFrame contentFrame;
+    private final ContentFrame contentFrame;
 
-    private Pane parentPane;
+    private final Pane parentPane;
+
+    protected int id;
 }
 
 

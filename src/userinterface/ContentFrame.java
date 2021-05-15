@@ -343,6 +343,15 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
     }
 
     /**
+     * Retrieve the {@link UIController} object associated to this {@link ContentFrame}
+     *
+     * @return controller: the {@link UIController} object associated to this {@link ContentFrame}.
+     */
+    public UIController getController() {
+        return controller;
+    }
+
+    /**
      * Set the ContentFrame's controller to a given controller
      *
      * @param controller

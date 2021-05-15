@@ -131,7 +131,9 @@ public abstract class Pane extends AbstractFrame implements DocumentListener {
 
     public abstract void setController(UIController controller);
 
-    protected abstract void setParentPane(Pane pane);
+    protected void setParentPane(Pane pane) {
+        this.parentPane = pane;
+    }
 
     private Pane subPane;
 

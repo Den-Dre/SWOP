@@ -21,9 +21,10 @@ public class HorizontalSplitPane extends GenericSplitPane {
         // Associate the original `Pane` object to the `lowerPane` attribute...
         lowerPane = childPane;
         // ... and associate a deep copy of the original `Pane` object to the `upperPane` attribute
-        // This way we ensure that changing one `Pane` doesn't change the other ´Pane` object, too.
-        upperPane = childPane.deepCopy();
-
+        // This way we ensure that changing one `Pane` doesn't change the other `Pane` object.
+//        upperPane = childPane.deepCopy();
+        ContentFrame c = new ContentFrame(lowerPane.getxPos(), lowerPane.getyPos(), lowerPane.getWidth(), lowerPane.getHeight());
+        upperPane = new LeafPane(c, lowerPane.getController());
 
         // Set the sizes & position of the sub-panes
         lowerPane.setxPos(x);
@@ -31,12 +32,20 @@ public class HorizontalSplitPane extends GenericSplitPane {
         lowerPane.setWidth(width);
         lowerPane.setHeight(height/2);
         lowerPane.setParentPane(this);
+        // Assign focus to one of the `Pane`s
+        lowerPane.toggleFocus(true);
 
         upperPane.setxPos(x);
         upperPane.setyPos(y);
         upperPane.setWidth(width);
         upperPane.setHeight(height/2);
         upperPane.setParentPane(this);
+        upperPane.toggleFocus(false);
+
+        // Update domain layer knowledge
+        UIController controller = upperPane.getController();
+//        ((LeafPane) upperPane).id = controller.addPaneDocument();
+        controller.addDocumentListener(upperPane);
     }
 
     /**
@@ -147,7 +156,10 @@ public class HorizontalSplitPane extends GenericSplitPane {
      */
     @Override
     public void handleKey(int id, int keyCode, char keyChar, int modifiersEx) {
-        // Delegate to the sub-pane that has focus, if any.
+        if (lowerPane.hasFocus())
+            lowerPane.handleKey(id, keyCode, keyChar, modifiersEx);
+        else if (upperPane.hasFocus())
+            upperPane.handleKey(id, keyCode, keyChar, modifiersEx);
     }
 
     /**
@@ -195,10 +207,6 @@ public class HorizontalSplitPane extends GenericSplitPane {
     @Override
     public boolean hasFocus() {
         return (upperPane.hasFocus() || lowerPane.hasFocus());
-    }
-
-    @Override
-    protected void setParentPane(Pane pane) {
     }
 
     private Pane upperPane;

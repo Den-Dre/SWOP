@@ -1,5 +1,6 @@
 package domainlayer;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -172,16 +173,16 @@ public class UIController {
         this.bookmarksURLKeeper.addBookmarksHref(name, href);
     }
 
-    public void addPaneDocument(String name) {
-        this.documentsKeeper.addPaneDocument(name);
+    public int addPaneDocument() {
+        return documentsKeeper.addPaneDocument();
     }
 
-    public void removePaneDocument(String name) {
-        this.documentsKeeper.removePaneDocument(name);
+    public int removePaneDocument(int id) {
+        return documentsKeeper.removePaneDocument(id);
     }
 
-    public ContentSpan getPaneDocument(String name) {
-        return this.documentsKeeper.getPaneContentSpan(name);
+    public ContentSpan getPaneDocument(int id) {
+        return this.documentsKeeper.getPaneContentSpan(id);
     }
 
     /**
