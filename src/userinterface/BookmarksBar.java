@@ -66,7 +66,7 @@ public class BookmarksBar extends Frame {
      *      an int[2] array: int[0] is the x-coordinate, int[1] the y-coordinate.
      */
     private int[] getNextPosition() {
-        int x = getxPos() + offset + textHyperLinks.stream().mapToInt(UITextHyperlink::getMaxWidth).map(t -> t + bookmarkSeperationDistance).sum();
+        int x = getxPos() + offset + textHyperLinks.stream().mapToInt(UITextHyperlink::getWidth).map(t -> t + bookmarkSeperationDistance).sum();
         int y = yCoordinate + height / 4;
         return new int[]{x, y};
     }

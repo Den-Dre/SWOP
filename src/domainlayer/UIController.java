@@ -175,7 +175,7 @@ public class UIController {
         try {
             this.document.saveDocument(fileName);
         } catch (Exception e) {
-            System.out.println("Can't save this document!");
+            System.out.println("Can't save this document!" + e);
         }
     }
 }
