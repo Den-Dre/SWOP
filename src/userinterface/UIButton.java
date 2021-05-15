@@ -149,9 +149,9 @@ public class UIButton extends DocumentCell{
          */
         private void drawButton(Graphics g) {
             g.setColor(buttonColor);
-            g.fillRoundRect(getxPos()+getxOffset(), getyPos(), getWidth(), getHeight(), 3,3);
+            g.fillRoundRect(getxPos()+getxOffset(), getyPos()+getyOffset(), getWidth(), getHeight(), 3,3);
             g.setColor(contourColor);
-            g.drawRoundRect(getxPos()+getxOffset(), getyPos(), getWidth(), getHeight(), 3,3);
+            g.drawRoundRect(getxPos()+getxOffset(), getyPos()+getyOffset(), getWidth(), getHeight(), 3,3);
         }
 
         /**
@@ -212,11 +212,11 @@ public class UIButton extends DocumentCell{
          */
         void drawButton(Graphics g) {
             g.setColor(buttonColor);
-            g.fillRoundRect(getxPos()+getxOffset(), getyPos(), getWidth(), getHeight(), 3,3);
+            g.fillRoundRect(getxPos()+getxOffset(), getyPos()+getyOffset(), getWidth(), getHeight(), 3,3);
             g.setColor(contourColor);
             Graphics2D g2 = (Graphics2D) g;
             g2.setStroke(new BasicStroke(2));
-            g.drawRoundRect(getxPos()+getxOffset(), getyPos(), getWidth(), getHeight(), 3,3);
+            g.drawRoundRect(getxPos()+getxOffset(), getyPos()+getyOffset(), getWidth(), getHeight(), 3,3);
             g2.setStroke(new BasicStroke(1));
         }
 
@@ -278,7 +278,7 @@ public class UIButton extends DocumentCell{
     void drawText(Graphics g) {
         g.setColor(textColor);
         g.setFont(font);
-        int centerY = getyPos()+textHeight;
+        int centerY = getyPos()+textHeight+getyOffset();
         int textWidth = g.getFontMetrics().stringWidth(displayText);
         int centerX = getxPos() + (getWidth()-textWidth)/2 +getxOffset();
         g.drawString(displayText, centerX, centerY);

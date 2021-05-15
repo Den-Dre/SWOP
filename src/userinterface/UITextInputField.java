@@ -109,7 +109,7 @@ public class UITextInputField extends DocumentCell{
         }
         int textFieldOffset = (textField.getContentWithoutScrollbars()).getxOffset();
         this.cursorPos = new int[] {metrics.stringWidth(this.getText().substring(0,this.cursor))+textField.getxPos()+
-                (textStart)+offset+ textFieldOffset, getCursorYPos()};
+                (textStart)+offset+ textFieldOffset, getCursorYPos()+getyOffset()};
         this.textHeight = metrics.getHeight();
     }
 
@@ -125,7 +125,7 @@ public class UITextInputField extends DocumentCell{
         if (getText().length() == 0) offset = cursorOffset;
         int textFieldOffset = (textField.getContentWithoutScrollbars()).getxOffset();
         this.selectStartPos = new int[] {metrics.stringWidth(this.getText().substring(0,this.selectStart))+
-                this.getxPos()+(textStart)+textFieldOffset, this.getyPos()};
+                this.getxPos()+(textStart)+textFieldOffset, this.getyPos()+getyOffset()};
     }
 
     /**
@@ -157,7 +157,7 @@ public class UITextInputField extends DocumentCell{
         }
         // Draw a normal rectangle or a rectangle with rounded corners
         //g.drawRect(this.getxPos(), this.getyPos(), this.getWidth(), this.getHeight());
-        g.drawRoundRect(this.getxPos()+getxOffset(), this.getyPos(), this.getWidth(), this.getHeight(), 3,3);
+        g.drawRoundRect(this.getxPos()+getxOffset(), this.getyPos()+getyOffset(), this.getWidth(), this.getHeight(), 3,3);
         g2.setStroke(new BasicStroke(1));
     }
 
@@ -217,7 +217,7 @@ public class UITextInputField extends DocumentCell{
         selectStart = 0;
         int offset = 0;
         if (getText().length() == 0) offset = cursorOffset;
-        selectStartPos = new int[] {this.getxPos() + textStart + offset, this.getyPos()};
+        selectStartPos = new int[] {this.getxPos() + textStart + offset+getxOffset(), this.getyPos()+getyOffset()};
     }
 
     /**

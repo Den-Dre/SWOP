@@ -11,6 +11,9 @@ public class VerticalScrollBarDecorator extends DocumentCellDecorator {
      */
     public VerticalScrollBarDecorator(DocumentCell cell) throws IllegalDimensionException {
         super(cell);
+        double ratio = (double) cell.getMaxHeight()/cell.getHeight();
+        length = cell.parentHeight;
+        innerBarLength = (int) Math.round(length/ratio);
     }
 
     /**
@@ -21,13 +24,30 @@ public class VerticalScrollBarDecorator extends DocumentCellDecorator {
     @Override
     public void render(Graphics g) {
         super.render(g);
-        g.setColor(Color.BLUE);
-        // Simulate a scroll bar. TODO: Replace this with a working scroll bar
-        // The drawn scroll bar overlaps with the `Add Bookmark` button in the
-        // `BoomkarksDialog` screen, due to the `render()` method of `UIButton`:
-        // in this method, the width of the button is re-estimated, but only when it's rendered.
-        // Commenting out that `setWidth()` call will result in correctly placed scrollbars.
-        g.fillRect(getxPos() + getWidth() - SCROLLBAR_WIDTH, getyPos(), SCROLLBAR_WIDTH, getHeight());
-//        System.out.println("Created VSB of: " + cellToBeDecorated.getClass().getCanonicalName());
+        double ratio = (double) cellToBeDecorated.getMaxHeight()/parentHeight;
+        if (ratio < 1.0)
+            ratio = 1.0;
+        setLength(parentHeight);
+        innerBarLength = (int) Math.round(length/ratio);
+        g.setColor(Color.BLACK);
+        g.drawRect(getxPos() + getxOffset(), getyPos()+offset + getyOffset(), thicknessOuterBar, length - (4 * offset));
+        g.setColor(currentColor);
+        g.fillRoundRect(getxPos()+(thicknessOuterBar)/4, (int) (getyPos() + (2 * offset) + fraction * (length - innerBarLength) + getyOffset()),
+                thicknessInnerBar, innerBarLength - (8 * offset), 2, 2);
+    }
+
+    void init() {
+        setHeight(length);
+        setWidth(thicknessOuterBar);
+    }
+
+    @Override
+    void moved() {
+        cellToBeDecorated.setyOffset(- (int) Math.round(fraction*Math.abs(cellToBeDecorated.getMaxHeight() - length)));
+    }
+
+    @Override
+    void dragged(int dx, int dy) {
+        setFraction((double) dy / (length-innerBarLength) + fraction);
     }
 }

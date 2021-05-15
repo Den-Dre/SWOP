@@ -328,7 +328,7 @@ public class LeafPane extends Frame implements DocumentListener {
      *               The content that should be set.
      */
     public void setContent(DocumentCell content) {
-        this.content = new HorizontalScrollBarDecorator(content);
+        this.content = new HorizontalScrollBarDecorator(new VerticalScrollBarDecorator(content));
         this.content.setParentWidth(getWidth());
         this.content.setParentHeight(getHeight());
 //        DocumentCell wrapped = wrapInDocumentCell(content);

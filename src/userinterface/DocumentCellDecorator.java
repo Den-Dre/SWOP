@@ -195,6 +195,18 @@ public abstract class DocumentCellDecorator extends DocumentCell {
     }
 
     @Override
+    public void setParentHeight(int parentHeight) {
+        super.setParentHeight(parentHeight);
+        cellToBeDecorated.setParentHeight(parentHeight);
+    }
+
+    @Override
+    public void setParentWidth(int parentWidth) {
+        super.setParentWidth(parentWidth);
+        cellToBeDecorated.setParentWidth(parentWidth);
+    }
+
+    @Override
     public void setxOffset(int xOffset) {
         super.setxOffset(xOffset);
     }
