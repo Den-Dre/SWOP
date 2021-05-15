@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"browsrhtml"},{"l":"browsrhtml.tests"},{"l":"canvaswindow"},{"l":"domainlayer"},{"l":"userinterface"}];updateSearchResults();

@@ -63,7 +63,7 @@ public class ContentSpanBuilder extends BrowsrDocumentValidator {
                 switch (lexer.getTokenValue()) {
                     case "a" -> { return getHyperlink(); }
                     case "table" -> { return getTable(); }
-                    case "form" -> {
+                    case "form" -> { 
                     	if (!parsedForm)
                     		return getForm();  
                     	else 

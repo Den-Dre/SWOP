@@ -77,7 +77,7 @@ class MouseEventItem extends RecordingItem {
 			case MouseEvent.MOUSE_DRAGGED: id = "MOUSE_DRAGGED"; break;
 			default: id = "unknown"; break;
 		}
-//		writer.println("MouseEvent " + id + " " + x + " " + y + " " + clickCount + " " + button + " " + modifiersEx);
+		writer.println("MouseEvent " + id + " " + x + " " + y + " " + clickCount + " " + button + " " + modifiersEx);
 	}
 
 	@Override
@@ -107,7 +107,7 @@ class KeyEventItem extends RecordingItem {
 			case KeyEvent.KEY_RELEASED: id = "KEY_RELEASED"; break;
 			default: id = "unknown"; break;
 		}
-//		writer.println("KeyEvent " + id + " " + keyCode + " " + (int)keyChar + " " + modifiersEx);
+		writer.println("KeyEvent " + id + " " + keyCode + " " + (int)keyChar + " " + modifiersEx);
 	}
 
 	@Override
@@ -129,7 +129,7 @@ class PaintItem extends RecordingItem {
 	void save(String path, int itemIndex, PrintWriter writer) throws IOException {
 		String imagePath = imagePathOf(path, itemIndex);
 		javax.imageio.ImageIO.write(image, "PNG", new File(imagePath));
-//		writer.println("Paint");
+		writer.println("Paint");
 	}
 
 	void replay(int itemIndex, CanvasWindow window) {
@@ -288,7 +288,7 @@ public class CanvasWindow {
 	}
 
 	private void handleMouseEvent_(MouseEvent e) {
-//		 System.out.println(e);
+		 System.out.println(e);
 		if (recording != null)
 			recording.items.add(new MouseEventItem(e.getID(), e.getX(), e.getY(), e.getClickCount(), e.getButton(), e.getModifiersEx()));
 		handleMouseEvent(e.getID(), e.getX(), e.getY(), e.getClickCount(), e.getButton(), e.getModifiersEx());

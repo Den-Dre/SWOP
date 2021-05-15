@@ -72,7 +72,7 @@ public class SaveDialogTest {
         controller.saveDocument(fileName);
         String projectDir = System.getProperty("user.dir");
         // Check if the saved document exists
-        File outputFile = new File(projectDir + File.separator + "savedPages" + File.separator + fileName + ".html");
+        File outputFile = new File(projectDir + File.separator + fileName + ".html");
         assertTrue(outputFile.isFile());
         // Check the contents of the saved HTML file:
         // In de demo op "https://people.cs.kuleuven.be/bart.jacobs/browsrtest.html" staan er spaties als indentatie
@@ -144,7 +144,7 @@ public class SaveDialogTest {
         dialog.handleMouse(MouseEvent.MOUSE_RELEASED,  saveButton.getxPos()+5, saveButton.getyPos()+5, 1, MouseEvent.BUTTON1, 0);
         // Check whether the page is saved succesfully
         String projectDir = System.getProperty("user.dir");
-        File outputFile = new File(projectDir + File.separator + "savedPages" + File.separator + name + ".html");
+        File outputFile = new File(projectDir + File.separator + name + ".html");
         assertTrue(outputFile.isFile());
     }
 

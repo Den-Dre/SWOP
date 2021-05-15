@@ -74,7 +74,6 @@ public class Document {
      * @param action The action associated with the form.
      * @param values The values to be passed into the url separated with '='.
      */
-    // TODO: Write a test for this method
     public void loadFromForm(String action, ArrayList<String> values) {
         try {
             URL newUrl = new URL(new URL(getUrlString()), action + getEncodedValues(values));
@@ -91,7 +90,6 @@ public class Document {
      * @param list An arraylist in which each element corresponds to a name-value pair separated with the '=' character.
      * @return An encoded version of the given name-value pairs separated by '&'.
      */
-    // TODO: Write a test for this method
     private String getEncodedValues(ArrayList<String> list) {
         StringBuilder values = new StringBuilder("");
         for (String nameValue :  list) {
@@ -220,7 +218,7 @@ public class Document {
     }
 
     /**
-     * Retrieve the contents of a docoument
+     * Retrieve the contents of a document
      * that should be displayed when a malformed
      * URL is entered by the user.
      *
@@ -261,6 +259,7 @@ public class Document {
             InputStream stream = con.getInputStream();
 
             BufferedReader buffer = new BufferedReader(new InputStreamReader(stream));
+            BufferedWriter outputWriter = new BufferedWriter(new FileWriter(fileName + ".html"));
 
             // First we download the HTML-code to verify whether it's valid
             String line;
@@ -271,10 +270,9 @@ public class Document {
 
             // Check whether the downloaded document only consists of HTML-code
             // that our Browsr can parse.
-            ContentSpanBuilder.buildContentSpan(document);
+            BrowsrDocumentValidator.assertIsValidBrowsrDocument(document);
 
             // Only if it is, we save the document to a file
-            BufferedWriter outputWriter = new BufferedWriter(new FileWriter(fileName + ".html"));
             outputWriter.write(document);
 
             // Write out final remaining bytes that are still in buffer
