@@ -522,4 +522,9 @@ public class UITextInputField extends DocumentCell{
      */
     private final Color focusColor = Color.BLUE;
 
+    /**
+     * The ID of the {@link Pane} that currently has focus.
+     * Its value is initialised to 0 as this represents the root{@link Pane}.
+     */
+    protected int id = 0;
 }

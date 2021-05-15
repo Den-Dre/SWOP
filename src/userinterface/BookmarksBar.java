@@ -121,7 +121,7 @@ public class BookmarksBar extends AbstractFrame {
         for (UITextHyperlink textHyperlink : textHyperLinks) {
             result = textHyperlink.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
             if (result.getType() == ReturnMessage.Type.Hyperlink) {
-                loadTextHyperlink(result.getContent());
+                loadTextHyperlink(this.id, result.getContent());
                 return;
             }
         }
@@ -155,10 +155,10 @@ public class BookmarksBar extends AbstractFrame {
      *
      * @param linkName: the name of the link that needs to be loaded.
      */
-    public void loadTextHyperlink(String linkName) {
+    public void loadTextHyperlink(int id, String linkName) {
         // TODO: This seems redundant. Maybe we should change our approach of storing bookmarks.
         String url = controller.getURLFromBookmark(linkName);
-        controller.loadDocument(url);
+        controller.loadDocument(this.id, url);
     }
 
     /**
@@ -208,5 +208,11 @@ public class BookmarksBar extends AbstractFrame {
      * the height of this {@code BookmarksBar}.
      */
     private final int height;
+
+    /**
+     * The ID of the {@link Pane} that currently has focus.
+     * Its value is initialised to 0 as this represents the root{@link Pane}.
+     */
+    private int id = 0;
 }
 

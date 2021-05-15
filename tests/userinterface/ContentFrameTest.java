@@ -105,20 +105,24 @@ class ContentFrameTest {
     	// ======== Setup ===========
     	UIController ctrl1 = new UIController(); 
     	Document doc1 = new Document();
-    	UIController ctrl2 = new UIController(); 
+    	int id1 = ctrl1.addPaneDocument();
+    	UIController ctrl2 = new UIController();
     	Document doc2 = new Document();
-    	UIController ctrl3 = new UIController(); 
+		int id2 = ctrl2.addPaneDocument();
+		UIController ctrl3 = new UIController();
     	Document doc3 = new Document();
-    	UIController ctrl4 = new UIController(); 
+		int id3 = ctrl3.addPaneDocument();
+		UIController ctrl4 = new UIController();
     	Document doc4 = new Document();
-    	
-    	// a valid userinterface.Browsr document
+		int id4 = ctrl4.addPaneDocument();
+
+		// a valid userinterface.Browsr document
     	ContentSpan content1 = ContentSpanBuilder.buildContentSpan("""
     			<a href="a.html">a</a>
     			"""); // only a HyperLink
     	doc1.changeContentSpan(content1);
     	contentFrame1.setController(ctrl1);
-    	ctrl1.setDocument(doc1);
+    	ctrl1.setCurrentDocument(id1);
     	contentFrame1.contentChanged(); // would throw an exception if translation failed
     	assertEquals(((DocumentCellDecorator) contentFrame1.getContent()).getContentWithoutScrollbars().getClass(), UIHyperlink.class);
     	assertEquals(((UIHyperlink) ((DocumentCellDecorator) contentFrame1.getContent()).getContentWithoutScrollbars()).getText(), "a");
@@ -130,7 +134,7 @@ class ContentFrameTest {
 				"""); // only a Table
     	doc2.changeContentSpan(content2);
     	contentFrame1.setController(ctrl2);
-    	ctrl2.setDocument(doc2);	
+    	ctrl2.setCurrentDocument(id2);
     	contentFrame1.contentChanged(); // would throw an exception if translation failed
 		assertTrue(((DocumentCellDecorator) contentFrame1.getContent()).getContentWithoutScrollbars() instanceof UITable); // content is translated into a UITable
 		UITable table = (UITable) ((DocumentCellDecorator) contentFrame1.getContent()).getContentWithoutScrollbars();
@@ -144,7 +148,7 @@ class ContentFrameTest {
 				"""); // only a piece of Text
     	doc3.changeContentSpan(content3);
     	contentFrame1.setController(ctrl3);
-    	ctrl3.setDocument(doc3);
+    	ctrl3.setCurrentDocument(id3);
     	contentFrame1.contentChanged(); // would throw an exception if translation failed
 		assertTrue(((DocumentCellDecorator) contentFrame1.getContent()).getContentWithoutScrollbars() instanceof UITextField);
 		assertEquals(((UITextField) ((DocumentCellDecorator) contentFrame1.getContent()).getContentWithoutScrollbars()).getText(), "HTML elements partially supported by UserInterface.Browsr:");
@@ -183,7 +187,7 @@ class ContentFrameTest {
 		
 		doc4.changeContentSpan(content4);
 		contentFrame1.setController(ctrl4);
-		ctrl4.setDocument(doc4);
+		ctrl4.setCurrentDocument(id4);
 		contentFrame1.contentChanged();
 		assertTrue(((DocumentCellDecorator) contentFrame1.getContent()).getContentWithoutScrollbars() instanceof UIForm);
 		UIForm form = (UIForm) ((DocumentCellDecorator) contentFrame1.getContent()).getContentWithoutScrollbars();

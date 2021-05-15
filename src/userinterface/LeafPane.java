@@ -36,6 +36,7 @@ public class LeafPane extends Pane {
         this.parentPane = null;
         this.contentFrame.setController(controller);
         this.id = getController().addPaneDocument();
+        this.contentFrame.setId(id);
         setFocusedPane(this);
     }
 
@@ -124,6 +125,7 @@ public class LeafPane extends Pane {
         else {
             setFocusedPane(this);
             toggleFocus(true);
+            getController().setCurrentDocument(id);
             contentFrame.handleMouse(id, x, y, clickCount, button, modifiersEx);
         }
     }

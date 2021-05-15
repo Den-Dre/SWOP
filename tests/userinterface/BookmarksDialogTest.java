@@ -24,6 +24,7 @@ public class BookmarksDialogTest {
     private Pane area;
     private BookmarksBar bookmarksBar;
     private UIController controller;
+    private int id;
 
     private final String tableUrl = "https://people.cs.kuleuven.be/bart.jacobs/browsrtest.html";
 
@@ -38,6 +39,7 @@ public class BookmarksDialogTest {
         bookmarksBar = new BookmarksBar(bookmarksBarOffset, addressBarHeight + 2 * bookmarksBarOffset, 100, bookmarksBarHeight, bookmarksBarOffset);
         ContentFrame areaContents = new ContentFrame(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100);
         area = new LeafPane(areaContents, controller);
+        id = areaContents.getId();
 
         // Couple the uicontoller to the documentarea and addressbar
         controller = new UIController(); // The document is created within uicontroller
@@ -102,7 +104,7 @@ public class BookmarksDialogTest {
     void canCancelDialog() {
         String name = "TableURL";
         // Load in the document to be saved
-        controller.loadDocument(tableUrl);
+        controller.loadDocument(id, tableUrl);
         // Now the document is loaded and it should be saved when pressing the save button
         controller.saveDocument(name);
         // Simulate opening a BookmarkDialog
@@ -133,9 +135,9 @@ public class BookmarksDialogTest {
     @DisplayName("Can load incorrectly formed bookmarks")
     void loadIncorrectBookmarkTest() {
         bookmarksBar.addBookmark("test", "http://wwww.test.be");
-        bookmarksBar.loadTextHyperlink("test");
+        bookmarksBar.loadTextHyperlink(id, "test");
         TextSpan error = (TextSpan) Document.getErrorDocument();
-        TextSpan text = (TextSpan) controller.getDocument().getContentSpan();
+        TextSpan text = (TextSpan) controller.getCurrentDocument().getContentSpan();
         assertEquals(error.getText(), text.getText());
     }
 
@@ -143,8 +145,8 @@ public class BookmarksDialogTest {
     @DisplayName("Can load correctly formed bookmarks")
     void loadCorrectBookmarkTest() {
         bookmarksBar.addBookmark("test", tableUrl);
-        bookmarksBar.loadTextHyperlink("test");
-        ContentSpan resultContentSpan = controller.getDocument().getContentSpan();
+        bookmarksBar.loadTextHyperlink(id, "test");
+        ContentSpan resultContentSpan = controller.getCurrentDocument().getContentSpan();
         ContentSpanBuilderTest.verifyContents(resultContentSpan);
     }
 

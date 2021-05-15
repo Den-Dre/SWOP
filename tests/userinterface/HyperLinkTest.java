@@ -23,7 +23,7 @@ class HyperLinkTest{
     private final String href2 = "heeeel lange href!!!!!";
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
 
         Browsr browsr = new Browsr("browsr");
         
@@ -78,12 +78,13 @@ class HyperLinkTest{
 	void composeFullURL() {
 		// browsr is already initialised with prof. Jacobs' index.html url
 		String href = "browsrtest.html";
-		ctrl.getDocument().setUrlString("https://people.cs.kuleuven.be/bart.jacobs/index.html");
+		ctrl.getCurrentDocument().setUrlString("https://people.cs.kuleuven.be/bart.jacobs/index.html");
 		// compose url with href and load the document
-		ctrl.loadDocumentFromHref(href);
+        // id should be 0 as there's only one pane loaded
+		ctrl.loadDocumentFromHref(0, href);
 		
 		// we traveled to this new url, hence the url in the bar has changed
-		assertEquals(bar.getURL().toString(), "https://people.cs.kuleuven.be/bart.jacobs/browsrtest.html");
+		assertEquals(bar.getURL(), "https://people.cs.kuleuven.be/bart.jacobs/browsrtest.html");
 		
 	}
 	
@@ -93,9 +94,9 @@ class HyperLinkTest{
 	void loadAndShowDoc() {
 		// browsr is already initialised with prof. Jacobs' index.html url
 		String href = "browsrtest.html";
-		ctrl.getDocument().setUrlString("https://people.cs.kuleuven.be/bart.jacobs/index.html");
+		ctrl.getCurrentDocument().setUrlString("https://people.cs.kuleuven.be/bart.jacobs/index.html");
 		// compose url with href and load the document
-		ctrl.loadDocumentFromHref(href);
+		ctrl.loadDocumentFromHref(0, href);
 		
 		// check if document has changed
 		assertTrue(((DocumentCellDecorator) doc.getContent()).getContentWithoutScrollbars() instanceof UITable);
@@ -110,9 +111,9 @@ class HyperLinkTest{
 	void updateAddressBar() {
 		// browsr is already initialised with prof. Jacobs' index.html url
 		String href = "browsrtest.html";
-		ctrl.getDocument().setUrlString("https://people.cs.kuleuven.be/bart.jacobs/index.html");
+		ctrl.getCurrentDocument().setUrlString("https://people.cs.kuleuven.be/bart.jacobs/index.html");
 		// compose url with href and load the document
-		ctrl.loadDocumentFromHref(href);
+		ctrl.loadDocumentFromHref(0, href);
 		
 		// check Addressbar
 		assertEquals(bar.getURL(), 
@@ -127,10 +128,10 @@ class HyperLinkTest{
     void malformedURL() {
         String malformedURL = "ww.www.test.com";
         UIController controller = new UIController();
-        controller.loadDocument(malformedURL);
+        controller.loadDocument(0, malformedURL);
 
         // Verify contents of returned URL
-        ContentSpan contentSpan = controller.getContentSpan();
+        ContentSpan contentSpan = controller.getContentSpan(0);
         TextSpan textSpan = (TextSpan) contentSpan;
         assertEquals("Error: malformed URL.", textSpan.getText());
     }

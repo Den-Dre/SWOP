@@ -135,14 +135,19 @@ public abstract class Pane extends AbstractFrame implements DocumentListener {
         this.parentPane = pane;
     }
 
+    public Pane getFocusedPane() {
+        return this.focusedPane;
+    };
+
+    public int getId() {
+        return this.id;
+    }
+
     private Pane subPane;
 
     protected Pane focusedPane;
 
     protected Pane parentPane;
 
-    public Pane getFocusedPane() {
-        return this.focusedPane;
-    };
-
+    protected int id;
 }

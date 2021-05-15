@@ -23,8 +23,10 @@ public class HorizontalSplitPane extends GenericSplitPane {
         // ... and associate a deep copy of the original `Pane` object to the `upperPane` attribute
         // This way we ensure that changing one `Pane` doesn't change the other `Pane` object.
 //        upperPane = childPane.deepCopy();
-        ContentFrame c = new ContentFrame(lowerPane.getxPos(), lowerPane.getyPos(), lowerPane.getWidth(), lowerPane.getHeight());
-        upperPane = new LeafPane(c, lowerPane.getController());
+        ContentFrame childCf = childPane.getContentFrame();
+
+        ContentFrame cf = new ContentFrame(lowerPane.getxPos(), lowerPane.getyPos(), lowerPane.getWidth(), lowerPane.getHeight());
+        upperPane = new LeafPane(cf, lowerPane.getController());
 
         // Set the sizes & position of the sub-panes
         lowerPane.setxPos(x);

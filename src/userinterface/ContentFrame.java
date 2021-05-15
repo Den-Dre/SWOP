@@ -59,6 +59,11 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
 //	    rows.add(row5);
     }
 
+    public ContentFrame(int x, int y, int width, int height, int id) {
+        super(x, y, width, height);
+        this.id = id;
+    }
+
     public ContentFrame(ContentFrame frame) {
         super(frame.getxPos(), frame.getyPos(), frame.getWidth(), frame.getHeight());
         this.content = frame.content.deepCopy();
@@ -293,10 +298,10 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
             case Empty:
                 return;
             case Hyperlink:
-                controller.loadDocumentFromHref(link.getContent());
+                controller.loadDocumentFromHref(id, link.getContent());
                 break;
             case Form:
-                controller.loadDocumentFromForm(link.getContent(), link.getContentList());
+                controller.loadDocumentFromForm(id, link.getContent(), link.getContentList());
                 break;
         }
     }
@@ -306,12 +311,13 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
      * Notify the LeafPane that the contents have been changed
      */
     public void contentChanged() {
-        try{
-            ContentSpan newContentSpan = controller.getContentSpan();
-            DocumentCell newContents = translateToUIElements(newContentSpan);
-            setContent(newContents);
+        try {
+            // TODO implement this using DocumentKeeper & LeafPane's id's
+            ContentSpan newContentSpan = controller.getContentSpan(this.id);
+            DocumentCell translatedContentSpan = translateToUIElements(newContentSpan);
+            setContent(translatedContentSpan);
         }
-        catch(Exception e){
+        catch(Exception e) {
             e.printStackTrace();
         }
     }
@@ -362,6 +368,19 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
     }
 
     /**
+     * Get the id associated to the {@link LeafPane} of this {@code ContentFrame}.
+     *
+     * @return id: the id associated to the {@link LeafPane} of this {@code ContentFrame}.
+     */
+    public int getId() {
+        return this.id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
      * The {@link UIController} related to this ContentFrame
       */
     public UIController controller;
@@ -375,6 +394,12 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
      * The content that is represented by this ContentFrame.
      */
     private DocumentCell content;
+
+    /**
+     * The id of the {@link LeafPane} associated to this {@code ContentFrame}.
+     * Initialise the {@code id} with -1 to indicate it hasn't been assigned.
+     */
+    private int id = -1;
 }
 
 

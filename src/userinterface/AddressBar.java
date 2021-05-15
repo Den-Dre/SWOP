@@ -54,7 +54,7 @@ public class AddressBar extends UITextInputField implements DocumentListener {
         this.updateCopyUrl();
         this.moveCursor(this.getURL().length());
         if (uiController != null)
-            this.uiController.loadDocument(this.getURL());
+            this.uiController.loadDocument(this.id, this.getURL());
     }
 
     /**
@@ -63,7 +63,7 @@ public class AddressBar extends UITextInputField implements DocumentListener {
      */
     @Override
     public void contentChanged() {
-        String newUrl = uiController.getUrlString();
+        String newUrl = uiController.getUrlString(this.id);
         this.changeURLto(newUrl);
     }
 

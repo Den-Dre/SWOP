@@ -10,8 +10,6 @@ import java.awt.datatransfer.Transferable;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 /**
  * A class to represent the UserInterface.Browsr window,
@@ -68,6 +66,7 @@ public class Browsr extends CanvasWindow {
             controller = new UIController();
             ContentFrame contentFrame = new ContentFrame(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100);
             rootPane = new LeafPane(contentFrame, controller);
+            controller.setCurrentDocument(rootPane.getId());
 
             this.frames.add(addressBar);
             this.frames.add(rootPane);

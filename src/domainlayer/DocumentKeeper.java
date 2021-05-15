@@ -1,9 +1,7 @@
 package domainlayer;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.Arrays;
+import userinterface.Pane;
+
 import java.util.HashMap;
 
 /**
@@ -24,37 +22,61 @@ public class DocumentKeeper {
     }
 
     public int addPaneDocument() {
+        Document doc = new Document();
+        panesToDocuments.put(++documentCounter, doc);
+        System.out.println(panesToDocuments.toString());
+        return documentCounter;
+    }
+
+    public int addPaneDocumentBasedOn(int siblingId) {
         documentCounter++;
-        try {
-            this.panesToDocuments.put(documentCounter, document.composeDocument(new URL(document.getUrlString())));
-        } catch(IOException e) {
-            this.panesToDocuments.put(documentCounter, Document.getErrorDocument());
-        }
+        Document doc = new Document();
+
+        // Create a new Document based on that of the sibling
+        doc.loadFromUrl(panesToDocuments.get(siblingId).getUrlString());
+        panesToDocuments.put(documentCounter, doc);
         System.out.println(panesToDocuments.toString());
         return documentCounter;
     }
 
     public int removePaneDocument(int id) {
-        this.panesToDocuments.remove(id);
+        panesToDocuments.remove(id);
         return --documentCounter;
     }
 
-    public ContentSpan getPaneContentSpan(int paneName) {
-        return this.panesToDocuments.get(paneName);
+    public ContentSpan getPaneContentSpan(int id) {
+        return panesToDocuments.get(id).getContentSpan();
     }
 
     public int getDocumentCounter() {
         return documentCounter;
     }
 
-    public Document getDocument() {
-        return document;
+    public Document getDocument(int id) {
+        return panesToDocuments.get(id);
+    }
+
+    public Document getCurrentDocument() {
+        return panesToDocuments.get(currentDocumentId);
+    }
+
+    public void setCurrentDocumentId(int currentDocumentId) {
+        this.currentDocumentId = currentDocumentId;
+    }
+
+    public int getCurrentDocumentId() {
+        return currentDocumentId;
     }
 
     private final Document document;
 
-    private final HashMap<Integer, ContentSpan> panesToDocuments;
+    private final HashMap<Integer, Document> panesToDocuments;
 
     private int documentCounter = -1;
+
+    /**
+     * The Id of the {@link Pane} that is currently selected.
+     */
+    private int currentDocumentId;
 }
 
