@@ -73,7 +73,7 @@ public abstract class GenericDialogScreen extends Frame {
      * Get the contents of this dialog screen.
      *
      * @param currentUrl: The URL of the current document displayed in the associated {@link Browsr} object.
-     * @return form: The {@link UIForm} that contains the contents of this dialog screen.
+     * @return form: The {@link UIActionForm} that contains the contents of this dialog screen.
      */
     public abstract UIForm getForm(String currentUrl);
 

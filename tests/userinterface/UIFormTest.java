@@ -25,7 +25,7 @@ class UIFormTest {
     @BeforeEach
     void setUp() {
         formContent = new UITextInputField(0,0,100,20);
-        form = new UIForm(x,y,"action", formContent);
+        form = new UIActionForm(x,y,"action", formContent);
     }
 
     @Test

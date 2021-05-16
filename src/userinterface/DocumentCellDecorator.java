@@ -1,6 +1,7 @@
 package userinterface;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public abstract class DocumentCellDecorator extends DocumentCell {
     /**
@@ -144,7 +145,20 @@ public abstract class DocumentCellDecorator extends DocumentCell {
         // and are left with the wrapper `UITable` from which we extract the encapsulated element:
         return ((UITable) cellToBeDecorated).getContent().get(0).get(0);
     }
-
+    
+    /**
+     * Retrieve the name and value of the decorated DocumentCell.
+     *
+     * Only applies if the DocumentCell has a name and value (e.g UITextInputField)
+     * or can contain elements that do (e.g. UITable).
+     *
+     * @return An ArrayList with the name and value of the DocumentCell separated by a '=' sign.
+     */
+    @Override 
+    public ArrayList<String> getNamesAndValues() { 
+    	return cellToBeDecorated.getNamesAndValues();
+    }
+    
     /**
      * A variable to denote the {@link DocumentCell} that will be decorated.
      */

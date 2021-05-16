@@ -42,7 +42,7 @@ public class SaveDialog extends GenericDialogScreen {
      *
      * @param currentUrl:
      *           The {@link String} representation of the URL currently entered in the {@link AddressBar}.
-     * @return new UIForm: a {@link UIForm} object that represents the form of this {@code SaveDialog}.
+     * @return new UIForm: a {@link UIActionForm} object that represents the form of this {@code SaveDialog}.
      */
 //    UIForm constructForm(String currentUrl) {
     public UIForm getForm(String currentUrl) {
@@ -78,7 +78,7 @@ public class SaveDialog extends GenericDialogScreen {
 
         UITable outerTable = new UITable(offset, offset,0,0, outerTableRows);
 
-        return new UIForm(offset, offset, "bookmarksDialog", outerTable);
+        return new UIActionForm(offset, offset, "bookmarksDialog", outerTable);
     }
 
     /**

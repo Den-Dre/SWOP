@@ -181,7 +181,7 @@ public class LeafPane extends Frame implements DocumentListener {
      */
     private DocumentCell translateForm(Form content) {
     	DocumentCell formContentsTranslated = translateToUIElements(content.getContent());
-    	return new UIForm(getxPos(), getyPos(), content.getAction(), formContentsTranslated);
+    	return new UIActionForm(getxPos(), getyPos(), content.getAction(), formContentsTranslated);
     }
     
     /**
@@ -243,7 +243,7 @@ public class LeafPane extends Frame implements DocumentListener {
         // if (id != MouseEvent.MOUSE_CLICKED) return;
         ReturnMessage result = content.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
         linkPressed(result);
-    }
+    } 
 
     /**
      * Returns true if and only if (x,y) is in this UserInterface.LeafPane.

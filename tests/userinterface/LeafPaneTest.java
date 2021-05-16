@@ -185,8 +185,8 @@ class LeafPaneTest {
 		leafPane1.setController(ctrl4);
 		ctrl4.setDocument(doc4);
 		leafPane1.contentChanged();
-		assertTrue(((DocumentCellDecorator) leafPane1.getContent()).getContentWithoutScrollbars() instanceof UIForm);
-		UIForm form = (UIForm) ((DocumentCellDecorator) leafPane1.getContent()).getContentWithoutScrollbars();
+		assertTrue(((DocumentCellDecorator) leafPane1.getContent()).getContentWithoutScrollbars() instanceof UIActionForm);
+		UIActionForm form = (UIActionForm) ((DocumentCellDecorator) leafPane1.getContent()).getContentWithoutScrollbars();
 		assertEquals(form.getAction(), "browsrformactiontest.php");
 		assertTrue(form.getFormContent() instanceof UITable);
 		UITable table2 = (UITable) form.getFormContent();
