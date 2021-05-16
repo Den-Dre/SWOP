@@ -411,6 +411,8 @@ public class Browsr extends CanvasWindow {
      */
     private void splitHorizontally() {
         Pane focused = rootPane.getFocusedPane();
+        // Replace the currently focused Pane with a HorizontalSplitPane containing
+        // the originally focused Pane and a copy of it as its children.
         rootPane.getRootPane().replacePaneWith(focused, focused.getHorizontalSplit());
         frames.set(rootPaneIndex, rootPane.getRootPane());
         repaint();
@@ -423,7 +425,9 @@ public class Browsr extends CanvasWindow {
      */
     private void splitVertically() {
         Pane focused = rootPane.getFocusedPane();
-        focused.setFocusedPane(focused.getVerticalSplit());
+        // Replace the currently focused Pane with a VerticalSplitPane containing
+        // the originally focused Pane and a copy of it as its children.
+        rootPane.getRootPane().replacePaneWith(focused, focused.getVerticalSplit());
         frames.set(rootPaneIndex, rootPane.getRootPane());
         repaint();
     }
@@ -460,7 +464,8 @@ public class Browsr extends CanvasWindow {
         if (t == null)
             return;
         try {
-            this.addressBarInput.changeTextTo((String) t.getTransferData(DataFlavor.stringFlavor));
+            addressBarInput.changeTextTo((String) t.getTransferData(DataFlavor.stringFlavor));
+            addressBarInput.toggleFocus(true);
         } catch (Exception e){
             e.printStackTrace();
         }
