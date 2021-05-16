@@ -411,7 +411,7 @@ public class Browsr extends CanvasWindow {
      */
     private void splitHorizontally() {
         Pane focused = rootPane.getFocusedPane();
-        focused.setFocusedPane(focused.getHorizontalSplit());
+        rootPane.getRootPane().replacePaneWith(focused, focused.getHorizontalSplit());
         frames.set(rootPaneIndex, rootPane.getRootPane());
         repaint();
     }

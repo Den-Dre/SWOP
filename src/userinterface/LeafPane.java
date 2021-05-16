@@ -247,33 +247,34 @@ public class LeafPane extends Pane {
         return this.id;
     }
 
-//    /**
-//     * Set the parent {@code Pane} of this {@code LeafPane}.
-//     *
-//     * @param parentPane: the parent {@code Pane} to be set.
-//     */
-//    public void setParentPane(Pane parentPane) {
-//        this.parentPane = parentPane;
-//    }
 
     @Override
     public Pane getFirstChild() {
-        return null;
+        throw new UnsupportedOperationException("Can't request child of a LeafPane.");
     }
 
     @Override
     public Pane getSecondChild() {
-        return null;
+        throw new UnsupportedOperationException("Can't request child of a LeafPane.");
     }
+
+    @Override
+    public void setFirstChild(Pane pane) {
+        throw new UnsupportedOperationException("Can't set child Pane of a LeafPane.");
+    }
+
+    @Override
+    public void setSecondChild(Pane pane) {
+        throw new UnsupportedOperationException("Can't set child Pane of a LeafPane.");
+    }
+
+    @Override
+    public void replacePaneWith(Pane oldPane, Pane newPane) { }
 
     /**
      * The content that is represented by this ContentFrame.
      */
     private final ContentFrame contentFrame;
-
-    private Pane parentPane;
-
-    protected int id;
 }
 
 

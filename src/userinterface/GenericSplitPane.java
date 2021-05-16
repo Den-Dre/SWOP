@@ -147,24 +147,31 @@ public abstract class GenericSplitPane extends Pane {
     public boolean hasFocus() {
         return (getSecondChild().hasFocus() || getFirstChild().hasFocus());
     }
+//
+//    /**
+//     * Set the {@link ContentFrame} object that currently has focus.
+//     *
+//     * @param pane : The {@code ContentFrame} object to be set.
+//     */
+//    @Override
+//    public void setFocusedPane(Pane pane) {
+//        if (parentPane != null)
+//            parentPane.setFocusedPane(pane);
+//        else
+//            focusedPane = pane;
+//    }
 
     /**
-     * Set the {@link ContentFrame} object that currently has focus.
-     *
-     * @param pane : The {@code ContentFrame} object to be set.
+     * Get the {@link Pane} object that currently has focus.
      */
     @Override
-    public void setFocusedPane(Pane pane) {
-        this.focusedPane = pane;
+    public Pane getFocusedPane() {
+        return parentPane != null ? parentPane.getFocusedPane() : focusedPane;
     }
 
     public abstract Pane getFirstChild();
 
     public abstract Pane getSecondChild();
-
-    public abstract void setFirstChild(Pane pane);
-
-    public abstract void setSecondChild(Pane pane);
 
     abstract void drawSeparator(Graphics g);
 

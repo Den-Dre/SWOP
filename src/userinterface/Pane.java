@@ -39,9 +39,22 @@ public abstract class Pane extends AbstractFrame implements DocumentListener {
      * @param pane: The {@code ContentFrame} object to be set.
      */
     public void setFocusedPane(Pane pane) {
-        this.focusedPane = pane;
-        if (parentPane != null)
-            parentPane.setFocusedPane(pane);
+        if (getParentPane() != null)
+            getParentPane().setFocusedPane(pane);
+        else
+            focusedPane = pane;
+    }
+
+    public void replacePaneWith(Pane oldPane, Pane newPane) {
+        if (oldPane == getFirstChild())
+            setFirstChild(newPane);
+        else if (oldPane == getSecondChild())
+            setSecondChild(newPane);
+        else {
+            getFocusedPane().replacePaneWith(oldPane, newPane);
+            getSecondChild().replacePaneWith(oldPane, newPane);
+        }
+
     }
 
     public UIController getController() {
@@ -59,11 +72,7 @@ public abstract class Pane extends AbstractFrame implements DocumentListener {
     }
 
     /**
-     * Define what the class that implemente
-
-     public HorizontalSplitPane(HorizontalSplitPane pane) {
-     super(pane);
-     }
+     * Define what the class that implements
      * this {@link DocumentListener} Interface
      * should do when the contents of the
      * linked {@link domainlayer.Document} change.
@@ -137,13 +146,23 @@ public abstract class Pane extends AbstractFrame implements DocumentListener {
         this.parentPane = pane;
     }
 
+    public Pane getParentPane() {
+        return parentPane;
+    }
+
     public Pane getFocusedPane() {
-        return this.focusedPane;
+        if (parentPane != null)
+            return parentPane.getFocusedPane();
+        return focusedPane;
     };
 
     public abstract Pane getFirstChild();
 
     public abstract Pane getSecondChild();
+
+    public abstract void setFirstChild(Pane pane);
+
+    public abstract void setSecondChild(Pane pane);
 
     public int getId() {
         return this.id;
