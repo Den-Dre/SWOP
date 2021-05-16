@@ -59,7 +59,11 @@ public abstract class Pane extends AbstractFrame implements DocumentListener {
     }
 
     /**
-     * Define what the class that implements
+     * Define what the class that implemente
+
+     public HorizontalSplitPane(HorizontalSplitPane pane) {
+     super(pane);
+     }
      * this {@link DocumentListener} Interface
      * should do when the contents of the
      * linked {@link domainlayer.Document} change.
@@ -76,8 +80,6 @@ public abstract class Pane extends AbstractFrame implements DocumentListener {
      * Handle a vertical split of the contents of this {@code Pane}.
      */
     public abstract Pane getVerticalSplit();
-
-    public abstract void replaceChildPane(Pane oldPane, Pane newPane);
 
     /**
      * Handle mouseEvents. Determine if this AbstractFrame was pressed and do the right actions.

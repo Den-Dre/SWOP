@@ -20,8 +20,8 @@ public class UIController {
      */
     public UIController() {
         this.bookmarksURLKeeper = new BookmarksURLKeeper();
-        this.documentsKeeper = new DocumentKeeper(new Document());
-        // TODO replace calls to `document` field with calls to documentsKeeper (reduce chain of responsibilities).
+        this.documentsKeeper = new DocumentKeeper();
+        // TODO replace calls to `document` field with calls to documentsKeeper (-> reduces chain of responsibilities?).
     }
 
 
@@ -76,6 +76,11 @@ public class UIController {
      */
     public void setCurrentDocument(int id) {
         documentsKeeper.setCurrentDocumentId(id);
+        System.out.println("[Current document set to: " + id + "]");
+    }
+
+    public int getCurrentDocumentId() {
+        return documentsKeeper.getCurrentDocumentId();
     }
 
     /**

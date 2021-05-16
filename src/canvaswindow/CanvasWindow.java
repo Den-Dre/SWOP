@@ -315,7 +315,7 @@ public class CanvasWindow {
 	}
 
 	private void handleKeyEvent_(KeyEvent e) {
-		 System.out.println(e);
+//		 System.out.println(e);
 		if (recording != null)
 			recording.items.add(new KeyEventItem(e.getID(), e.getKeyCode(), e.getKeyChar(), e.getModifiersEx()));
 		handleKeyEvent(e.getID(), e.getKeyCode(), e.getKeyChar(), e.getModifiersEx());
@@ -413,7 +413,7 @@ public class CanvasWindow {
 
 		@Override
 		protected void paintComponent(Graphics g) {
-			// System.out.println("Painting...");
+//			 System.out.println("Painting...");
 			super.paintComponent(g);
 
 			if (recording != null) {
@@ -437,7 +437,7 @@ public class CanvasWindow {
 				public void windowClosed(WindowEvent e) {
 					if (recording != null)
 						try {
-							// System.out.println(new File(".").getCanonicalPath());
+							 System.out.println(new File(".").getCanonicalPath());
 							recording.save(recordingPath);
 						} catch (IOException ex) {
 							throw new RuntimeException(ex);

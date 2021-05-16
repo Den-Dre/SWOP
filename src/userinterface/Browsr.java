@@ -417,8 +417,22 @@ public class Browsr extends CanvasWindow {
     private void splitHorizontally() {
         System.out.println("[SplitHorizontally called] caller: ");
         Pane focused = rootPane.getFocusedPane();
-        printCallStack();
+//        printCallStack();
         focused.setFocusedPane(focused.getHorizontalSplit());
+        frames.set(rootPaneIndex, rootPane.getRootPane());
+        repaint();
+    }
+
+    /**
+     * Takes the necessary actions to vertically
+     * split the {@link ContentFrame} that currently
+     * has focus.
+     */
+    private void splitVertically() {
+        System.out.println("[SplitVertically called] caller: ");
+        Pane focused = rootPane.getFocusedPane();
+//        printCallStack();
+        focused.setFocusedPane(focused.getVerticalSplit());
         frames.set(rootPaneIndex, rootPane.getRootPane());
         repaint();
     }
@@ -431,20 +445,6 @@ public class Browsr extends CanvasWindow {
         Arrays.stream(Thread.currentThread().getStackTrace()).forEach(s -> System.out.println(
                 "\tat " + s.getClassName() + "." + s.getMethodName() + "(" + s.getFileName() + ":" + s
                         .getLineNumber() + ")"));
-    }
-
-    /**
-     * Takes the necessary actions to vertically
-     * split the {@link ContentFrame} that currently
-     * has focus.
-     */
-    private void splitVertically() {
-        System.out.println("[SplitVertically called] caller: ");
-        Pane focused = rootPane.getFocusedPane();
-        printCallStack();
-        focused.setFocusedPane(focused.getVerticalSplit());
-        frames.set(rootPaneIndex, rootPane.getRootPane());
-        repaint();
     }
 
     /**

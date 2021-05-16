@@ -30,6 +30,21 @@ public abstract class AbstractFrame {
     }
 
     /**
+     * Returns true if and only if (x,y) occurred within
+     * the boundaries of this {@code AbstractFrame}.
+     *
+     * @param x: The x coordinate to check
+     * @param y: the y coordinate to check
+     * @return True iff the given point lies in this DocumentCells area including the edges
+     */
+    public boolean wasClicked(int x, int y) {
+        return x >= this.getxPos()
+            && x < (this.getxPos() + this.getWidth())
+            && y >= this.getyPos()
+            && y < (this.getyPos() + this.getHeight());
+    }
+
+    /**
      * render the contents of this AbstractFrame.
      *
      * @param g: The graphics to be rendered.

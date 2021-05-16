@@ -54,7 +54,7 @@ public class AddressBar extends UITextInputField implements DocumentListener {
         this.updateCopyUrl();
         this.moveCursor(this.getURL().length());
         if (uiController != null)
-            this.uiController.loadDocument(this.id, this.getURL());
+            this.uiController.loadDocument(uiController.getCurrentDocumentId(), this.getURL());
     }
 
     /**

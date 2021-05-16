@@ -59,19 +59,30 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
 //	    rows.add(row5);
     }
 
-    public ContentFrame(int x, int y, int width, int height, int id) {
+    /**
+     * Initialise a {@code ContentFrame} with the given {@code AbstractFrame} parameters
+     * and an {@code siblingId} as a reference for which page should be loaded.
+     *
+     * @param x        : The x coordinate of the {@code ContentFrame}.
+     * @param y        : The y coordinate of the {@code ContentFrame}.
+     * @param width    : The width of the {@code ContentFrame}.
+     * @param height   : The height of the {@code ContentFrame}.
+     * @param siblingId: The id of another {@code Pane} object whose page should be copied.
+     */
+    public ContentFrame(int x, int y, int width, int height, int siblingId) {
         super(x, y, width, height);
-        this.id = id;
+        this.id = controller.duplicatePaneDocument(siblingId);
     }
 
     public ContentFrame(ContentFrame frame) {
         super(frame.getxPos(), frame.getyPos(), frame.getWidth(), frame.getHeight());
         this.content = frame.content.deepCopy();
         this.controller = frame.controller;
+        this.id = frame.id;
     }
 
     /**
-     * Create a deep copy of this {@code AbstractFrame} object.
+     * Create a deep copy of this {@code ContentFrame} object.
      *
      * @return copy: a deep copied version of this {@code AbstractFrame}
      * object which thus does not point to the original object.
@@ -188,7 +199,7 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
      */
     private DocumentCell translateTextSpan(TextSpan content)  {
         try {
-            System.out.println("TEXT: " + content.getText());
+//            System.out.println("TEXT: " + content.getText());
             return new UITextField(getxPos(), getyPos(), getWidth(), textSize, content.getText());
         }
         catch(IllegalDimensionException e){
@@ -267,19 +278,6 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
         // if (id != MouseEvent.MOUSE_CLICKED) return;
         ReturnMessage result = content.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
         linkPressed(result);
-    }
-
-    /**
-     * Returns true if and only if (x,y) is in this UserInterface.ContentFrame.
-     *
-     * @param x: The x coordinate to check
-     * @param y: the y coordinate to check
-     */
-    boolean wasClicked(int x, int y) {
-//    	System.out.println("DocArea: on: "+x+","+y);
-//    	System.out.println("getX: "+this.getxPos()+", getY: "+this.getyPos());
-//    	System.out.println("width: "+this.getWidth()+", height: "+this.getHeight());
-        return x >= this.getxPos() && x <= (this.getxPos() + this.getWidth()) && y >= this.getyPos() && y <= (this.getyPos() + this.getHeight());
     }
 
     @Override

@@ -16,8 +16,7 @@ public class DocumentKeeper {
      * with an empty hashmap that maps the
      * UI-layer objects to documents.
      */
-    public DocumentKeeper(Document document) {
-        this.document = document;
+    public DocumentKeeper() {
         this.panesToDocuments = new HashMap<>();
     }
 
@@ -29,12 +28,11 @@ public class DocumentKeeper {
     }
 
     public int addPaneDocumentBasedOn(int siblingId) {
-        documentCounter++;
-        Document doc = new Document();
-
         // Create a new Document based on that of the sibling
+        Document doc = new Document();
         doc.loadFromUrl(panesToDocuments.get(siblingId).getUrlString());
-        panesToDocuments.put(documentCounter, doc);
+
+        panesToDocuments.put(++documentCounter, doc);
         System.out.println(panesToDocuments.toString());
         return documentCounter;
     }
@@ -62,13 +60,12 @@ public class DocumentKeeper {
 
     public void setCurrentDocumentId(int currentDocumentId) {
         this.currentDocumentId = currentDocumentId;
+        System.out.println("[Nb. of panes: " + panesToDocuments.size() + "]");
     }
 
     public int getCurrentDocumentId() {
         return currentDocumentId;
     }
-
-    private final Document document;
 
     private final HashMap<Integer, Document> panesToDocuments;
 
