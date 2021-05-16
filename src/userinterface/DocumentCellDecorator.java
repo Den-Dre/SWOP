@@ -124,8 +124,7 @@ public abstract class DocumentCellDecorator extends DocumentCell {
     @Override
     public ReturnMessage getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
         handleMouse(id, x, y, clickCount, button, modifier);
-        ReturnMessage message = cellToBeDecorated.getHandleMouse(id, x, y, clickCount, button, modifier);
-        return message;
+        return cellToBeDecorated.getHandleMouse(id, x, y, clickCount, button, modifier);
     }
 
     /**
@@ -189,9 +188,27 @@ public abstract class DocumentCellDecorator extends DocumentCell {
     }
 
     @Override
+    public void setxOffset(int xOffset) {
+        //super.setxOffset(xOffset);
+        cellToBeDecorated.setxOffset(xOffset);
+    }
+
+    @Override
+    public void setyOffset(int yOffset) {
+        //super.setyOffset(yOffset);
+        cellToBeDecorated.setyOffset(yOffset);
+    }
+
+    @Override
     public void setWidth(int newWidth) {
         super.setWidth(newWidth);
         cellToBeDecorated.setWidth(newWidth);
+    }
+
+    @Override
+    public void setHeight(int newHeight) {
+        super.setHeight(newHeight);
+        cellToBeDecorated.setHeight(newHeight);
     }
 
     @Override
@@ -207,8 +224,43 @@ public abstract class DocumentCellDecorator extends DocumentCell {
     }
 
     @Override
-    public void setxOffset(int xOffset) {
-        super.setxOffset(xOffset);
+    public int getMaxWidth() {
+        return cellToBeDecorated.getMaxWidth();
+    }
+
+    @Override
+    public int getMaxHeight() {
+        return cellToBeDecorated.getMaxHeight();
+    }
+
+    @Override
+    public void setyReference(int yReference) {
+        cellToBeDecorated.setyReference(yReference);
+    }
+
+    public int getVerticalBarXOffset() {
+        return 0;
+    }
+
+    public int getHorizontalBarYOffset() {
+        return 0;
+    }
+
+    /**
+     * Method to determine if the click was in this DocumentCells area
+     * @param x: the x-position of the click
+     * @param y: the y-position of the click
+     * @return True iff the given point lies in this DocumentCells area including the edges
+     */
+    @Override
+    public boolean wasClicked(int x, int y) {
+//    	System.out.println("docCell: on: "+x+","+y);
+//    	System.out.println("getX: "+this.getxPos()+", getY: "+this.getyPos());
+//    	System.out.println("width: "+this.getWidth()+", height: "+this.getHeight());
+        return (x >= this.getxPos()+getxOffset()+getVerticalBarXOffset()) &&
+                x <= (this.getxPos() + this.getWidth()+getxOffset()+getVerticalBarXOffset()) &&
+                y >= (this.getyPos()+getyOffset()+getHorizontalBarYOffset()) &&
+                y <= (this.getyPos() + this.getHeight()+getyOffset()+getHorizontalBarYOffset());
     }
 
     /**

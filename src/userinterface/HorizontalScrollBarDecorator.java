@@ -30,10 +30,10 @@ public class HorizontalScrollBarDecorator extends DocumentCellDecorator {
         setLength(parentWidth);
         innerBarLength = (int) Math.round(length/ratio);
         g.setColor(Color.BLACK);
-        g.drawRect(getxPos() + offset + getxOffset(), getyPos(), length - (4 * offset), thicknessOuterBar);
+        g.drawRect(getxPos() + offset + getxOffset(), getyPos()+getHorizontalBarYOffset(), length - (4 * offset), thicknessOuterBar);
         g.setColor(currentColor);
         g.fillRoundRect((int) (getxPos() + (2 * offset) + fraction * (length - innerBarLength) + getxOffset()),
-                getyPos()+(thicknessOuterBar)/4, innerBarLength - (8 * offset), thicknessInnerBar, 2, 2);
+                getyPos()+(thicknessOuterBar)/4+getHorizontalBarYOffset(), innerBarLength - (8 * offset), thicknessInnerBar, 2, 2);
     }
 
     void init() {
@@ -43,32 +43,17 @@ public class HorizontalScrollBarDecorator extends DocumentCellDecorator {
 
     @Override
     void moved() {
-        System.out.println("moved");
+        if (length >= cellToBeDecorated.getMaxWidth()) return;
         cellToBeDecorated.setxOffset(- (int) Math.round(fraction*Math.abs(cellToBeDecorated.getMaxWidth() - length)));
     }
-
-//    @Override
-//    public void setWidth(int newWidth) {
-//        super.setWidth(newWidth);
-//        setLength(newWidth);
-//    }
 
     @Override
     void dragged(int dx, int dy) {
         setFraction((double) dx / (length-innerBarLength) + fraction);
     }
 
-    /**
-     * Handle key presses. This method does the right action when a key is pressed.
-     *
-     * @param id          : The KeyEvent (Associated with type of KeyEvent)
-     * @param keyCode     : The KeyEvent code (Determines the involved key)
-     * @param keyChar     : The character representation of the involved key
-     * @param modifiersEx : Specifies other keys that were involved in the event
-     */
     @Override
-    public void handleKey(int id, int keyCode, char keyChar, int modifiersEx) {
-        this.cellToBeDecorated.handleKey(id, keyCode, keyChar, modifiersEx);
-        ratioChanged((double) parentWidth/cellToBeDecorated.getMaxWidth());
+    public int getHorizontalBarYOffset() {
+        return parentHeight;
     }
 }

@@ -29,10 +29,6 @@ public class UITextInputField extends DocumentCell{
      */
     public UITextInputField(int x, int y, int width, int height) throws IllegalDimensionException {
         super(x, y, width, height);
-        // An inputfield has a fixed width as denoted in the assignment on page 7
-        //int inputFieldWidth = 50;
-        //setWidth(inputFieldWidth);
-        textField.parentWidth = getWidth();
     }
 
     /**
@@ -61,6 +57,7 @@ public class UITextInputField extends DocumentCell{
      */
     @Override
     public void render(Graphics g) {
+        if (outOfArea()) return;
         setFontMetrics(g);
         updateSelectStart();
         drawSelection(g);
@@ -139,7 +136,7 @@ public class UITextInputField extends DocumentCell{
             g.setColor(this.highlightColor);
             int start = Math.min(this.cursorPos[0], this.selectStartPos[0]);
             int stop = Math.max(this.cursorPos[0], this.selectStartPos[0])-start;
-            g.fillRect(start, this.getyPos(), stop, textHeight);
+            g.fillRect(start, this.getyPos()+getyOffset(), stop, textHeight);
         }
     }
 
@@ -217,7 +214,7 @@ public class UITextInputField extends DocumentCell{
         selectStart = 0;
         int offset = 0;
         if (getText().length() == 0) offset = cursorOffset;
-        selectStartPos = new int[] {this.getxPos() + textStart + offset+getxOffset(), this.getyPos()+getyOffset()};
+        selectStartPos = new int[] {this.getxPos() + textStart + offset+getxOffset(), this.getyPos()+getyOffset()+ textField.getyPos()};
     }
 
     /**
@@ -423,6 +420,25 @@ public class UITextInputField extends DocumentCell{
     public void setxOffset(int xOffset) {
         super.setxOffset(xOffset);
         textField.setxPos(getxPos()+xOffset);
+    }
+
+    @Override
+    public void setyOffset(int yOffset) {
+        super.setyOffset(yOffset);
+        textField.setyPos(getyPos()+yOffset);
+        textField.setyReference(getyPos()+getyOffset());
+    }
+
+    @Override
+    public void setyReference(int yReference) {
+        super.setyReference(yReference);
+        textField.setyReference(getyPos()+getyOffset());
+    }
+
+    @Override
+    public void setxReference(int xReference) {
+        super.setxReference(xReference);
+        textField.setxReference(getxPos());
     }
 
     /**

@@ -26,6 +26,8 @@ public abstract class Frame {
         this.yPos = y;
         this.width = width;
         this.height = height;
+        this.parentWidth = width;
+        this.parentHeight = height;
         this.hasFocus = false;
     }
 
@@ -85,7 +87,7 @@ public abstract class Frame {
     }
 
     public boolean outOfArea() {
-        return (getyPos() < getyReference()); //(getxPos() - Math.abs(getxOffset())) < getxReference() |
+        return ((getyPos()+getyOffset() < getyReference()) | (getyPos()+getyOffset() > getyReference()+parentHeight)); //(getxPos() - Math.abs(getxOffset())) < getxReference() |
     }
 
     /**

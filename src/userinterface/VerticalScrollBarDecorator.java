@@ -11,8 +11,8 @@ public class VerticalScrollBarDecorator extends DocumentCellDecorator {
      */
     public VerticalScrollBarDecorator(DocumentCell cell) throws IllegalDimensionException {
         super(cell);
-        double ratio = (double) cell.getMaxHeight()/cell.getHeight();
-        length = cell.parentHeight;
+        double ratio = (double) cell.getMaxHeight()/parentHeight;
+        length = parentHeight;
         innerBarLength = (int) Math.round(length/ratio);
     }
 
@@ -30,10 +30,15 @@ public class VerticalScrollBarDecorator extends DocumentCellDecorator {
         setLength(parentHeight);
         innerBarLength = (int) Math.round(length/ratio);
         g.setColor(Color.BLACK);
-        g.drawRect(getxPos() + getxOffset(), getyPos()+offset + getyOffset(), thicknessOuterBar, length - (4 * offset));
+        g.drawRect(getxPos() + getxOffset()+getVerticalBarXOffset(), getyPos()+offset + getyOffset(), thicknessOuterBar, length - (4 * offset));
         g.setColor(currentColor);
-        g.fillRoundRect(getxPos()+(thicknessOuterBar)/4, (int) (getyPos() + (2 * offset) + fraction * (length - innerBarLength) + getyOffset()),
+        g.fillRoundRect(getxPos()+(thicknessOuterBar)/4+getVerticalBarXOffset(), (int) (getyPos() + (2 * offset) + fraction * (length - innerBarLength) + getyOffset()),
                 thicknessInnerBar, innerBarLength - (8 * offset), 2, 2);
+    }
+
+    @Override
+    public int getVerticalBarXOffset() {
+        return parentWidth - thicknessOuterBar;
     }
 
     void init() {
@@ -43,6 +48,7 @@ public class VerticalScrollBarDecorator extends DocumentCellDecorator {
 
     @Override
     void moved() {
+        if (length >= cellToBeDecorated.getMaxHeight()) return;
         cellToBeDecorated.setyOffset(- (int) Math.round(fraction*Math.abs(cellToBeDecorated.getMaxHeight() - length)));
     }
 

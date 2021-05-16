@@ -221,8 +221,9 @@ public class LeafPane extends Frame implements DocumentListener {
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
-        if ((newWindowWidth - getxPos()) >= 0) setWidth(newWindowWidth - getxPos());
-        if ((newWindowHeight - getyPos()) >= 0) setHeight(newWindowHeight - getyPos());
+        //TODO: The -30 is temporary for shrinking the leafPane, so everything is better visible.
+        if ((newWindowWidth - getxPos()) >= 0) setWidth(newWindowWidth - getxPos()-30);
+        if ((newWindowHeight - getyPos()) >= 0) setHeight(newWindowHeight - getyPos()-30);
         if (content != null) {
             content.handleResize(newWindowWidth, newWindowHeight);
             content.setParentWidth(getWidth());
@@ -274,6 +275,7 @@ public class LeafPane extends Frame implements DocumentListener {
             ContentSpan newContentSpan = controller.getContentSpan();
             DocumentCell newContents = translateToUIElements(newContentSpan);
             setContent(newContents);
+            this.content.setyReference(getyPos());
         }
         catch(Exception e){
             e.printStackTrace();
