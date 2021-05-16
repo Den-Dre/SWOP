@@ -17,17 +17,16 @@ public abstract class GenericSplitPane extends Pane {
     public GenericSplitPane(int x, int y, int width, int height, LeafPane childPane, Pane parentPane) throws IllegalDimensionException {
         super(x, y, width, height);
         setParentPane(parentPane);
-        setFirstChild(childPane);
-        ContentFrame cf = new ContentFrame(x, (height-y)/2, width, height);
-        setSecondChild(new LeafPane(cf, getFirstChild().getController()));
-
+        setFirstChild(childPane); // horizontal split -> = lower pane; vertical split -> = left pane
+        ContentFrame cf = new ContentFrame(x, y, width, height);
+        setSecondChild(new LeafPane(cf, getFirstChild().getController())); // horizontal split -> = upper pane; vertical split -> = right pane
     }
 
     protected void updateListener() {
         // Update domain layer knowledge
-        Pane secondChild = getSecondChild();
-        UIController controller = secondChild.getController();
-        controller.addDocumentListener(secondChild.getId(), secondChild);
+        UIController controller = getController();
+        controller.addDocumentListener(getFirstChild().getId(), getFirstChild());
+        controller.addDocumentListener(getSecondChild().getId(), getSecondChild());
     }
 
     public GenericSplitPane(GenericSplitPane pane) {

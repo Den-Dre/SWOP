@@ -23,7 +23,6 @@ public class LeafPane extends Pane {
         this.id = getController().addPaneDocument();
     }
 
-
     /**
      * Construct a {@code ContentFrame} with the given parameters.
      *
@@ -91,7 +90,6 @@ public class LeafPane extends Pane {
     @Override
     public Pane getHorizontalSplit() {
         return new HorizontalSplitPane(getxPos(), getyPos(), getWidth(), getHeight(), this, parentPane);
-//        parentPane.replaceChildPane(this, hsPane);
     }
 
     /**
@@ -100,7 +98,13 @@ public class LeafPane extends Pane {
     @Override
     public Pane getVerticalSplit() {
         return new VerticalSplitPane(getxPos(), getyPos(), getWidth(), getHeight(), this, parentPane);
-//        parentPane.replaceChildPane(this, hsPane);
+    }
+
+    public void closeLeafPane() {
+        LeafPane sibling = parentPane.getFirstChild() == this ?
+                (LeafPane) parentPane.getSecondChild() : (LeafPane) parentPane.getFirstChild();
+        setParentPane(sibling);
+        parentPane.handleResize(sibling.getWidth(), sibling.getHeight());
     }
 
     /**
@@ -243,12 +247,31 @@ public class LeafPane extends Pane {
         return this.id;
     }
 
+//    /**
+//     * Set the parent {@code Pane} of this {@code LeafPane}.
+//     *
+//     * @param parentPane: the parent {@code Pane} to be set.
+//     */
+//    public void setParentPane(Pane parentPane) {
+//        this.parentPane = parentPane;
+//    }
+
+    @Override
+    public Pane getFirstChild() {
+        return null;
+    }
+
+    @Override
+    public Pane getSecondChild() {
+        return null;
+    }
+
     /**
      * The content that is represented by this ContentFrame.
      */
     private final ContentFrame contentFrame;
 
-    private final Pane parentPane;
+    private Pane parentPane;
 
     protected int id;
 }

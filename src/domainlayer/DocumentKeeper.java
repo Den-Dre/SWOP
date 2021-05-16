@@ -60,7 +60,7 @@ public class DocumentKeeper {
 
     public void setCurrentDocumentId(int currentDocumentId) {
         this.currentDocumentId = currentDocumentId;
-        System.out.println("[Nb. of panes: " + panesToDocuments.size() + "]");
+//        System.out.println("[Nb. of panes: " + panesToDocuments.size() + "]");
     }
 
     public void loadFromUrl(int id, String urlString) {

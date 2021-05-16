@@ -246,7 +246,8 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
     @Override
     public void render(Graphics g) {
         content.render(g);
-        g.setColor(Color.green);
+        System.out.println("[" + content + " Rendered content at: (" + getxPos() + ", " + getyPos() + ")]");
+//        g.setColor(Color.green);
         //g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
     }
 
@@ -310,7 +311,6 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
      */
     public void contentChanged() {
         try {
-            // TODO implement this using DocumentKeeper & LeafPane's id's
             ContentSpan newContentSpan = controller.getContentSpan(this.id);
             DocumentCell translatedContentSpan = translateToUIElements(newContentSpan);
             setContent(translatedContentSpan);

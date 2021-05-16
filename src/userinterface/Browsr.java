@@ -390,7 +390,7 @@ public class Browsr extends CanvasWindow {
     private void handleBookmarksDialog() {
         this.layout = new BookmarksDialogLayout();
         String currentUrl = this.getAddressBar().getURL();
-        this.bookmarksDialog = new BookmarksDialog(this.getWidth(), this.getHeight(), currentUrl, bookmarksBar, this);
+        this.bookmarksDialog = new BookmarksDialog(getWidth(), getHeight(), currentUrl, bookmarksBar, this);
     }
 
     /**
@@ -401,7 +401,7 @@ public class Browsr extends CanvasWindow {
     private void handleSaveDialog() {
         this.layout = new SaveDialogLayout();
         String currentUrl = this.getAddressBar().getURL();
-        this.saveDialog = new SaveDialog(this.getWidth(), this.getHeight(), currentUrl, this);
+        this.saveDialog = new SaveDialog(getWidth(), getHeight(), currentUrl, this);
     }
 
     /**
@@ -410,7 +410,6 @@ public class Browsr extends CanvasWindow {
      * has focus.
      */
     private void splitHorizontally() {
-//        System.out.println("[SplitHorizontally called] caller: ");
         Pane focused = rootPane.getFocusedPane();
         focused.setFocusedPane(focused.getHorizontalSplit());
         frames.set(rootPaneIndex, rootPane.getRootPane());
@@ -423,7 +422,6 @@ public class Browsr extends CanvasWindow {
      * has focus.
      */
     private void splitVertically() {
-//        System.out.println("[SplitVertically called] caller: ");
         Pane focused = rootPane.getFocusedPane();
         focused.setFocusedPane(focused.getVerticalSplit());
         frames.set(rootPaneIndex, rootPane.getRootPane());
@@ -447,7 +445,10 @@ public class Browsr extends CanvasWindow {
      * the {@link ContentFrame} that currently
      * has focus.
      */
-    private void closeCurrentLeafPane() {}
+    private void closeCurrentLeafPane() {
+        LeafPane focused = (LeafPane) rootPane.getFocusedPane();
+        focused.closeLeafPane();
+    }
 
     /**
      * For testing purposes: paste contents

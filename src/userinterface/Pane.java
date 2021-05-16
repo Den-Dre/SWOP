@@ -45,7 +45,7 @@ public abstract class Pane extends AbstractFrame implements DocumentListener {
     }
 
     public UIController getController() {
-        return this.subPane.getController();
+        return getFirstChild().getController();
     }
 
     public DocumentCell getContent() {
@@ -140,6 +140,10 @@ public abstract class Pane extends AbstractFrame implements DocumentListener {
     public Pane getFocusedPane() {
         return this.focusedPane;
     };
+
+    public abstract Pane getFirstChild();
+
+    public abstract Pane getSecondChild();
 
     public int getId() {
         return this.id;
