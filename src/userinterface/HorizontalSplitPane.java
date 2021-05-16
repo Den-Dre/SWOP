@@ -30,6 +30,8 @@ public class HorizontalSplitPane extends GenericSplitPane {
         upperPane.setHeight(height/2);
         upperPane.setParentPane(this);
         upperPane.toggleFocus(false);
+
+        updateListener();
     }
 
     /**

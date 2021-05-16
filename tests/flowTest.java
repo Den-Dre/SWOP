@@ -35,7 +35,7 @@ public class flowTest {
         area.setController(controller);
         bar.setUiController(controller);
         // Couple the document with the documentarea and addressbar
-        controller.addDocumentListener(area);
+        controller.addDocumentListener(id, area);
         controller.addUrlListener(bar);
     }
 

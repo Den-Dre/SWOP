@@ -62,6 +62,7 @@ public class UITextInputField extends DocumentCell{
         this.textHeight = textInputField.textHeight;
         this.selectStartPos = textInputField.selectStartPos;
         this.selectStart = textInputField.selectStart;
+        this.id = textInputField.id;
     }
 
 

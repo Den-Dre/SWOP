@@ -15,7 +15,7 @@ public class UIControllerTest {
     void setUp() {
         cf = new ContentFrame(0, 0, 100, 100);
         controller = new UIController();
-        controller.addDocumentListener(cf);
+        controller.addDocumentListener(id, cf);
     }
 
     @Test
@@ -85,7 +85,7 @@ public class UIControllerTest {
         controller.setCurrentDocument(id);
         assertEquals(document, controller.getCurrentDocument());
 
-        controller.addDocumentListener(area);
+        controller.addDocumentListener(id, area);
         controller.addUrlListener(bar);
 
         String link = "www.test.be";

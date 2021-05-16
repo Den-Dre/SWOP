@@ -231,6 +231,19 @@ public class LeafPane extends Pane {
     }
 
     /**
+     * Get the id associated to this {@code LeafPane}.
+     *
+     * @return id: the id associated to this {@code LeafPane}.
+     */
+    // Note: if this method is not overridden and instead
+    // taken from Pane.java, incorrect behaviour occurs due
+    // to the id of the parentPane being returned.
+    @Override
+    public int getId() {
+        return this.id;
+    }
+
+    /**
      * The content that is represented by this ContentFrame.
      */
     private final ContentFrame contentFrame;

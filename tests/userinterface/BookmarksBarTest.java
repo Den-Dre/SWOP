@@ -33,6 +33,7 @@ public class BookmarksBarTest {
         int addressBarOffset = 5;
         int addressBarHeight = 20;
         int bookmarksBarHeight = 20;
+        int id = 0;
 
         // Make a total browsr without the gui class (=browsr.java)
         addressBar = new AddressBar(addressBarOffset, addressBarOffset, 100, addressBarHeight, addressBarOffset);
@@ -44,7 +45,7 @@ public class BookmarksBarTest {
         addressBar.setUiController(controller);
         bookmarksBar.setUIController(controller);
         // Couple the document with the documentarea and addressbar
-        controller.addDocumentListener(area);
+        controller.addDocumentListener(id, area);
         controller.addUrlListener(addressBar);
     }
 

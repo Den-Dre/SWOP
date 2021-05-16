@@ -52,8 +52,7 @@ public class UIController {
      * @param urlString: the String representation of the URL of the document to be loaded.
      */
     public void loadDocument(int id, String urlString) {
-        Document doc = documentsKeeper.getDocument(id);
-        doc.loadFromUrl(urlString);
+        documentsKeeper.loadFromUrl(id, urlString);
     }
 
     /**
@@ -112,8 +111,8 @@ public class UIController {
      * @param d
      *        The new DocumentListener for the document
      */
-    public void addDocumentListener(DocumentListener d) {
-        getCurrentDocument().addDocumentListener(d);
+    public void addDocumentListener(int id, DocumentListener d) {
+        documentsKeeper.addDocumentListener(id, d);
     }
 
     /**

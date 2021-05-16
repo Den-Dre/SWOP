@@ -63,6 +63,14 @@ public class DocumentKeeper {
         System.out.println("[Nb. of panes: " + panesToDocuments.size() + "]");
     }
 
+    public void loadFromUrl(int id, String urlString) {
+        panesToDocuments.get(id).loadFromUrl(urlString);
+    }
+
+    public void addDocumentListener(int id, DocumentListener d) {
+        panesToDocuments.get(id).addDocumentListener(d);
+    }
+
     public int getCurrentDocumentId() {
         return currentDocumentId;
     }

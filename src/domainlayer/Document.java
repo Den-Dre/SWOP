@@ -114,11 +114,10 @@ public class Document {
         try {
             URL newUrl = new URL(urlString);
             changeContentSpan(composeDocument(newUrl));
-            setUrlString(urlString);
         } catch (Exception e) {
             changeContentSpan(Document.getErrorDocument());
-            setUrlString(urlString);
         }
+        setUrlString(urlString);
     }
 
     /**

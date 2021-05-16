@@ -78,7 +78,7 @@ public class Browsr extends CanvasWindow {
             bookmarksBar.setUIController(controller);
 
             controller.addUrlListener(addressBarInput);
-            controller.addDocumentListener(rootPane);
+            controller.addDocumentListener(rootPane.getId(), rootPane);
 
 //            DocumentCellDecorator decoratedDocCell = new HorizontalScrollBarDecorator(new VerticalScrollBarDecorator(contentFrame.getContent()));
 //            contentFrame.setContent(decoratedDocCell);
@@ -364,19 +364,14 @@ public class Browsr extends CanvasWindow {
      */
     @Override
     protected void handleKeyEvent(int id, int keyCode, char keyChar, int modifiersEx) {
-//        long current = System.currentTimeMillis();
-//        long diff = current - lastCall;
-//        lastCall = current;
         if (modifiersEx == KeyEvent.CTRL_DOWN_MASK) {  // KeyEven.CTRL_DOWN_MASK == 128 == CTRL
             if (keyCode == 68 && layout instanceof RegularLayout) // 68 == d
                 handleBookmarksDialog();
             else if (keyCode == 83 && layout instanceof RegularLayout) // 83 == s
                 handleSaveDialog();
-            else if (keyCode == 72) {// 72 == h
-//                if (diff > 200)
-                    splitHorizontally();
-            }
-            else if (keyCode == 86) // 86 == v
+            else if (keyCode == 72 && id == KeyEvent.KEY_PRESSED) // 72 == h
+                splitHorizontally();
+            else if (keyCode == 86 && id == KeyEvent.KEY_PRESSED) // 86 == v
                 splitVertically();
             else if (keyCode == 88) // 88 == x
                 closeCurrentLeafPane();
@@ -415,9 +410,8 @@ public class Browsr extends CanvasWindow {
      * has focus.
      */
     private void splitHorizontally() {
-        System.out.println("[SplitHorizontally called] caller: ");
+//        System.out.println("[SplitHorizontally called] caller: ");
         Pane focused = rootPane.getFocusedPane();
-//        printCallStack();
         focused.setFocusedPane(focused.getHorizontalSplit());
         frames.set(rootPaneIndex, rootPane.getRootPane());
         repaint();
@@ -429,9 +423,8 @@ public class Browsr extends CanvasWindow {
      * has focus.
      */
     private void splitVertically() {
-        System.out.println("[SplitVertically called] caller: ");
+//        System.out.println("[SplitVertically called] caller: ");
         Pane focused = rootPane.getFocusedPane();
-//        printCallStack();
         focused.setFocusedPane(focused.getVerticalSplit());
         frames.set(rootPaneIndex, rootPane.getRootPane());
         repaint();
@@ -440,6 +433,8 @@ public class Browsr extends CanvasWindow {
     /**
      * Print the call stack at the time the method is called.
      * Useful for debugging purposes.
+     *
+     * <a href=https://stackoverflow.com/questions/45944793/how-to-print-java-method-call-stack>Source</a>
      */
     private void printCallStack() {
         Arrays.stream(Thread.currentThread().getStackTrace()).forEach(s -> System.out.println(

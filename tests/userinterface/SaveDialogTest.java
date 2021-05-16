@@ -42,7 +42,7 @@ public class SaveDialogTest {
         bookmarksBar.setUIController(controller);
 
         // Couple the document with the documentarea and addressbar
-        controller.addDocumentListener(area);
+        controller.addDocumentListener(id, area);
         controller.addUrlListener(bar);
         browsr = new Browsr("Browsr");
         bar = browsr.getAddressBar();

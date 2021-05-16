@@ -18,12 +18,16 @@ public abstract class GenericSplitPane extends Pane {
         super(x, y, width, height);
         setParentPane(parentPane);
         setFirstChild(childPane);
-        ContentFrame cf = new ContentFrame(getFirstChild().getxPos(), getFirstChild().getyPos(), getFirstChild().getWidth(), getFirstChild().getHeight());
+        ContentFrame cf = new ContentFrame(x, (height-y)/2, width, height);
         setSecondChild(new LeafPane(cf, getFirstChild().getController()));
 
+    }
+
+    protected void updateListener() {
         // Update domain layer knowledge
-        UIController controller = getSecondChild().getController();
-        controller.addDocumentListener(getSecondChild());
+        Pane secondChild = getSecondChild();
+        UIController controller = secondChild.getController();
+        controller.addDocumentListener(secondChild.getId(), secondChild);
     }
 
     public GenericSplitPane(GenericSplitPane pane) {
@@ -157,9 +161,9 @@ public abstract class GenericSplitPane extends Pane {
 
     public abstract Pane getFirstChild();
 
-    public abstract void setFirstChild(Pane pane);
-
     public abstract Pane getSecondChild();
+
+    public abstract void setFirstChild(Pane pane);
 
     public abstract void setSecondChild(Pane pane);
 
