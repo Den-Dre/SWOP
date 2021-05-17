@@ -102,6 +102,8 @@ public class LeafPane extends Pane {
     }
 
     public Pane closeLeafPane() {
+        if (this == getRootPane())
+            contentFrame.setWelcomeDocument();
         Pane sibling = parentPane.getFirstChild() == this ?
                        parentPane.getSecondChild() : parentPane.getFirstChild();
         sibling.handleResize(parentPane.getWidth(), parentPane.getHeight());

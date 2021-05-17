@@ -2,6 +2,7 @@ package userinterface;
 
 import domainlayer.*;
 
+import javax.print.Doc;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -334,6 +335,14 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
      */
     public void setContent(DocumentCell content) {
         this.content = new HorizontalScrollBarDecorator(new VerticalScrollBarDecorator(content));
+    }
+
+    /**
+     * Set the contents of this {@code ContentFrame}
+     * to the Welcome Document.
+     */
+    protected void setWelcomeDocument() {
+        setContent(translateToUIElements(Document.getWelcomeDocument()));
     }
 
     /**
