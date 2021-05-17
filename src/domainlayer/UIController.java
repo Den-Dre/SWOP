@@ -75,7 +75,7 @@ public class UIController {
      */
     public void setCurrentDocument(int id) {
         documentsKeeper.setCurrentDocumentId(id);
-        System.out.println("[Current document set to: " + id + "]");
+//        System.out.println("[Current document set to: " + id + "]");
     }
 
     public int getCurrentDocumentId() {

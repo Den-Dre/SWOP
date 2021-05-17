@@ -3,9 +3,10 @@ package userinterface;
 import domainlayer.UIController;
 
 import java.awt.*;
+import java.util.Arrays;
 
 /**
- * A class to represent the portion of Broswr that renders the document
+ * A class to represent the portion of Browsr that renders the document
  */
 public class LeafPane extends Pane {
     /**
@@ -100,11 +101,15 @@ public class LeafPane extends Pane {
         return new VerticalSplitPane(getxPos(), getyPos(), getWidth(), getHeight(), this, parentPane);
     }
 
-    public void closeLeafPane() {
-        LeafPane sibling = parentPane.getFirstChild() == this ?
-                (LeafPane) parentPane.getSecondChild() : (LeafPane) parentPane.getFirstChild();
-        setParentPane(sibling);
-        parentPane.handleResize(sibling.getWidth(), sibling.getHeight());
+    public Pane closeLeafPane() {
+        Pane sibling = parentPane.getFirstChild() == this ?
+                       parentPane.getSecondChild() : parentPane.getFirstChild();
+        sibling.handleResize(parentPane.getWidth(), parentPane.getHeight());
+//        sibling.handleResize(getLastResize()[0], getLastResize()[1]);
+        sibling.setParentPane(parentPane.getParentPane());
+        setFocusedPane(sibling);
+        setParentPane(null);
+        return sibling;
     }
 
     /**
@@ -128,6 +133,7 @@ public class LeafPane extends Pane {
             getController().setCurrentDocument(this.id);
             contentFrame.handleMouse(id, x, y, clickCount, button, modifiersEx);
         }
+        System.out.println("[Clicked on " + this + ": (" + getWidth() + ", " + getHeight() + ")]");
     }
 
     /**
@@ -158,9 +164,10 @@ public class LeafPane extends Pane {
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
-        setWidth(newWindowWidth);
-        setHeight(newWindowHeight);
         contentFrame.handleResize(newWindowWidth, newWindowHeight);
+        setWidth(contentFrame.getWidth());
+        setHeight(contentFrame.getHeight());
+        setLastResize(newWindowWidth, newWindowHeight);
     }
 
     /**

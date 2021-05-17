@@ -373,7 +373,7 @@ public class Browsr extends CanvasWindow {
                 splitHorizontally();
             else if (keyCode == 86 && id == KeyEvent.KEY_PRESSED) // 86 == v
                 splitVertically();
-            else if (keyCode == 88) // 88 == x
+            else if (keyCode == 88 && id == KeyEvent.KEY_PRESSED) // 88 == x
                 closeCurrentLeafPane();
             else if (keyCode == 80) // 80 == p
                 handlePaste();
@@ -414,8 +414,7 @@ public class Browsr extends CanvasWindow {
         // Replace the currently focused Pane with a HorizontalSplitPane containing
         // the originally focused Pane and a copy of it as its children.
         rootPane.getRootPane().replacePaneWith(focused, focused.getHorizontalSplit());
-        frames.set(rootPaneIndex, rootPane.getRootPane());
-        repaint();
+        updateRootPane(rootPane.getRootPane());
     }
 
     /**
@@ -428,15 +427,14 @@ public class Browsr extends CanvasWindow {
         // Replace the currently focused Pane with a VerticalSplitPane containing
         // the originally focused Pane and a copy of it as its children.
         rootPane.getRootPane().replacePaneWith(focused, focused.getVerticalSplit());
-        frames.set(rootPaneIndex, rootPane.getRootPane());
-        repaint();
+        updateRootPane(rootPane.getRootPane());
     }
 
     /**
      * Print the call stack at the time the method is called.
      * Useful for debugging purposes.
      *
-     * <a href=https://stackoverflow.com/questions/45944793/how-to-print-java-method-call-stack>Source</a>
+     * <a href=https://stackoverflow.com/questions/45944793/how-to-print-java-method-call-stack>Source</a>.
      */
     private void printCallStack() {
         Arrays.stream(Thread.currentThread().getStackTrace()).forEach(s -> System.out.println(
@@ -451,7 +449,19 @@ public class Browsr extends CanvasWindow {
      */
     private void closeCurrentLeafPane() {
         LeafPane focused = (LeafPane) rootPane.getFocusedPane();
-        focused.closeLeafPane();
+        Pane newParent = focused.closeLeafPane();
+        updateRootPane(newParent.getRootPane());
+    }
+
+    /**
+     * Update the {@code root}{@link Pane} attribute of this Browsr object.
+     * This updates the entry in {@code this.frames}, too.
+     *
+     * @param newRootPane: the new {@code root}{@link Pane} object to be set.
+     */
+    private void updateRootPane(Pane newRootPane) {
+        this.rootPane = newRootPane;
+        frames.set(rootPaneIndex, newRootPane);
     }
 
     /**
@@ -604,6 +614,4 @@ public class Browsr extends CanvasWindow {
      * Keep the index of the rootPane in the frames list
      */
     private int rootPaneIndex;
-
-    private long lastCall = 0;
 }

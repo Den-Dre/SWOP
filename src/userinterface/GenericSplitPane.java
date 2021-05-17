@@ -20,6 +20,7 @@ public abstract class GenericSplitPane extends Pane {
         setFirstChild(childPane); // horizontal split -> = lower pane; vertical split -> = left pane
         ContentFrame cf = new ContentFrame(x, y, width, height);
         setSecondChild(new LeafPane(cf, getFirstChild().getController())); // horizontal split -> = upper pane; vertical split -> = right pane
+        this.lastResize = childPane.lastResize;
     }
 
     protected void updateListeners() {
@@ -147,19 +148,6 @@ public abstract class GenericSplitPane extends Pane {
     public boolean hasFocus() {
         return (getSecondChild().hasFocus() || getFirstChild().hasFocus());
     }
-//
-//    /**
-//     * Set the {@link ContentFrame} object that currently has focus.
-//     *
-//     * @param pane : The {@code ContentFrame} object to be set.
-//     */
-//    @Override
-//    public void setFocusedPane(Pane pane) {
-//        if (parentPane != null)
-//            parentPane.setFocusedPane(pane);
-//        else
-//            focusedPane = pane;
-//    }
 
     /**
      * Get the {@link Pane} object that currently has focus.
