@@ -71,6 +71,13 @@ public class DocumentKeeper {
         panesToDocuments.get(id).addDocumentListener(d);
     }
 
+    public void addDocumentListener(int id, DocumentListener d, int copyId) {
+        Document copyDoc = getDocument(copyId);
+        Document newDoc = getDocument(id);
+        newDoc.setCopyInfo(copyDoc.getUrlString(), copyDoc.isWelcomeDocumentLoaded());
+        addDocumentListener(id, d);
+    }
+
     public int getCurrentDocumentId() {
         return currentDocumentId;
     }

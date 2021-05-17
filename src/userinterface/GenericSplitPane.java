@@ -22,11 +22,11 @@ public abstract class GenericSplitPane extends Pane {
         setSecondChild(new LeafPane(cf, getFirstChild().getController())); // horizontal split -> = upper pane; vertical split -> = right pane
     }
 
-    protected void updateListener() {
+    protected void updateListeners() {
         // Update domain layer knowledge
         UIController controller = getController();
         controller.addDocumentListener(getFirstChild().getId(), getFirstChild());
-        controller.addDocumentListener(getSecondChild().getId(), getSecondChild());
+        controller.addDocumentListener(getSecondChild().getId(), getSecondChild(), getFirstChild().getId());
     }
 
     public GenericSplitPane(GenericSplitPane pane) {

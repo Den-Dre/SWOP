@@ -311,7 +311,7 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
      */
     public void contentChanged() {
         try {
-            ContentSpan newContentSpan = controller.getContentSpan(this.id);
+            ContentSpan newContentSpan = controller.getContentSpan(id);
             DocumentCell translatedContentSpan = translateToUIElements(newContentSpan);
             setContent(translatedContentSpan);
         }

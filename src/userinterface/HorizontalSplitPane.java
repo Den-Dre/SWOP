@@ -32,7 +32,7 @@ public class HorizontalSplitPane extends GenericSplitPane {
         upperPane.setParentPane(this);
         upperPane.toggleFocus(false);
 
-        updateListener();
+        updateListeners();
     }
 
     /**

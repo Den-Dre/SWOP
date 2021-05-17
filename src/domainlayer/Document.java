@@ -111,6 +111,7 @@ public class Document {
      * @param urlString: the String representation of the URL of the document to be loaded.
      */
     public void loadFromUrl(String urlString) {
+        welcomeDocumentLoaded = false;
         try {
             URL newUrl = new URL(urlString);
             changeContentSpan(composeDocument(newUrl));
@@ -284,4 +285,28 @@ public class Document {
             buffer.close();
         }
     }
+
+    public boolean isWelcomeDocumentLoaded() {
+        return welcomeDocumentLoaded;
+    }
+
+    public void setCopyInfo(String urlString, boolean welcome) {
+        this.copyURL = urlString;
+        this.copyWelcome = welcome;
+        updateCopyInfo();
+    }
+
+    private void updateCopyInfo() {
+        if (copyWelcome) {
+            changeContentSpan(Document.getWelcomeDocument());
+            copyWelcome = false;
+        } else if (copyURL != null)
+            loadFromUrl(copyURL);
+    }
+
+    private boolean welcomeDocumentLoaded = true;
+
+    private boolean copyWelcome = false;
+
+    private String copyURL;
 }

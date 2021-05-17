@@ -31,7 +31,7 @@ public class VerticalSplitPane extends GenericSplitPane {
         rightPane.setParentPane(this);
         rightPane.toggleFocus(false);
 
-        updateListener();
+        updateListeners();
     }
 
     /**

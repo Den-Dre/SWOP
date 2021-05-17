@@ -115,6 +115,10 @@ public class UIController {
         documentsKeeper.addDocumentListener(id, d);
     }
 
+    public void addDocumentListener(int id, DocumentListener d, int copyId) {
+        documentsKeeper.addDocumentListener(id, d, copyId);
+    }
+
     /**
      * Add a documentListener to the list of urlListeners of the controllers document
      *
