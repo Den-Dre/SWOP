@@ -2,6 +2,8 @@ package domainlayer;
 
 import userinterface.Pane;
 
+import javax.print.Doc;
+import javax.swing.*;
 import java.util.HashMap;
 
 /**
@@ -79,6 +81,10 @@ public class DocumentKeeper {
 
     public int getCurrentDocumentId() {
         return currentDocumentId;
+    }
+
+    public void setWelcomeDocument(int id) {
+        panesToDocuments.get(id).changeContentSpan(Document.getWelcomeDocument());
     }
 
     private final HashMap<Integer, Document> panesToDocuments;

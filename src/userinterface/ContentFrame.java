@@ -247,7 +247,7 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
     @Override
     public void render(Graphics g) {
         content.render(g);
-//        System.out.println("[" + content + " Rendered content at: (" + getxPos() + ", " + getyPos() + ")]");
+        System.out.println("[" + content + " Rendered content at: (" + getxPos() + ", " + getyPos() + ")]");
 //        g.setColor(Color.green);
         //g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
     }
@@ -357,6 +357,7 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
      */
     protected void setWelcomeDocument() {
         setContent(translateToUIElements(Document.getWelcomeDocument()));
+        controller.setWelcomeDocument(id);
     }
 
     /**

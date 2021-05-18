@@ -83,6 +83,7 @@ public class LeafPane extends Pane {
         g2.setStroke(new BasicStroke(2));
         g2.setColor(Color.BLUE);
         g2.drawRect(getxPos(), getyPos(), getWidth()-offset, getHeight()-offset);
+        // Reset the stroke for future drawing
         g2.setStroke(new BasicStroke(1));
     }
 
@@ -120,10 +121,13 @@ public class LeafPane extends Pane {
     }
 
     public Pane closeLeafPane() {
-        if (this == getRootPane())
+        if (this == getRootPane()) {
             contentFrame.setWelcomeDocument();
+            return this;
+        }
         Pane sibling = parentPane.getFirstChild() == this ?
-                parentPane.getSecondChild() : parentPane.getFirstChild();
+                       parentPane.getSecondChild() : parentPane.getFirstChild();
+        updateParents(sibling);
         sibling.setxPos(parentPane.getxPos());
         sibling.setyPos(parentPane.getyPos());
         sibling.handleResize(parentPane.getWidth()+getBasexPos(), parentPane.getHeight()+getBaseyPos());
@@ -134,14 +138,27 @@ public class LeafPane extends Pane {
     }
 
     /**
-     * What to do when mouse is pressed? Check the following things:
-     *  <ul>
-     *       <li> -> Was it on me? </li>
-     *       <li> -> Was it the right button? </li>
-     *       <li> -> Is it the right MouseEvent? </li>
-     *       <li> => Handle the result accordingly </li>
-     * </ul>
-     * => If all yes, send the click to content. The result of this could be a href String or the Empty String.
+     * Update the parent of the parent of the given {@link Pane}.
+     * @param sibling : the {@link Pane} whose parents will be updated.
+     */
+    private void updateParents(Pane sibling) {
+        if (parentPane.getParentPane() == null)
+            return;
+        if (parentPane == parentPane.getParentPane().getFirstChild())
+            parentPane.getParentPane().setFirstChild(sibling);
+        else
+            parentPane.getParentPane().setSecondChild(sibling);
+    }
+
+    /**
+     * Handle mouseEvents. Determine if this AbstractFrame was pressed and do the right actions.
+     *
+     * @param id          : The type of mouse activity
+     * @param x           : The x coordinate of the mouse activity
+     * @param y           : The y coordinate of the mouse activity
+     * @param clickCount  : The number of clicks
+     * @param button      : The mouse button that was clicked
+     * @param modifiersEx : The control keys that were held on the click
      */
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
@@ -155,7 +172,7 @@ public class LeafPane extends Pane {
             contentFrame.handleMouse(id, x, y, clickCount, button, modifiersEx);
         }
         if (id == MouseEvent.MOUSE_PRESSED)
-            System.out.println("[Clicked on " + this + ": (" + getxPos() + ", " + getyPos() + "; " + getWidth() + ", " + getHeight() + ")]");
+            System.out.println("[Clicked on " + this + ": (" + x + ", " + y + "; " + getWidth() + ", " + getHeight() + ")]");
     }
 
 //    /**

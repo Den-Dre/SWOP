@@ -1,5 +1,7 @@
 package domainlayer;
 
+import userinterface.ContentFrame;
+
 import java.util.ArrayList;
 
 /**
@@ -204,4 +206,8 @@ public class UIController {
      * linked to this {@code Controller}.
      */
     private final BookmarksURLKeeper bookmarksURLKeeper;
+
+    public void setWelcomeDocument(int id) {
+        documentsKeeper.setWelcomeDocument(id);
+    }
 }
