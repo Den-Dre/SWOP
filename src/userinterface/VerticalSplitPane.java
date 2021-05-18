@@ -21,6 +21,9 @@ public class VerticalSplitPane extends GenericSplitPane {
         leftPane.setWidth(width/2);
         leftPane.setHeight(height);
         leftPane.setParentPane(this);
+        leftPane.setParentHeight(height);
+        leftPane.setxReference(x);
+        leftPane.setyReference(y);
         // Assign focus to one of the child `Pane`s
         leftPane.toggleFocus(true);
 
@@ -29,6 +32,9 @@ public class VerticalSplitPane extends GenericSplitPane {
         rightPane.setWidth(width/2);
         rightPane.setHeight(height);
         rightPane.setParentPane(this);
+        rightPane.setParentHeight(height);
+        rightPane.setxReference(x + width/2);
+        rightPane.setyReference(y);
         rightPane.toggleFocus(false);
 
         updateListeners();
@@ -105,6 +111,44 @@ public class VerticalSplitPane extends GenericSplitPane {
     @Override
     public void setSecondChild(Pane pane) {
         this.rightPane = pane;
+    }
+
+    @Override
+    public void setxPos(int xPos) {
+        super.setxPos(xPos);
+        leftPane.setxPos(xPos);
+        rightPane.setxPos(xPos + getWidth()/2);
+    }
+
+    @Override
+    public void setyPos(int yPos) {
+        super.setyPos(yPos);
+        leftPane.setyPos(yPos);
+        rightPane.setyPos(yPos);
+    }
+
+    @Override
+    public void setxReference(int xReference) {
+        super.setxReference(xReference);
+        leftPane.setxReference(xReference);
+        rightPane.setxReference(xReference+getHeight()/2);
+    }
+
+    @Override
+    public void setyReference(int yReference) {
+        super.setyReference(yReference);
+        leftPane.setyReference(yReference);
+        rightPane.setyReference(yReference);
+    }
+
+    @Override
+    public void setParentWidth(int parentWidth) {
+        super.setParentWidth(parentWidth);
+    }
+
+    @Override
+    public void setParentHeight(int parentHeight) {
+        super.setParentHeight(parentHeight);
     }
 
     private Pane leftPane;
