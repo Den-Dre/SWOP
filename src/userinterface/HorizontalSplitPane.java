@@ -86,6 +86,8 @@ public class HorizontalSplitPane extends GenericSplitPane {
         g2.setStroke(new BasicStroke(5));
         g2.setColor(Color.BLACK);
         g2.fillRect(lowerPane.getxPos(), lowerPane.getyPos()-SEPARATOR_THICKNESS, getWidth()-getxPos(), SEPARATOR_THICKNESS);
+        // Reset the stroke for future drawing
+        g2.setStroke(new BasicStroke(1));
     }
 
     @Override
