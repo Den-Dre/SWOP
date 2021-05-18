@@ -17,7 +17,7 @@ import java.util.ArrayList;
  *     moving the cursor and selecting text are supported.
  * </p>
  */
-public class UITextInputField extends DocumentCell{
+public class UITextInputField extends DocumentCell {
     /**
      * Initialise this UITextInputField with the given parameters.
      *

@@ -258,12 +258,19 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
-//        if ((newWindowWidth - getxPos()) >= 0) setWidth(newWindowWidth - getxPos());
-//        if ((newWindowHeight - getyPos()) >= 0) setHeight(newWindowHeight - getyPos());
         setWidth(newWindowWidth-getxPos());
         setHeight(newWindowHeight-getyPos());
         if (content != null)
             content.handleResize(newWindowWidth, newWindowHeight);
+        //TODO: The -30 is temporary for shrinking the leafPane, so everything is better visible.
+        if ((newWindowWidth - getxPos()) >= 0) setWidth(newWindowWidth - getxPos()-30);
+        if ((newWindowHeight - getyPos()) >= 0) setHeight(newWindowHeight - getyPos()-30);
+        if (content != null) {
+            content.handleResize(newWindowWidth, newWindowHeight);
+            content.setParentWidth(getWidth());
+            content.setParentHeight(getHeight());
+        }
+
     }
 
     /**
@@ -278,7 +285,7 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
      */
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-        if (button != MouseEvent.BUTTON1) return;
+        if (button != MouseEvent.BUTTON1 && id != MouseEvent.MOUSE_DRAGGED) return;
         // if (id != MouseEvent.MOUSE_CLICKED) return;
         ReturnMessage result = content.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
         linkPressed(result);
@@ -337,6 +344,8 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
      */
     public void setContent(DocumentCell content) {
         this.content = new HorizontalScrollBarDecorator(new VerticalScrollBarDecorator(content));
+        this.content.setParentWidth(getWidth());
+        this.content.setParentHeight(getHeight());
     }
 
     /**

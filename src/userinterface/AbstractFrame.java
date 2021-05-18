@@ -278,9 +278,6 @@ public abstract class AbstractFrame {
      * @return True iff the given point lies in this DocumentCells area including the edges
      */
     public boolean wasClicked(int x, int y) {
-//    	System.out.println("docCell: on: "+x+","+y);
-//    	System.out.println("getX: "+this.getxPos()+", getY: "+this.getyPos());
-//    	System.out.println("width: "+this.getWidth()+", height: "+this.getHeight());
         return x >= this.getxPos() && x <= (this.getxPos() + this.getWidth()) && y >= this.getyPos() && y <= (this.getyPos() + this.getHeight());
     }
 }

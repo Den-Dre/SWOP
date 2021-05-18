@@ -91,14 +91,6 @@ public class LeafPane extends Pane {
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
-        //TODO: The -30 is temporary for shrinking the leafPane, so everything is better visible.
-        if ((newWindowWidth - getxPos()) >= 0) setWidth(newWindowWidth - getxPos()-30);
-        if ((newWindowHeight - getyPos()) >= 0) setHeight(newWindowHeight - getyPos()-30);
-        if (content != null) {
-            content.handleResize(newWindowWidth, newWindowHeight);
-            content.setParentWidth(getWidth());
-            content.setParentHeight(getHeight());
-        }
         contentFrame.setxPos(getxPos());
         contentFrame.setyPos(getyPos());
         contentFrame.handleResize(newWindowWidth, newWindowHeight);
@@ -148,10 +140,6 @@ public class LeafPane extends Pane {
      */
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-        if (button != MouseEvent.BUTTON1 && id != MouseEvent.MOUSE_DRAGGED) return;
-        // if (id != MouseEvent.MOUSE_CLICKED) return;
-        ReturnMessage result = content.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
-        linkPressed(result);
         if (!contentFrame.wasClicked(x, y) && getRootPane().wasClicked(x, y))
             // Then a different LeafPane must have been clicked
             toggleFocus(false);
@@ -200,76 +188,49 @@ public class LeafPane extends Pane {
     @Override
     public void contentChanged() {
         this.contentFrame.contentChanged();
-        this.content.setyReference(getyPos());
+        this.contentFrame.setyReference(getyPos());
     }
 
     public UIController getController() {
         return contentFrame.getController();
     }
 
-    /**
-     * This method looks if the given string is a valid link.
-     * If so, do the right actions.
-     *
-     * @param link: The string of the link to be checked
-    */
-    private void linkPressed(ReturnMessage link){
-        switch (link.getType()) {
-            case Empty:
-                return;
-            case Hyperlink:
-                controller.loadDocumentFromHref(link.getContent());
-                break;
-            case Form:
-                controller.loadDocumentFromForm(link.getContent(), link.getContentList());
-                break;
-        }
-    }
 
-    /**
-     * Wrap the given {@link DocumentCell} in a
-     * {@link UITable} s.t. it can be easily decorated
-     * by means of the decorator pattern which is implemented by
-     * {@link VerticalScrollBarDecorator} and {@link HorizontalScrollBarDecorator}.
-     *
-     *
-     * @param cell: The {@link DocumentCell} to be wrapped.
-     * @return wrapped: The given {@link DocumentCell} wrapped in a {@link UITable}.
-     */
-    private DocumentCell wrapInDocumentCell(DocumentCell cell) {
-        ArrayList<ArrayList<DocumentCell>> overlayContents =
-                new ArrayList<>(Collections.singletonList(new ArrayList<>(Collections.singletonList(cell))));
-        return new UITable(cell.getxPos(), cell.getyPos(), cell.getWidth(), cell.getHeight(), overlayContents);
-    }
 
-    /**
-     * Set the content of this LeafPane
-     * to the provided {@link ContentSpan}.
-     *
-     * The content to be set is wrapped in a
-     * {@link UITable} for easy decoration using the
-     * {@link HorizontalScrollBarDecorator} and
-     * {@link VerticalScrollBarDecorator} decorators.
-     *
-     * @param content:
-     *               The content that should be set.
-     */
-    public void setContent(DocumentCell content) {
-        DocumentCell wrapped = wrapInDocumentCell(content);
-        this.content = new HorizontalScrollBarDecorator(new VerticalScrollBarDecorator(wrapped));
-        this.content.setParentWidth(getWidth());
-        this.content.setParentHeight(getHeight());
-    }
+//    /**
+//     * Wrap the given {@link DocumentCell} in a
+//     * {@link UITable} s.t. it can be easily decorated
+//     * by means of the decorator pattern which is implemented by
+//     * {@link VerticalScrollBarDecorator} and {@link HorizontalScrollBarDecorator}.
+//     *
+//     *
+//     * @param cell: The {@link DocumentCell} to be wrapped.
+//     * @return wrapped: The given {@link DocumentCell} wrapped in a {@link UITable}.
+//     */
+//    private DocumentCell wrapInDocumentCell(DocumentCell cell) {
+//        ArrayList<ArrayList<DocumentCell>> overlayContents =
+//                new ArrayList<>(Collections.singletonList(new ArrayList<>(Collections.singletonList(cell))));
+//        return new UITable(cell.getxPos(), cell.getyPos(), cell.getWidth(), cell.getHeight(), overlayContents);
+//    }
 
-    /**
-     * Retrieve the contents of this LeafPane.
-     *
-     * @return contentSpan:
-     *              A {@link ContentSpan} that denotes the contents of this LeafPane.
-     */
-    public DocumentCell getContent() {
-        return this.content;
-    }
+//    /**
+//     * Set the content of this LeafPane
+//     * to the provided {@link ContentSpan}.
+//     *
+//     * The content to be set is wrapped in a
+//     * {@link UITable} for easy decoration using the
+//     * {@link HorizontalScrollBarDecorator} and
+//     * {@link VerticalScrollBarDecorator} decorators.
+//     *
+//     * @param content:
+//     *               The content that should be set.
+//     */
+//    public void setContent(DocumentCell content) {
+//        DocumentCell wrapped = wrapInDocumentCell(content);
+//        this.content = new HorizontalScrollBarDecorator(new VerticalScrollBarDecorator(wrapped));
+//        this.content.setParentWidth(getWidth());
+//        this.content.setParentHeight(getHeight());
+//    }
 
     /**
      * Set the LeafPane's controller to a given controller

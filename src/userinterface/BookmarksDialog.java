@@ -102,15 +102,15 @@ public class BookmarksDialog extends GenericDialogScreen {
         int textSize = getTextSize();
 
         this.bookmarksBar = dialog.bookmarksBar.deepCopy();
-        this.nameInput = new HorizontalScrollBarDecorator(new UITextInputField(offset, offset,100,textSize, "Name"));
-        this.urlInput = new HorizontalScrollBarDecorator(new UITextInputField(offset, offset,100,textSize, "URL"));
+        this.nameInput = new UITextInputField(offset, offset,100,textSize, "Name");
+        this.urlInput = new UITextInputField(offset, offset,100,textSize, "URL");
 
-        this.nameInputContents = (UITextInputField) nameInput.getContentWithoutScrollbars();
-        this.urlInputContents = (UITextInputField) urlInput.getContentWithoutScrollbars();
+        this.nameInputContents = nameInput;
+        this.urlInputContents = urlInput;
 
         // URL input must be prefilled:
         this.urlInputContents.changeTextTo(dialog.getCurrentUrl());
-        this.form = new HorizontalScrollBarDecorator(new VerticalScrollBarDecorator(getForm(getCurrentUrl())));
+        this.form = getForm(getCurrentUrl());
     }
 
     /**
