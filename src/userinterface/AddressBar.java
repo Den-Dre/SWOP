@@ -22,7 +22,6 @@ public class AddressBar extends UITextInputField implements DocumentListener {
     public AddressBar(int x, int y, int width, int height, int offset) throws IllegalDimensionException{
         super(x, y, width, height);
         this.offset = offset;
-        
     }
 
     /**

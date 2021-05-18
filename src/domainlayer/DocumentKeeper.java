@@ -84,9 +84,7 @@ public class DocumentKeeper {
     }
 
     public void setWelcomeDocument(int id) {
-        Document doc = new Document();
-        panesToDocuments.replace(id, doc);
-        doc.changeContentSpan(Document.getWelcomeDocument());
+        panesToDocuments.get(id).changeContentSpan(Document.getWelcomeDocument());
     }
 
     private final HashMap<Integer, Document> panesToDocuments;
