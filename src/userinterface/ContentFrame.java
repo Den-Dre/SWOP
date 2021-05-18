@@ -345,6 +345,7 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
      */
     protected void setWelcomeDocument() {
         setContent(translateToUIElements(Document.getWelcomeDocument()));
+        controller.setWelcomeDocument(id);
     }
 
     /**

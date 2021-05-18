@@ -102,10 +102,13 @@ public class LeafPane extends Pane {
     }
 
     public Pane closeLeafPane() {
-        if (this == getRootPane())
+        if (this == getRootPane()) {
             contentFrame.setWelcomeDocument();
+            return this;
+        }
         Pane sibling = parentPane.getFirstChild() == this ?
                        parentPane.getSecondChild() : parentPane.getFirstChild();
+        updateParents(sibling);
         sibling.setxPos(parentPane.getxPos());
         sibling.setyPos(parentPane.getyPos());
         sibling.handleResize(parentPane.getWidth()+getBasexPos(), parentPane.getHeight()+getBaseyPos());
@@ -113,6 +116,19 @@ public class LeafPane extends Pane {
         setFocusedPane(sibling);
         setParentPane(null);
         return sibling;
+    }
+
+    /**
+     * Update the parent of the parent of the given {@link Pane}.
+     * @param sibling : the {@link Pane} whose parents will be updated.
+     */
+    private void updateParents(Pane sibling) {
+        if (parentPane.getParentPane() == null)
+            return;
+        if (parentPane == parentPane.getParentPane().getFirstChild())
+            parentPane.getParentPane().setFirstChild(sibling);
+        else
+            parentPane.getParentPane().setSecondChild(sibling);
     }
 
     /**
