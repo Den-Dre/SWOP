@@ -100,8 +100,8 @@ public class LeafPane extends Pane {
         contentFrame.setxPos(getxPos());
         contentFrame.setyPos(getyPos());
         contentFrame.handleResize(newWindowWidth, newWindowHeight);
-        setWidth(newWindowWidth);
-        setHeight(newWindowHeight);
+        setWidth(newWindowWidth-getBasexPos());
+        setHeight(newWindowHeight-getBaseyPos());
     }
 
     /**
