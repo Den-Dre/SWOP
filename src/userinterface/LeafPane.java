@@ -1,218 +1,88 @@
 package userinterface;
 
-import domainlayer.*;
+import domainlayer.DocumentListener;
+import domainlayer.UIController;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.Arrays;
 
 /**
- * A class to represent the portion of Broswr that renders the document
+ * A class to represent the portion of Browsr that renders the document
  */
-public class LeafPane extends Frame implements DocumentListener {
+public class LeafPane extends Pane {
     /**
-     * Construct a {@code LeafPane} with the given parameters.
+     * Construct a {@code ContentFrame} with the given parameters.
+     * The coordinates and dimensions are copied from the given {@link ContentFrame}.
      *
-     * @param x      : The x coordinate of the {@code LeafPane}.
-     * @param y      : The y coordinate of the {@code LeafPane}.
-     * @param width  : The width of the {@code LeafPane}.
-     * @param height : The height of the {@code LeafPane}.
+     * @param contentFrame: The contents of this {@code LeafPane} in a {@link ContentFrame} object.
+     * @param parentPane: The parent {@link Pane} of this {@code LeafPane}.
      * @throws IllegalDimensionException : When one of the dimensions is negative.
      */
-    public LeafPane(int x, int y, int width, int height) throws IllegalDimensionException {
-        super(x, y, width, height);
-
-//        // hard-coded Welcome document (for now!)
-//        ArrayList<ArrayList<DocumentCell>> rows = new ArrayList<>();
-//
-//        UITextField title = new UITextField(x, y, "Welcome to UserInterface.Browsr!".length(), 50, "Welcome to UserInterface.Browsr!");
-//        UITextField authors = new UITextField(x, y, width, 20,
-//	  		"By yours truly: Andreas Hinderyckx, Martijn Leplae, Thibault Van Win and Jakob Heirwegh");
-//        UITextField swopper = new UITextField(x, y, width, 20, "1st iteration Software-Ontwerp 2020-2021");
-//        UITextField empty = new UITextField(x, y, width, 20, " ");
-//
-//        String href = "browsrtest.html";
-//        String text = "Click here to see what we can do!";
-//
-//        UIHyperlink hyperLink = new UIHyperlink(x, y, width, 20, href, text);
-//
-//        ArrayList<DocumentCell> row1 = new ArrayList<>();
-//        ArrayList<DocumentCell> row2 = new ArrayList<>();
-//        ArrayList<DocumentCell> row3 = new ArrayList<>();
-//        ArrayList<DocumentCell> row4 = new ArrayList<>();
-//        ArrayList<DocumentCell> row5 = new ArrayList<>();
-//
-//	    row1.add(title);
-//	    row2.add(authors);
-//	    row3.add(empty);
-//	    row4.add(hyperLink);
-//	    row5.add(swopper);
-//
-//	    rows.add(row1);
-//	    rows.add(row2);
-//	    rows.add(row3);
-//	    rows.add(row4);
-//	    rows.add(row5);
+    public LeafPane(ContentFrame contentFrame, Pane parentPane) throws IllegalDimensionException {
+        super(contentFrame.getxPos(), contentFrame.getyPos(), contentFrame.getWidth(), contentFrame.getHeight());
+        this.contentFrame = contentFrame;
+        this.parentPane = parentPane;
+        this.id = getController().addPaneDocument();
     }
-    
+
     /**
-     * Translates the contentSpan from the domainmodel into the simplified UI-representation objects.
-     * Distinction is made between domain-classes Table, HyperLink, TextSpan, TextInputField, Form and SubmitButton
+     * Construct a {@code ContentFrame} with the given parameters.
      *
-     * @param contents: The contents to be translated to UI elements.
-     * @return a DocumentCell derived class that can be rendered on screen
+     * @param contentFrame: The contents of this {@code LeafPane} in a {@link ContentFrame} object.
+     * @throws IllegalDimensionException : When one of the dimensions is negative.
      */
-    private DocumentCell translateToUIElements(ContentSpan contents) {
-        DocumentCell newUIContents = null;
-
-        if (contents instanceof Table)
-            newUIContents = translateTable((Table) contents);
-        else if (contents instanceof HyperLink)
-            newUIContents = translateHL((HyperLink) contents);
-        else if (contents instanceof TextSpan)
-            newUIContents = translateTextSpan((TextSpan) contents);
-        else if (contents instanceof TextInputField)
-        	newUIContents = translateTextInputField((TextInputField) contents);
-        else if (contents instanceof Form)
-        	newUIContents = translateForm((Form) contents);
-        else if (contents instanceof SubmitButton)
-        	newUIContents = translateSubmitButton();
-        else
-            System.out.println("unknown domainmodel representation class: " + contents.getClass().getCanonicalName());
-        return newUIContents;
+    public LeafPane(ContentFrame contentFrame, UIController controller) throws IllegalDimensionException {
+        super(contentFrame.getxPos(), contentFrame.getyPos(), contentFrame.getWidth(), contentFrame.getHeight());
+        this.contentFrame = contentFrame;
+        this.parentPane = null;
+        this.contentFrame.setController(controller);
+        this.id = getController().addPaneDocument();
+        this.contentFrame.setId(id);
+        setFocusedPane(this);
     }
 
     /**
-     * Translates a Table from the domainmodel into the simplified UI-representation
+     * A copy constructor in order
+     * to create a deep copy of
+     * {@code Pane} objects.
      *
-     * @param content: The content to be translated to UI elements.
-     * @return a UITable with the translated elements
+     * @param p : the {@code Pane} to be copied.
      */
-    private DocumentCell translateTable(Table content) {
-    	try {
-            // get sub elements
-            ArrayList<ArrayList<DocumentCell>> UIrows = new ArrayList<>();
-            // draw the table
-            List<TableRow> rows = content.getRows();
-            for (TableRow row : rows)
-                UIrows.add(translateRow(row));
+    public LeafPane(LeafPane p) {
+        super(p.getxPos(), p.getyPos(), p.getWidth(), p.getHeight());
+        this.contentFrame = p.contentFrame.deepCopy();
+        // Add this LeafPane to the controller and retrieve its `id` generated by the controller
+        this.id = getController().addPaneDocument();
+        if (p.parentPane == null)
+            this.parentPane = null;
+        else // this LeafPane's parentPane remains `null` as its the root of the `Pane` tree structure
+            this.parentPane = p.parentPane.deepCopy();
+    }
 
-            return new UITable(this.getxPos(), this.getyPos(), this.getWidth(), this.getHeight(), UIrows);
-        }
-    	catch(IllegalDimensionException e){
-    	    System.out.print("Invalid UITable dimensions");
-    	    return null;
-        }
+    @Override
+    public LeafPane deepCopy() {
+        return new LeafPane(this);
     }
-    
+
     /**
-     * Translates a Cell from the domainmodel into the simplified UI-representation
-     * 
-     * @param content: The content to be translated to UI elements
-     * @return a DocumentCell with translated elements
-     */
-    private DocumentCell translateCell(TableCell content) {
-    	// get sub-elements    	
-    	ContentSpan cellContent = content.getContent();
-    	return translateToUIElements(cellContent); 
-    }
-    
-    /**
-     * Translates a Row from the domainmodel into the simplified UI-representation
-     * 
-     * @param content: The content to be translated to UI elements
-     * @return an ArrayList<DocumentCell> with translated elements
-     */
-    private ArrayList<DocumentCell> translateRow(TableRow content) {
-		// get sub elements
-    	ArrayList<DocumentCell> row = new ArrayList<>();
-    	List<TableCell> cells = content.getCells();
-    	// draw the row
-    	for (TableCell cell : cells) {
-    		row.add(translateCell(cell)); 
-    	}
-    	return row;
-    }
-    
-    /**
-     * Translates a HyperLink from the domainmodel into the simplified UI-representation
-     * 
-     * @param content: The content to be translated to UI elements
-     * @return a UIHyperlink with translated elements
-     */
-    private DocumentCell translateHL(HyperLink content) {
-    	try {
-            // get arguments
-            String href = content.getHref();
-            String text = content.getTextSpan().getText();
-            // return UIHyperlink with arguments
-            return new UIHyperlink(getxPos(), getyPos(), getWidth(), textSize, href, text);
-        }
-    	catch(IllegalDimensionException e){
-    	    System.out.print("Invalid UIHyperLink dimensions");
-    	    return null;
-        }
-    }
-    
-    /**
-     * Translates a TextSpan from the domainmodel into the simplified UI-representation
+     * Render the contents of this AbstractFrame.
      *
-     * @param content: The content to be translated to UI elements.
-     * @return a UITextField with translated elements
-     */
-    private DocumentCell translateTextSpan(TextSpan content)  {
-        try {
-            System.out.println("TEXT: " + content.getText());
-            return new UITextField(getxPos(), getyPos(), getWidth(), textSize, content.getText());
-        }
-        catch(IllegalDimensionException e){
-            System.out.print("Invalid UITextField dimensions");
-            return null;
-        }
-    }
-    
-    /**
-     * Translates a Form from the domainmodel into the simplified UI-representation
-     * 
-     * @param content: The content to be translated to UI elements.
-     * @return  a UIForm with translated elements
-     */
-    private DocumentCell translateForm(Form content) {
-    	DocumentCell formContentsTranslated = translateToUIElements(content.getContent());
-    	return new UIForm(getxPos(), getyPos(), content.getAction(), formContentsTranslated);
-    }
-    
-    /**
-     * Translates a {@link TextInputField} from the domainmodel into the simplified UI-representation
-     * The created {@link UITextInputField} should also have a horizontal scroll bar and is decorated as such.
-     * 
-     * @param content: The content to be translated to UI elements.
-     * @return a UITextInputField with translated elements
-     */
-    private DocumentCell translateTextInputField(TextInputField content) {
-    	return new UITextInputField(getxPos(), getyPos(), 100, textSize, content.getName());
-    }
-    
-    /**
-     * Translates a SubmitButton from the domainmodel into the simplified UI-representation
-     *  
-     * @return a UIButton with translated elements
-     */
-    private DocumentCell translateSubmitButton() {
-    	return new UIButton(getxPos(), getyPos(), 50, 15, "Submit", "submit");
-    }    
-    
-    /**
-     * Renders the content. The content renders its sub-content recursively if existent
-     * @param g: The graphics to be rendered
+     * @param g : The graphics to be rendered.
      */
     @Override
     public void render(Graphics g) {
-        content.render(g);
-        g.setColor(Color.green);
-        //g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
+        contentFrame.render(g);
+        if (hasFocus())
+            drawFocusedBorder(g);
+    }
+
+    private void drawFocusedBorder(Graphics g) {
+        int offset = 5;
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(2));
+        g2.setColor(Color.BLUE);
+        g2.drawRect(getxPos(), getyPos(), getWidth()-offset, getHeight()-offset);
     }
 
     /**
@@ -229,6 +99,41 @@ public class LeafPane extends Frame implements DocumentListener {
             content.setParentWidth(getWidth());
             content.setParentHeight(getHeight());
         }
+        contentFrame.setxPos(getxPos());
+        contentFrame.setyPos(getyPos());
+        contentFrame.handleResize(newWindowWidth, newWindowHeight);
+        setWidth(newWindowWidth-getBasexPos());
+        setHeight(newWindowHeight-getBaseyPos());
+    }
+
+    /**
+     * Handle a horizontal split of the contents of this {@code Pane}.
+     */
+    @Override
+    public Pane getHorizontalSplit() {
+        return new HorizontalSplitPane(getxPos(), getyPos(), getWidth(), getHeight(), this, parentPane);
+    }
+
+    /**
+     * Handle a vertical split of the contents of this {@code Pane}.
+     */
+    @Override
+    public Pane getVerticalSplit() {
+        return new VerticalSplitPane(getxPos(), getyPos(), getWidth(), getHeight(), this, parentPane);
+    }
+
+    public Pane closeLeafPane() {
+        if (this == getRootPane())
+            contentFrame.setWelcomeDocument();
+        Pane sibling = parentPane.getFirstChild() == this ?
+                parentPane.getSecondChild() : parentPane.getFirstChild();
+        sibling.setxPos(parentPane.getxPos());
+        sibling.setyPos(parentPane.getyPos());
+        sibling.handleResize(parentPane.getWidth()+getBasexPos(), parentPane.getHeight()+getBaseyPos());
+        sibling.setParentPane(parentPane.getParentPane());
+        setFocusedPane(sibling);
+        setParentPane(null);
+        return sibling;
     }
 
     /**
@@ -247,6 +152,17 @@ public class LeafPane extends Frame implements DocumentListener {
         // if (id != MouseEvent.MOUSE_CLICKED) return;
         ReturnMessage result = content.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
         linkPressed(result);
+        if (!contentFrame.wasClicked(x, y) && getRootPane().wasClicked(x, y))
+            // Then a different LeafPane must have been clicked
+            toggleFocus(false);
+        else if (contentFrame.wasClicked(x, y)) {
+            setFocusedPane(this);
+            toggleFocus(true);
+            getController().setCurrentDocument(this.id);
+            contentFrame.handleMouse(id, x, y, clickCount, button, modifiersEx);
+        }
+        if (id == MouseEvent.MOUSE_PRESSED)
+            System.out.println("[Clicked on " + this + ": (" + getxPos() + ", " + getyPos() + "; " + getWidth() + ", " + getHeight() + ")]");
     }
 
 //    /**
@@ -262,24 +178,33 @@ public class LeafPane extends Frame implements DocumentListener {
 //        return x >= this.getxPos() && x <= (this.getxPos() + this.getWidth()) && y >= this.getyPos() && y <= (this.getyPos() + this.getHeight());
 //    }
 
+    /**
+     * Handle key presses. This method does the right action when a key is pressed.
+     *
+     * @param id          : The KeyEvent (Associated with type of KeyEvent)
+     * @param keyCode     : The KeyEvent code (Determines the involved key)
+     * @param keyChar     : The character representation of the involved key
+     * @param modifiersEx : Specifies other keys that were involved in the event
+     */
     @Override
     public void handleKey(int id, int keyCode, char keyChar, int modifiersEx) {
-        content.handleKey(id, keyCode, keyChar, modifiersEx);
+        contentFrame.handleKey(id, keyCode, keyChar, modifiersEx);
     }
 
     /**
-     * Notify the LeafPane that the contents have been changed
+     * Define what the class that implements
+     * this {@link DocumentListener} Interface
+     * should do when the contents of the
+     * linked {@link ContentFrame} changes.
      */
+    @Override
     public void contentChanged() {
-        try{
-            ContentSpan newContentSpan = controller.getContentSpan();
-            DocumentCell newContents = translateToUIElements(newContentSpan);
-            setContent(newContents);
-            this.content.setyReference(getyPos());
-        }
-        catch(Exception e){
-            e.printStackTrace();
-        }
+        this.contentFrame.contentChanged();
+        this.content.setyReference(getyPos());
+    }
+
+    public UIController getController() {
+        return contentFrame.getController();
     }
 
     /**
@@ -330,11 +255,10 @@ public class LeafPane extends Frame implements DocumentListener {
      *               The content that should be set.
      */
     public void setContent(DocumentCell content) {
-        this.content = new HorizontalScrollBarDecorator(new VerticalScrollBarDecorator(content));
+        DocumentCell wrapped = wrapInDocumentCell(content);
+        this.content = new HorizontalScrollBarDecorator(new VerticalScrollBarDecorator(wrapped));
         this.content.setParentWidth(getWidth());
         this.content.setParentHeight(getHeight());
-//        DocumentCell wrapped = wrapInDocumentCell(content);
-//        this.content = new HorizontalScrollBarDecorator(new VerticalScrollBarDecorator(wrapped));
     }
 
     /**
@@ -344,7 +268,7 @@ public class LeafPane extends Frame implements DocumentListener {
      *              A {@link ContentSpan} that denotes the contents of this LeafPane.
      */
     public DocumentCell getContent() {
-        return this.content.getContentWithoutScrollbars();
+        return this.content;
     }
 
     /**
@@ -354,23 +278,102 @@ public class LeafPane extends Frame implements DocumentListener {
      *        The new controller
      */
     public void setController(UIController controller) {
-        this.controller = controller;
+        this.contentFrame.setController(controller);
+    }
+
+    public ContentFrame getContentFrame() {
+        return contentFrame;
     }
 
     /**
-     * The {@link UIController} related to this LeafPane
-      */
-    public UIController controller;
+     * Set the x position of this LeafPane and its contents to the given value
+     *
+     * @param xPos :
+     *             The value this LeafPane's x position should be set to.
+     */
+    @Override
+    public void setxPos(int xPos) {
+        super.setxPos(xPos);
+        contentFrame.setxPos(xPos);
+    }
 
     /**
-     * The text size of the {@code Url} of this LeafPane.
+     * Set the y position of this LeafPane and its contents to the given value
+     *
+     * @param yPos :
+     *             The value this LeafPane and its contents' y position should be set to.
      */
-    static final int textSize = 14;
+    @Override
+    public void setyPos(int yPos) {
+        super.setyPos(yPos);
+        contentFrame.setyPos(yPos);
+    }
 
     /**
-     * The content that is represented by this LeafPane.
+     * Set the width of this LeafPane and its contents to the given value.
+     *
+     * @param newWidth :
+     *                 The new value of this LeafPane and its contents" width should be set to.
      */
-    private DocumentCellDecorator content;
+    @Override
+    public void setWidth(int newWidth) {
+        super.setWidth(newWidth);
+        contentFrame.setWidth(newWidth);
+    }
+
+    /**
+     * Set the height of this LeafPane and its contents to the given value.
+     *
+     * @param newHeight :
+     *                  The new value of this LeafPane and its contents' height should be set to.
+     */
+    @Override
+    public void setHeight(int newHeight) {
+        super.setHeight(newHeight);
+        contentFrame.setHeight(newHeight);
+    }
+
+    /**
+     * Get the id associated to this {@code LeafPane}.
+     *
+     * @return id: the id associated to this {@code LeafPane}.
+     */
+    // Note: if this method is not overridden and instead
+    // taken from Pane.java, incorrect behaviour occurs due
+    // to the id of the parentPane being returned.
+    @Override
+    public int getId() {
+        return this.id;
+    }
+
+
+    @Override
+    public Pane getFirstChild() {
+        throw new UnsupportedOperationException("Can't request child of a LeafPane.");
+    }
+
+    @Override
+    public Pane getSecondChild() {
+        throw new UnsupportedOperationException("Can't request child of a LeafPane.");
+    }
+
+    @Override
+    public void setFirstChild(Pane pane) {
+        throw new UnsupportedOperationException("Can't set child Pane of a LeafPane.");
+    }
+
+    @Override
+    public void setSecondChild(Pane pane) {
+        throw new UnsupportedOperationException("Can't set child Pane of a LeafPane.");
+    }
+
+    @Override
+    public void replacePaneWith(Pane oldPane, Pane newPane) { }
+
+    /**
+     * The content that is represented by this ContentFrame.
+     */
+    private final ContentFrame contentFrame;
 }
 
 

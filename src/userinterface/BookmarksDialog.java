@@ -1,6 +1,7 @@
 package userinterface;
 
 import java.awt.*;
+import java.awt.print.Book;
 import java.util.ArrayList;
 
 /**
@@ -18,14 +19,14 @@ import java.util.ArrayList;
  */
 public class BookmarksDialog extends GenericDialogScreen {
     /**
-     * Initialise this Frame with the given parameters.
+     * Initialise this AbstractFrame with the given parameters.
      *
-     * @param width        : The width of this Frame.
-     * @param height       : The height of this Frame.
+     * @param width        : The width of this AbstractFrame.
+     * @param height       : The height of this AbstractFrame.
      * @param currentUrl   : The URL of the document currently loaded.
      * @param bookmarksBar : The {@link BookmarksBar} associated to this {@code BoomkarksDialog}.
      * @param browsr       : The {@link Browsr} associated to this {@code BoomkarksDialog}.
-     * @throws IllegalDimensionException: When one of the dimensions of this Frame is negative
+     * @throws IllegalDimensionException: When one of the dimensions of this AbstractFrame is negative
      */
     public BookmarksDialog(int width, int height, String currentUrl, BookmarksBar bookmarksBar, Browsr browsr) throws IllegalDimensionException {
         // Must cover the entire screen:
@@ -91,6 +92,36 @@ public class BookmarksDialog extends GenericDialogScreen {
         UITable outerTable = new UITable(offset, offset,0,0, outerTableRows);
 
         return new UIForm(offset, offset, "bookmarksDialog", outerTable);
+    }
+
+    public BookmarksDialog(BookmarksDialog dialog) {
+        // We can reference the same Browsr obejct as there will always only be one instantiation
+        super(dialog.getxPos(), dialog.getyPos(), dialog.getWidth(), dialog.getHeight(), dialog.getBrowsr(), dialog.getCurrentUrl());
+
+        int offset = getOffset();
+        int textSize = getTextSize();
+
+        this.bookmarksBar = dialog.bookmarksBar.deepCopy();
+        this.nameInput = new HorizontalScrollBarDecorator(new UITextInputField(offset, offset,100,textSize, "Name"));
+        this.urlInput = new HorizontalScrollBarDecorator(new UITextInputField(offset, offset,100,textSize, "URL"));
+
+        this.nameInputContents = (UITextInputField) nameInput.getContentWithoutScrollbars();
+        this.urlInputContents = (UITextInputField) urlInput.getContentWithoutScrollbars();
+
+        // URL input must be prefilled:
+        this.urlInputContents.changeTextTo(dialog.getCurrentUrl());
+        this.form = new HorizontalScrollBarDecorator(new VerticalScrollBarDecorator(getForm(getCurrentUrl())));
+    }
+
+    /**
+     * Create a deep copy of this {@code AbstractFrame} object.
+     *
+     * @return copy: a deep copied version of this {@code AbstractFrame}
+     * object which thus does not point to the original object.
+     */
+    @Override
+    protected AbstractFrame deepCopy() {
+        return new BookmarksDialog(this);
     }
 
     /**

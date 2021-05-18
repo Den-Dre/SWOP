@@ -9,7 +9,7 @@ public enum BrowsrLayout {
     /**
      * A constant to denote the regular layout of
      * a {@link Browsr} consisting of a {@link AddressBar},
-     * {@link BookmarksBar} and a {@link LeafPane}.
+     * {@link BookmarksBar} and a {@link ContentFrame}.
      */
     REGULAR,
 

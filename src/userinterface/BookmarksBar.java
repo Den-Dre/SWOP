@@ -12,22 +12,42 @@ import java.util.ArrayList;
  *  on one of the bookmarks to navigate to the
  *  associated URL.
  */
-public class BookmarksBar extends Frame {
+public class BookmarksBar extends AbstractFrame {
     /**
-     * Initialise this Frame with the given parameters.
+     * Initialise this AbstractFrame with the given parameters.
      *
-     * @param x      : The x coordinate of this Frame.
-     * @param y      : The y coordinate of this Frame.
-     * @param width  : The width of this Frame
-     * @param height : The height of this Frame
+     * @param x      : The x coordinate of this AbstractFrame.
+     * @param y      : The y coordinate of this AbstractFrame.
+     * @param width  : The width of this AbstractFrame
+     * @param height : The height of this AbstractFrame
      * @param offset : The distance that will be used as padding in-between saved bookmarks.
-     * @throws IllegalDimensionException: When one of the dimensions of this Frame is negative
+     * @throws IllegalDimensionException: When one of the dimensions of this AbstractFrame is negative
      */
     public BookmarksBar(int x, int y, int width, int height, int offset) throws IllegalDimensionException {
         super(x, y, width, height);
         this.yCoordinate = y;
         this.height = height;
         this.offset = offset;
+    }
+
+    public BookmarksBar(BookmarksBar bar) {
+        super(bar.getxPos(), bar.getyPos(), bar.getWidth(), bar.getHeight());
+        this.yCoordinate = bar.yCoordinate;
+        this.height = bar.height;
+        this.offset = bar.offset;
+        // Keep a reference to the same controller object
+        this.controller = bar.controller;
+    }
+
+    /**
+     * Create a deep copy of this {@code AbstractFrame} object.
+     *
+     * @return copy: a deep copied version of this {@code AbstractFrame}
+     * object which thus does not point to the original object.
+     */
+    @Override
+    protected BookmarksBar deepCopy() {
+        return new BookmarksBar(this);
     }
 
     /**
@@ -77,8 +97,10 @@ public class BookmarksBar extends Frame {
      */
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.GRAY);
-        g.drawLine(getxPos() + offset, getyPos() + height, getWidth() - offset, getyPos() + height);
+        Graphics2D g2 = (Graphics2D) g;
+        g2.setStroke(new BasicStroke(2));
+        g2.setColor(Color.GRAY);
+        g2.drawLine(getxPos() + offset, getyPos() + height, getWidth() - offset, getyPos() + height);
 //        g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
         this.textHyperLinks.forEach(t -> t.render(g));
     }
@@ -99,7 +121,7 @@ public class BookmarksBar extends Frame {
         for (UITextHyperlink textHyperlink : textHyperLinks) {
             result = textHyperlink.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
             if (result.getType() == ReturnMessage.Type.Hyperlink) {
-                loadTextHyperlink(result.getContent());
+                loadTextHyperlink(this.id, result.getContent());
                 return;
             }
         }
@@ -133,10 +155,10 @@ public class BookmarksBar extends Frame {
      *
      * @param linkName: the name of the link that needs to be loaded.
      */
-    public void loadTextHyperlink(String linkName) {
+    public void loadTextHyperlink(int id, String linkName) {
         // TODO: This seems redundant. Maybe we should change our approach of storing bookmarks.
         String url = controller.getURLFromBookmark(linkName);
-        controller.loadDocument(url);
+        controller.loadDocument(this.id, url);
     }
 
     /**
@@ -186,5 +208,11 @@ public class BookmarksBar extends Frame {
      * the height of this {@code BookmarksBar}.
      */
     private final int height;
+
+    /**
+     * The ID of the {@link Pane} that currently has focus.
+     * Its value is initialised to 0 as this represents the root{@link Pane}.
+     */
+    private int id = 0;
 }
 

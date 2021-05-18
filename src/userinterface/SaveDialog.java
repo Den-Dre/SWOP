@@ -19,13 +19,13 @@ public class SaveDialog extends GenericDialogScreen {
 
 
     /**
-     * Initialise this Frame with the given parameters.
+     * Initialise this AbstractFrame with the given parameters.
      *
-     * @param width     : The width of this Frame
-     * @param height    : The height of this Frame
+     * @param width     : The width of this AbstractFrame
+     * @param height    : The height of this AbstractFrame
      * @param currentUrl: The URL of the page currently displayed in the associated {@link Browsr} object.
      * @param browsr    : The {@link Browsr} object linked to this {@code SaveDialog}.
-     * @throws IllegalDimensionException: When one of the dimensions of this Frame is negative
+     * @throws IllegalDimensionException: When one of the dimensions of this AbstractFrame is negative
      */
     public SaveDialog(int width, int height, String currentUrl, Browsr browsr ) throws IllegalDimensionException {
         super(0, 0, width, height, browsr, currentUrl);
@@ -34,6 +34,15 @@ public class SaveDialog extends GenericDialogScreen {
         this.nameInput = new UITextInputField(offset, offset, 100, getTextSize(), "Name");
         this.nameInputContents = (UITextInputField) nameInput;
         this.form = getForm(currentUrl);
+    }
+
+    public SaveDialog(SaveDialog dialog) {
+        super(0, 0, dialog.getWidth(), dialog.getHeight(), dialog.getBrowsr(), dialog.getCurrentUrl());
+        int offset = dialog.getOffset();
+
+        this.nameInput = new UITextInputField(offset, offset, 100, dialog.getTextSize(), "Name");
+        this.nameInputContents = nameInput;
+        this.form = getForm(dialog.getCurrentUrl());
     }
 
 
@@ -109,6 +118,17 @@ public class SaveDialog extends GenericDialogScreen {
         } catch (IllegalArgumentException e) {
                 System.out.println("Can't save document with empty file name.");
             }
+    }
+
+    /**
+     * Create a deep copy of this {@code AbstractFrame} object.
+     *
+     * @return copy: a deep copied version of this {@code AbstractFrame}
+     * object which thus does not point to the original object.
+     */
+    @Override
+    protected SaveDialog deepCopy() {
+        return new SaveDialog(this);
     }
 
     /**

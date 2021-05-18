@@ -12,11 +12,12 @@ import java.awt.event.*;
 @DisplayName("total program flow when typing in addressbar")
 public class flowTest {
 
-    private LeafPane area;
+    private ContentFrame area;
     private AddressBar bar;
     private UIController controller;
     private final String goodUrl = "https://people.cs.kuleuven.be/bart.jacobs/browsrtest.html";
     private final String badUrl = "www.fout.be";
+    private final int id = 0;
 
     private final char undefChar = KeyEvent.CHAR_UNDEFINED;
     private final int mouseClick = MouseEvent.MOUSE_RELEASED;
@@ -27,14 +28,14 @@ public class flowTest {
     @BeforeEach
     void setup(){
         // Make a total browsr without the gui class (=browsr.java)
-        area = new LeafPane(0,20,100,100);
+        area = new ContentFrame(0,20,100,100);
         bar = new AddressBar(0,0,100,20,0);
         controller = new UIController(); // The document is created within uicontroller
         // Couple the uicontoller to the documentarea and addressbar
         area.setController(controller);
         bar.setUiController(controller);
         // Couple the document with the documentarea and addressbar
-        controller.addDocumentListener(area);
+        controller.addDocumentListener(id, area);
         controller.addUrlListener(bar);
     }
 
@@ -48,7 +49,7 @@ public class flowTest {
 
     @Test
     @DisplayName("good flow when typing good url")
-    void typeGoodUrl() throws Exception{
+    void typeGoodUrl() {
         //1. Click on addressBar to gain focus
         assertFalse(bar.hasFocus);
         bar.handleMouse(mouseClick, 5, 5, 1,leftMouse,0);
@@ -63,9 +64,9 @@ public class flowTest {
         bar.handleKey(keyPress, KeyEvent.VK_ENTER, undefChar, 0);
         assertFalse(bar.hasFocus);
         assertEquals(goodUrl, bar.getURL());
-        assertEquals(goodUrl, controller.getUrlString());
+        assertEquals(goodUrl, controller.getUrlString(id));
         //4. Document should be loaded
-//        ContentSpan expectedSpan = controller.getDocument().composeDocument(new URL(goodUrl));
+//        ContentSpan expectedSpan = controller.getCurrentDocument().composeDocument(new URL(goodUrl));
 //        assertEquals(area.translateToUIElements(expectedSpan), area.getContent());
     }
 
@@ -109,7 +110,7 @@ public class flowTest {
         bar.handleKey(keyPress, KeyEvent.VK_ENTER, undefChar, 0);
         assertFalse(bar.hasFocus);
         assertEquals(goodUrl, bar.getURL());
-        assertEquals(goodUrl, controller.getUrlString());
+        assertEquals(goodUrl, controller.getUrlString(0));
         // 5. Click on addressBar to gain focus
         assertFalse(bar.hasFocus);
         bar.handleMouse(mouseClick, 5, 5, 1,leftMouse,0);
@@ -124,7 +125,7 @@ public class flowTest {
         bar.handleKey(keyPress, KeyEvent.VK_ESCAPE, undefChar, 0);
         // 8. The addressbar should now be restored to the correct previous url
         assertEquals(goodUrl, bar.getURL());
-        assertEquals(goodUrl, controller.getUrlString());
+        assertEquals(goodUrl, controller.getUrlString(id));
     }
 
     @Test
@@ -147,7 +148,7 @@ public class flowTest {
         bar.handleKey(keyPress, KeyEvent.VK_ENTER, undefChar, 0);
         assertFalse(bar.hasFocus);
         assertEquals(goodUrl, bar.getURL());
-        assertEquals(goodUrl, controller.getUrlString());
+        assertEquals(goodUrl, controller.getUrlString(id));
         ///////////////////////
 
         // 4. Click on a hyperlink 'a' -> 'a.html'
@@ -159,6 +160,6 @@ public class flowTest {
         // 6. The bar should show the new url, although it is bad
         String badLink = "https://people.cs.kuleuven.be/bart.jacobs/a.html";
         assertEquals(badLink, bar.getURL());
-        assertEquals(badLink, controller.getUrlString());
+        assertEquals(badLink, controller.getUrlString(id));
     }
 }

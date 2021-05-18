@@ -14,12 +14,20 @@ public class UITextField extends DocumentCell{
      * @param width: the width of this {@code UITextField}.
      * @param text_size: The height of this {@code UITextField}.
      * @param text: The text attribute of this {@code UITextField}.
-     * @throws IllegalDimensionException: When one of the dimensions of the associated {@link Frame} is negative.
+     * @throws IllegalDimensionException: When one of the dimensions of the associated {@link AbstractFrame} is negative.
      */
     public UITextField(int x, int y, int width, int text_size, String text) throws IllegalDimensionException {
         super(x, y, width, text_size);
         textField = text;
         textHeight = text_size;
+        updateSizes();
+        setWidth(getMaxWidth());
+    }
+
+    public UITextField(UITextField textField) {
+        super(textField.getxPos(), textField.getyPos(), textField.getMaxWidth(), textField.getMaxHeight());
+        this.textField = textField.getText();
+        this.textHeight = textField.getMaxHeight();
         updateSizes();
         setWidth(getMaxWidth());
     }

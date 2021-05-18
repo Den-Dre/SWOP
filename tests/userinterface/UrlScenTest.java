@@ -25,15 +25,17 @@ import javax.print.Doc;
 class UrlScenTest {
 
     private AddressBar bar;
-    private LeafPane doc;
+    private Pane doc;
     private UIController ctrl;
+    private final int id = 0;
     private int offset = 5;
+
     private final char undefChar = KeyEvent.CHAR_UNDEFINED;
     private final int mouseClick = MouseEvent.MOUSE_RELEASED;
     private final int keyPress = KeyEvent.KEY_PRESSED;
     private final int leftMouse = MouseEvent.BUTTON1;
     private final int shiftModifier = KeyEvent.SHIFT_DOWN_MASK;
-    
+
     private Browsr browsr = null;
     
     private final int badURL[] = {65,65,65,65};
@@ -47,7 +49,7 @@ class UrlScenTest {
         bar = browsr.getAddressBar();
         doc = browsr.getDocumentArea();
         
-		ctrl = doc.controller;
+		ctrl = doc.getController();
 
     }
 	
@@ -197,7 +199,7 @@ class UrlScenTest {
 	@DisplayName("user clicks outside AddressBar")
 	void clickOutsideBar() {
         assertFalse(bar.hasFocus);
-        // click inside UserInterface.Frame
+        // click inside UserInterface.AbstractFrame
         bar.handleMouse(mouseClick, 10,15,1, leftMouse,0);
         assertTrue(bar.hasFocus);
         // click outside addressbar
@@ -271,10 +273,10 @@ class UrlScenTest {
     void malformedURL() {
         String malformedURL = "ww.www.test.com";
         UIController controller = new UIController();
-        controller.loadDocument(malformedURL);
+        controller.loadDocument(id, malformedURL);
 
         // Verify contents of returned URL
-        ContentSpan contentSpan = controller.getContentSpan();
+        ContentSpan contentSpan = controller.getContentSpan(id);
         TextSpan textSpan = (TextSpan) contentSpan;
         assertEquals("Error: malformed URL.", textSpan.getText());
     }

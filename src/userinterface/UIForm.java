@@ -28,6 +28,14 @@ public class UIForm extends DocumentCell {
         this.formContent.setyPos(y);
     }
 
+    public UIForm(UIForm uiForm) {
+        super(uiForm.getxPos(), uiForm.getyPos(), uiForm.getMaxWidth(), uiForm.getMaxHeight());
+        this.action = uiForm.getAction();
+        this.formContent = uiForm.formContent.deepCopy();
+        this.formContent.setxPos(uiForm.getxPos());
+        this.formContent.setyPos(uiForm.getyPos());
+    }
+
     /**
      * Renders this UIForm.
      *
@@ -54,9 +62,8 @@ public class UIForm extends DocumentCell {
     @Override
     public ReturnMessage getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
         ReturnMessage response = this.formContent.getHandleMouse(id, x, y, clickCount, button, modifier);
-        if (response.getType() == ReturnMessage.Type.Button && response.getContent().equals("submit")) {
-                return handleSubmitPressed();
-            }
+        if (response.getType() == ReturnMessage.Type.Button && response.getContent().equals("submit"))
+            return handleSubmitPressed();
         return response;
     }
 
