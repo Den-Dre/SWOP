@@ -62,9 +62,8 @@ public class UIForm extends DocumentCell {
     @Override
     public ReturnMessage getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
         ReturnMessage response = this.formContent.getHandleMouse(id, x, y, clickCount, button, modifier);
-        if (response.getType() == ReturnMessage.Type.Button && response.getContent().equals("submit")) {
-                return handleSubmitPressed();
-            }
+        if (response.getType() == ReturnMessage.Type.Button && response.getContent().equals("submit"))
+            return handleSubmitPressed();
         return response;
     }
 

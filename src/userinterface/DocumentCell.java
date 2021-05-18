@@ -90,8 +90,10 @@ public class DocumentCell extends AbstractFrame {
     /**
      * Retrieve the name and value of this DocumentCell.
      *
+     * <p>
      * Only applies if the DocumentCell has a name and value (e.g UITextInputField)
      * or can contain elements that do (e.g. UITable).
+     * </p>
      *
      * @return An ArrayList with the name and value of the DocumentCell separated by a '=' sign.
      */

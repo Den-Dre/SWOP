@@ -181,6 +181,20 @@ public abstract class DocumentCellDecorator extends DocumentCell {
     }
 
     /**
+     * Retrieve the names and values of the content of this decorator.
+     * <p>
+     * Only applies if the DocumentCell has a name and value (e.g UITextInputField)
+     * or can contain elements that do (e.g. UITable).
+     * </p>
+     *
+     * @return An ArrayList with the name and value of the DocumentCell separated by a '=' sign.
+     */
+    @Override
+    public ArrayList<String> getNamesAndValues() {
+        return getContentWithoutScrollbars().getNamesAndValues();
+    }
+
+    /**
      * A variable to denote the {@link DocumentCell} that will be decorated.
      */
     protected final DocumentCell cellToBeDecorated;
