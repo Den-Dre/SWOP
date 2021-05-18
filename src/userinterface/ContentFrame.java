@@ -258,8 +258,10 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
-        if ((newWindowWidth - getxPos()) >= 0) setWidth(newWindowWidth - getxPos());
-        if ((newWindowHeight - getyPos()) >= 0) setHeight(newWindowHeight - getyPos());
+//        if ((newWindowWidth - getxPos()) >= 0) setWidth(newWindowWidth - getxPos());
+//        if ((newWindowHeight - getyPos()) >= 0) setHeight(newWindowHeight - getyPos());
+        setWidth(newWindowWidth-getxPos());
+        setHeight(newWindowHeight-getyPos());
         if (content != null)
             content.handleResize(newWindowWidth, newWindowHeight);
     }
@@ -385,6 +387,32 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    /**
+     * Set the x position of this ContentFrame and its contents to the given value
+     *
+     * @param xPos :
+     *             The value this ContentFrame's and its content's x position should be set to.
+     */
+    @Override
+    public void setxPos(int xPos) {
+        super.setxPos(xPos);
+        if (content != null)
+            content.setxPos(xPos);
+    }
+
+    /**
+     * Set the y position of this ContentFrame and its contents to the given value
+     *
+     * @param yPos :
+     *             The value this ContentFrame's and its content's y position should be set to.
+     */
+    @Override
+    public void setyPos(int yPos) {
+        super.setyPos(yPos);
+        if (content != null)
+            content.setyPos(yPos);
     }
 
     /**

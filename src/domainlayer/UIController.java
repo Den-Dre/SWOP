@@ -167,7 +167,7 @@ public class UIController {
     }
 
     public int duplicatePaneDocument(int siblingId) {
-        return documentsKeeper.addPaneDocumentBasedOn(siblingId);
+        return documentsKeeper.addPaneDocument(siblingId);
     }
 
     public int removePaneDocument(int id) {

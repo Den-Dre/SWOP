@@ -56,6 +56,23 @@ public class VerticalSplitPane extends GenericSplitPane {
     }
 
     /**
+     * This method handles resizes.
+     * It makes sure the AbstractFrame is adjusted in width when the window shrinks or grows.
+     * It does not change its height (e.g. look at Firefox).
+     *
+     * @param newWindowWidth  : parameter containing the new window-width of this AbstractFrame.
+     * @param newWindowHeight : parameter containing the new window-height of this AbstractFrame.
+     */
+    @Override
+    public void handleResize(int newWindowWidth, int newWindowHeight) {
+        getFirstChild().setxPos(getxPos());
+        getSecondChild().setxPos(getxPos() + newWindowWidth/2);
+        getFirstChild().handleResize(newWindowWidth/2, newWindowHeight);
+        getSecondChild().handleResize(newWindowWidth/2, newWindowHeight);
+        super.handleResize(newWindowWidth, newWindowHeight);
+    }
+
+    /**
      * A method that draws the separator
      * This method is called each time the
      * separator is dragged to a new position.

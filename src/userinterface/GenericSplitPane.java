@@ -117,8 +117,8 @@ public abstract class GenericSplitPane extends Pane {
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
-        getFirstChild().handleResize(newWindowWidth, newWindowHeight/2);
-        getSecondChild().handleResize(newWindowWidth, newWindowHeight/2);
+        setWidth(getFirstChild().getWidth() + getSecondChild().getWidth());
+        setHeight(getFirstChild().getHeight() + getSecondChild().getHeight());
     }
 
     @Override

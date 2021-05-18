@@ -23,11 +23,10 @@ public class DocumentKeeper {
     public int addPaneDocument() {
         Document doc = new Document();
         panesToDocuments.put(++documentCounter, doc);
-        System.out.println(panesToDocuments.toString());
         return documentCounter;
     }
 
-    public int addPaneDocumentBasedOn(int siblingId) {
+    public int addPaneDocument(int siblingId) {
         // Create a new Document based on that of the sibling
         Document doc = new Document();
         doc.loadFromUrl(panesToDocuments.get(siblingId).getUrlString());

@@ -168,13 +168,21 @@ public abstract class Pane extends AbstractFrame implements DocumentListener {
         return this.id;
     }
 
-    public void setLastResize(int width, int height) {
-        getRootPane().lastResize = new int[] {width, height};
-        System.out.println("[Created LeafPane : (" + getWidth() + ", " + getHeight() + ")]");
+//    public void setLastResize(int width, int height) {
+//        getRootPane().lastResize = new int[] {width, height};
+//        System.out.println("[Created LeafPane : (" + getWidth() + ", " + getHeight() + ")]");
+//    }
+//
+//    public int[] getLastResize() {
+//        return getRootPane().lastResize;
+//    }
+
+    protected int getBasexPos() {
+        return getRootPane().getxPos();
     }
 
-    public int[] getLastResize() {
-        return getRootPane().lastResize;
+    protected int getBaseyPos() {
+        return getRootPane().getyPos();
     }
 
     private Pane subPane;

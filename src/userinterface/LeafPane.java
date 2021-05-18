@@ -3,6 +3,7 @@ package userinterface;
 import domainlayer.UIController;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.util.Arrays;
 
 /**
@@ -71,8 +72,6 @@ public class LeafPane extends Pane {
     @Override
     public void render(Graphics g) {
         contentFrame.render(g);
-        setHeight(contentFrame.getHeight());
-        setWidth(contentFrame.getWidth());
         if (hasFocus())
             drawFocusedBorder(g);
     }
@@ -106,8 +105,9 @@ public class LeafPane extends Pane {
             contentFrame.setWelcomeDocument();
         Pane sibling = parentPane.getFirstChild() == this ?
                        parentPane.getSecondChild() : parentPane.getFirstChild();
+        sibling.setxPos(parentPane.getxPos());
+        sibling.setyPos(parentPane.getyPos());
         sibling.handleResize(parentPane.getWidth(), parentPane.getHeight());
-//        sibling.handleResize(getLastResize()[0], getLastResize()[1]);
         sibling.setParentPane(parentPane.getParentPane());
         setFocusedPane(sibling);
         setParentPane(null);
@@ -135,7 +135,8 @@ public class LeafPane extends Pane {
             getController().setCurrentDocument(this.id);
             contentFrame.handleMouse(id, x, y, clickCount, button, modifiersEx);
         }
-        System.out.println("[Clicked on " + this + ": (" + getWidth() + ", " + getHeight() + ")]");
+        if (id == MouseEvent.MOUSE_PRESSED)
+            System.out.println("[Clicked on " + this + ": (" + getxPos() + ", " + getyPos() + "; " + getWidth() + ", " + getHeight() + ")]");
     }
 
     /**
@@ -166,10 +167,17 @@ public class LeafPane extends Pane {
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
+        // If this LeafPane has a parent SplitPane, the parent will have
+        // updated the LeafPane's x and y coordinates in the handleResize()
+        // call of its parent HorizontalSplitPane or VerticalSplitPane.
+        // Thus, we propagate these updates to the linked content:
+        contentFrame.setxPos(getxPos());
+        contentFrame.setyPos(getyPos());
         contentFrame.handleResize(newWindowWidth, newWindowHeight);
-        setWidth(contentFrame.getWidth());
-        setHeight(contentFrame.getHeight());
-        setLastResize(newWindowWidth, newWindowHeight);
+        setWidth(newWindowWidth-getBasexPos());
+        setHeight(newWindowHeight-getBaseyPos());
+//        setWidth(contentFrame.getWidth());
+//        setHeight(contentFrame.getHeight());
     }
 
     /**
