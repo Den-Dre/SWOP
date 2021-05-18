@@ -17,7 +17,7 @@ public class HorizontalSplitPane extends GenericSplitPane {
 
         // Set the sizes & position of the sub-panes
         lowerPane.setxPos(x);
-       lowerPane.setyPos(y + height/2);
+        lowerPane.setyPos(y + height/2);
         lowerPane.setWidth(width);
         lowerPane.setHeight(height/2);
         lowerPane.setParentPane(this);
@@ -95,6 +95,7 @@ public class HorizontalSplitPane extends GenericSplitPane {
         g2.setStroke(new BasicStroke(5));
         g2.setColor(Color.BLACK);
         g2.fillRect(lowerPane.getxPos(), lowerPane.getyPos()-SEPARATOR_THICKNESS, getWidth()-getxPos(), SEPARATOR_THICKNESS);
+        // Reset the stroke for future drawing
         g2.setStroke(new BasicStroke(1));
     }
 
