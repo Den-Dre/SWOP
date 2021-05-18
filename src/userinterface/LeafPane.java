@@ -1,5 +1,6 @@
 package userinterface;
 
+import domainlayer.DocumentListener;
 import domainlayer.UIController;
 
 import java.awt.*;
@@ -107,7 +108,7 @@ public class LeafPane extends Pane {
                        parentPane.getSecondChild() : parentPane.getFirstChild();
         sibling.setxPos(parentPane.getxPos());
         sibling.setyPos(parentPane.getyPos());
-        sibling.handleResize(parentPane.getWidth(), parentPane.getHeight());
+        sibling.handleResize(parentPane.getWidth()+getBasexPos(), parentPane.getHeight()+getBaseyPos());
         sibling.setParentPane(parentPane.getParentPane());
         setFocusedPane(sibling);
         setParentPane(null);
@@ -154,16 +155,11 @@ public class LeafPane extends Pane {
 
     /**
      * This method handles resizes.
-     * It makes sure the AbstractFrame is adjusted in width when the window shrinks or grows.
+     * It makes sure the LeafPane is adjusted in width when the window shrinks or grows.
      * It does not change its height (e.g. look at Firefox).
      *
-     * <p>N.B.: without this method, {@code BookmakrBar} would be rendered with
-     * the given absolute width, and thus one would need to guess the
-     * correct initial size of the window. Using this method, widths are
-     * automatically adjusted: both at initialization and at runtime.</p>
-     *
-     * @param newWindowWidth  : parameter containing the new window-width of this AbstractFrame.
-     * @param newWindowHeight : parameter containing the new window-height of this AbstractFrame.
+     * @param newWindowWidth  : parameter containing the new window-width of this LeafPane.
+     * @param newWindowHeight : parameter containing the new window-height of this LeafPane.
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
@@ -176,13 +172,13 @@ public class LeafPane extends Pane {
         contentFrame.handleResize(newWindowWidth, newWindowHeight);
         setWidth(newWindowWidth-getBasexPos());
         setHeight(newWindowHeight-getBaseyPos());
-//        setWidth(contentFrame.getWidth());
-//        setHeight(contentFrame.getHeight());
+//        setWidth(newWindowWidth);
+//        setHeight(newWindowHeight);
     }
 
     /**
      * Define what the class that implements
-     * this {@link domainlayer.DocumentListener} Interface
+     * this {@link DocumentListener} Interface
      * should do when the contents of the
      * linked {@link ContentFrame} changes.
      */
