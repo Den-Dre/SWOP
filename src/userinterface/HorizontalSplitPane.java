@@ -71,14 +71,15 @@ public class HorizontalSplitPane extends GenericSplitPane {
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
-//        if (parentPane == null) {
-//            newWindowWidth -= getBasexPos();
-//            newWindowHeight -= getBaseyPos();
-//        }
-        getFirstChild().setyPos(getyPos() + (newWindowHeight)/2);
         getSecondChild().setyPos(getyPos());
-        getFirstChild().handleResize(newWindowWidth, (newWindowHeight)/2);
+
+        if (parentPane == null) {
+            newWindowWidth -= getBasexPos();
+            newWindowHeight -= getBaseyPos();
+        }
         getSecondChild().handleResize(newWindowWidth, newWindowHeight/2);
+        getFirstChild().setyPos(getyPos() + (newWindowHeight)/2);
+        getFirstChild().handleResize(newWindowWidth, (newWindowHeight)/2);
         super.handleResize(newWindowWidth, newWindowHeight);
     }
 

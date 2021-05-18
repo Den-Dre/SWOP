@@ -171,8 +171,8 @@ public class UITable extends DocumentCell{
         System.out.println("resizing");
         setColumnWidths();
         setRowHeights();
-        setParentHeight(getHeight());
-        setParentWidth(getWidth());
+        setParentHeight(newWindowHeight);
+        setParentWidth(newWindowWidth);
     }
 
     /**
