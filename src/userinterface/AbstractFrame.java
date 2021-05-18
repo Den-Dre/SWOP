@@ -86,6 +86,11 @@ public abstract class AbstractFrame {
         this.hasFocus = newState;
     }
 
+    public boolean outOfArea() {
+        return ((getyPos()+getyOffset() < getyReference()) |
+                (getyPos()+getyOffset() > getyReference()+parentHeight)); //(getxPos() - Math.abs(getxOffset())) < getxReference() |
+    }
+
     /**
      * An integer variable to denote the x coordinate of this AbstractFrame.
      */
