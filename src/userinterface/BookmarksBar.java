@@ -103,6 +103,7 @@ public class BookmarksBar extends AbstractFrame {
         g2.drawLine(getxPos() + offset, getyPos() + height, getWidth() - offset, getyPos() + height);
 //        g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
         this.textHyperLinks.forEach(t -> t.render(g));
+        g2.setStroke(new BasicStroke(1));
     }
 
     /**

@@ -260,13 +260,8 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
     public void handleResize(int newWindowWidth, int newWindowHeight) {
         setWidth(newWindowWidth-getxPos());
         setHeight(newWindowHeight-getyPos());
-        if (content != null)
-            content.handleResize(newWindowWidth, newWindowHeight);
-        //TODO: The -30 is temporary for shrinking the leafPane, so everything is better visible.
-        if ((newWindowWidth - getxPos()) >= 0) setWidth(newWindowWidth - getxPos()-30);
-        if ((newWindowHeight - getyPos()) >= 0) setHeight(newWindowHeight - getyPos()-30);
         if (content != null) {
-            content.handleResize(newWindowWidth, newWindowHeight);
+            content.handleResize(getWidth(), getHeight());
             content.setParentWidth(getWidth());
             content.setParentHeight(getHeight());
         }

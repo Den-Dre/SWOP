@@ -83,6 +83,7 @@ public class LeafPane extends Pane {
         g2.setStroke(new BasicStroke(2));
         g2.setColor(Color.BLUE);
         g2.drawRect(getxPos(), getyPos(), getWidth()-offset, getHeight()-offset);
+        g2.setStroke(new BasicStroke(1));
     }
 
     /**

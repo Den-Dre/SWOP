@@ -79,13 +79,6 @@ public class Browsr extends CanvasWindow {
 
             controller.addUrlListener(addressBarInput);
             controller.addDocumentListener(rootPane.getId(), rootPane);
-
-//            DocumentCellDecorator decoratedDocCell = new HorizontalScrollBarDecorator(new VerticalScrollBarDecorator(contentFrame.getContent()));
-//            contentFrame.setContent(decoratedDocCell);
-
-//            leafPane.setContent(new VerticalScrollBarDecorator(new HorizontalScrollBarDecorator(new UITextInputField(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100))));
-            // For testing purposes
-//            AddressBar.changeTextTo("https://people.cs.kuleuven.be/bart.jacobs/browsrtest.html");
         }
         catch(IllegalDimensionException e){
             System.out.print("Dimension error in frame while making browser!");
