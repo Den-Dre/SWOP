@@ -255,6 +255,7 @@ public class UIButton extends DocumentCell{
      */
     @Override
     public void render(Graphics g) {
+        if (outOfHorizontalBounds() | outOfVerticalBounds()) return;
         setWidth(g.getFontMetrics().stringWidth(displayText)*3/2);
         state.Render(g);
     }

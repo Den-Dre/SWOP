@@ -43,7 +43,7 @@ public class UITextField extends DocumentCell{
     public void render(Graphics g) {
         metrics = g.getFontMetrics(textFieldFont);
         updateSizes();
-        if (outOfArea()) return;
+        if (outOfVerticalBounds()) return;
         g.setColor(textFieldColor);
         g.setFont(textFieldFont);
         g.drawString(visibleText(), getxPos(), getyPos()+textHeight+getyOffset());

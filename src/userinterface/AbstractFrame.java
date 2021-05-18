@@ -86,9 +86,14 @@ public abstract class AbstractFrame {
         this.hasFocus = newState;
     }
 
-    public boolean outOfArea() {
+    public boolean outOfVerticalBounds() {
         return ((getyPos()+getyOffset() < getyReference()) |
-                (getyPos()+getyOffset() > getyReference()+parentHeight)); //(getxPos() - Math.abs(getxOffset())) < getxReference() |
+                (getyPos()+getyOffset() > getyReference()+parentHeight));
+    }
+
+    public boolean outOfHorizontalBounds() {
+        return (getxPos()+getxOffset() < getxReference());
+//                (getxPos()+getWidth()+getxOffset() > getxReference()+parentWidth);
     }
 
     /**

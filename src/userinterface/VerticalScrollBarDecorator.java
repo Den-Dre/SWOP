@@ -63,7 +63,7 @@ public class VerticalScrollBarDecorator extends DocumentCellDecorator {
 
     @Override
     public int getVerticalBarXOffset() {
-        return parentWidth - thicknessOuterBar;
+        return parentWidth - thicknessOuterBar-5;
     }
 
     void init() {

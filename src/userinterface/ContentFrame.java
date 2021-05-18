@@ -258,8 +258,14 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
-        setWidth(newWindowWidth-getxPos());
-        setHeight(newWindowHeight-getyPos());
+        if (getxPos() > newWindowWidth)
+            setWidth(newWindowWidth);
+        else
+            setWidth(newWindowWidth-getxPos());
+        if (getyPos() > newWindowHeight)
+            setHeight(newWindowHeight);
+        else
+            setHeight(newWindowHeight-getyPos());
         if (content != null) {
             content.handleResize(getWidth(), getHeight());
             content.setParentWidth(getWidth());
@@ -402,8 +408,10 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
     @Override
     public void setxPos(int xPos) {
         super.setxPos(xPos);
-        if (content != null)
+        if (content != null) {
             content.setxPos(xPos);
+            content.setxReference(xPos);
+        }
     }
 
     /**
@@ -415,8 +423,24 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
     @Override
     public void setyPos(int yPos) {
         super.setyPos(yPos);
-        if (content != null)
+        if (content != null) {
             content.setyPos(yPos);
+            content.setyReference(yPos);
+        }
+    }
+
+    @Override
+    public void setParentWidth(int parentWidth) {
+        super.setParentWidth(parentWidth);
+        if (content != null)
+            content.setParentWidth(parentWidth);
+    }
+
+    @Override
+    public void setParentHeight(int parentHeight) {
+        super.setParentHeight(parentHeight);
+        if (content != null)
+            content.setParentHeight(parentHeight);
     }
 
     /**

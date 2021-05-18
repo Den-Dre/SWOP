@@ -40,6 +40,7 @@ public class UITable extends DocumentCell{
 
     @Override
     public void setParentWidth(int parentWidth) {
+        System.out.println("resizing table: " + parentWidth);
         for (ArrayList<DocumentCell> row : grid) {
             for (DocumentCell cell : row) {
                 cell.setParentWidth(parentWidth);

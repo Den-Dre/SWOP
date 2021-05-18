@@ -295,6 +295,30 @@ public class LeafPane extends Pane {
         contentFrame.setHeight(newHeight);
     }
 
+    @Override
+    public void setParentWidth(int parentWidth) {
+        super.setParentWidth(parentWidth);
+        contentFrame.setParentWidth(parentWidth);
+    }
+
+    @Override
+    public void setParentHeight(int parentHeight) {
+        super.setParentHeight(parentHeight);
+        contentFrame.setParentHeight(parentHeight);
+    }
+
+    @Override
+    public void setxReference(int xReference) {
+        super.setxReference(xReference);
+        contentFrame.setxReference(xReference);
+    }
+
+    @Override
+    public void setyReference(int yReference) {
+        super.setyReference(yReference);
+        contentFrame.setyReference(yReference);
+    }
+
     /**
      * Get the id associated to this {@code LeafPane}.
      *

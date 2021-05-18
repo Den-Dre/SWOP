@@ -93,6 +93,11 @@ public class UIForm extends DocumentCell {
         this.formContent.handleKey(id, keyCode, keyChar, modifiersEx);
     }
 
+    @Override
+    public void handleResize(int newWindowWidth, int newWindowHeight) {
+        formContent.handleResize(parentWidth, parentHeight);
+    }
+
     /**
      * Get the maximum height of this UIForm.
      *
@@ -161,6 +166,18 @@ public class UIForm extends DocumentCell {
     public void setyReference(int yReference) {
         super.setyReference(yReference);
         formContent.setyReference(yReference);
+    }
+
+    @Override
+    public void setParentWidth(int parentWidth) {
+        super.setParentWidth(parentWidth);
+        formContent.setParentWidth(parentWidth);
+    }
+
+    @Override
+    public void setParentHeight(int parentHeight) {
+        super.setParentHeight(parentHeight);
+        formContent.setParentHeight(parentHeight);
     }
 
     /**

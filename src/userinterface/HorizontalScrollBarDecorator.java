@@ -54,6 +54,9 @@ public class HorizontalScrollBarDecorator extends DocumentCellDecorator {
 
     @Override
     public int getHorizontalBarYOffset() {
-        return parentHeight;
+        if (cellToBeDecorated instanceof UITextField)
+            return parentHeight;
+        else
+            return parentHeight-15;
     }
 }

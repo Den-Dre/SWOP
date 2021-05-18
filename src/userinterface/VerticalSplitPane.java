@@ -127,28 +127,32 @@ public class VerticalSplitPane extends GenericSplitPane {
         rightPane.setyPos(yPos);
     }
 
-    @Override
-    public void setxReference(int xReference) {
-        super.setxReference(xReference);
-        leftPane.setxReference(xReference);
-        rightPane.setxReference(xReference+getHeight()/2);
-    }
-
-    @Override
-    public void setyReference(int yReference) {
-        super.setyReference(yReference);
-        leftPane.setyReference(yReference);
-        rightPane.setyReference(yReference);
-    }
+//    @Override
+//    public void setxReference(int xReference) {
+//        super.setxReference(xReference);
+//        leftPane.setxReference(xReference);
+//        rightPane.setxReference(xReference+getHeight()/2);
+//    }
+//
+//    @Override
+//    public void setyReference(int yReference) {
+//        super.setyReference(yReference);
+//        leftPane.setyReference(yReference);
+//        rightPane.setyReference(yReference);
+//    }
 
     @Override
     public void setParentWidth(int parentWidth) {
         super.setParentWidth(parentWidth);
+        leftPane.setParentWidth(parentWidth);
+        rightPane.setParentWidth(parentWidth);
     }
 
     @Override
     public void setParentHeight(int parentHeight) {
         super.setParentHeight(parentHeight);
+        leftPane.setParentHeight(parentHeight);
+        rightPane.setParentHeight(parentHeight);
     }
 
     private Pane leftPane;
