@@ -228,7 +228,7 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
      * @return a UITextInputField with translated elements
      */
     private DocumentCell translateTextInputField(TextInputField content) {
-    	return new HorizontalScrollBarDecorator(new UITextInputField(getxPos(), getyPos(), 100, textSize, content.getName()));
+    	return new UITextInputField(getxPos(), getyPos(), 100, textSize, content.getName());
     }
     
     /**

@@ -567,4 +567,9 @@ public class UITextInputField extends DocumentCell {
 
     private DocumentCellDecorator textField = new HorizontalScrollBarDecorator(new UITextField(getxPos()+textStart, getyPos(), getWidth(), this.getHeight()*3/4, ""));
 
+    /**
+     * The ID of the {@link Pane} that currently has focus.
+     * Its value is initialised to 0 as this represents the root{@link Pane}.
+     */
+    protected int id = 0;
 }
