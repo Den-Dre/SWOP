@@ -34,8 +34,8 @@ public class HorizontalSplitPane extends GenericSplitPane {
         upperPane.setHeight(height/2);
         upperPane.setParentPane(this);
         upperPane.setParentHeight(upperPane.getHeight());
-        lowerPane.setxReference(x);
-        lowerPane.setyReference(y);
+        upperPane.setxReference(x);
+        upperPane.setyReference(y);
         upperPane.toggleFocus(false);
         updateListeners();
     }
@@ -71,9 +71,13 @@ public class HorizontalSplitPane extends GenericSplitPane {
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
-        getFirstChild().setyPos(getyPos() + newWindowHeight/2);
+//        if (parentPane == null) {
+//            newWindowWidth -= getBasexPos();
+//            newWindowHeight -= getBaseyPos();
+//        }
+        getFirstChild().setyPos(getyPos() + (newWindowHeight)/2);
         getSecondChild().setyPos(getyPos());
-        getFirstChild().handleResize(newWindowWidth, newWindowHeight/2);
+        getFirstChild().handleResize(newWindowWidth, (newWindowHeight)/2);
         getSecondChild().handleResize(newWindowWidth, newWindowHeight/2);
         super.handleResize(newWindowWidth, newWindowHeight);
     }
@@ -112,6 +116,48 @@ public class HorizontalSplitPane extends GenericSplitPane {
     @Override
     public void setSecondChild(Pane pane) {
         this.upperPane = pane;
+    }
+
+    @Override
+    public void setxPos(int xPos) {
+        super.setxPos(xPos);
+        upperPane.setxPos(xPos);
+        lowerPane.setxPos(xPos);
+    }
+
+    @Override
+    public void setyPos(int yPos) {
+        super.setyPos(yPos);
+        upperPane.setyPos(yPos);
+        lowerPane.setyPos(yPos + getHeight()/2);
+    }
+
+//    @Override
+//    public void setxReference(int xReference) {
+//        super.setxReference(xReference);
+//        leftPane.setxReference(xReference);
+//        rightPane.setxReference(xReference+getHeight()/2);
+//    }
+//
+//    @Override
+//    public void setyReference(int yReference) {
+//        super.setyReference(yReference);
+//        leftPane.setyReference(yReference);
+//        rightPane.setyReference(yReference);
+//    }
+
+    @Override
+    public void setParentWidth(int parentWidth) {
+        super.setParentWidth(parentWidth);
+        upperPane.setParentWidth(parentWidth);
+        lowerPane.setParentWidth(parentWidth);
+    }
+
+    @Override
+    public void setParentHeight(int parentHeight) {
+        super.setParentHeight(parentHeight);
+        upperPane.setParentHeight(parentHeight);
+        lowerPane.setParentHeight(parentHeight);
     }
 
     private Pane upperPane;

@@ -326,7 +326,7 @@ public class Browsr extends CanvasWindow {
     protected void handleResize() {
         //ook laten weten aan de frames om zichzelf intern aan te passen!
         for (AbstractFrame frame : frames)
-            frame.handleResize(this.getWidth(), this.getHeight());
+            frame.handleResize(this.getWidth(), this.getHeight()); //-(addressBarInput.getHeight()+ bookmarksBar.getHeight()+10)
         repaint();
     }
 

@@ -92,11 +92,15 @@ public class LeafPane extends Pane {
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
+//        if (parentPane == null) {
+//            newWindowWidth -= getBasexPos();
+//            newWindowHeight -= getBaseyPos();
+//        }
         contentFrame.setxPos(getxPos());
         contentFrame.setyPos(getyPos());
         contentFrame.handleResize(newWindowWidth, newWindowHeight);
-        setWidth(newWindowWidth-getBasexPos());
-        setHeight(newWindowHeight-getBaseyPos());
+        setWidth(newWindowWidth);
+        setHeight(newWindowHeight);
     }
 
     /**
