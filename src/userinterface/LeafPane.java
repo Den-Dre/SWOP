@@ -120,8 +120,10 @@ public class LeafPane extends Pane {
     }
 
     public Pane closeLeafPane() {
-        if (this == getRootPane())
+        if (this == getRootPane()) {
             contentFrame.setWelcomeDocument();
+            return this;
+        }
         Pane sibling = parentPane.getFirstChild() == this ?
                 parentPane.getSecondChild() : parentPane.getFirstChild();
         sibling.setxPos(parentPane.getxPos());
@@ -155,7 +157,7 @@ public class LeafPane extends Pane {
             contentFrame.handleMouse(id, x, y, clickCount, button, modifiersEx);
         }
         if (id == MouseEvent.MOUSE_PRESSED)
-            System.out.println("[Clicked on " + this + ": (" + getxPos() + ", " + getyPos() + "; " + getWidth() + ", " + getHeight() + ")]");
+            System.out.println("[Clicked on " + this + ": (" + x + ", " + y + "; " + getWidth() + ", " + getHeight() + ")]");
     }
 
 //    /**
