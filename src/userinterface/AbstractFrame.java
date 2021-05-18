@@ -87,13 +87,13 @@ public abstract class AbstractFrame {
     }
 
     public boolean outOfVerticalBounds() {
-        return (getyPos()+getyOffset() < getyReference());
-//                || (getyPos()+getyOffset() > getyReference()+parentHeight));
+        return ((getyPos()+getyOffset() < getyReference()) |
+                (getyPos()+getyOffset()+getHeight()-5 > getyReference()+parentHeight));
     }
 
     public boolean outOfHorizontalBounds() {
-        return (getxPos()+getxOffset() < getxReference());
-//                (getxPos()+getWidth()+getxOffset() > getxReference()+parentWidth);
+        return (getxPos()+getxOffset() < getxReference() |
+                (getxPos()+getWidth()+getxOffset()-5 > getxReference()+parentWidth));
     }
 
     /**
