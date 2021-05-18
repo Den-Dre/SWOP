@@ -123,8 +123,8 @@ public abstract class Frame {
      */
     private int height;
 
-    int parentWidth = width;
-    int parentHeight = height;
+    int parentWidth;
+    int parentHeight;
 
     /**
      * A variable to denote the background {@link Color} of this Frame.

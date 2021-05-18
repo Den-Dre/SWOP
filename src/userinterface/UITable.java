@@ -274,21 +274,13 @@ public class UITable extends DocumentCell{
     @Override
     public void setWidth(int newWidth) {
         super.setWidth(newWidth);
-        for (ArrayList<DocumentCell> row : grid) {
-            for (DocumentCell cell : row) {
-                cell.parentWidth = newWidth;
-            }
-        }
+        //setParentWidth(parentWidth);
     }
 
     @Override
     public void setHeight(int newHeight) {
         super.setHeight(newHeight);
-        for (ArrayList<DocumentCell> row : grid) {
-            for (DocumentCell cell : row) {
-                cell.parentHeight = newHeight;
-            }
-        }
+        //setParentHeight(parentHeight);
     }
 
     @Override

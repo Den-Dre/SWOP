@@ -105,7 +105,8 @@ public class UITextInputField extends DocumentCell{
         	offset = cursorOffset;
         }
         int textFieldOffset = (textField.getContentWithoutScrollbars()).getxOffset();
-        this.cursorPos = new int[] {metrics.stringWidth(this.getText().substring(0,this.cursor))+textField.getxPos()+
+        String visibleText = ((UITextField) textField.getContentWithoutScrollbars()).getText();
+        this.cursorPos = new int[] {metrics.stringWidth(visibleText.substring(0,this.cursor))+textField.getxPos()+
                 (textStart)+offset+ textFieldOffset, getCursorYPos()+getyOffset()};
         this.textHeight = metrics.getHeight();
     }
@@ -121,7 +122,8 @@ public class UITextInputField extends DocumentCell{
         int offset = 0;
         if (getText().length() == 0) offset = cursorOffset;
         int textFieldOffset = (textField.getContentWithoutScrollbars()).getxOffset();
-        this.selectStartPos = new int[] {metrics.stringWidth(this.getText().substring(0,this.selectStart))+
+        String visibleText = ((UITextField) textField.getContentWithoutScrollbars()).getText();
+        this.selectStartPos = new int[] {metrics.stringWidth(visibleText.substring(0,this.selectStart))+
                 this.getxPos()+(textStart)+textFieldOffset, this.getyPos()+getyOffset()};
     }
 
@@ -171,6 +173,8 @@ public class UITextInputField extends DocumentCell{
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
         textField.handleMouse(id, x, y, clickCount, button, modifiersEx);
+        if (!textField.wasClicked(x,y) && id != MouseEvent.MOUSE_DRAGGED)
+            textField.setFraction(1.0);
         if (button != MouseEvent.BUTTON1) return; // Button1 is left mouse button
         if (id != MouseEvent.MOUSE_RELEASED) return;
         if (this.wasClicked(x,y)) {
@@ -372,6 +376,7 @@ public class UITextInputField extends DocumentCell{
         if (newCursor > textLength) newCursor = textLength;
         if (newCursor < 0) newCursor = 0;
         this.cursor = newCursor;
+        textField.setFraction((double) (cursor-1)/getText().length());
     }
 
     /**

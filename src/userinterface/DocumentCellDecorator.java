@@ -83,11 +83,9 @@ public abstract class DocumentCellDecorator extends DocumentCell {
         if (id == MouseEvent.MOUSE_PRESSED && (wasClicked(x, y))) {
             prevMouse = new int[] {x, y};
             currentColor = innerColorDragging;
-            System.out.println("pressed");
         }
         else if (id == MouseEvent.MOUSE_DRAGGED) {
             if (prevMouse == null) return;
-            System.out.println("dragged");
             currentMouse = new int[] {x, y};
             dragged(currentMouse[0]-prevMouse[0], currentMouse[1]-prevMouse[1]);
             prevMouse = new int[] {x, y};
@@ -295,14 +293,4 @@ public abstract class DocumentCellDecorator extends DocumentCell {
      * A variable to denote the {@link DocumentCell} that will be decorated.
      */
     protected final DocumentCell cellToBeDecorated;
-
-    /**
-     * The height of the added horizontal scrolling bar.
-     */
-    protected final int SCROLLBAR_HEIGHT = 5;
-
-    /**
-     * The width of the added vertical scrolling bar.
-     */
-    protected final int SCROLLBAR_WIDTH = 5;
 }
