@@ -52,10 +52,8 @@ public abstract class Pane extends AbstractFrame implements DocumentListener {
             setSecondChild(newPane);
         else {
             //getFocusedPane().replacePaneWith(oldPane, newPane);
-            if (getSecondChild() instanceof LeafPane)
-                getFirstChild().replacePaneWith(oldPane, newPane);
-            else
-                getSecondChild().replacePaneWith(oldPane, newPane);
+            getFirstChild().replacePaneWith(oldPane, newPane);
+            getSecondChild().replacePaneWith(oldPane, newPane);
         }
 
     }
