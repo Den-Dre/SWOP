@@ -15,6 +15,9 @@ public class UIControllerTest {
     void setUp() {
         cf = new ContentFrame(0, 0, 100, 100);
         controller = new UIController();
+        
+        Pane rootPane = new LeafPane(cf, controller);
+        controller.setCurrentDocument(rootPane.getId());
         controller.addDocumentListener(id, cf);
     }
 

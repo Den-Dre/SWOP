@@ -21,7 +21,7 @@ public class BookmarksDialogTest {
 
     private Browsr browsr;
     private AddressBar bar;
-    private Pane area;
+    private ContentFrame area;
     private BookmarksBar bookmarksBar;
     private UIController controller;
     private int id;
@@ -35,24 +35,24 @@ public class BookmarksDialogTest {
         int addressBarHeight = 20;
         int bookmarksBarHeight = 20;
 
+        // Make a total browsr without the gui class (=browsr.java)
         bar = new AddressBar(addressBarOffset, addressBarOffset, 100, addressBarHeight, addressBarOffset);
         bookmarksBar = new BookmarksBar(bookmarksBarOffset, addressBarHeight + 2 * bookmarksBarOffset, 100, bookmarksBarHeight, bookmarksBarOffset);
-        ContentFrame areaContents = new ContentFrame(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100);
-        area = new LeafPane(areaContents, controller);
-        id = areaContents.getId();
-
-        // Couple the uicontoller to the documentarea and addressbar
+        area = new ContentFrame(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100);
+        id = area.getId();
         controller = new UIController(); // The document is created within uicontroller
+        // Couple the uicontroller to the documentarea, addressbar and uicontroller
         area.setController(controller);
         bar.setUiController(controller);
         bookmarksBar.setUIController(controller);
-
+        // setup root of pane structure
+        Pane rootPane = new LeafPane(area, controller);
+        controller.setCurrentDocument(rootPane.getId());
         // Couple the document with the documentarea and addressbar
-        controller.addDocumentListener(id, area);
+        controller.addDocumentListener(rootPane.getId(), area);
         controller.addUrlListener(bar);
         browsr = new Browsr("Browsr");
         bar = browsr.getAddressBar();
-        area = browsr.getDocumentArea();
     }
 
     @Test
@@ -78,7 +78,7 @@ public class BookmarksDialogTest {
         String name = "TableURL";
         // Simulate opening a BookmarkDialog
         BookmarksDialog dialog = new BookmarksDialog(100, 100, tableUrl, bookmarksBar, browsr);
-        UITextInputField nameInput = (UITextInputField) ((HorizontalScrollBarDecorator) ((UITable) ((UITable) dialog.getForm(tableUrl).getFormContent()).getContent().get(1).get(0)).getContent().get(0).get(1)).getContent();
+        UITextInputField nameInput = (UITextInputField) ((UITable) ((UITable) dialog.getForm(tableUrl).getFormContent()).getContent().get(1).get(0)).getContent().get(0).get(1);
         UIButton addBookmarkButton = (UIButton) ((UITable) dialog.getForm(tableUrl).getFormContent()).getContent().get(2).get(0);
 
         // Select the Name input field

@@ -115,7 +115,11 @@ class ContentFrameTest {
 		UIController ctrl4 = new UIController();
     	Document doc4 = new Document();
 		int id4 = ctrl4.addPaneDocument();
-
+		
+		// setup root of pane structure
+		Pane rootPane1 = new LeafPane(contentFrame1, ctrl4);
+		ctrl4.setCurrentDocument(rootPane1.getId());
+		
 		// a valid userinterface.Browsr document
     	ContentSpan content1 = ContentSpanBuilder.buildContentSpan("""
     			<a href="a.html">a</a>
@@ -124,6 +128,9 @@ class ContentFrameTest {
     	contentFrame1.setController(ctrl1);
     	ctrl1.setCurrentDocument(id1);
     	contentFrame1.contentChanged(); // would throw an exception if translation failed
+    	
+    	System.out.println("celly: " + ((DocumentCellDecorator) contentFrame1.getContent()));
+    	
     	assertEquals(((DocumentCellDecorator) contentFrame1.getContent()).getContentWithoutScrollbars().getClass(), UIHyperlink.class);
     	assertEquals(((UIHyperlink) ((DocumentCellDecorator) contentFrame1.getContent()).getContentWithoutScrollbars()).getText(), "a");
     	

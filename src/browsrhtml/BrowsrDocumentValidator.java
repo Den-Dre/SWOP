@@ -121,9 +121,15 @@ public class BrowsrDocumentValidator {
 		case TEXT -> consumeTextSpan();
 		case OPEN_START_TAG -> {
 			switch (lexer.getTokenValue()) {
-			case "a" -> consumeHyperlink();
-			case "table" -> consumeTable();
-			default -> fail();
+			case "a":
+				consumeHyperlink();
+				break;
+			case "table":
+				consumeTable();
+				break;
+			default:
+				fail();
+				break;
 			}
 		}
 		default -> fail();

@@ -40,7 +40,9 @@ public class SaveDialogTest {
         area.setController(controller);
         bar.setUiController(controller);
         bookmarksBar.setUIController(controller);
-
+        // setup root of pane structure
+        Pane rootPane = new LeafPane(area, controller);
+        controller.setCurrentDocument(rootPane.getId());
         // Couple the document with the documentarea and addressbar
         controller.addDocumentListener(id, area);
         controller.addUrlListener(bar);
@@ -126,7 +128,7 @@ public class SaveDialogTest {
         controller.saveDocument(name);
         // Simulate opening a BookmarkDialog
         SaveDialog dialog = new SaveDialog(100, 100, tableUrl, browsr);
-        UITextInputField nameInput = (UITextInputField) ((HorizontalScrollBarDecorator) ((UITable) ((UITable) dialog.getForm(tableUrl).getFormContent()).getContent().get(1).get(0)).getContent().get(0).get(1)).getContent();
+        UITextInputField nameInput = (UITextInputField) ((UITable) ((UITable) dialog.getForm(tableUrl).getFormContent()).getContent().get(1).get(0)).getContent().get(0).get(1);
         UIButton saveButton = (UIButton) ((UITable) dialog.getForm(tableUrl).getFormContent()).getContent().get(2).get(0);
 
         // Select the Name input field
