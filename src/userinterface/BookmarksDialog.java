@@ -19,14 +19,14 @@ import java.util.ArrayList;
  */
 public class BookmarksDialog extends GenericDialogScreen {
     /**
-     * Initialise this AbstractFrame with the given parameters.
+     * Initialize this {@code BookmarksDialog} with the given parameters.
      *
-     * @param width        : The width of this AbstractFrame.
-     * @param height       : The height of this AbstractFrame.
+     * @param width        : The width of this {@code BookmarksDialog}.
+     * @param height       : The height of this {@code BookmarksDialog}.
      * @param currentUrl   : The URL of the document currently loaded.
      * @param bookmarksBar : The {@link BookmarksBar} associated to this {@code BoomkarksDialog}.
      * @param browsr       : The {@link Browsr} associated to this {@code BoomkarksDialog}.
-     * @throws IllegalDimensionException: When one of the dimensions of this AbstractFrame is negative
+     * @throws IllegalDimensionException: When one of the dimensions of this {@code BookmarksDialog} is negative
      */
     public BookmarksDialog(int width, int height, String currentUrl, BookmarksBar bookmarksBar, Browsr browsr) throws IllegalDimensionException {
         // Must cover the entire screen:
@@ -44,6 +44,31 @@ public class BookmarksDialog extends GenericDialogScreen {
         // URL input must be prefilled:
         this.urlInput.changeTextTo(currentUrl);
         this.form = getForm(currentUrl);
+    }
+    
+    /**
+     * Initialize this {@code BookmarksDialog} with the given {@code BookmarksDialog}. Used to achieve 
+     * a deep copy of a given {@code BookmarksDialog}.
+     * 
+     * @param dialog : the {@code BookmarksDialog} that needs to be copied.
+     */
+    public BookmarksDialog(BookmarksDialog dialog) {
+        // We can reference the same Browsr obejct as there will always only be one instantiation
+        super(dialog.getxPos(), dialog.getyPos(), dialog.getWidth(), dialog.getHeight(), dialog.getBrowsr(), dialog.getCurrentUrl());
+
+        int offset = getOffset();
+        int textSize = getTextSize();
+
+        this.bookmarksBar = dialog.bookmarksBar.deepCopy();
+        this.nameInput = new UITextInputField(offset, offset,100,textSize, "Name");
+        this.urlInput = new UITextInputField(offset, offset,100,textSize, "URL");
+
+        this.nameInputContents = nameInput;
+        this.urlInputContents = urlInput;
+
+        // URL input must be prefilled:
+        this.urlInputContents.changeTextTo(dialog.getCurrentUrl());
+        this.form = getForm(getCurrentUrl());
     }
 
     /**
@@ -94,30 +119,11 @@ public class BookmarksDialog extends GenericDialogScreen {
         return new UIForm(offset, offset, "bookmarksDialog", outerTable);
     }
 
-    public BookmarksDialog(BookmarksDialog dialog) {
-        // We can reference the same Browsr obejct as there will always only be one instantiation
-        super(dialog.getxPos(), dialog.getyPos(), dialog.getWidth(), dialog.getHeight(), dialog.getBrowsr(), dialog.getCurrentUrl());
-
-        int offset = getOffset();
-        int textSize = getTextSize();
-
-        this.bookmarksBar = dialog.bookmarksBar.deepCopy();
-        this.nameInput = new UITextInputField(offset, offset,100,textSize, "Name");
-        this.urlInput = new UITextInputField(offset, offset,100,textSize, "URL");
-
-        this.nameInputContents = nameInput;
-        this.urlInputContents = urlInput;
-
-        // URL input must be prefilled:
-        this.urlInputContents.changeTextTo(dialog.getCurrentUrl());
-        this.form = getForm(getCurrentUrl());
-    }
-
     /**
-     * Create a deep copy of this {@code AbstractFrame} object.
+     * Create a deep copy of this {@code BookmarksDialog} object.
      *
-     * @return copy: a deep copied version of this {@code AbstractFrame}
-     * object which thus does not point to the original object.
+     * @return copy: a deep copied version of this {@code BookmarksDialog}
+     * object as an {@link AbstractFrame} which thus does not point to the original object.
      */
     @Override
     protected AbstractFrame deepCopy() {
@@ -134,7 +140,16 @@ public class BookmarksDialog extends GenericDialogScreen {
         this.form.render(g);
     }
 
-
+    /**
+     * Handle mouseEvents. Determine if this LeafPane was pressed and do the right actions.
+     *
+     * @param id          : The type of mouse activity
+     * @param x           : The x coordinate of the mouse activity
+     * @param y           : The y coordinate of the mouse activity
+     * @param clickCount  : The number of clicks
+     * @param button      : The mouse button that was clicked
+     * @param modifiersEx : The control keys that were held on the click
+     */
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
         ReturnMessage result = form.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
@@ -167,7 +182,7 @@ public class BookmarksDialog extends GenericDialogScreen {
     }
 
     /**
-     * Get the text contained in the 'Name' {@link UITextField} of the content of this {@link BookmarksDialog}.
+     * Get the text contained in the 'Name' {@link UITextField} of the content of this {@code BookmarksDialog}.
      *
      * @return text:
      *          The text contained in the "Name" {@link UITextInputField} of this {@code BookmarksDialog}.
@@ -177,7 +192,7 @@ public class BookmarksDialog extends GenericDialogScreen {
     }
 
     /**
-     * Get the text contained in the 'URL' {@link UITextField} of the content of this {@link BookmarksDialog}.
+     * Get the text contained in the 'URL' {@link UITextField} of the content of this {@code BookmarksDialog}.
      *
      * @return text:
      *          The text contained in the "Name" {@link UITextInputField} of this {@code BookmarksDialog}.
@@ -190,7 +205,7 @@ public class BookmarksDialog extends GenericDialogScreen {
      * A variable to represent the content
      * that this {@code BookmarksDialog}
      * displays. The content is contained
-     * in a {@link DocumentCell}.
+     * in a {@link UIForm}.
      */
     private final UIForm form;
 
@@ -202,17 +217,26 @@ public class BookmarksDialog extends GenericDialogScreen {
 
     /**
      * The input field which takes a name for
-     * the to be created bookmark.
+     * the to be created bookmark. 
+     * Denoted by a {@link UITextInputField}.
      */
     private final UITextInputField nameInput;
 
     /**
-     * The input field which takes an URL in
+     * The {@link UITextInputField} which takes an URL in
      * string form for the to be created bookmark.
      */
     private final UITextInputField urlInput;
 
+    /**
+     * The {@link UITextInputField} denoting the name input contents
+     * of this {@code BookmarksDialog}.
+     */
     private final UITextInputField nameInputContents;
 
+    /**
+     * The {@link UITextInputField} denoting the url input contents
+     * of this {@code BookmarksDialog}.
+     */
     private final UITextInputField urlInputContents;
 }

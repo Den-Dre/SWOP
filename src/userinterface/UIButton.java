@@ -11,7 +11,7 @@ import java.awt.event.MouseEvent;
 public class UIButton extends DocumentCell{
 
     /**
-     * Initialise this {@code UIButton} with the given parameters.
+     * Initialize this {@code UIButton} with the given parameters.
      *
      * @param x          : The x coordinate of this {@code UIButton}
      * @param y          : The y coordinate of this {@code UIButton}

@@ -2,15 +2,21 @@ package userinterface;
 
 import java.awt.*;
 
+/**
+ * A class extending {@link GenericSplitPane} to handle horizontal splitting
+ */
 public class HorizontalSplitPane extends GenericSplitPane {
-    /**
-     * Initialise this AbstractFrame with the given parameters.
+    
+	/**
+     * Initialize this {@code HorizontalSplitPane} with the given parameters.
      *
-     * @param x      : The x coordinate of this AbstractFrame.
-     * @param y      : The y coordinate of this AbstractFrame.
-     * @param width  : The width of this AbstractFrame
-     * @param height : The height of this AbstractFrame
-     * @throws IllegalDimensionException: When one of the dimensions of this AbstractFrame is negative
+     * @param x      : The x coordinate of this HorizontalSplitPane.
+     * @param y      : The y coordinate of this HorizontalSplitPane.
+     * @param width  : The width of this HorizontalSplitPane
+     * @param height : The height of this HorizontalSplitPane
+     * @param childPane : the {@link LeafPane} child of this HorizontalSplitPane
+     * @param parentPane : the {@link Pane} parent of this HorizontalSplitPane 
+     * @throws IllegalDimensionException: When one of the dimensions of this HorizontalSplitPane is negative
      */
     public HorizontalSplitPane(int x, int y, int width, int height, LeafPane childPane, Pane parentPane) throws IllegalDimensionException {
         super(x, y, width, height, childPane, parentPane);
@@ -63,11 +69,11 @@ public class HorizontalSplitPane extends GenericSplitPane {
 
     /**
      * This method handles resizes.
-     * It makes sure the AbstractFrame is adjusted in width when the window shrinks or grows.
+     * It makes sure the HorizontalSplitPane is adjusted in width when the window shrinks or grows.
      * It does not change its height (e.g. look at Firefox).
      *
-     * @param newWindowWidth  : parameter containing the new window-width of this AbstractFrame.
-     * @param newWindowHeight : parameter containing the new window-height of this AbstractFrame.
+     * @param newWindowWidth  : parameter containing the new window-width of this HorizontalSplitPane.
+     * @param newWindowHeight : parameter containing the new window-height of this HorizontalSplitPane.
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
@@ -99,26 +105,53 @@ public class HorizontalSplitPane extends GenericSplitPane {
         g2.setStroke(new BasicStroke(1));
     }
 
+    /**
+     * Gets the first (lower) childPane of this {@code HorizontalSplitPane}
+     * 
+     * @return leftPane : the first childPane of this {@code HorizontalSplitPane}
+     */
     @Override
     public Pane getFirstChild() {
         return lowerPane;
     }
 
+    /**
+     * Gets the second (upper) childPane of this {@code HorizontalSplitPane}
+     * 
+     * @return rightPane : the second childPane of this {@code HorizontalSplitPane}
+     */
     @Override
     public void setFirstChild(Pane pane) {
         this.lowerPane = pane;
     }
 
+    /**
+     * Sets the first (lower-side) childPane of this {@code HorizontalSplitPane}
+     * 
+     * @return leftPane : the first childPane of this {@code HorizontalSplitPane}
+     */
     @Override
     public Pane getSecondChild() {
         return upperPane;
     }
 
+    /**
+     * Sets the second (upper) childPane of this {@code HorizontalSplitPane}
+     * 
+     * @return rightPane : the second childPane of this {@code HorizontalSplitPane}
+     */
     @Override
     public void setSecondChild(Pane pane) {
         this.upperPane = pane;
     }
-
+    
+    
+    /**
+     * Sets the x-position of this {@code HorizontalSplitPane} and its childPanes
+     * ({@code upperPane} and {@code lowerPane})
+     * 
+     * @param xPos : the new x-position of this {@code HorizontalSplitPane}
+     */
     @Override
     public void setxPos(int xPos) {
         super.setxPos(xPos);
@@ -126,6 +159,12 @@ public class HorizontalSplitPane extends GenericSplitPane {
         lowerPane.setxPos(xPos);
     }
 
+    /**
+     * Sets the y-position of this {@code HorizontalSplitPane} and its childPanes
+     * ({@code upperPane} and {@code lowerPane})
+     * 
+     * @param yPos : the new y-position of this {@code HorizontalSplitPane}
+     */
     @Override
     public void setyPos(int yPos) {
         super.setyPos(yPos);
@@ -147,6 +186,12 @@ public class HorizontalSplitPane extends GenericSplitPane {
 //        rightPane.setyReference(yReference);
 //    }
 
+    /**
+     * Sets the width of the parentPane ({@link Pane}) of this {@code HorizontalSplitPane} and its chiledPanes
+     * ({@code upperPane} and {@code lowerPane})
+     * 
+     * @param parentWidth : the new width of the parentPane of this {@code HorizontalSplitPane} 
+     */
     @Override
     public void setParentWidth(int parentWidth) {
         super.setParentWidth(parentWidth);
@@ -154,6 +199,12 @@ public class HorizontalSplitPane extends GenericSplitPane {
         lowerPane.setParentWidth(parentWidth);
     }
 
+    /**
+     * Sets the height of the parentPane ({@link Pane}) of this {@code HorizontalSplitPane} and its chiledPanes
+     * ({@code upperPane} and {@code lowerPane})
+     * 
+     * @param parentHeight : the new height of the parentPane of this {@code HorizontalSplitPane} 
+     */
     @Override
     public void setParentHeight(int parentHeight) {
         super.setParentHeight(parentHeight);
@@ -161,7 +212,13 @@ public class HorizontalSplitPane extends GenericSplitPane {
         lowerPane.setParentHeight(parentHeight);
     }
 
+    /**
+     * A variable of type {@link Pane} to hold the upper childPane of this {@code HorizontalSplitPane} 
+     */
     private Pane upperPane;
 
+    /**
+     * A variable of type {@link Pane} to hold the lower childPane of this {@code HorizontalSplitPane} 
+     */
     private Pane lowerPane;
 }

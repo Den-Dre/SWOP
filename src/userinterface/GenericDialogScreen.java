@@ -6,15 +6,15 @@ package userinterface;
  */
 public abstract class GenericDialogScreen extends AbstractFrame {
     /**
-     * Initialise this AbstractFrame with the given parameters.
+     * Initialize this {@code GenericDialogScreen} with the given parameters.
      *
-     * @param x          : The x coordinate of this AbstractFrame.
-     * @param y          : The y coordinate of this AbstractFrame.
-     * @param width      : The width of this AbstractFrame
-     * @param height     : The height of this AbstractFrame
+     * @param x          : The x coordinate of this {@code GenericDialogScreen}.
+     * @param y          : The y coordinate of this {@code GenericDialogScreen}.
+     * @param width      : The width of this {@code GenericDialogScreen}
+     * @param height     : The height of this {@code GenericDialogScreen}
      * @param browsr     : The {@link Browsr} object associated to this {@code GenericDialogScreen}.
      * @param currentUrl : The URL of the doucment currently displayed in the associated {@link Browsr} object.
-     * @throws IllegalDimensionException: When one of the dimensions of this AbstractFrame is negative
+     * @throws IllegalDimensionException: When one of the dimensions of this {@code GenericDialogScreen} is negative
      */
     public GenericDialogScreen(int x, int y, int width, int height, Browsr browsr, String currentUrl) throws IllegalDimensionException {
         super(x, y, width, height);

@@ -2,24 +2,17 @@ package userinterface;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.lang.reflect.Array;
 import java.util.Arrays;
 
+/**
+ * A class of decorators that decorate a visualization of a {@link DocumentCell} in 
+ * browsr with a scroll bar.
+ */
 public abstract class DocumentCellDecorator extends DocumentCell {
 
-    final static int thicknessOuterBar = 8;
-    final static int thicknessInnerBar = 4;
-    double fraction = 0.0;
-    int innerBarLength;
-    int length;
-    final int offset = 2;
-    int[] prevMouse;
-
-    final Color innerColorNormal = Color.gray;
-    final Color innerColorDragging = Color.blue;
-    Color currentColor = innerColorNormal;
-
     /**
-     * Initialise this decorator with the given parameters.
+     * Initialize this decorator with the given parameters.
      *
      * @param cell: The {@link DocumentCell} to be decorated
      * @throws IllegalDimensionException: When one of the dimensions of this Frame is negative
@@ -29,20 +22,40 @@ public abstract class DocumentCellDecorator extends DocumentCell {
         this.cellToBeDecorated = cell;
     }
 
-
+    /**
+     * Sets the length  of this {@code DocumentCellDecorator} to the given value
+     * 
+     * @param newLength : The new length of this {@code DocumentCellDecorator}
+     */
     public void setLength(int newLength) {
         length = newLength;
 //        innerBarLength = (int) Math.round(length/getRatio());
     }
 
+    /**
+     * Get the fraction of this  {@code DocumentCellDecorator}.
+     * 
+     * @return fraction : fraction of type {@link Double} of this {@code DocumentCellDecorator}.
+     */
     public double getFraction() {
         return fraction;
     }
 
+    /**
+     * Get the ratio of this  {@code DocumentCellDecorator}.
+     * 
+     * @return ratio : the ratio of type {@link Double} of this {@code DocumentCellDecorator}.
+     */
     public double getRatio() {
         return 1.0;
     }
 
+    /**
+     * Sets the fraction of this {@code DocumentCellDecorator} to the given value. 
+     * 
+     * @param fraction : a {@link Double} reaching from 0 to 1
+     * @post assumes that the scroll bar has moved afterwards.
+     */
     public void setFraction(double fraction) {
         if (Double.isNaN(fraction)) return;
         if (fraction > 1.0)
@@ -53,6 +66,12 @@ public abstract class DocumentCellDecorator extends DocumentCell {
         moved();
     }
 
+    /**
+     * Calculates the ratio of this {@code DocumentCellDecorator} to the {@code length}
+     * of this {@code DocumentCellDecorator} to the given value. 
+     * 
+     * @param ratio : a {@link Double} smaller than or equal to 1
+     */
     public void ratioChanged(double newRatio) {
         if (newRatio < 1.0)
             newRatio = 1.0;
@@ -101,13 +120,23 @@ public abstract class DocumentCellDecorator extends DocumentCell {
         }
     }
 
+    /**
+     * stub method (needs to be overridden) to initialize a scroll bar
+     */
     void init() {
 
     }
 
+    /**
+     * stub method (needs to be overridden) to move a scroll bar
+     */
     void moved() {
 
     }
+    
+    /**
+     * stub method (needs to be overridden) to drag a scroll bar
+     */
     void dragged(int dx, int dy) {
 
     }
@@ -168,10 +197,11 @@ public abstract class DocumentCellDecorator extends DocumentCell {
     // after adding a `DocumentCellDecorator` to a UITable,
     // but the coordinates of `cellToBeDecorated` weren't updated yet.
     /**
-     * Set the x position of this Frame to the given value
+     * Set the x position of this {@code DocumentCellDecorator} to the given value. Does the 
+     * same for the {@code cellToBeDecorated} of this {@code DocumentCellDecorator}.
      *
      * @param xPos :
-     *             The value this Frame's x position should be set to.
+     *             The value this {@code DocumentCellDecorator}'s x position should be set to.
      */
     @Override
     public void setxPos(int xPos) {
@@ -180,10 +210,11 @@ public abstract class DocumentCellDecorator extends DocumentCell {
     }
 
     /**
-     * Set the y position of this Frame to the given value
+     * Set the y position of this {@code DocumentCellDecorator} to the given value. Does the 
+     * same for the {@code cellToBeDecorated} of this {@code DocumentCellDecorator}.
      *
      * @param yPos :
-     *             The value this Frame's y position should be set to.
+     *             The value this {@code DocumentCellDecorator}'s y position should be set to.
      */
     @Override
     public void setyPos(int yPos) {
@@ -191,61 +222,133 @@ public abstract class DocumentCellDecorator extends DocumentCell {
         this.cellToBeDecorated.setyPos(yPos);
     }
 
+    /**
+     * Set the x offset of the {@code cellToBeDecorated} of this {@code DocumentCellDecorator}.
+     *
+     * @param xOffset :
+     *             The value the {@code cellToBeDecorated} of this {@code DocumentCellDecorator}'s x offset should be set to.
+     */
     @Override
     public void setxOffset(int xOffset) {
         //super.setxOffset(xOffset);
         cellToBeDecorated.setxOffset(xOffset);
     }
 
+    /**
+     * Set the y offset of the {@code cellToBeDecorated} of this {@code DocumentCellDecorator}.
+     *
+     * @param yOffset :
+     *             The value the {@code cellToBeDecorated} of this {@code DocumentCellDecorator}'s y offset should be set to.
+     */
     @Override
     public void setyOffset(int yOffset) {
         //super.setyOffset(yOffset);
         cellToBeDecorated.setyOffset(yOffset);
     }
 
+    /**
+     * Set the width of this {@code DocumentCellDecorator} to the given value. Does the 
+     * same for the {@code cellToBeDecorated} of this {@code DocumentCellDecorator}.
+     *
+     * @param newWidth :
+     *             The value this {@code DocumentCellDecorator}'s width should be set to.
+     */
     @Override
     public void setWidth(int newWidth) {
         super.setWidth(newWidth);
         cellToBeDecorated.setWidth(newWidth);
     }
 
+    /**
+     * Set the height of this {@code DocumentCellDecorator} to the given value. Does the 
+     * same for the {@code cellToBeDecorated} of this {@code DocumentCellDecorator}.
+     *
+     * @param newHeight:
+     *             The value this {@code DocumentCellDecorator}'s height should be set to.
+     */
     @Override
     public void setHeight(int newHeight) {
         super.setHeight(newHeight);
         cellToBeDecorated.setHeight(newHeight);
     }
 
+    /**
+     * Set the height of the parent of this {@code DocumentCellDecorator} to the given value. Does the 
+     * same for the parent of the {@code cellToBeDecorated} of this {@code DocumentCellDecorator}.
+     *
+     * @param parentHeight:
+     *             The value the height of the parent of this {@code DocumentCellDecorator} should be set to.
+     */
     @Override
     public void setParentHeight(int parentHeight) {
         super.setParentHeight(parentHeight);
         cellToBeDecorated.setParentHeight(parentHeight);
     }
 
+    /**
+     * Set the width of the parent of this {@code DocumentCellDecorator} to the given value. Does the 
+     * same for the parent of the {@code cellToBeDecorated} of this {@code DocumentCellDecorator}.
+     *
+     * @param parentWidth:
+     *             The value the width of the parent of this {@code DocumentCellDecorator} should be set to.
+     */
     @Override
     public void setParentWidth(int parentWidth) {
         super.setParentWidth(parentWidth);
         cellToBeDecorated.setParentWidth(parentWidth);
     }
 
+    /**
+     * Get the max width of the {@code cellToBeDecorated} of this {@code DocumentCellDecorator}.
+     * 
+     * @return ratio : 
+     * 					the width of type {@link Double} of the {@code cellToBeDecorated} of 
+     * 					this {@code DocumentCellDecorator}.
+     */
     @Override
     public int getMaxWidth() {
         return cellToBeDecorated.getMaxWidth();
     }
 
+    /**
+     * Get the max height of the {@code cellToBeDecorated} of this {@code DocumentCellDecorator}.
+     * 
+     * @return height : 
+     * 					the height of type {@link Double} of the {@code cellToBeDecorated} of 
+     * 					this {@code DocumentCellDecorator}.
+     */
     @Override
     public int getMaxHeight() {
         return cellToBeDecorated.getMaxHeight();
     }
 
+    /**
+     * Set the y reference of the {@code cellToBeDecorated} of this {@code DocumentCellDecorator}.
+     *
+     * @param yReference:
+     *             The value the y reference of the {@code cellToBeDecorated} of this {@code DocumentCellDecorator} should be set to.
+     */
     @Override
     public void setyReference(int yReference) {
         cellToBeDecorated.setyReference(yReference);
     }
-
+    
+    /**
+     * Get the vertical x offset of the scroll bar of this {@code DocumentCellDecorator}.
+     * 
+     * @return xOffset : 
+     * 					the vertical x offset of the scroll bar of this {@code DocumentCellDecorator}.
+     */
     public int getVerticalBarXOffset() {
         return 0;
     }
 
+    /**
+     * Get the vertical y offset of the scroll bar of this {@code DocumentCellDecorator}.
+     * 
+     * @return yOffset : 
+     * 					the vertical y offset of the scroll bar of this {@code DocumentCellDecorator}.
+     */
     public int getHorizontalBarYOffset() {
         return 0;
     }
@@ -296,4 +399,57 @@ public abstract class DocumentCellDecorator extends DocumentCell {
      * A variable to denote the {@link DocumentCell} that will be decorated.
      */
     protected final DocumentCell cellToBeDecorated;
+    
+    /**
+     * A variable to denote the thickness of the border around the scroll bar.
+     */
+    final static int thicknessOuterBar = 8;
+    
+    /**
+     * A variable to denote the thickness of the scroll bar.
+     */
+    final static int thicknessInnerBar = 4;
+    
+    /**
+     * A variable to denote the fraction of this {@code DocumentCellDecorator}.
+     */
+    double fraction = 0.0;
+    
+    /**
+     * A variable to denote the length of the scroll bar of this {@code DocumentCellDecorator}.
+     */
+    int innerBarLength;
+    
+    /**
+     * A variable to denote the length of this {@code DocumentCellDecorator}.
+     */
+    int length;
+    
+    /**
+     * A variable to denote the offset of this {@code DocumentCellDecorator}.
+     */
+    final int offset = 2;
+    
+    /**
+     * A variable of type {@link Array} to denote the previous mouse event
+     * of this {@code DocumentCellDecorator}.
+     */
+    int[] prevMouse;
+
+    /**
+     * A variable of type {@link Color} to denote the standard color of the scrollbar
+     * of this {@code DocumentCellDecorator}.
+     */
+    final Color innerColorNormal = Color.gray;
+    
+    /**
+     * A variable of type {@link Color} to denote the color of the scrollbar when selected
+     * of this {@code DocumentCellDecorator}.
+     */
+    final Color innerColorDragging = Color.blue;
+    
+    /** 
+     * A variable of type {@link Color} to denote the currentColor of this {@code DocumentCellDecorator}.
+     */
+    Color currentColor = innerColorNormal;
 }

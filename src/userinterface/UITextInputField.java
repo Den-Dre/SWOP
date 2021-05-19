@@ -19,12 +19,12 @@ import java.util.ArrayList;
  */
 public class UITextInputField extends DocumentCell {
     /**
-     * Initialise this UITextInputField with the given parameters.
+     * Initialize this {@code UITextInputField} with the given parameters.
      *
-     * @param x      : The x coordinate of this UITextInputField
-     * @param y      : The y coordinate of this UITextInputField
-     * @param width  : The width of this UITextInputField
-     * @param height : The height of this UITextInputField
+     * @param x      : The x coordinate of this {@code UITextInputField}
+     * @param y      : The y coordinate of this {@code UITextInputField}
+     * @param width  : The width of this {@code UITextInputField}
+     * @param height : The height of this {@code UITextInputField}
      * @throws IllegalDimensionException: When the dimensions of {@code super} are illegal.
      */
     public UITextInputField(int x, int y, int width, int height) throws IllegalDimensionException {
@@ -84,6 +84,7 @@ public class UITextInputField extends DocumentCell {
 
     /**
      * Draws the cursor onto the right location on screen, only if the addressBar has focus.
+     * 
      * @param g: The graphics that contain the information to be printed
      */
     private void printCursor(Graphics g) {
@@ -398,35 +399,77 @@ public class UITextInputField extends DocumentCell {
         return nameAndValue;
     }
 
+    /**
+     * Set the width of this {@code UITextInputField}.
+     *
+     * Also sets the width of the parent of the {@link UITextField} of this {@code UITextInputField}.
+     *
+     * @param newWidth: The desired new width.
+     */
     @Override
     public void setWidth(int newWidth) {
         super.setWidth(newWidth);
         textField.parentWidth = newWidth;
     }
 
+    /**
+     * Set the height of this {@code UITextInputField}.
+     *
+     * Also sets the height of the parent of the {@link UITextField} of this {@code UITextInputField}.
+     *
+     * @param newHeight: The desired new height.
+     */
     @Override
     public void setHeight(int newHeight) {
         super.setHeight(newHeight);
     }
 
+    /**
+     * Set the x-position of this {@code UITextInputField}.
+     *
+     * Also sets the x-position of the {@link UITextField} of this {@code UITextInputField}.
+     *
+     * @param xPos: The desired x-position.
+     */
     @Override
     public void setxPos(int xPos) {
         super.setxPos(xPos);
         textField.setxPos(xPos);
     }
 
+    /**
+     * Set the y-position of this {@code UITextInputField}.
+     *
+     * Also sets the y-position of the {@link UITextField} of this {@code UITextInputField}.
+     *
+     * @param yPos: The desired y-position.
+     */
     @Override
     public void setyPos(int yPos) {
         super.setyPos(yPos);
         textField.setyPos(yPos);
     }
 
+    /**
+     * Set the x offset of this {@code UITextInputField}.
+     *
+     * Also sets the x offset of the {@link UITextField} of this {@code UITextInputField}.
+     *
+     * @param xOffset: The desired xOffset.
+     */
     @Override
     public void setxOffset(int xOffset) {
         super.setxOffset(xOffset);
         textField.setxPos(getxPos()+xOffset);
     }
 
+    /**
+     * Set the y offset of this {@code UITextInputField}.
+     *
+     * Also sets the y offset of the {@link UITextField} of this {@code UITextInputField}.
+     *
+     * @param yOffset: The desired yOffset.
+     */
     @Override
     public void setyOffset(int yOffset) {
         super.setyOffset(yOffset);
@@ -434,12 +477,26 @@ public class UITextInputField extends DocumentCell {
         textField.setyReference(getyPos()+getyOffset());
     }
 
+    /**
+     * Set the y reference of this {@code UITextInputField}.
+     *
+     * Also sets the y reference of the {@link UITextField} of this {@code UITextInputField}..
+     *
+     * @param yReference: The desired yReference.
+     */
     @Override
     public void setyReference(int yReference) {
         super.setyReference(yReference);
         textField.setyReference(getyPos()+getyOffset());
     }
 
+    /**
+     * Set the x reference of this {@code UITextInputField}.
+     *
+     * Also sets the x reference of the {@link UITextField} of this {@code UITextInputField}..
+     *
+     * @param xReference: The desired xReference.
+     */
     @Override
     public void setxReference(int xReference) {
         super.setxReference(xReference);
@@ -447,7 +504,7 @@ public class UITextInputField extends DocumentCell {
     }
 
     /**
-     * The name of this UITextInputField.
+     * The name of this {@code UITextInputField}.
      */
     private String name = "";
 
@@ -560,11 +617,15 @@ public class UITextInputField extends DocumentCell {
     /**
      * A variable to denote the
      * {@link Color} of the box
-     * surrounding this UITextInputField
+     * surrounding this {@code UITextInputField}
      * when hasFocus is true
      */
     private final Color focusColor = Color.BLUE;
 
+    /**
+     * A variable to denote {@link UITextField} of this {@code UITextInputField}
+     * encapsulated into a {@link DocumentCellDecorator}.
+     */
     private DocumentCellDecorator textField = new HorizontalScrollBarDecorator(new UITextField(getxPos()+textStart, getyPos(), getWidth(), this.getHeight()*3/4, ""));
 
     /**

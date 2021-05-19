@@ -4,15 +4,22 @@ import domainlayer.UIController;
 
 import java.awt.*;
 
+/**
+ * A class extending {@link Pane} to handle the splitting of {@link LeafPane}'s when adding a new 
+ * LeafPane to it by transforming it into a {@link Pane} with two {@link LeafPane}'s as attributes
+ */
 public abstract class GenericSplitPane extends Pane {
+	
     /**
-     * Initialise this {@code GenericSplitPane} with the given parameters.
+     * Initialize this {@code GenericSplitPane} with the given parameters.
      *
-     * @param x      : The x coordinate of this AbstractFrame.
-     * @param y      : The y coordinate of this AbstractFrame.
-     * @param width  : The width of this AbstractFrame
-     * @param height : The height of this AbstractFrame
-     * @throws IllegalDimensionException: When one of the dimensions of this AbstractFrame is negative
+     * @param x      : The x coordinate of this GenericSplitPane.
+     * @param y      : The y coordinate of this GenericSplitPane.
+     * @param width  : The width of this GenericSplitPane
+     * @param height : The height of this GenericSplitPane
+     * @param childPane : the {@link LeafPane} child of this GenericSplitPane
+     * @param parentPane : the {@link Pane} parent of this GenericSplitPane
+     * @throws IllegalDimensionException: When one of the dimensions of this GenericSplitPane is negative
      */
     public GenericSplitPane(int x, int y, int width, int height, LeafPane childPane, Pane parentPane) throws IllegalDimensionException {
         super(x, y, width, height);
@@ -23,6 +30,21 @@ public abstract class GenericSplitPane extends Pane {
         this.lastResize = childPane.lastResize;
     }
 
+    /**
+     * Initialize this {@code GenericSplitPane} with a given GenericSplitPane. Used for deep copy.
+     * 
+     * @param pane	: The {@code GenericSplitPane} 
+     */
+    public GenericSplitPane(GenericSplitPane pane) {
+        super(pane.getxPos(), pane.getyPos(), pane.getWidth(), pane.getHeight());
+    }
+    
+    /**
+     * Accesses the domain-layer through an observer design pattern linking the children ({@link LeafPane}'s)
+     * of this {@code GenericSplitPane} (UI-layer) to the right {@link domainlayer.Document} (Domain-layer).
+     * This results in children of this {@code GenericSplitPane} listening to changes in their 
+     * respective {@link domainlayer.Document}.
+     */
     protected void updateListeners() {
         // Update domain layer knowledge
         UIController controller = getController();
@@ -30,12 +52,8 @@ public abstract class GenericSplitPane extends Pane {
         controller.addDocumentListener(getSecondChild().getId(), getSecondChild(), getFirstChild().getId());
     }
 
-    public GenericSplitPane(GenericSplitPane pane) {
-        super(pane.getxPos(), pane.getyPos(), pane.getWidth(), pane.getHeight());
-    }
-
     /**
-     * render the contents of this AbstractFrame.
+     * render the contents of this {@code GenericSplitPane}.
      *
      * @param g : The graphics to be rendered.
      */
@@ -47,7 +65,7 @@ public abstract class GenericSplitPane extends Pane {
     }
 
     /**
-     * Handle a horizontal split of the contents of this {@code Pane}.
+     * Handle a horizontal split of the contents of this {@code GenericSplitPane}.
      */
     @Override
     public Pane getHorizontalSplit() {
@@ -59,7 +77,7 @@ public abstract class GenericSplitPane extends Pane {
     }
 
     /**
-     * Handle a vertical split of the contents of this {@code Pane}.
+     * Handle a vertical split of the contents of this {@code GenericSplitPane}.
      */
     @Override
     public Pane getVerticalSplit() {
@@ -71,7 +89,7 @@ public abstract class GenericSplitPane extends Pane {
     }
 
     /**
-     * Handle mouseEvents. Determine if this AbstractFrame was pressed and do the right actions.
+     * Handle mouseEvents. Determine if this GenericSplitPane was pressed and do the right actions.
      *
      * @param id          : The type of mouse activity
      * @param x           : The x coordinate of the mouse activity
@@ -103,12 +121,12 @@ public abstract class GenericSplitPane extends Pane {
     }
 
     /**
-     * This method handles resizes.
-     * It makes sure the AbstractFrame is adjusted in width when the window shrinks or grows.
+     * This method handles resizes of this {@code GenericSplitPane}.
+     * It makes sure the GenericSplitPane is adjusted in width when the window shrinks or grows.
      * It does not change its height (e.g. look at Firefox).
      *
-     * @param newWindowWidth  : parameter containing the new window-width of this AbstractFrame.
-     * @param newWindowHeight : parameter containing the new window-height of this AbstractFrame.
+     * @param newWindowWidth  : parameter containing the new window-width of this GenericSplitPane.
+     * @param newWindowHeight : parameter containing the new window-height of this GenericSplitPane.
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
@@ -116,6 +134,10 @@ public abstract class GenericSplitPane extends Pane {
         setHeight(getFirstChild().getHeight() + getSecondChild().getHeight());
     }
 
+    /**
+     * Sets the {@link domainlayer.UIController} for this {@code GenericSplitPane} which relays 
+     * calls from this GenericSplitPane to the Domain-Layer.
+     */
     @Override
     public void setController(UIController controller) {
         getFirstChild().setController(controller);
@@ -135,9 +157,9 @@ public abstract class GenericSplitPane extends Pane {
     }
 
     /**
-     * Check whether this {@code Pane} currently has focus.
+     * Check whether this {@code GenericSplitPane} currently has focus.
      *
-     * @return focus: True iff. this {@code Pane} currently has focus.
+     * @return focus: True iff. this {@code GenericSplitPane} currently has focus.
      */
     @Override
     public boolean hasFocus() {
@@ -152,14 +174,25 @@ public abstract class GenericSplitPane extends Pane {
         return parentPane != null ? parentPane.getFocusedPane() : focusedPane;
     }
 
+    /**
+     * Abstract method returning the first child (of type {@link Pane} of this {@code GenericSplitPane}
+     */
     public abstract Pane getFirstChild();
 
+    /**
+     * Abstract method returning the second child (of type {@link Pane} of this {@code GenericSplitPane}
+     */
     public abstract Pane getSecondChild();
 
+    /**
+     * Abstract method to draw the separator (as defined in the assignment)
+     * 
+     * @param g : The graphics to be rendered.
+     */
     abstract void drawSeparator(Graphics g);
 
     /**
-     * A constant that denotes the thickness
+     * A constant of type int that denotes the thickness
      * of the separator drawn between split windows.
      */
     protected final int SEPARATOR_THICKNESS = 5;

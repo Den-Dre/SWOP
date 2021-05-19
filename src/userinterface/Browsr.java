@@ -16,6 +16,7 @@ import java.util.Arrays;
  * with an {@link AddressBar} and a {@link ContentFrame}.
  */
 public class Browsr extends CanvasWindow {
+	
     /**
      * Initializes this {@code Browsr} as CanvasWindow object:
      * the initial layout consists of: an {@link AddressBar},
@@ -401,7 +402,7 @@ public class Browsr extends CanvasWindow {
 
     /**
      * Takes the necessary actions to horizontally
-     * split the {@link ContentFrame} that currently
+     * split the {@link Pane} that currently
      * has focus.
      */
     private void splitHorizontally() {
@@ -414,7 +415,7 @@ public class Browsr extends CanvasWindow {
 
     /**
      * Takes the necessary actions to vertically
-     * split the {@link ContentFrame} that currently
+     * split the {@link Pane} that currently
      * has focus.
      */
     private void splitVertically() {
@@ -439,7 +440,7 @@ public class Browsr extends CanvasWindow {
 
     /**
      * Takes the necessary actions to close
-     * the {@link ContentFrame} that currently
+     * the {@link Pane} that currently
      * has focus.
      */
     private void closeCurrentLeafPane() {
@@ -541,7 +542,7 @@ public class Browsr extends CanvasWindow {
     private AddressBar addressBarInput;
 
     /**
-     * A variable that denotes the {@link ContentFrame}
+     * A variable that denotes the {@link Pane}
      * associated to this UserInterface.Browsr.
      */
     private Pane rootPane;
@@ -566,7 +567,7 @@ public class Browsr extends CanvasWindow {
 	}
 	
     /**
-     * @return the {@link ContentFrame} of this {@link Browsr}, for testing/debug purposes
+     * @return the {@link Pane} of this {@link Browsr}, for testing/debug purposes
      */
 	public Pane getDocumentArea() {
 		return this.rootPane;

@@ -37,7 +37,13 @@ public class UITable extends DocumentCell{
         setParentWidth(parentWidth);
         setParentHeight(parentHeight);
     }
-
+    
+    /**
+     * Sets the width of the parent of this {@code UITable} to the given value.
+     * The same is done for the parents of all {@link DocumentCell}s in this {@code UITable}.
+     * 
+     * @param parentWidth : the new {@code parentWidth} of this {@code UITable} and its contents.
+     */
     @Override
     public void setParentWidth(int parentWidth) {
         System.out.println("resizing table: " + parentWidth);
@@ -49,6 +55,12 @@ public class UITable extends DocumentCell{
         }
     }
 
+    /**
+     * Sets the height of the parent of this {@code UITable} to the given value.
+     * The same is done for the parents of all {@link DocumentCell}s in this {@code UITable}.
+     * 
+     * @param parentHeight : the new {@code parentHeight} of this {@code UITable} and its contents.
+     */
     @Override
     public void setParentHeight(int parentHeight) {
         super.setParentHeight(parentHeight);
@@ -296,6 +308,14 @@ public class UITable extends DocumentCell{
         //setyReference(yPos);
     }
 
+    /**
+     * Set the x reference of this {@code UITable} the given value.
+     * 
+     * Does the same for all {@link DocumentCell}s inside this {@code UITable}.
+     *
+     * @param xReference:
+     *            The new {@code xReference} of this {@code UITable} and its contents.
+     */
     @Override
     public void setxReference(int xReference) {
         //super.setxReference(xReference);
@@ -306,6 +326,14 @@ public class UITable extends DocumentCell{
         }
     }
 
+    /**
+     * Set the y reference of this {@code UITable} the given value.
+     * 
+     * Does the same for all {@link DocumentCell}s inside this {@code UITable}.
+     *
+     * @param yReference:
+     *            The new {@code yReference} of this {@code UITable} and its contents.
+     */   
     @Override
     public void setyReference(int yReference) {
         //super.setyReference(yReference);
@@ -316,18 +344,36 @@ public class UITable extends DocumentCell{
         }
     }
 
+    /**
+     * Set the width of this {@code UITable} to the given value
+     *
+     * @param newWidth:
+     *            The new width of this {@code UITable}.
+     */
     @Override
     public void setWidth(int newWidth) {
         super.setWidth(newWidth);
         //setParentWidth(parentWidth);
     }
 
+    /**
+     * Set the height of this {@code UITable} to the given value
+     *
+     * @param newHeight:
+     *            The new height of this {@code UITable}.
+     */
     @Override
     public void setHeight(int newHeight) {
         super.setHeight(newHeight);
         //setParentHeight(parentHeight);
     }
 
+    /**
+     * Set the x offset of this {@code UITable} to the given value
+     *
+     * @param xOffset:
+     *            The new {@code xOffset} of this {@code UITable}.
+     */
     @Override
     public void setxOffset(int xOffset) {
         super.setxOffset(xOffset);
@@ -338,6 +384,12 @@ public class UITable extends DocumentCell{
         }
     }
 
+    /**
+     * Set the y offset of this {@code UITable} to the given value
+     *
+     * @param yOffset:
+     *            The new {@code yOffset} of this {@code UITable}.
+     */
     @Override
     public void setyOffset(int yOffset) {
         super.setyOffset(yOffset);
