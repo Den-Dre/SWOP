@@ -228,6 +228,12 @@ public abstract class DocumentCellDecorator extends DocumentCell {
     }
 
     @Override
+    public void setxReference(int xReference) {
+        super.setxReference(xReference);
+        cellToBeDecorated.setxReference(xReference);
+    }
+
+    @Override
     public int getMaxWidth() {
         return cellToBeDecorated.getMaxWidth();
     }

@@ -37,7 +37,7 @@ public class HorizontalScrollBarDecorator extends DocumentCellDecorator {
     }
 
     void init() {
-        //setHeight(thicknessOuterBar);
+        setHeight(thicknessOuterBar);
         setWidth(length);
     }
 

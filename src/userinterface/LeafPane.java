@@ -132,7 +132,7 @@ public class LeafPane extends Pane {
         updateParents(sibling);
         sibling.setxPos(parentPane.getxPos());
         sibling.setyPos(parentPane.getyPos());
-        sibling.handleResize(parentPane.getWidth()+getBasexPos(), parentPane.getHeight()+getBaseyPos());
+        sibling.handleResize(parentPane.getWidth(), parentPane.getHeight());
         sibling.setParentPane(parentPane.getParentPane());
         setFocusedPane(sibling);
         setParentPane(null);
