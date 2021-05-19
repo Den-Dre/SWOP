@@ -62,6 +62,6 @@ public class HorizontalScrollBarDecorator extends DocumentCellDecorator {
         if (cellToBeDecorated instanceof UITextField)
             return parentHeight;
         else
-            return parentHeight-15;
+            return parentHeight-17;
     }
 }
