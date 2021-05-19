@@ -127,28 +127,31 @@ public class HorizontalSplitPane extends GenericSplitPane {
             if(y < lowerPane.getyPos()) {
                 int oldY = lowerPane.getyPos();
                 int deltaY = Math.abs(oldY-y);
+                int newUpperHeight = upperPane.getHeight() - deltaY;
+                int newLowerHeight = lowerPane.getHeight() + deltaY;
                 lowerPane.setyPos(y);
-                lowerPane.setHeight(lowerPane.getHeight() + deltaY);
-                upperPane.setHeight(upperPane.getHeight() - deltaY);
-                lowerPane.setParentHeight(lowerPane.getHeight());
-                upperPane.setParentHeight(upperPane.getHeight());
-                lowerPane.setyReference(y);
-                upperFraction = (double) (upperPane.getHeight())/getHeight();
+                lowerPane.setHeight(newLowerHeight);
+                upperPane.setHeight(newUpperHeight);
+//                lowerPane.setParentHeight(lowerPane.getHeight());
+//                upperPane.setParentHeight(upperPane.getHeight());
+//                lowerPane.setyReference(y);
+                upperFraction = (double) (newUpperHeight)/getHeight();
                 System.out.println(upperFraction);
-                lowerPane.handleResize(this.getWidth(),lowerPane.getHeight());
-                upperPane.handleResize(this.getWidth(),upperPane.getHeight());
+                lowerPane.handleResize(this.getWidth(),newLowerHeight);
+                upperPane.handleResize(this.getWidth(),newUpperHeight);
             } else {
                 int oldY = lowerPane.getyPos();
                 int deltaY = Math.abs(oldY-y);
                 lowerPane.setyPos(y);
                 lowerPane.setHeight(lowerPane.getHeight() - deltaY);
                 upperPane.setHeight(upperPane.getHeight() + deltaY);
-                lowerPane.setParentHeight(lowerPane.getHeight());
-                upperPane.setParentHeight(upperPane.getHeight());
-                lowerPane.setyReference(y);
+//                lowerPane.setParentHeight(lowerPane.getHeight());
+//                upperPane.setParentHeight(upperPane.getHeight());
+//                lowerPane.setyReference(y);
                 upperFraction = (double) (upperPane.getHeight())/getHeight();
                 lowerPane.handleResize(this.getWidth(),lowerPane.getHeight());
                 upperPane.handleResize(this.getWidth(),upperPane.getHeight());
+                System.out.println(upperFraction);
             }
             System.out.println("MouseEvent " + id + " " + x + " " + y + " " + clickCount + " " + button + " " + modifiersEx);
         }
