@@ -74,8 +74,7 @@ public class VerticalScrollBarDecorator extends DocumentCellDecorator {
     @Override
     public void setParentHeight(int parentHeight) {
         super.setParentHeight(parentHeight);
-        if (parentHeight < length)
-            setLength(parentHeight);
+        setLength(parentHeight);
     }
 
     @Override
