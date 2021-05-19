@@ -21,7 +21,7 @@ public class HorizontalSplitPane extends GenericSplitPane {
         lowerPane.setWidth(width);
         lowerPane.setHeight(height/2);
         lowerPane.setParentPane(this);
-        lowerPane.setParentHeight(lowerPane.getHeight());
+        lowerPane.setParentHeight(height/2);
         lowerPane.setxReference(x);
         lowerPane.setyReference(y + height/2);
         // Assign focus to one of the `Pane`s
@@ -33,7 +33,7 @@ public class HorizontalSplitPane extends GenericSplitPane {
         upperPane.setWidth(width);
         upperPane.setHeight(height/2);
         upperPane.setParentPane(this);
-        upperPane.setParentHeight(upperPane.getHeight());
+        upperPane.setParentHeight(height/2);
         upperPane.setxReference(x);
         upperPane.setyReference(y);
         upperPane.toggleFocus(false);

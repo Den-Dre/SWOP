@@ -57,7 +57,7 @@ public class UITextInputField extends DocumentCell {
      */
     @Override
     public void render(Graphics g) {
-        if (outOfVerticalBounds() | outOfHorizontalBounds()) return;
+        if ((outOfVerticalBounds() | outOfHorizontalBounds()) && !(this instanceof AddressBar) ) return;
         setFontMetrics(g);
         updateSelectStart();
         drawSelection(g);

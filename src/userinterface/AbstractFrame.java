@@ -87,8 +87,8 @@ public abstract class AbstractFrame {
     }
 
     public boolean outOfVerticalBounds() {
-        return ((getyPos()+getyOffset() < getyReference())); // ||
-//                (getyPos()+getyOffset()+getHeight()-5 > getyReference()+parentHeight));
+        return ((getyPos()+getyOffset() < getyReference()) |
+                (getyPos()+getyOffset()+getHeight() > getyReference()+parentHeight));
     }
 
     public boolean outOfHorizontalBounds() {

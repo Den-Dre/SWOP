@@ -72,6 +72,13 @@ public class VerticalScrollBarDecorator extends DocumentCellDecorator {
     }
 
     @Override
+    public void setParentHeight(int parentHeight) {
+        super.setParentHeight(parentHeight);
+        if (parentHeight < length)
+            setLength(parentHeight);
+    }
+
+    @Override
     void moved() {
         if (length >= cellToBeDecorated.getMaxHeight()) return;
         cellToBeDecorated.setyOffset(- (int) Math.round(fraction*Math.abs(cellToBeDecorated.getMaxHeight() - length)));
@@ -80,5 +87,10 @@ public class VerticalScrollBarDecorator extends DocumentCellDecorator {
     @Override
     void dragged(int dx, int dy) {
         setFraction((double) dy / (length-innerBarLength) + fraction);
+    }
+
+    @Override
+    public double getRatio() {
+        return (double) cellToBeDecorated.getMaxHeight()/parentHeight;
     }
 }

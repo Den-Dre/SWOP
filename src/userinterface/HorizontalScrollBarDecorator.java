@@ -37,8 +37,13 @@ public class HorizontalScrollBarDecorator extends DocumentCellDecorator {
     }
 
     void init() {
-        setHeight(thicknessOuterBar);
+        //setHeight(thicknessOuterBar);
         setWidth(length);
+    }
+
+    @Override
+    public double getRatio() {
+        return (double) cellToBeDecorated.getMaxWidth()/parentWidth;
     }
 
     @Override
