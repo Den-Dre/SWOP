@@ -95,7 +95,7 @@ public class HorizontalSplitPane extends GenericSplitPane {
     void drawSeparator(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(5));
-        g2.setColor(Color.YELLOW);
+        g2.setColor(Color.BLACK);
         g2.fillRect(lowerPane.getxPos(), lowerPane.getyPos()-SEPARATOR_THICKNESS, getWidth()-getxPos(), SEPARATOR_THICKNESS);
         g2.setStroke(new BasicStroke(1));
     }

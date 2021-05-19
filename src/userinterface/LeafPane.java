@@ -222,7 +222,6 @@ public class LeafPane extends Pane {
     }
 
 
-
 //    /**
 //     * Wrap the given {@link DocumentCell} in a
 //     * {@link UITable} s.t. it can be easily decorated
