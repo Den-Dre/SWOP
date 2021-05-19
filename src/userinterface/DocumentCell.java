@@ -70,6 +70,8 @@ public class DocumentCell extends AbstractFrame {
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
+        this.setHeight(newWindowHeight);
+        this.setWidth(newWindowWidth);
     }
 
     /**

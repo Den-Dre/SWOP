@@ -316,6 +316,7 @@ public class LeafPane extends Pane {
     public void setHeight(int newHeight) {
         super.setHeight(newHeight);
         contentFrame.setHeight(newHeight);
+        //contentFrame.handleResize(getWidth(),newHeight);
     }
 
     @Override

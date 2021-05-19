@@ -1,6 +1,7 @@
 package userinterface;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 
 public class HorizontalSplitPane extends GenericSplitPane {
     /**
@@ -94,9 +95,46 @@ public class HorizontalSplitPane extends GenericSplitPane {
     void drawSeparator(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(5));
-        g2.setColor(Color.BLACK);
+        g2.setColor(Color.YELLOW);
         g2.fillRect(lowerPane.getxPos(), lowerPane.getyPos()-SEPARATOR_THICKNESS, getWidth()-getxPos(), SEPARATOR_THICKNESS);
         g2.setStroke(new BasicStroke(1));
+    }
+
+    /**
+     * Handle mouseEvents.
+     *
+     * @param id          : The type of mouse activity
+     * @param x           : The x coordinate of the mouse activity
+     * @param y           : The y coordinate of the mouse activity
+     * @param clickCount  : The number of clicks
+     * @param button      : The mouse button that was clicked
+     * @param modifiersEx : The control keys that were held on the click
+     */
+    @Override
+    public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
+        if((id == MouseEvent.MOUSE_DRAGGED) && (y < lowerPane.getyPos() + SEPARATOR_THICKNESS / 2) && (y > lowerPane.getyPos() - SEPARATOR_THICKNESS)){
+            if(y < lowerPane.getyPos()) {
+                int oldY = lowerPane.getyPos();
+                lowerPane.setyPos(y);
+                lowerPane.setHeight(lowerPane.getHeight() + oldY - y);
+                upperPane.setHeight(upperPane.getHeight() - oldY - y);
+                //lowerPane.handleResize(this.getWidth(),lowerPane.getHeight() + oldY - y);
+                //upperPane.handleResize(this.getWidth(),upperPane.getHeight() - oldY - y);
+            } else {
+                int oldY = lowerPane.getyPos();
+                lowerPane.setyPos(y);
+                lowerPane.setHeight(lowerPane.getHeight() - y - oldY);
+                upperPane.setHeight(upperPane.getHeight() + y - oldY);
+                //lowerPane.handleResize(this.getWidth(),lowerPane.getHeight() - y - oldY);
+                //upperPane.handleResize(this.getWidth(),upperPane.getHeight() + y - oldY);
+            }
+            System.out.println("MouseEvent " + id + " " + x + " " + y + " " + clickCount + " " + button + " " + modifiersEx);
+        }
+        else{
+            getFirstChild().handleMouse(id, x, y, clickCount, button, modifiersEx);
+            getSecondChild().handleMouse(id, x, y, clickCount, button, modifiersEx);
+        }
+
     }
 
     @Override

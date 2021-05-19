@@ -162,5 +162,5 @@ public abstract class GenericSplitPane extends Pane {
      * A constant that denotes the thickness
      * of the separator drawn between split windows.
      */
-    protected final int SEPARATOR_THICKNESS = 5;
+    protected final int SEPARATOR_THICKNESS = 10;
 }

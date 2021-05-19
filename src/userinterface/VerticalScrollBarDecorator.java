@@ -81,4 +81,5 @@ public class VerticalScrollBarDecorator extends DocumentCellDecorator {
     void dragged(int dx, int dy) {
         setFraction((double) dy / (length-innerBarLength) + fraction);
     }
+
 }
