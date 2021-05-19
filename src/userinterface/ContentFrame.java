@@ -349,6 +349,8 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
         this.content = new HorizontalScrollBarDecorator(new VerticalScrollBarDecorator(content));
         this.content.setParentWidth(getWidth());
         this.content.setParentHeight(getHeight());
+        this.content.setxReference(getxPos());
+        this.content.setyReference(getyPos());
     }
 
     /**

@@ -60,6 +60,8 @@ public class Browsr extends CanvasWindow {
             int bookmarksBarHeight = 20;
 
             AddressBar addressBar = new AddressBar(addressBarOffset, addressBarOffset, 100, addressBarHeight, addressBarOffset);
+            addressBar.setxReference(addressBarOffset);
+            addressBar.setyReference(addressBarOffset);
             addressBarInput = addressBar;//(AddressBar) addressBar.getContent();
             bookmarksBar = new BookmarksBar(bookmarksBarOffset, addressBarHeight + 2 * bookmarksBarOffset, 100, bookmarksBarHeight, bookmarksBarOffset);
 

@@ -32,10 +32,15 @@ public abstract class DocumentCellDecorator extends DocumentCell {
 
     public void setLength(int newLength) {
         length = newLength;
+//        innerBarLength = (int) Math.round(length/getRatio());
     }
 
     public double getFraction() {
         return fraction;
+    }
+
+    public double getRatio() {
+        return 1.0;
     }
 
     public void setFraction(double fraction) {
@@ -153,8 +158,7 @@ public abstract class DocumentCellDecorator extends DocumentCell {
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
-        //this.setHeight(newWindowHeight);
-        //this.setWidth(newWindowWidth);
+        //setParentHeight(newWindowHeight);
         this.cellToBeDecorated.handleResize(newWindowWidth, newWindowHeight);
         moved();
     }
@@ -224,6 +228,12 @@ public abstract class DocumentCellDecorator extends DocumentCell {
     }
 
     @Override
+    public void setxReference(int xReference) {
+        super.setxReference(xReference);
+        cellToBeDecorated.setxReference(xReference);
+    }
+
+    @Override
     public int getMaxWidth() {
         return cellToBeDecorated.getMaxWidth();
     }
@@ -254,9 +264,6 @@ public abstract class DocumentCellDecorator extends DocumentCell {
      */
     @Override
     public boolean wasClicked(int x, int y) {
-//    	System.out.println("docCell: on: "+x+","+y);
-//    	System.out.println("getX: "+this.getxPos()+", getY: "+this.getyPos());
-//    	System.out.println("width: "+this.getWidth()+", height: "+this.getHeight());
         return (x >= this.getxPos()+getxOffset()+getVerticalBarXOffset()) &&
                 x <= (this.getxPos() + this.getWidth()+getxOffset()+getVerticalBarXOffset()) &&
                 y >= (this.getyPos()+getyOffset()+getHorizontalBarYOffset()) &&

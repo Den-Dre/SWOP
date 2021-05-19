@@ -42,6 +42,11 @@ public class HorizontalScrollBarDecorator extends DocumentCellDecorator {
     }
 
     @Override
+    public double getRatio() {
+        return (double) cellToBeDecorated.getMaxWidth()/parentWidth;
+    }
+
+    @Override
     void moved() {
         if (length >= cellToBeDecorated.getMaxWidth()) return;
         cellToBeDecorated.setxOffset(- (int) Math.round(fraction*Math.abs(cellToBeDecorated.getMaxWidth() - length)));

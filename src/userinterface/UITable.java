@@ -34,13 +34,14 @@ public class UITable extends DocumentCell{
         setxReference(x);
         setyReference(y);
 
-        setParentWidth(getWidth());
-        setParentHeight(getHeight());
+        setParentWidth(parentWidth);
+        setParentHeight(parentHeight);
     }
 
     @Override
     public void setParentWidth(int parentWidth) {
         System.out.println("resizing table: " + parentWidth);
+        super.setParentWidth(parentWidth);
         for (ArrayList<DocumentCell> row : grid) {
             for (DocumentCell cell : row) {
                 cell.setParentWidth(parentWidth);
@@ -50,6 +51,7 @@ public class UITable extends DocumentCell{
 
     @Override
     public void setParentHeight(int parentHeight) {
+        super.setParentHeight(parentHeight);
         for (ArrayList<DocumentCell> row : grid) {
             for (DocumentCell cell : row) {
                 cell.setParentHeight(parentHeight);
