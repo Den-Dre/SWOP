@@ -93,7 +93,7 @@ public class VerticalSplitPane extends GenericSplitPane {
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(5));
         g2.setColor(Color.black);
-        g2.fillRect(rightPane.getxPos()-SEPARATOR_THICKNESS, rightPane.getyPos(), SEPARATOR_THICKNESS, rightPane.getHeight()-getxPos());
+        g2.fillRect(rightPane.getxPos()-SEPARATOR_THICKNESS, rightPane.getyPos(), SEPARATOR_THICKNESS, rightPane.getHeight());
         g2.setStroke(new BasicStroke(1));
     }
 

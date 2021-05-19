@@ -78,7 +78,6 @@ public class HorizontalSplitPane extends GenericSplitPane {
         getSecondChild().handleResize(newWindowWidth, (int) (newWindowHeight*upperFraction));
         getFirstChild().setyPos(getyPos() + (int) (newWindowHeight*upperFraction));
         getFirstChild().handleResize(newWindowWidth, (int) (newWindowHeight*(1-upperFraction)));
-        //super.handleResize(newWindowWidth, newWindowHeight);
     }
 
     /**
@@ -93,7 +92,7 @@ public class HorizontalSplitPane extends GenericSplitPane {
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(5));
         g2.setColor(Color.BLACK);
-        g2.fillRect(lowerPane.getxPos(), lowerPane.getyPos()-SEPARATOR_THICKNESS, getWidth()-getxPos(), SEPARATOR_THICKNESS);
+        g2.fillRect(lowerPane.getxPos(), lowerPane.getyPos()-SEPARATOR_THICKNESS, lowerPane.getWidth(), SEPARATOR_THICKNESS);
         g2.setStroke(new BasicStroke(1));
     }
 
