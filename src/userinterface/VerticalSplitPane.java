@@ -1,6 +1,7 @@
 package userinterface;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 
 public class VerticalSplitPane extends GenericSplitPane {
     /**
@@ -71,16 +72,15 @@ public class VerticalSplitPane extends GenericSplitPane {
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
+        getSecondChild().setxPos(getxPos());
+
         if (parentPane == null) {
             newWindowWidth -= getBasexPos();
             newWindowHeight -= getBaseyPos();
         }
-        getFirstChild().setxPos(getxPos());
-        getFirstChild().setxReference(getxPos());
-        getSecondChild().setxPos(getxPos() + newWindowWidth/2);
-        getSecondChild().setxReference(getxPos()+newWindowWidth/2);
-        getFirstChild().handleResize(newWindowWidth/2, newWindowHeight);
-        getSecondChild().handleResize(newWindowWidth/2, newWindowHeight);
+        getSecondChild().handleResize((int) (newWindowWidth*upperFraction), newWindowHeight);
+        getFirstChild().setxPos((int) (getxPos() + newWindowWidth*(1-upperFraction)));
+        getFirstChild().handleResize((int) (newWindowWidth*(1-upperFraction)),newWindowHeight);
         super.handleResize(newWindowWidth, newWindowHeight);
     }
 
@@ -99,6 +99,68 @@ public class VerticalSplitPane extends GenericSplitPane {
         g2.fillRect(rightPane.getxPos()-SEPARATOR_THICKNESS, rightPane.getyPos(), SEPARATOR_THICKNESS, rightPane.getHeight()-getxPos());
         g2.setStroke(new BasicStroke(1));
     }
+
+    /**
+     * Retruns true if and only if the coordinates are in the separator
+     * @param x : The x coordinate
+     * @param y : The y coordinate
+     * @return  : True iff the click was in the separator
+     */
+    boolean isInSeperator(int x, int y) {
+        return ((x < rightPane.getxPos() + SEPARATOR_THICKNESS / 2) && (x > rightPane.getxPos() - SEPARATOR_THICKNESS) &&
+                (y >= this.getyPos() && y < this.getyPos() + this.getHeight()));
+    }
+
+
+    /**
+     * Handle mouseEvents.
+     *
+     * @param id          : The type of mouse activity
+     * @param x           : The x coordinate of the mouse activity
+     * @param y           : The y coordinate of the mouse activity
+     * @param clickCount  : The number of clicks
+     * @param button      : The mouse button that was clicked
+     * @param modifiersEx : The control keys that were held on the click
+     */
+    @Override
+    public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
+        if((id == MouseEvent.MOUSE_DRAGGED) && isInSeperator(x,y)){
+            if(x < rightPane.getxPos()) {
+                int oldX = rightPane.getxPos();
+                int deltaX = Math.abs(oldX - x);
+                rightPane.setxPos(x);
+                rightPane.setWidth(rightPane.getWidth() + deltaX);
+                leftPane.setWidth(leftPane.getWidth() - deltaX);
+                rightPane.setParentWidth(rightPane.getWidth());
+                leftPane.setParentWidth(leftPane.getWidth());
+                rightPane.setxReference(x);
+                upperFraction = (double) (leftPane.getWidth())/getWidth();
+                System.out.println(upperFraction);
+                rightPane.handleResize(rightPane.getWidth(),this.getHeight());
+                leftPane.handleResize(leftPane.getWidth(),this.getHeight());
+            } else {
+                int oldX = rightPane.getxPos();
+                int deltaX = Math.abs(oldX - x);
+                rightPane.setxPos(x);
+                rightPane.setWidth(rightPane.getWidth() - deltaX);
+                leftPane.setWidth(leftPane.getWidth() + deltaX);
+                rightPane.setParentWidth(rightPane.getWidth());
+                leftPane.setParentWidth(leftPane.getWidth());
+                rightPane.setxReference(x);
+                upperFraction = (double) (leftPane.getWidth())/getWidth();
+                rightPane.handleResize(rightPane.getWidth(),this.getHeight());
+                leftPane.handleResize(leftPane.getWidth(),this.getHeight());
+            }
+            System.out.println("MouseEvent " + id + " " + x + " " + y + " " + clickCount + " " + button + " " + modifiersEx);
+        }
+        else{
+            getFirstChild().handleMouse(id, x, y, clickCount, button, modifiersEx);
+            getSecondChild().handleMouse(id, x, y, clickCount, button, modifiersEx);
+        }
+
+    }
+
+
     @Override
     public Pane getFirstChild() {
         return leftPane;
@@ -164,4 +226,6 @@ public class VerticalSplitPane extends GenericSplitPane {
     private Pane leftPane;
 
     private Pane rightPane;
+
+    private double upperFraction = 0.5;
 }

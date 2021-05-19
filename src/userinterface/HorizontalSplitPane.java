@@ -101,6 +101,17 @@ public class HorizontalSplitPane extends GenericSplitPane {
     }
 
     /**
+     * Retruns true if and only if the coordinates are in the separator
+     * @param x : The x coordinate
+     * @param y : The y coordinate
+     * @return  : True iff the click was in the separator
+     */
+    boolean isInSeperator(int x, int y) {
+        return ((y < lowerPane.getyPos() + SEPARATOR_THICKNESS / 2) && (y > lowerPane.getyPos() - SEPARATOR_THICKNESS) &&
+                (x >= this.getxPos() && x < this.getxPos() + this.getWidth()));
+    }
+
+    /**
      * Handle mouseEvents.
      *
      * @param id          : The type of mouse activity
@@ -112,7 +123,7 @@ public class HorizontalSplitPane extends GenericSplitPane {
      */
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-        if((id == MouseEvent.MOUSE_DRAGGED) && (y < lowerPane.getyPos() + SEPARATOR_THICKNESS / 2) && (y > lowerPane.getyPos() - SEPARATOR_THICKNESS)){
+        if((id == MouseEvent.MOUSE_DRAGGED) && isInSeperator(x,y)){
             if(y < lowerPane.getyPos()) {
                 int oldY = lowerPane.getyPos();
                 int deltaY = Math.abs(oldY-y);
