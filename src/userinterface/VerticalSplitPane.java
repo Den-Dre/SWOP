@@ -72,16 +72,13 @@ public class VerticalSplitPane extends GenericSplitPane {
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
-        getSecondChild().setxPos(getxPos());
-
-        if (parentPane == null) {
-            newWindowWidth -= getBasexPos();
-            newWindowHeight -= getBaseyPos();
-        }
-        getSecondChild().handleResize((int) (newWindowWidth*upperFraction), newWindowHeight);
-        getFirstChild().setxPos((int) (getxPos() + newWindowWidth*(1-upperFraction)));
-        getFirstChild().handleResize((int) (newWindowWidth*(1-upperFraction)),newWindowHeight);
-        super.handleResize(newWindowWidth, newWindowHeight);
+        setWidth(newWindowWidth);
+        setHeight(newWindowHeight);
+        getFirstChild().setxPos(getxPos());
+        getFirstChild().handleResize((int) (newWindowWidth* leftFraction), newWindowHeight);
+        getSecondChild().setxPos((int) (getxPos() + newWindowWidth* leftFraction));
+        getSecondChild().handleResize((int) (newWindowWidth*(1- leftFraction)),newWindowHeight);
+        //super.handleResize(newWindowWidth, newWindowHeight);
     }
 
     /**
@@ -131,11 +128,11 @@ public class VerticalSplitPane extends GenericSplitPane {
                 rightPane.setxPos(x);
                 rightPane.setWidth(rightPane.getWidth() + deltaX);
                 leftPane.setWidth(leftPane.getWidth() - deltaX);
-                rightPane.setParentWidth(rightPane.getWidth());
-                leftPane.setParentWidth(leftPane.getWidth());
-                rightPane.setxReference(x);
-                upperFraction = (double) (leftPane.getWidth())/getWidth();
-                System.out.println(upperFraction);
+//                rightPane.setParentWidth(rightPane.getWidth());
+//                leftPane.setParentWidth(leftPane.getWidth());
+//                rightPane.setxReference(x);
+                leftFraction = (double) (leftPane.getWidth())/getWidth();
+                System.out.println("leftFraction:" + leftFraction);
                 rightPane.handleResize(rightPane.getWidth(),this.getHeight());
                 leftPane.handleResize(leftPane.getWidth(),this.getHeight());
             } else {
@@ -144,14 +141,15 @@ public class VerticalSplitPane extends GenericSplitPane {
                 rightPane.setxPos(x);
                 rightPane.setWidth(rightPane.getWidth() - deltaX);
                 leftPane.setWidth(leftPane.getWidth() + deltaX);
-                rightPane.setParentWidth(rightPane.getWidth());
-                leftPane.setParentWidth(leftPane.getWidth());
-                rightPane.setxReference(x);
-                upperFraction = (double) (leftPane.getWidth())/getWidth();
+//                rightPane.setParentWidth(rightPane.getWidth());
+//                leftPane.setParentWidth(leftPane.getWidth());
+//                rightPane.setxReference(x);
+                leftFraction = (double) (leftPane.getWidth())/getWidth();
                 rightPane.handleResize(rightPane.getWidth(),this.getHeight());
                 leftPane.handleResize(leftPane.getWidth(),this.getHeight());
+                System.out.println("leftFraction:" + leftFraction);
             }
-            System.out.println("MouseEvent " + id + " " + x + " " + y + " " + clickCount + " " + button + " " + modifiersEx);
+            //System.out.println("MouseEvent " + id + " " + x + " " + y + " " + clickCount + " " + button + " " + modifiersEx);
         }
         else{
             getFirstChild().handleMouse(id, x, y, clickCount, button, modifiersEx);
@@ -185,7 +183,7 @@ public class VerticalSplitPane extends GenericSplitPane {
     public void setxPos(int xPos) {
         super.setxPos(xPos);
         leftPane.setxPos(xPos);
-        rightPane.setxPos(xPos + getWidth()/2);
+        rightPane.setxPos((int) (xPos + getWidth()* leftFraction));
     }
 
     @Override
@@ -227,5 +225,5 @@ public class VerticalSplitPane extends GenericSplitPane {
 
     private Pane rightPane;
 
-    private double upperFraction = 0.5;
+    private double leftFraction = 0.5;
 }

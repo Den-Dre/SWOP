@@ -16,6 +16,7 @@ import java.util.Arrays;
  * with an {@link AddressBar} and a {@link ContentFrame}.
  */
 public class Browsr extends CanvasWindow {
+
     /**
      * Initializes this {@code Browsr} as CanvasWindow object:
      * the initial layout consists of: an {@link AddressBar},
@@ -59,6 +60,8 @@ public class Browsr extends CanvasWindow {
             // that is linked to this UserInterface.Browsr.
             int bookmarksBarHeight = 20;
 
+            totalUpperBarHeight = addressBarHeight+bookmarksBarHeight+addressBarOffset+bookmarksBarOffset;
+
             AddressBar addressBar = new AddressBar(addressBarOffset, addressBarOffset, 100, addressBarHeight, addressBarOffset);
             addressBar.setxReference(addressBarOffset);
             addressBar.setyReference(addressBarOffset);
@@ -66,7 +69,7 @@ public class Browsr extends CanvasWindow {
             bookmarksBar = new BookmarksBar(bookmarksBarOffset, addressBarHeight + 2 * bookmarksBarOffset, 100, bookmarksBarHeight, bookmarksBarOffset);
 
             controller = new UIController();
-            ContentFrame contentFrame = new ContentFrame(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100);
+            ContentFrame contentFrame = new ContentFrame(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 600-2*addressBarOffset, 600-totalUpperBarHeight);
             rootPane = new LeafPane(contentFrame, controller);
             controller.setCurrentDocument(rootPane.getId());
 
@@ -325,10 +328,10 @@ public class Browsr extends CanvasWindow {
      *</p>
      */
     @Override
-    protected void handleResize() {
+    public void handleResize() {
         //ook laten weten aan de frames om zichzelf intern aan te passen!
         for (AbstractFrame frame : frames)
-            frame.handleResize(this.getWidth(), this.getHeight()); //-(addressBarInput.getHeight()+ bookmarksBar.getHeight()+10)
+            frame.handleResize(this.getWidth(), this.getHeight()-totalUpperBarHeight-5); //-(addressBarInput.getHeight()+ bookmarksBar.getHeight()+10)
         repaint();
     }
 
@@ -609,4 +612,6 @@ public class Browsr extends CanvasWindow {
      * Keep the index of the rootPane in the frames list
      */
     private int rootPaneIndex;
+
+    private int totalUpperBarHeight;
 }

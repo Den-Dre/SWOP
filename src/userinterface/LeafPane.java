@@ -97,13 +97,7 @@ public class LeafPane extends Pane {
         setHeight(newWindowHeight);
         contentFrame.setxPos(getxPos());
         contentFrame.setyPos(getyPos());
-        if (parentPane == null) {
-            newWindowHeight -= contentFrame.getyPos();
-            newWindowWidth -= contentFrame.getxPos();
-        }
         contentFrame.handleResize(newWindowWidth, newWindowHeight);
-//        setWidth(newWindowWidth-getBasexPos());
-//        setHeight(newWindowHeight-getBaseyPos());
     }
 
     /**
@@ -111,7 +105,7 @@ public class LeafPane extends Pane {
      */
     @Override
     public Pane getHorizontalSplit() {
-        return new HorizontalSplitPane(getxPos(), getyPos(), getWidth(), getHeight()-getBaseyPos(), this, parentPane);
+        return new HorizontalSplitPane(getxPos(), getyPos(), getWidth(), getHeight(), this, parentPane);
     }
 
     /**
@@ -119,7 +113,7 @@ public class LeafPane extends Pane {
      */
     @Override
     public Pane getVerticalSplit() {
-        return new VerticalSplitPane(getxPos(), getyPos(), getWidth()-getBasexPos(), getHeight(), this, parentPane);
+        return new VerticalSplitPane(getxPos(), getyPos(), getWidth(), getHeight(), this, parentPane);
     }
 
     public Pane closeLeafPane() {

@@ -258,17 +258,13 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
-//        if (getxPos() > newWindowWidth)
-//
-//        else
-//            setWidth(newWindowWidth-getxPos());
-//        if (getyPos() > newWindowHeight)
-//
-//        else
-//            setHeight(newWindowHeight-getyPos());
         setWidth(newWindowWidth);
         setHeight(newWindowHeight);
+        setParentWidth(newWindowWidth);
+        setParentHeight(newWindowHeight);
         if (content != null) {
+            content.setWidth(newWindowWidth);
+            content.setHeight(newWindowHeight);
             content.handleResize(getWidth(), getHeight());
             content.setParentWidth(getWidth());
             content.setParentHeight(getHeight());
