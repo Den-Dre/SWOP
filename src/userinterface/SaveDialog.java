@@ -86,6 +86,7 @@ public class SaveDialog extends GenericDialogScreen {
         outerTableRows.add(outerTableRow3);
 
         UITable outerTable = new UITable(offset, offset,0,0, outerTableRows);
+        outerTable.handleResize(getBrowsr().getWidth(),getBrowsr().getHeight());
 
         return new UIForm(offset, offset, "bookmarksDialog", outerTable);
     }
