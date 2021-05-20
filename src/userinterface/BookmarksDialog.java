@@ -51,7 +51,7 @@ public class BookmarksDialog extends GenericDialogScreen {
      *
      * @param currentUrl:
      *           The {@link String} representation of the URL currently entered in the {@link AddressBar}.
-     * @return new UIForm: a {@link UIForm} object that represents the form of this {@code BookmarksDialog}.
+     * @return new UIForm: a {@link UIActionForm} object that represents the form of this {@code BookmarksDialog}.
      */
     public UIForm getForm(String currentUrl) {
         // Hard coded bookmarks dialog screen
@@ -92,7 +92,7 @@ public class BookmarksDialog extends GenericDialogScreen {
         UITable outerTable = new UITable(offset, offset,0,0, outerTableRows);
         outerTable.handleResize(getBrowsr().getAreaWidth(),getBrowsr().getAreaHeight());
 
-        return new UIForm(offset, offset, "bookmarksDialog", outerTable);
+        return new UIActionForm(offset, offset, "bookmarksDialog", outerTable);
     }
 
 

@@ -191,12 +191,13 @@ class ContentFrameTest {
 				</form>
 				""");
 		
+
 		ctrl4.getDocument(id4).changeContentSpan(content4);
 		contentFrame1.setController(ctrl4);
 		ctrl4.setCurrentDocument(id4);
 		contentFrame1.contentChanged();
 		assertTrue(((DocumentCellDecorator) contentFrame1.getContent()).getContentWithoutScrollbars() instanceof UIForm);
-		UIForm form = (UIForm) ((DocumentCellDecorator) contentFrame1.getContent()).getContentWithoutScrollbars();
+		UIActionForm form = (UIActionForm) ((DocumentCellDecorator) contentFrame1.getContent()).getContentWithoutScrollbars();
 		assertEquals(form.getAction(), "browsrformactiontest.php");
 		assertTrue(form.getFormContent() instanceof UITable);
 		UITable table2 = (UITable) form.getFormContent();

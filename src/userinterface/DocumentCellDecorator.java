@@ -1,9 +1,11 @@
 package userinterface;
 
 import java.awt.*;
+
 import java.awt.event.MouseEvent;
 import java.lang.reflect.Array;
-
+import java.util.ArrayList;
+import java.util.Arrays;
 /**
  * A class of decorators that decorate a visualization of a {@link DocumentCell} in 
  * browsr with a scroll bar.
@@ -391,7 +393,20 @@ public abstract class DocumentCellDecorator extends DocumentCell {
 //            return ((UITable) cellToBeDecorated).getContent().get(0).get(0);
         return cellToBeDecorated;
     }
-
+    
+    /**
+     * Retrieve the name and value of the decorated DocumentCell.
+     *
+     * Only applies if the DocumentCell has a name and value (e.g UITextInputField)
+     * or can contain elements that do (e.g. UITable).
+     *
+     * @return An ArrayList with the name and value of the DocumentCell separated by a '=' sign.
+     */
+    @Override 
+    public ArrayList<String> getNamesAndValues() { 
+    	return cellToBeDecorated.getNamesAndValues();
+    }
+    
     /**
      * A variable to denote the {@link DocumentCell} that will be decorated.
      */
