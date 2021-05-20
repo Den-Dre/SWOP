@@ -21,7 +21,8 @@ public class UITextHyperlink extends DocumentCell {
      */
     public UITextHyperlink(int x, int y, int width, int link_size, String text) throws IllegalDimensionException {
         super(x, y, width, link_size);
-        this.text = text;
+        this.textField = new UITextField(x, y, width, link_size, text);
+        //this.text = text;
         textHeight = link_size;
 
         // TODO: Decide whether the following two calls can be omitted in this class's constructor:
@@ -31,7 +32,8 @@ public class UITextHyperlink extends DocumentCell {
 
     public UITextHyperlink(UITextHyperlink hyperlink) {
         super(hyperlink.getxPos(), hyperlink.getyPos(), hyperlink.getMaxWidth(), hyperlink.getMaxHeight());
-        this.text = hyperlink.getText();
+        textField = new UITextField(hyperlink.getxPos(), hyperlink.getyPos(), hyperlink.getMaxWidth(), hyperlink.getMaxHeight(), hyperlink.getText());
+        // this.text = hyperlink.getText();
         this.textHeight = hyperlink.getMaxHeight();
         updateSizes();
         setWidth(getMaxWidth());
@@ -48,24 +50,28 @@ public class UITextHyperlink extends DocumentCell {
     @Override
     public void render(Graphics g) {
         metrics = g.getFontMetrics(hyperlinkFont);
+        textField.setMetrics(metrics);
         updateSizes();
-        AttributedString link = new AttributedString(text);
+        if (outOfVerticalBounds()) return;
+        String visibleText = textField.visibleText();
+        if (visibleText.length() == 0) return;
+        AttributedString link = new AttributedString(visibleText);
         g.setColor(Color.BLUE);
         link.addAttribute(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-        g.drawString(link.getIterator(), getxPos()+getxOffset(), getyPos()+textHeight+getyOffset());
-
-        // Draw a rectangle around the text for debugging purposes
-//        g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
+        if (getxPos() <= getxReference()+5)
+            g.drawString(link.getIterator(), getxPos(), getyPos()+textHeight+getyOffset());
+        else
+            g.drawString(link.getIterator(), Math.max(getxPos() + getxOffset(), getxReference()), getyPos() + textHeight + getyOffset());
     }
 
     /**
      * Update the {@code textWidth} based on this {@code UIHyperlink} {@code href} attribute.
      */
     private void updateSizes() {
-        if (!isCalculateActualWidth()) textWidth =  (int) (textHeight*text.length()*heightToWidthRatio);
+        if (!isCalculateActualWidth()) textWidth =  (int) (textHeight*getText().length()*heightToWidthRatio);
         else {
             if (metrics == null) return;
-            textWidth = metrics.stringWidth(text);
+            textWidth = metrics.stringWidth(getText());
         }
     }
 
@@ -89,7 +95,7 @@ public class UITextHyperlink extends DocumentCell {
     public ReturnMessage getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
         if (id == MouseEvent.MOUSE_RELEASED) {
             if (wasClicked(x, y))
-                return new ReturnMessage(ReturnMessage.Type.Hyperlink, this.text);
+                return new ReturnMessage(ReturnMessage.Type.Hyperlink, getText());
         }
         return new ReturnMessage(ReturnMessage.Type.Empty);
     }
@@ -117,14 +123,64 @@ public class UITextHyperlink extends DocumentCell {
      *              The text displayed in this UIHyperlink.
      */
     public String getText() {
-        return text;
+        return textField.getText();
     }
 
+    @Override
+    public void setxPos(int xPos) {
+        super.setxPos(xPos);
+        textField.setxPos(xPos);
+    }
+
+    @Override
+    public void setyPos(int yPos) {
+        super.setyPos(yPos);
+        textField.setyPos(yPos);
+    }
+
+    @Override
+    public void setxOffset(int xOffset) {
+        super.setxOffset(xOffset);
+        textField.setxOffset(xOffset);
+    }
+
+//    @Override
+//    public void setyOffset(int yOffset) {
+//        super.setyOffset(yOffset);
+//        textField.setyOffset(yOffset);
+//    }
+
+    @Override
+    public void setxReference(int xReference) {
+        super.setxReference(xReference);
+        textField.setxReference(xReference);
+    }
+
+//    @Override
+//    public void setyReference(int yReference) {
+//        super.setyReference(yReference);
+//        textField.setyReference(yReference);
+//    }
+
+    @Override
+    public void setParentWidth(int parentWidth) {
+        super.setParentWidth(parentWidth);
+        textField.setParentWidth(parentWidth);
+    }
+
+//    @Override
+//    public void setParentHeight(int parentHeight) {
+//        super.setParentHeight(parentHeight);
+//        textField.setParentHeight(parentHeight);
+//    }
+
     // =========== Contents of this UIHyperlink =============
-    /**
-     * A string variable to denote the text value of this UIHyperlink.
-     */
-    private final String text;
+//    /**
+//     * A string variable to denote the text value of this UIHyperlink.
+//     */
+//    private final String text;
+
+    private final UITextField textField;
 
     // ============== Dimension variables ====================
     /**

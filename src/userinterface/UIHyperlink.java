@@ -21,58 +21,32 @@ public class UIHyperlink extends UITextHyperlink{
      */
     public UIHyperlink(int x, int y, int width, int link_size, String href, String text) throws IllegalDimensionException {
         super(x, y, width, link_size, text);
-        this.textHeight = link_size;
-        this.textWidth = width;
+//        this.textHeight = link_size;
+//        this.textWidth = width;
         this.href = href;
-        updateSizes();
+        //updateSizes();
         setWidth(getMaxWidth());
     }
 
     public UIHyperlink(UIHyperlink hyperlink) {
         super(hyperlink.getxPos(), hyperlink.getyPos(), hyperlink.getMaxWidth(), hyperlink.getMaxHeight(), hyperlink.getText());
-        this.textHeight = hyperlink.getMaxHeight();
-        this.textWidth = hyperlink.getMaxWidth();
+//        this.textHeight = hyperlink.getMaxHeight();
+//        this.textWidth = hyperlink.getMaxWidth();
         this.href = hyperlink.getHref();
-        updateSizes();
+        //updateSizes();
         setWidth(getMaxWidth());
     }
 
-    /**
-     * Renders the link onto the window.
-     * -> Update information about the dimensions of the string
-     * -> Set the color
-     * -> Underline the text
-     * -> Draw the href on the window
-     *
-     * @param g: The graphics that will be updated
-     */
-    @Override
-    public void render(Graphics g) {
-        metrics = g.getFontMetrics(hyperlinkFont);
-        updateSizes();
-        g.setColor(hyperlinkColor);
-
-        // Underling the hyperlink
-        AttributedString link = new AttributedString(text);
-        link.addAttribute(TextAttribute.FONT, hyperlinkFont);
-        link.addAttribute(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
-
-        g.drawString(link.getIterator(), getxPos()+getxOffset(), getyPos()+super.getMaxHeight()+getyOffset());
-
-        // Draw a rectangle around the text for debugging purposes
-        //g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
-    }
-
-    /**
-     * Update the {@code textWidth} based on this {@code UIHyperlink} {@code href} attribute.
-     */
-    private void updateSizes() {
-        if (!isCalculateActualWidth()) textWidth =  (int) (super.getMaxHeight()*text.length()*heightToWidthRatio);
-        else {
-            if (metrics == null) return;
-            textWidth = metrics.stringWidth(href);
-        }
-    }
+//    /**
+//     * Update the {@code textWidth} based on this {@code UIHyperlink} {@code href} attribute.
+//     */
+//    private void updateSizes() {
+//        if (!isCalculateActualWidth()) textWidth =  (int) (super.getMaxHeight()*getText().length()*heightToWidthRatio);
+//        else {
+//            if (metrics == null) return;
+//            textWidth = metrics.stringWidth(getText());
+//        }
+//    }
 
     /**
      * Input: a mouse click
@@ -99,25 +73,25 @@ public class UIHyperlink extends UITextHyperlink{
         return new ReturnMessage(ReturnMessage.Type.Empty);
     }
 
-    /**
-     * Return the text width of this {@code UIHyperlink}
-     *
-     * @return textWidth: the width of this {@code UIHyperlink}.
-     */
-    @Override
-    public int getMaxWidth() {
-        return this.textWidth;
-    }
-
-    /**
-     * Return the text height of this {@code UIHyperlink}
-     *
-     * @return textHeight: the height of this {@code UIHyperlink}.
-     */
-    @Override
-    public int getMaxHeight() {
-        return this.textHeight;
-    }
+//    /**
+//     * Return the text width of this {@code UIHyperlink}
+//     *
+//     * @return textWidth: the width of this {@code UIHyperlink}.
+//     */
+//    @Override
+//    public int getMaxWidth() {
+//        return this.textWidth;
+//    }
+//
+//    /**
+//     * Return the text height of this {@code UIHyperlink}
+//     *
+//     * @return textHeight: the height of this {@code UIHyperlink}.
+//     */
+//    @Override
+//    public int getMaxHeight() {
+//        return this.textHeight;
+//    }
 
     /**
      * Get the {@code href} value of this {@code UITextHyperlink}.
@@ -135,34 +109,29 @@ public class UIHyperlink extends UITextHyperlink{
      */
     private final String href;
 
-    /**
-     * A string variable to denote the text value of this UIHyperlink.
-     */
-    private final String text = super.getText();
-
-    // ============== Dimension variables ====================
-
-    /**
-     * An integer variable to denote the text height of this {@code UIHyperlink}.
-     */
-    private int textWidth;
-
-    /**
-     * An integer variable to denote the text height of this {@code UIHyperlink}.
-     */
-    private int textHeight;
-
-    // ============== Font variables ===========================
-    /**
-     * A variable to denote the {@link Font} of the text of this UIHyperlink
-     */
-    private final Font hyperlinkFont = new Font(Font.SANS_SERIF, Font.PLAIN, getHeight());
-    /**
-     * A variable to denote the {@link Color} of the text of this UIHyperlink
-     */
-    private final Color hyperlinkColor = Color.BLUE;
-    /**
-     * A variable to denote the {@link FontMetrics} of the text of this UIHyperlink.
-     */
-    private FontMetrics metrics;
+//    // ============== Dimension variables ====================
+//
+//    /**
+//     * An integer variable to denote the text height of this {@code UIHyperlink}.
+//     */
+//    private int textWidth;
+//
+//    /**
+//     * An integer variable to denote the text height of this {@code UIHyperlink}.
+//     */
+//    private int textHeight;
+//
+//    // ============== Font variables ===========================
+//    /**
+//     * A variable to denote the {@link Font} of the text of this UIHyperlink
+//     */
+//    private final Font hyperlinkFont = new Font(Font.SANS_SERIF, Font.PLAIN, getHeight());
+//    /**
+//     * A variable to denote the {@link Color} of the text of this UIHyperlink
+//     */
+//    private final Color hyperlinkColor = Color.BLUE;
+//    /**
+//     * A variable to denote the {@link FontMetrics} of the text of this UIHyperlink.
+//     */
+//    private FontMetrics metrics;
 }

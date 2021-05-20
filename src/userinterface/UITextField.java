@@ -77,7 +77,7 @@ public class UITextField extends DocumentCell{
         int deltaPosRef = Math.abs(getxPos()-getxReference());
         int frontCut = Math.abs(getxOffset());
         if (frontCut <= deltaPosRef)
-            return text;
+            frontCut = 0;
         else
             frontCut -= deltaPosRef;
         if (metrics.stringWidth(text) <= frontCut) return "";
@@ -88,6 +88,8 @@ public class UITextField extends DocumentCell{
             }
         }
         int width = parentWidth;
+        if (deltaPosRef+getxOffset() > 0)
+            width = parentWidth-deltaPosRef-getxOffset();
         for (int j = 0; j < text.length(); j++) {
             if (metrics.stringWidth(text.substring(0,j)) >= width){
                 text = text.substring(0, j);
@@ -125,6 +127,10 @@ public class UITextField extends DocumentCell{
 
     public void setText(String text) {
         textField = text;
+    }
+
+    public void setMetrics(FontMetrics metrics) {
+        this.metrics = metrics;
     }
 
     /**
