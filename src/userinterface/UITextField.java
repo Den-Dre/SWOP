@@ -50,11 +50,6 @@ public class UITextField extends DocumentCell {
      * Update the textWidth of this UserInterface.UITextField in the textFieldFont.
      */
     private void updateSizes() {
-//        if (!isCalculateActualWidth()) textWidth =  (int) (textHeight*textField.length()*heightToWidthRatio);
-//        else {
-//            if (metrics == null) return;
-//            textWidth = metrics.stringWidth(textField);
-//        }
         if (metrics == null) {
             textWidth = (int) (textHeight * textField.length() * heightToWidthRatio);
             return;
@@ -62,6 +57,11 @@ public class UITextField extends DocumentCell {
         textWidth = metrics.stringWidth(textField);
     }
 
+    /**
+     * Get the visible text of this UITextField.
+     *
+     * @return A sub-string of this UITextField's text.
+     */
     public String visibleText() {
         String text = getText();
         if (metrics == null) return text;
