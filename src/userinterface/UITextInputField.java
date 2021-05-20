@@ -367,6 +367,15 @@ public class UITextInputField extends DocumentCell {
     }
 
     /**
+     * Get the textField of this UITextInputField.
+     *
+     * @return textField of this UITextInputField.
+     */
+    public DocumentCellDecorator getTextField() {
+        return textField;
+    }
+
+    /**
      * Externally change the url, this moves the cursor to the right and toggles focus off.
      * @param text
      *        The String representation of the url to be set

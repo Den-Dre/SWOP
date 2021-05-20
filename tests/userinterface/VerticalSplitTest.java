@@ -163,4 +163,28 @@ public class VerticalSplitTest {
         assertEquals(leftPane.getyPos(), yPos);
         assertEquals(rightPane.getyPos(), yPos);
     }
+
+    @Test
+    void dragging() {
+        final int mousePressed = MouseEvent.MOUSE_PRESSED;
+        final int mouseDragged = MouseEvent.MOUSE_DRAGGED;
+        int leftMouse = MouseEvent.BUTTON1;
+
+        splitVertically();
+        int separatorX = rightPane.getxPos();
+        int separatorY = rightPane.getyPos();
+        int x1 = 1;
+        int x2 = 5;
+        browsr.handleMouseEvent(mousePressed, separatorX+x1, separatorY+1, 1, leftMouse, 0);
+        browsr.handleMouseEvent(mouseDragged, separatorX+x2, separatorY+1, 1, leftMouse, 0);
+        assertEquals(separatorX + x2 ,rightPane.getxPos());
+
+        separatorX = rightPane.getxPos();
+        separatorY = rightPane.getyPos();
+        browsr.handleMouseEvent(mousePressed, separatorX+x1, separatorY+1, 1, leftMouse, 0);
+        browsr.handleMouseEvent(mouseDragged, separatorX-x2, separatorY+1, 1, leftMouse, 0);
+        assertEquals(separatorX - x2 ,rightPane.getxPos());
+
+
+    }
 }

@@ -98,10 +98,10 @@ class HyperLinkTest{
 		// compose url with href and load the document
 		ctrl.loadDocumentFromHref(0, href);
 		
-		UITable table = (UITable) ((LeafPane) doc).getContentWithoutScrollbars();
-		
+		UITable content = (UITable) ((DocumentCellDecorator) doc.getContent().getContent()).getContentWithoutScrollbars();
+        UITextField text = (UITextField) content.getContent().get(0).get(0);
 		// check if document has changed
-        assertEquals(((UITextField) table.getContent().get(0).get(0)).getText(),
+        assertEquals(text.getText(),
 				"HTML elements partially supported by Browsr:");
 	}
 	

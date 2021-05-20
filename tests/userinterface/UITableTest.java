@@ -142,6 +142,30 @@ class UITableTest {
     }
 
     @Test
+    void setxOffset() {
+        int xOffset = -3;
+        table1.setxOffset(xOffset);
+        ArrayList<ArrayList<DocumentCell>> grid = table1.getContent();
+        for (ArrayList<DocumentCell> row : grid) {
+            for (DocumentCell cell : row) {
+                assertEquals(xOffset, cell.getxOffset());
+            }
+        }
+    }
+
+    @Test
+    void setyOffset() {
+        int yOffset = -3;
+        table1.setyOffset(yOffset);
+        ArrayList<ArrayList<DocumentCell>> grid = table1.getContent();
+        for (ArrayList<DocumentCell> row : grid) {
+            for (DocumentCell cell : row) {
+                assertEquals(yOffset, cell.getyOffset());
+            }
+        }
+    }
+
+    @Test
     void invalidDimensions() throws IllegalDimensionException {
         IllegalDimensionException exception = assertThrows(IllegalDimensionException.class, () -> {
             new UITable(-1,10,10,10,null);
