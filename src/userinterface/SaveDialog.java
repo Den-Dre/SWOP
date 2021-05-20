@@ -115,6 +115,7 @@ public class SaveDialog extends GenericDialogScreen {
      *
      * @param result:
      *              the string returned by the clicked element of the content of this {@code SaveDialog}.
+     * @param name: The name that should be given to the file corresponding to the saved {@code Document}
      */
     protected void handleClickResult(ReturnMessage result, String name) {
         if (result.getType() != ReturnMessage.Type.Button)

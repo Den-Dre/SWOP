@@ -136,7 +136,7 @@ public class BookmarksDialogTest {
     @DisplayName("Can load incorrectly formed bookmarks")
     void loadIncorrectBookmarkTest() {
         bookmarksBar.addBookmark("test", "http://wwww.test.be");
-        bookmarksBar.loadTextHyperlink(id, "test");
+        bookmarksBar.loadTextHyperlink("test");
         TextSpan error = (TextSpan) Document.getErrorDocument();
         TextSpan text = (TextSpan) controller.getCurrentDocument().getContentSpan();
         assertEquals(error.getText(), text.getText());
@@ -146,7 +146,7 @@ public class BookmarksDialogTest {
     @DisplayName("Can load correctly formed bookmarks")
     void loadCorrectBookmarkTest() {
         bookmarksBar.addBookmark("test", tableUrl);
-        bookmarksBar.loadTextHyperlink(id, "test");
+        bookmarksBar.loadTextHyperlink("test");
         ContentSpan resultContentSpan = controller.getCurrentDocument().getContentSpan();
         ContentSpanBuilderTest.verifyContents(resultContentSpan);
     }

@@ -33,6 +33,7 @@ public class LeafPane extends Pane {
      * Construct a {@code ContentFrame} with the given parameters.
      *
      * @param contentFrame: The contents of this {@code LeafPane} in a {@link ContentFrame} object.
+     * @param controller: The {@link UIController} associated to this {@code LeafPane}.
      * @throws IllegalDimensionException : When one of the dimensions is negative.
      */
     public LeafPane(ContentFrame contentFrame, UIController controller) throws IllegalDimensionException {
@@ -405,6 +406,12 @@ public class LeafPane extends Pane {
     @Override
     public void replacePaneWith(Pane oldPane, Pane newPane) { }
 
+    /**
+     * Get the content of this {@code LeafPane} without the
+     * surrounding scrollbar decorators.
+     * @return: content: the content of this {@code LeafPane} without the
+     *      surrounding scrollbar decorators.
+     */
     public DocumentCell getContentWithoutScrollbars() {
         return ((DocumentCellDecorator) contentFrame.getContent()).getContentWithoutScrollbars();
     }
