@@ -116,7 +116,7 @@ public class BookmarksBar extends AbstractFrame {
         for (UITextHyperlink textHyperlink : textHyperLinks) {
             result = textHyperlink.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
             if (result.getType() == ReturnMessage.Type.Hyperlink) {
-                loadTextHyperlink(this.id, result.getContent());
+                loadTextHyperlink(result.getContent());
                 return;
             }
         }
@@ -158,7 +158,7 @@ public class BookmarksBar extends AbstractFrame {
      *
      * @param linkName: the name of the link that needs to be loaded.
      */
-    public void loadTextHyperlink(int id, String linkName) {
+    public void loadTextHyperlink(String linkName) {
         String url = controller.getURLFromBookmark(linkName);
         controller.loadDocument(controller.getCurrentDocumentId(), url);
     }

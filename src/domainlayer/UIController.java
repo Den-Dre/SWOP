@@ -1,7 +1,5 @@
 package domainlayer;
 
-import userinterface.ContentFrame;
-
 import java.util.ArrayList;
 
 /**
@@ -17,18 +15,17 @@ import java.util.ArrayList;
 public class UIController {
 
     /**
-     * Initialise this Controller
-     * with the given {@link Document}.
+     * Initialise this Controller with a new
+     * {@link Document} and {@link DocumentKeeper}.
      */
     public UIController() {
         this.bookmarksURLKeeper = new BookmarksURLKeeper();
         this.documentsKeeper = new DocumentKeeper();
-        // TODO replace calls to `document` field with calls to documentsKeeper (-> reduces chain of responsibilities?).
     }
 
-
     /**
-     * Combine the current url with the given href
+     * Combine the current url with the given href and
+     * load the page corresponding to the resulting URL.
      *
      * @param hrefString: the String representation of the href.
      */
@@ -43,8 +40,7 @@ public class UIController {
      * @param values An arraylist with the name-value pairs separated by "=".
      */
     public void loadDocumentFromForm(int id, String action, ArrayList<String> values) {
-        Document doc = documentsKeeper.getDocument(id);
-        doc.loadFromForm(action, values);
+        documentsKeeper.loadDocumentFromForm(id, action, values);
     }
 
     /**
@@ -77,9 +73,13 @@ public class UIController {
      */
     public void setCurrentDocument(int id) {
         documentsKeeper.setCurrentDocumentId(id);
-//        System.out.println("[Current document set to: " + id + "]");
     }
 
+    /**
+     * Retrieve the {@code id} of the currently loaded {@link Document}.
+     *
+     * @return id: the {@code id} of the currently loaded {@link Document}.
+     */
     public int getCurrentDocumentId() {
         return documentsKeeper.getCurrentDocumentId();
     }
@@ -117,8 +117,16 @@ public class UIController {
         documentsKeeper.addDocumentListener(id, d);
     }
 
-    public void addDocumentListener(int id, DocumentListener d, int copyId) {
-        documentsKeeper.addDocumentListener(id, d, copyId);
+    /**
+     * Similar to {@link DocumentKeeper#addDocumentListener(int, DocumentListener)}, but
+     * load contents based on the {@code Document} corresponding to the supplied {@code copyId}.
+     *
+     * @param id: the {@code id} corresponding to the {@code Document} to which the given listener should be added.
+     * @param documentListener: The {@link DocumentListener} that should be added.
+     * @param copyId: The id of the {@code Document} on which this listener addition is based.
+     */
+    public void addDocumentListener(int id, DocumentListener documentListener, int copyId) {
+        documentsKeeper.addDocumentListener(id, documentListener, copyId);
     }
 
     /**
@@ -164,18 +172,35 @@ public class UIController {
         bookmarksURLKeeper.addBookmarksHref(name, href);
     }
 
+    /**
+     * Generate and add a new {@link Document} to this {@code DocumentsKeeper}.
+     *
+     * @return id: the id of the newly added {@link Document}.
+     */
     public int addPaneDocument() {
         return documentsKeeper.addPaneDocument();
     }
 
+    /**
+     * Generate and add a new {@link Document} to this {@code DocumentsKeeper}.
+     * The newly created {@code Document} has the same {@link ContentSpan} loaded
+     * as that {@code Document} object associated to the given id.
+     *
+     * @param siblingId: the id of the {@link Document} which the newly added {@code Document}
+     * will be based on.
+     * @return id: the id of the newly created {@code Document}.
+     */
     public int duplicatePaneDocument(int siblingId) {
         return documentsKeeper.addPaneDocument(siblingId);
     }
 
-    public int removePaneDocument(int id) {
-        return documentsKeeper.removePaneDocument(id);
-    }
-
+    /**
+     * Get the {@link Document} object associated to
+     * the given {@code id}.
+     *
+     * @param id: The id of which the linked {@link Document} will be returned.
+     * @return document: the {@code Document} associated to the given {@code id}.
+     */
     public Document getDocument(int id) {
         return documentsKeeper.getDocument(id);
     }
@@ -207,8 +232,13 @@ public class UIController {
      */
     private final BookmarksURLKeeper bookmarksURLKeeper;
 
+    /**
+     * Set the contents of the {@link Document} corresponding to
+     * the given id to the contents of the {@link Document#getWelcomeDocument()}.
+     *
+     * @param id: the id of the {@code Document} whose contents should be set to the WelcomeDocument.
+     */
     public void setWelcomeDocument(int id) {
         documentsKeeper.setWelcomeDocument(id);
     }
-
 }

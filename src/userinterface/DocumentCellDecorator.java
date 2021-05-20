@@ -3,7 +3,6 @@ package userinterface;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.Array;
-import java.util.Arrays;
 
 /**
  * A class of decorators that decorate a visualization of a {@link DocumentCell} in 
@@ -289,11 +288,8 @@ public abstract class DocumentCellDecorator extends DocumentCell {
     }
 
     /**
-     * Get the max width of the {@code cellToBeDecorated} of this {@code DocumentCellDecorator}.
-     * 
-     * @return ratio : 
-     * 					the width of type {@link Double} of the {@code cellToBeDecorated} of 
-     * 					this {@code DocumentCellDecorator}.
+     * Set the x reference of this {@code DocumentCellDecorator}
+     * and its associated {@link DocumentCellDecorator#cellToBeDecorated}.
      */
     @Override
     public void setxReference(int xReference) {
@@ -301,6 +297,13 @@ public abstract class DocumentCellDecorator extends DocumentCell {
         cellToBeDecorated.setxReference(xReference);
     }
 
+    /**
+     * Get the maximum width of the contents of this
+     * {@code DocumentCellDecorator}.
+     *
+     * @return maxWidth: the maximum width of the contents of this
+     *      {@code DocumentCellDecorator}.
+     */
     @Override
     public int getMaxWidth() {
         return cellToBeDecorated.getMaxWidth();

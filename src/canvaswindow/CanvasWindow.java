@@ -311,7 +311,6 @@ public class CanvasWindow {
 	 * @param e Details about the event
 	 */
 	protected void handleMouseEvent(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-//		 System.out.println("Mouse event " + id + " (x=" + x + ", y = " + y + ", clickCount=" + clickCount + ", button=" + button + ")" + modifiersExToString(modifiersEx));
 	}
 
 	private void handleKeyEvent_(KeyEvent e) {

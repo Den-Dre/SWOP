@@ -31,15 +31,6 @@ public abstract class GenericSplitPane extends Pane {
     }
 
     /**
-     * Initialize this {@code GenericSplitPane} with a given GenericSplitPane. Used for deep copy.
-     * 
-     * @param pane	: The {@code GenericSplitPane} 
-     */
-    public GenericSplitPane(GenericSplitPane pane) {
-        super(pane.getxPos(), pane.getyPos(), pane.getWidth(), pane.getHeight());
-    }
-    
-    /**
      * Accesses the domain-layer through an observer design pattern linking the children ({@link LeafPane}'s)
      * of this {@code GenericSplitPane} (UI-layer) to the right {@link domainlayer.Document} (Domain-layer).
      * This results in children of this {@code GenericSplitPane} listening to changes in their 
@@ -241,5 +232,10 @@ public abstract class GenericSplitPane extends Pane {
      */
     protected final int SEPARATOR_THICKNESS = 10;
 
+    /**
+     * A boolean to denote whether the
+     * user is currently dragging a
+     * separator.
+     */
     public boolean dragging = false;
 }
