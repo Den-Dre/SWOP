@@ -162,14 +162,14 @@ public class UIController {
         bookmarksURLKeeper.addBookmarksHref(name, href);
     }
 
-//    /**
-//     * Generate and add a new {@link Document} to this {@code DocumentsKeeper}.
-//     *
-//     * @return id: the id of the newly added {@link Document}.
-//     */
-//    public int addPaneDocument() {
-//        return documentsKeeper.addPaneDocument();
-//    }
+    /**
+     * Generate and add a new {@link Document} to this {@code DocumentsKeeper}.
+     *
+     * @return id: the id of the newly added {@link Document}.
+     */
+    public int addPaneDocument() {
+        return documentsKeeper.addPaneDocument();
+    }
 //
 //    /**
 //     * Generate and add a new {@link Document} to this {@code DocumentsKeeper}.

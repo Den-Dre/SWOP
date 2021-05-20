@@ -21,16 +21,16 @@ public class DocumentKeeper {
         this.panesToDocuments = new HashMap<>();
     }
 
-//    /**
-//     * Generate and add a new {@link Document} to this {@code DocumentsKeeper}.
-//     *
-//     * @return id: the id of the newly added {@link Document}.
-//     */
-//    public int addPaneDocument() {
-//        Document doc = new Document();
-//        panesToDocuments.put(++documentCounter, doc);
-//        return documentCounter;
-//    }
+    /**
+     * Generate and add a new {@link Document} to this {@code DocumentsKeeper}.
+     *
+     * @return id: the id of the newly added {@link Document}.
+     */
+    public int addPaneDocument() {
+        Document doc = new Document();
+        panesToDocuments.put(++documentCounter, doc);
+        return documentCounter;
+    }
 //
 //
 //    /**
