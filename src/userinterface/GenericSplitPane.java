@@ -141,17 +141,14 @@ public abstract class GenericSplitPane extends Pane {
      * @param button      : The mouse button that was clicked
      * @param modifiersEx : The control keys that were held on the click
      */
-    public void handleMouseNotDragged(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-        if (id == MouseEvent.MOUSE_RELEASED && dragging){
-            dragging = false;
+    protected void handleMouseNotDragged(int id, int x, int y, int clickCount, int button, int modifiersEx) {
+        if (id == MouseEvent.MOUSE_RELEASED && dragging) {
             getFocusedPane().handleMouse(id, x, y, clickCount, button, modifiersEx);
-        }
-        else {
-            dragging = false;
+        } else {
             getFirstChild().handleMouse(id, x, y, clickCount, button, modifiersEx);
             getSecondChild().handleMouse(id, x, y, clickCount, button, modifiersEx);
         }
-
+        dragging = false;
     }
 
     /**
@@ -162,6 +159,18 @@ public abstract class GenericSplitPane extends Pane {
     @Override
     public boolean hasFocus() {
         return (getSecondChild().hasFocus() || getFirstChild().hasFocus());
+    }
+
+    public void setParentWidth(int parentWidth) {
+        super.setParentWidth(parentWidth);
+        getFirstChild().setParentWidth(parentWidth);
+        getSecondChild().setParentWidth(parentWidth);
+    }
+
+    public void setParentHeight(int parentHeight) {
+        super.setParentHeight(parentHeight);
+        getFirstChild().setParentHeight(parentHeight);
+        getSecondChild().setParentHeight(parentHeight);
     }
 
     /**

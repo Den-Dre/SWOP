@@ -10,7 +10,7 @@ import java.awt.event.MouseEvent;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("AbstractFrame")
-class FrameTest {
+class AbstractFrameTest {
 
     @Test
     @DisplayName("can correctly initialize")
