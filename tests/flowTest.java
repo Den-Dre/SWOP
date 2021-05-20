@@ -15,6 +15,7 @@ public class flowTest {
     private ContentFrame area;
     private AddressBar bar;
     private UIController controller;
+    Pane rootPane;
     private final String goodUrl = "https://people.cs.kuleuven.be/bart.jacobs/browsrtest.html";
     private final String badUrl = "www.fout.be";
     private final int id = 0;
@@ -200,6 +201,47 @@ public class flowTest {
         area.handleMouse(MouseEvent.MOUSE_PRESSED, submitX+1, submitY+1,1, leftMouse, 0);
         area.handleMouse(MouseEvent.MOUSE_RELEASED, submitX+1, submitY+1,1, leftMouse, 0);
         assertTrue(((DocumentCellDecorator) area.getContent()).getContentWithoutScrollbars() instanceof UITable);
-
+        UITable returnTable = (UITable) ((DocumentCellDecorator) area.getContent()).getContentWithoutScrollbars();
+        String firstString = ((UITextField) returnTable.getContent().get(0).get(0)).getText();
+        assertEquals("te", firstString);
     }
+
+    @Test
+    void splitting() {
+        //1. Simulate VerticalSplit
+        rootPane = new LeafPane(area, controller);
+        splitVertically();
+        assertTrue(rootPane instanceof VerticalSplitPane);
+        //2.Simulate HorizontalSplit
+        splitHorizontally();
+        assertTrue(rootPane.getFocusedPane().getParentPane() instanceof HorizontalSplitPane);
+    }
+
+    /**
+     * Takes the necessary actions to horizontally
+     * split the {@link ContentFrame} that currently
+     * has focus.
+     */
+    private void splitHorizontally() {
+        Pane focused = rootPane.getFocusedPane();
+        // Replace the currently focused Pane with a HorizontalSplitPane containing
+        // the originally focused Pane and a copy of it as its children.
+        rootPane.getRootPane().replacePaneWith(focused, focused.getHorizontalSplit());
+        rootPane = rootPane.getRootPane();
+    }
+
+    /**
+     * Takes the necessary actions to vertically
+     * split the {@link ContentFrame} that currently
+     * has focus.
+     */
+    private void splitVertically() {
+        Pane focused = rootPane.getFocusedPane();
+        // Replace the currently focused Pane with a VerticalSplitPane containing
+        // the originally focused Pane and a copy of it as its children.
+        rootPane.getRootPane().replacePaneWith(focused, focused.getVerticalSplit());
+        rootPane = rootPane.getRootPane();
+    }
+
+
 }
