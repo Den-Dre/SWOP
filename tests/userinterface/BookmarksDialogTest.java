@@ -24,7 +24,7 @@ public class BookmarksDialogTest {
     private ContentFrame area;
     private BookmarksBar bookmarksBar;
     private UIController controller;
-    private int id;
+    private int id = 0;
 
     private final String tableUrl = "https://people.cs.kuleuven.be/bart.jacobs/browsrtest.html";
 
@@ -39,7 +39,6 @@ public class BookmarksDialogTest {
         bar = new AddressBar(addressBarOffset, addressBarOffset, 100, addressBarHeight, addressBarOffset);
         bookmarksBar = new BookmarksBar(bookmarksBarOffset, addressBarHeight + 2 * bookmarksBarOffset, 100, bookmarksBarHeight, bookmarksBarOffset);
         area = new ContentFrame(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100);
-        id = area.getId();
         controller = new UIController(); // The document is created within uicontroller
         // Couple the uicontroller to the documentarea, addressbar and uicontroller
         area.setController(controller);

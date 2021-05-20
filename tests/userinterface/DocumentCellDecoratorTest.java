@@ -12,7 +12,7 @@ class DocumentCellDecoratorTest {
     private DocumentCellDecorator decorator;
     int x = 10;
     int y = 15;
-    int width = 5;
+    int width = 100;
     int height = 10;
     String text = "hallo";
 
@@ -24,7 +24,7 @@ class DocumentCellDecoratorTest {
 
     @BeforeEach
     void setUp() {
-        decorator = new HorizontalScrollBarDecorator(new UITextField(x, y, width, height, text));
+        decorator = new HorizontalScrollBarDecorator(new UITextField(x, y, width, height, "lolololololçlolololollllllllllllllllllll"));
     }
 
     @Test
@@ -41,8 +41,9 @@ class DocumentCellDecoratorTest {
 
     @Test
     void handleMouse() {
-        decorator.setParentWidth(5);
-        decorator.setLength(5);
+        decorator.setParentWidth(50);
+        decorator.setLength(10);
+        decorator.innerBarLength = 5;
         int x1 = 1;
         int x2 = 5;
         int delta = x2-x1;
@@ -50,7 +51,10 @@ class DocumentCellDecoratorTest {
         decorator.handleMouse(mousePress, decorator.getxPos()+1, decorator.getyPos()+decorator.getHorizontalBarYOffset()+1, 1, leftMouse, 0);
         decorator.handleMouse(mouseDrag, decorator.getxPos()+5, decorator.getyPos()+decorator.getHorizontalBarYOffset()+1, 1, leftMouse, 0);
         double afterFraction = decorator.getFraction();
-        assertTrue((decorator.getContentWithoutScrollbars()).getxOffset() < 0);
+        System.out.println("afterfraction: "+ afterFraction);
+        System.out.println("max width: " + decorator.cellToBeDecorated.getMaxWidth());
+        System.out.println("offset: " + decorator.getxOffset());
+        assertTrue(decorator.getxOffset() < 0);
         assertTrue(afterFraction > beforeFraction);
     }
 
