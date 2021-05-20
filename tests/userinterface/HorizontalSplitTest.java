@@ -107,9 +107,9 @@ public class HorizontalSplitTest {
         // 2. The system replaces the parent pane of the leaf pane containing the
         // focused frame by the latter pane’s sibling pane. It sets some remaining
         // frame as the new focused frame.
-        assertTrue(rootPane.getRootPane() instanceof LeafPane);
-        assertSame(rootPane.getFocusedPane(), rootPane.getRootPane());
-        assertSame(lowerPane.getRootPane(), lowerPane);
+        assertTrue(upperPane.getRootPane() instanceof LeafPane);
+        assertSame(upperPane.getFocusedPane(), upperPane.getRootPane());
+        assertSame(upperPane.getRootPane(), upperPane);
     }
 
     // 4.8 Use Case: Close Frame
