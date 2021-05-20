@@ -78,7 +78,6 @@ public abstract class DocumentCellDecorator extends DocumentCell {
         innerBarLength = (int) Math.round(length/newRatio);
     }
 
-
     /**
      * render the graphics {@code g} of this DocumentCell.
      *
@@ -394,7 +393,7 @@ public abstract class DocumentCellDecorator extends DocumentCell {
      * A variable to denote the {@link DocumentCell} that will be decorated.
      */
     protected final DocumentCell cellToBeDecorated;
-    
+
     /**
      * A variable to denote the thickness of the border around the scroll bar.
      */
@@ -419,12 +418,12 @@ public abstract class DocumentCellDecorator extends DocumentCell {
      * A variable to denote the length of this {@code DocumentCellDecorator}.
      */
     int length;
-    
+
     /**
      * A variable to denote the offset of this {@code DocumentCellDecorator}.
      */
     final int offset = 2;
-    
+
     /**
      * A variable of type {@link Array} to denote the previous mouse event
      * of this {@code DocumentCellDecorator}.

@@ -162,5 +162,23 @@ Bij aanvang bevindt \texttt{Browsr} zich in een \texttt{RegularLayout}. Wanneer 
 
 Daarnaast hebben we ook overwogen om het \textit{memento} design pattern te implementeren om de vorige staten van de \texttt{Regular}-, \texttt{BookmarksDialog-} of \texttt{SaveDialog}-layout te herstellen. Een implementatie van dit designpatroon bracht echter een aanzienlijke hoeveelheid overhead met zich mee vanwege de nood aan zogenoemde `memento-klassen' voor elk object dat de mogelijkheid moest hebben om hersteld te worden na het wisselen van een layout. Deze overhead wordt vermeden indien we voor elk van deze layouts de benodigde informatie in de hoger vermelde klassen bijhouden en via het gebruik van de zonet vernoemde layouts tussen deze scenario's wisselen vanuit de \texttt{Browsr}-klasse. Bovendien gebeurt dit alles met slechts een instantie van de \texttt{CanvasWindow}-klasse, zoals gevraagd.
 
+\section{Iteratie 3}
+\subsection{UI-laag}
+\begin{itemize}
+	\item \texttt{AbstractFrame}:\\
+	Deze klasse is gerefactored met als gevolg dat:
+	\begin{itemize}
+		\item Elke AbstractFrame een x-en yOffset heeft die kan gebruikt worden door de scrollBars om de AbstractFrames te verplaatsen.
+		\item Elke AbstractFrame heeft nu ook een x-en yReference heeft. Dit wordt gebruikt om deze objecten een notie te geven van de x-en y posities van de Pane waar ze deel van uitmaken.
+		\item Elke AbstractFrame een parentWidth-en Height heeft als attribuut. Analoog aan de x-en yReference wordt dit gebruikt om een notie te geven van de hoogte en breedte van de Pane waar deze objecten deel van uitmaken.
+	\end{itemize}
+	\item \texttt{DocumentCellDecorator}-klasse:\\
+	Deze klasse past het \textbf{Decorator-pattern} toe zodat er op een elegante manier \textit{scrollBars} aan \textit{DocumentCells} kan worden toegevoegd worden. Deze klasse implementeert gemeenschappelijke zaken tussen de klassen: \texttt{VerticalScrollBarDecorator} en \texttt{HorizontalScrollBarDecorator}.
+	\item \texttt{VerticalScrollBarDecorator} en \texttt{HorizontalScrollBarDecorator} kunnen dus gebruikt worden om respectievelijk verticale en/of horizontale scrollBars toe te voegen. Beide houden een \textit{fraction} bij (i.e. een variabele die bijhoudt hoe ver de scrollBar is gescrold). Wanneer deze \textit{fraction} wordt aangepast (door bijvoorbeeld een \texttt{MouseEvent.DRAGGING}), zorgen deze klassen ervoor dat de \textit{xOffset} of \textit{yOffset} van de \texttt{DocumentCell} die ze decoreren, worden aangepast.
+\end{itemize}
+
+
+
+
 \end{document}
 \\
