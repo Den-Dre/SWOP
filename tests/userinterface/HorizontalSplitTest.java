@@ -163,4 +163,9 @@ public class HorizontalSplitTest {
         assertEquals(lowerPane.getyPos(), yPos + 0.5*hsp.getHeight());
         assertEquals(upperPane.getyPos(), yPos);
     }
+
+    @Test
+    void dragging() {
+
+    }
 }
