@@ -54,8 +54,6 @@ public class HorizontalScrollBarDecorator extends DocumentCellDecorator {
 
     @Override
     void dragged(int dx, int dy) {
-    	System.out.println("length: " + length);
-    	System.out.println("innerBarLength: " + innerBarLength);
         setFraction((double) dx / (length-innerBarLength) + fraction);
     }
 
@@ -64,6 +62,7 @@ public class HorizontalScrollBarDecorator extends DocumentCellDecorator {
         if (cellToBeDecorated instanceof UITextField)
             return parentHeight;
         else
-            return parentHeight-17;
+            return parentHeight-17; // if the decorated object is not a UITextField,
+                                    // the scrollbar has to be higher.
     }
 }

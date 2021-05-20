@@ -16,15 +16,18 @@ class DocumentCellDecoratorTest {
     int height = 10;
     String text = "hallo";
 
-    final int mousePress = MouseEvent.MOUSE_PRESSED;
-    final int mouseDrag = MouseEvent.MOUSE_DRAGGED;
-    final int mouseRelease = MouseEvent.MOUSE_RELEASED;
-    final int leftMouse = MouseEvent.BUTTON1;
-
-
     @BeforeEach
     void setUp() {
-        decorator = new HorizontalScrollBarDecorator(new UITextField(x, y, width, height, "lolololololçlolololollllllllllllllllllll"));
+        decorator = new DocumentCellDecorator(new UITextField(x, y, width, height, text)) {
+            @Override
+            void init() { }
+
+            @Override
+            void moved() { }
+
+            @Override
+            void dragged(int dx, int dy) { }
+        };
     }
 
     @Test
@@ -37,25 +40,22 @@ class DocumentCellDecoratorTest {
     void getFraction() {
         decorator.setFraction(0.5);
         assertEquals(0.5, decorator.getFraction());
+        decorator.setFraction(-1.3);
+        assertEquals(0.0, decorator.getFraction());
+        decorator.setFraction(15);
+        assertEquals(1.0, decorator.getFraction());
     }
 
     @Test
-    void handleMouse() {
-        decorator.setParentWidth(50);
-        decorator.setLength(10);
-        decorator.innerBarLength = 5;
-        int x1 = 1;
-        int x2 = 5;
-        int delta = x2-x1;
-        double beforeFraction = decorator.getFraction();
-        decorator.handleMouse(mousePress, decorator.getxPos()+1, decorator.getyPos()+decorator.getHorizontalBarYOffset()+1, 1, leftMouse, 0);
-        decorator.handleMouse(mouseDrag, decorator.getxPos()+5, decorator.getyPos()+decorator.getHorizontalBarYOffset()+1, 1, leftMouse, 0);
-        double afterFraction = decorator.getFraction();
-        System.out.println("afterfraction: "+ afterFraction);
-        System.out.println("max width: " + decorator.cellToBeDecorated.getMaxWidth());
-        System.out.println("offset: " + decorator.getxOffset());
-        assertTrue(decorator.getxOffset() < 0);
-        assertTrue(afterFraction > beforeFraction);
+    void getRatio() {
+        // A generic decorator should return 1.0 as ratio.
+        assertEquals(1.0, decorator.getRatio());
+    }
+
+    @Test
+    void ratioChanged() {
+        decorator.ratioChanged(0.5);
+        assertEquals(decorator.length, decorator.innerBarLength);
     }
 
     @Test
@@ -65,42 +65,84 @@ class DocumentCellDecoratorTest {
 
     @Test
     void setxPos() {
+        int newX = decorator.getxPos()+20;
+        decorator.setxPos(newX);
+        assertEquals(newX, decorator.getxPos());
+        assertEquals(newX, decorator.getContent().getxPos());
+        assertEquals(newX, decorator.getContentWithoutScrollbars().getxPos());
     }
 
     @Test
     void setyPos() {
+        int newY = decorator.getyPos()+20;
+        decorator.setyPos(newY);
+        assertEquals(newY, decorator.getyPos());
+        assertEquals(newY, decorator.getContent().getyPos());
+        assertEquals(newY, decorator.getContentWithoutScrollbars().getyPos());
     }
 
     @Test
     void setxOffset() {
+        int xOffset = -3;
+        decorator.setxOffset(xOffset);
+        assertEquals(xOffset, decorator.getContent().getxOffset());
+        assertEquals(xOffset, decorator.getContentWithoutScrollbars().getxOffset());
     }
 
     @Test
     void setyOffset() {
+        int yOffset = -8;
+        decorator.setyOffset(yOffset);
+        assertEquals(yOffset, decorator.getContent().getyOffset());
+        assertEquals(yOffset, decorator.getContentWithoutScrollbars().getyOffset());
     }
 
     @Test
     void setWidth() {
+        int width = 23;
+        decorator.setWidth(width);
+        assertEquals(width, decorator.getWidth());
+        assertEquals(width, decorator.getContent().getWidth());
+        assertEquals(width, decorator.getContentWithoutScrollbars().getWidth());
     }
 
     @Test
     void setHeight() {
+        int height = 21;
+        decorator.setHeight(height);
+        assertEquals(height, decorator.getHeight());
+        assertEquals(height, decorator.getContent().getHeight());
+        assertEquals(height, decorator.getContentWithoutScrollbars().getHeight());
     }
 
     @Test
     void setParentHeight() {
+        int parentHeight = 12;
+        decorator.setParentHeight(parentHeight);
+        assertEquals(parentHeight, decorator.parentHeight);
+        assertEquals(parentHeight, decorator.getContent().parentHeight);
+        assertEquals(parentHeight, decorator.getContentWithoutScrollbars().parentHeight);
     }
 
     @Test
     void setParentWidth() {
+        int parentWidth = 14;
+        decorator.setParentWidth(parentWidth);
+        assertEquals(parentWidth, decorator.parentWidth);
+        assertEquals(parentWidth, decorator.getContent().parentWidth);
+        assertEquals(parentWidth, decorator.getContentWithoutScrollbars().parentWidth);
     }
 
     @Test
     void getMaxWidth() {
+        int expectedWidth = decorator.getContentWithoutScrollbars().getMaxWidth();
+        assertEquals(expectedWidth, decorator.getMaxWidth());
     }
 
     @Test
     void getMaxHeight() {
+        int expectedHeight = decorator.getContentWithoutScrollbars().getMaxHeight();
+        assertEquals(expectedHeight, decorator.getMaxHeight());
     }
 
     @Test
