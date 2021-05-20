@@ -9,7 +9,8 @@ import java.awt.event.MouseEvent;
 import java.util.Arrays;
 
 /**
- * A class to represent the portion of Browsr that renders the document
+ * A class to represent the portion of Browsr that renders the document extending from {@link Pane}
+ * (as defined in the assignment)
  */
 public class LeafPane extends Pane {
     /**
@@ -45,7 +46,7 @@ public class LeafPane extends Pane {
     }
 
     /**
-     * Render the contents of this AbstractFrame.
+     * Render the contents of this LeafPane.
      *
      * @param g : The graphics to be rendered.
      */
@@ -55,7 +56,12 @@ public class LeafPane extends Pane {
         if (hasFocus())
             drawFocusedBorder(g);
     }
-
+    
+    /**
+     * Render the border of this {@code LeafPane} with a blue line when focused 
+     * 
+     * @param g : The graphics to be rendered.
+     */
     private void drawFocusedBorder(Graphics g) {
         int offset = 5;
         Graphics2D g2 = (Graphics2D) g;
@@ -67,8 +73,11 @@ public class LeafPane extends Pane {
     }
 
     /**
-     * If the new window dimensions are legal, the UserInterface.LeafPane gets resized.
+     * If the new window dimensions are legal, the {@link LeafPane} gets resized.
      * It also resizes its content.
+     * 
+     * @param newWindowWidth	: The new window width of this {@link LeafPane}
+     * @param newWindowHeight	: The new window height of this {@link LeafPane}
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
@@ -80,7 +89,7 @@ public class LeafPane extends Pane {
     }
 
     /**
-     * Handle a horizontal split of the contents of this {@code Pane}.
+     * Handle a horizontal split of the contents of this {@code LeafPane}.
      */
     @Override
     public Pane getHorizontalSplit() {
@@ -88,13 +97,19 @@ public class LeafPane extends Pane {
     }
 
     /**
-     * Handle a vertical split of the contents of this {@code Pane}.
+     * Handle a vertical split of the contents of this {@code LeafPane}.
      */
     @Override
     public Pane getVerticalSplit() {
         return new VerticalSplitPane(getxPos(), getyPos(), getWidth(), getHeight(), this, parentPane);
     }
 
+    /**
+     * Closes the current {@link LeafPane} and returns its sibling or the welcome document
+     * (when this {@link LeafPane} is the root)
+     * 
+     * @return pane : the sibling of this (closed) {@link LeafPane} or the welcome document
+     */
     public Pane closeLeafPane() {
         if (this == getRootPane()) {
             contentFrame.setWelcomeDocument();
@@ -119,7 +134,8 @@ public class LeafPane extends Pane {
     }
 
     /**
-     * Update the parent of the parent of the given {@link Pane}.
+     * Update the parent of the parent of the given {@link LeafPane}.
+     * 
      * @param sibling : the {@link Pane} whose parents will be updated.
      */
     private void updateParents(Pane sibling) {
@@ -132,7 +148,7 @@ public class LeafPane extends Pane {
     }
 
     /**
-     * Handle mouseEvents. Determine if this AbstractFrame was pressed and do the right actions.
+     * Handle mouseEvents. Determine if this LeafPane was pressed and do the right actions.
      *
      * @param id          : The type of mouse activity
      * @param x           : The x coordinate of the mouse activity
@@ -155,19 +171,6 @@ public class LeafPane extends Pane {
         if (id == MouseEvent.MOUSE_PRESSED)
             System.out.printf("[Clicked on %s: (%d, %d; %d, %d)]\n", this.toString(), x, y, getWidth(), getHeight());
     }
-
-//    /**
-//     * Returns true if and only if (x,y) is in this UserInterface.LeafPane.
-//     *
-//     * @param x: The x coordinate to check
-//     * @param y: the y coordinate to check
-//     */
-//    private boolean wasClicked(int x, int y) {
-////    	System.out.println("DocArea: on: "+x+","+y);
-////    	System.out.println("getX: "+this.getxPos()+", getY: "+this.getyPos());
-////    	System.out.println("width: "+this.getWidth()+", height: "+this.getHeight());
-//        return x >= this.getxPos() && x <= (this.getxPos() + this.getWidth()) && y >= this.getyPos() && y <= (this.getyPos() + this.getHeight());
-//    }
 
     /**
      * Handle key presses. This method does the right action when a key is pressed.
@@ -193,66 +196,42 @@ public class LeafPane extends Pane {
         this.contentFrame.contentChanged();
         this.contentFrame.setyReference(getyPos());
     }
-
+    
+    /**
+     * Retrieve the {@link UIController} object associated to the contentFrame of 
+     * this {@link LeafPane}.
+     *
+     * @return controller: the {@link UIController} object associated to the 
+     *  contentFrame of this {@link LeafPane}.
+     */
     public UIController getController() {
         return contentFrame.getController();
     }
 
-
-//    /**
-//     * Wrap the given {@link DocumentCell} in a
-//     * {@link UITable} s.t. it can be easily decorated
-//     * by means of the decorator pattern which is implemented by
-//     * {@link VerticalScrollBarDecorator} and {@link HorizontalScrollBarDecorator}.
-//     *
-//     *
-//     * @param cell: The {@link DocumentCell} to be wrapped.
-//     * @return wrapped: The given {@link DocumentCell} wrapped in a {@link UITable}.
-//     */
-//    private DocumentCell wrapInDocumentCell(DocumentCell cell) {
-//        ArrayList<ArrayList<DocumentCell>> overlayContents =
-//                new ArrayList<>(Collections.singletonList(new ArrayList<>(Collections.singletonList(cell))));
-//        return new UITable(cell.getxPos(), cell.getyPos(), cell.getWidth(), cell.getHeight(), overlayContents);
-//    }
-
-//    /**
-//     * Set the content of this LeafPane
-//     * to the provided {@link ContentSpan}.
-//     *
-//     * The content to be set is wrapped in a
-//     * {@link UITable} for easy decoration using the
-//     * {@link HorizontalScrollBarDecorator} and
-//     * {@link VerticalScrollBarDecorator} decorators.
-//     *
-//     * @param content:
-//     *               The content that should be set.
-//     */
-//    public void setContent(DocumentCell content) {
-//        DocumentCell wrapped = wrapInDocumentCell(content);
-//        this.content = new HorizontalScrollBarDecorator(new VerticalScrollBarDecorator(wrapped));
-//        this.content.setParentWidth(getWidth());
-//        this.content.setParentHeight(getHeight());
-//    }
-
     /**
-     * Set the LeafPane's controller to a given controller
+     * Set the {@code LeafPane}'s controller to a given {@link domainlayer.UIController} object
      *
-     * @param controller
-     *        The new controller
+     * @param controller :
+     *        The new {@link domainlayer.UIController} object of this {@code LeafPane}
      */
     public void setController(UIController controller) {
         this.contentFrame.setController(controller);
     }
-
+    
+    /**
+     * Get the {@link ContentFrame} of this {@code LeafPane}.
+     * 
+     * @return contentFrame : the {@link ContentFrame} of this {@code LeafPane}
+     */
     public ContentFrame getContentFrame() {
         return contentFrame;
     }
 
     /**
-     * Set the x position of this LeafPane and its contents to the given value
+     * Set the x position of this {@code LeafPane} and its contents to the given value
      *
      * @param xPos :
-     *             The value this LeafPane's x position should be set to.
+     *             The value this {@code LeafPane}'s x position should be set to.
      */
     @Override
     public void setxPos(int xPos) {
@@ -261,10 +240,10 @@ public class LeafPane extends Pane {
     }
 
     /**
-     * Set the y position of this LeafPane and its contents to the given value
+     * Set the y position of this {@code LeafPane} and its contents to the given value
      *
      * @param yPos :
-     *             The value this LeafPane and its contents' y position should be set to.
+     *             The value this {@code LeafPane} and its contents' y position should be set to.
      */
     @Override
     public void setyPos(int yPos) {
@@ -273,10 +252,10 @@ public class LeafPane extends Pane {
     }
 
     /**
-     * Set the width of this LeafPane and its contents to the given value.
+     * Set the width of this {@code LeafPane} and its contents to the given value.
      *
      * @param newWidth :
-     *                 The new value of this LeafPane and its contents" width should be set to.
+     *                 The new value to which this {@code LeafPane} and its content's width should be set to.
      */
     @Override
     public void setWidth(int newWidth) {
@@ -285,10 +264,10 @@ public class LeafPane extends Pane {
     }
 
     /**
-     * Set the height of this LeafPane and its contents to the given value.
+     * Set the height of this {@code LeafPane} and its contents to the given value.
      *
      * @param newHeight :
-     *                  The new value of this LeafPane and its contents' height should be set to.
+     *                  The new value of this {@code LeafPane} and its contents' height should be set to.
      */
     @Override
     public void setHeight(int newHeight) {
@@ -297,24 +276,56 @@ public class LeafPane extends Pane {
         //contentFrame.handleResize(getWidth(),newHeight);
     }
 
+    /**
+     * Sets the width of the parent {@link Pane} of this {@code LeafPane} and the parent of 
+     * the currentFrame of this {@code LeafPane} to the given value.
+     *
+     * @param parentWidth :
+     *                 The new value to which the parent {@link Pane} of this {@code LeafPane}'s
+     *                 and the parent of the currentFrame of this {@code LeafPane}'s width should be set to.
+     */
     @Override
     public void setParentWidth(int parentWidth) {
         super.setParentWidth(parentWidth);
         contentFrame.setParentWidth(parentWidth);
     }
 
+    /**
+     * Sets the height of the parent {@link Pane} of this {@code LeafPane} and the parent of 
+     * the currentFrame of this {@code LeafPane} to the given value.
+     *
+     * @param parentHeight :
+     * 					The new value to which the parent {@link Pane} of this {@code LeafPane}'s
+     *                 	and the parent of the currentFrame of this {@code LeafPane}'s height should be set to.
+     */
     @Override
     public void setParentHeight(int parentHeight) {
         super.setParentHeight(parentHeight);
         contentFrame.setParentHeight(parentHeight);
     }
 
+    /**
+     * Sets the x reference position this {@code LeafPane} and its contentFrame to the 
+     * given value.
+     * 
+     * @param xReference : 
+     * 					The new value to which the x reference position of this {@code LeafPane} 
+     * 					and its contentFrame gets set.
+     */
     @Override
     public void setxReference(int xReference) {
         super.setxReference(xReference);
         contentFrame.setxReference(xReference);
     }
 
+    /**
+     * Sets the y reference position this {@code LeafPane} and its contentFrame to the 
+     * given value.
+     * 
+     * @param yReference : 
+     * 					The new value to which the y reference position of this {@code LeafPane} 
+     * 					and its contentFrame gets set.
+     */
     @Override
     public void setyReference(int yReference) {
         super.setyReference(yReference);
@@ -327,34 +338,71 @@ public class LeafPane extends Pane {
      * @return id: the id associated to this {@code LeafPane}.
      */
     // Note: if this method is not overridden and instead
-    // taken from Pane.java, incorrect behaviour occurs due
+    // taken from Pane.java, incorrect behavior occurs due
     // to the id of the parentPane being returned.
     @Override
     public int getId() {
         return this.id;
     }
 
-
+    /**
+     * Implementation of getFirstChild declared in {@link Pane}. But a {@code LeafPane} has
+     * no child {@code Pane} by design.
+     * 
+     * @throws UnsupportedOperationException : 
+     * 											a {@code LeafPane} has no child {@code Pane} 
+     * 											to return.
+     */
     @Override
     public Pane getFirstChild() {
         throw new UnsupportedOperationException("Can't request child of a LeafPane.");
     }
 
+    /**
+     * Implementation of getSecondChild declared in {@link Pane}. But a {@code LeafPane} has
+     * no child {@code Pane} by design.
+     * 
+     * @throws UnsupportedOperationException : 
+     * 											a {@code LeafPane} has no child {@code Pane}
+     * 											to return.
+     */
     @Override
     public Pane getSecondChild() {
         throw new UnsupportedOperationException("Can't request child of a LeafPane.");
     }
 
+    /**
+     * Implementation of setFirstChild declared in {@link Pane}. But a {@code LeafPane} has
+     * no child {@code Pane} by design.
+     * 
+     * @throws UnsupportedOperationException : 
+     * 											a {@code LeafPane} has no child {@code Pane}
+     * 											to be set.
+     */
     @Override
     public void setFirstChild(Pane pane) {
         throw new UnsupportedOperationException("Can't set child Pane of a LeafPane.");
     }
 
+    /**
+     * Implementation of setSecondChild declared in {@link Pane}. But a {@code LeafPane} has
+     * no child {@code Pane} by design.
+     * 
+     * @throws UnsupportedOperationException : 
+     * 											a {@code LeafPane} has no child {@code Pane}
+     * 											to be set.
+     */
     @Override
     public void setSecondChild(Pane pane) {
         throw new UnsupportedOperationException("Can't set child Pane of a LeafPane.");
     }
-
+    
+    /**
+     * a stub implementation of replacePaneWith declared in {@link Pane}.
+     * 
+     * @param oldPane : the old {@code Pane} to replace 
+     * @param newPane : the new {@code Pane} to replace the old {@code Pane} with
+     */
     @Override
     public void replacePaneWith(Pane oldPane, Pane newPane) { }
 
@@ -363,7 +411,8 @@ public class LeafPane extends Pane {
     }
 
     /**
-     * The content that is represented by this ContentFrame.
+     * A final variable of type {@link ContentFrame} containing the content of the contentFrame
+     * of this {@code LeafPane}.
      */
     private final ContentFrame contentFrame;
 }

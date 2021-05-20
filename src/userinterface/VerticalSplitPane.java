@@ -3,15 +3,21 @@ package userinterface;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
+/**
+ * A class extending {@link GenericSplitPane} to handle vertical splitting 
+ */
 public class VerticalSplitPane extends GenericSplitPane {
+	
     /**
-     * Initialise this AbstractFrame with the given parameters.
+     * Initialize this {@code VerticalSplitPane} with the given parameters.
      *
-     * @param x      : The x coordinate of this AbstractFrame.
-     * @param y      : The y coordinate of this AbstractFrame.
-     * @param width  : The width of this AbstractFrame
-     * @param height : The height of this AbstractFrame
-     * @throws IllegalDimensionException: When one of the dimensions of this AbstractFrame is negative
+     * @param x      : The x coordinate of this VerticalSplitPane.
+     * @param y      : The y coordinate of this VerticalSplitPane.
+     * @param width  : The width of this VerticalSplitPane
+     * @param height : The height of this VerticalSplitPane
+     * @param childPane : the {@link LeafPane} child of this VerticalSplitPane
+     * @param parentPane : the {@link Pane} parent of this VerticalSplitPane 
+     * @throws IllegalDimensionException: When one of the dimensions of this VerticalSplitPane is negative
      */
     public VerticalSplitPane(int x, int y, int width, int height, LeafPane childPane, Pane parentPane) throws IllegalDimensionException {
         super(x, y, width, height, childPane, parentPane);
@@ -44,11 +50,11 @@ public class VerticalSplitPane extends GenericSplitPane {
 
     /**
      * This method handles resizes.
-     * It makes sure the AbstractFrame is adjusted in width when the window shrinks or grows.
+     * It makes sure the VerticalSplitPane is adjusted in width when the window shrinks or grows.
      * It does not change its height (e.g. look at Firefox).
      *
-     * @param newWindowWidth  : parameter containing the new window-width of this AbstractFrame.
-     * @param newWindowHeight : parameter containing the new window-height of this AbstractFrame.
+     * @param newWindowWidth  : parameter containing the new window-width of this VerticalSplitPane.
+     * @param newWindowHeight : parameter containing the new window-height of this VerticalSplitPane.
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
@@ -127,27 +133,48 @@ public class VerticalSplitPane extends GenericSplitPane {
             handleMouseNotDragged(id, x, y, clickCount, button, modifiersEx);
     }
 
-
+    /**
+     * Gets the first (left-side) childPane of this {@code VerticalSplitPane}
+     * @return leftPane : the first childPane of this {@code VerticalSplitPane}
+     */
     @Override
     public Pane getFirstChild() {
         return leftPane;
     }
 
+    /**
+     * Gets the second (right-side) childPane of this {@code VerticalSplitPane}
+     * @return rightPane : the second childPane of this {@code VerticalSplitPane}
+     */
     @Override
     public Pane getSecondChild() {
         return rightPane;
     }
 
+    /**
+     * Sets the first (left-side) childPane of this {@code VerticalSplitPane}
+     *
+     * @param pane : the first childPane of this {@code VerticalSplitPane}
+     */
     @Override
     public void setFirstChild(Pane pane) {
         this.leftPane = pane;
     }
 
+    /**
+     * Sets the second (right-side) childPane of this {@code VerticalSplitPane}
+     * @param pane : the second childPane of this {@code VerticalSplitPane}
+     */
     @Override
     public void setSecondChild(Pane pane) {
         this.rightPane = pane;
     }
-
+    
+    /**
+     * Sets the x-position of this {@code VerticalSplitPane} and its childPanes
+     * ({@code leftPane} and {@code rightPane})
+     * @param xPos : the new x-position of this {@code VerticalSplitPane}
+     */
     @Override
     public void setxPos(int xPos) {
         super.setxPos(xPos);
@@ -155,6 +182,11 @@ public class VerticalSplitPane extends GenericSplitPane {
         rightPane.setxPos((int) (xPos + getWidth()* leftFraction));
     }
 
+    /**
+     * Sets the y-position of this {@code VerticalSplitPane} and its childPanes
+     * ({@code leftPane} and {@code rightPane})
+     * @param yPos : the new y-position of this {@code VerticalSplitPane}
+     */
     @Override
     public void setyPos(int yPos) {
         super.setyPos(yPos);
@@ -162,8 +194,14 @@ public class VerticalSplitPane extends GenericSplitPane {
         rightPane.setyPos(yPos);
     }
 
+    /**
+     * A variable of type {@link Pane} to hold the left childPane of this {@code VerticalSplitPane} 
+     */
     private Pane leftPane;
 
+    /**
+     * A variable of type {@link Pane} to hold the right childPane of this {@code VerticalSplitPane} 
+     */
     private Pane rightPane;
 
     private double leftFraction = 0.5;

@@ -1,0 +1,6 @@
+-> forms can be nested in our approach? Test out?
+-> pressing on left part of hyperlink -> next hyperlink gets pressed too
+-> url input cannot be written over (double hyperlinks should not be possible)
+-> show bookmarks as hyperlinks! No drawn box needed?
+-> is addressbar implemented as text input field?
+-> when form is loaded -> ' should be an html code? %27

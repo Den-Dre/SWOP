@@ -85,6 +85,13 @@ public class UIForm extends DocumentCell {
         this.formContent.handleKey(id, keyCode, keyChar, modifiersEx);
     }
 
+    /**
+     * If the new window dimensions are legal, this UIForm gets resized.
+     * It also resizes its content.
+     * 
+     * @param newWindowWidth	: The new window width of this {@link LeafPane}
+     * @param newWindowHeight	: The new window height of this {@link LeafPane}
+     */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
         formContent.handleResize(parentWidth, parentHeight);
@@ -136,36 +143,78 @@ public class UIForm extends DocumentCell {
         formContent.setxPos(xPos);
     }
 
+    /**
+     * Set the x offset of this UIForm.
+     *
+     * Also sets the x offset of the content.
+     *
+     * @param xOffset: The desired xOffset.
+     */
     @Override
     public void setxOffset(int xOffset) {
         super.setxOffset(xOffset);
         formContent.setxOffset(xOffset);
     }
 
+    /**
+     * Set the y offset of this UIForm.
+     *
+     * Also sets the y offset of the content.
+     *
+     * @param yOffset: The desired yOffset.
+     */
     @Override
     public void setyOffset(int yOffset) {
         super.setyOffset(yOffset);
         formContent.setyOffset(yOffset);
     }
 
+    /**
+     * Set the x reference of this UIForm.
+     *
+     * Also sets the x reference of the content.
+     *
+     * @param xReference: The desired xReference.
+     */
     @Override
     public void setxReference(int xReference) {
         super.setxReference(xReference);
         formContent.setxReference(xReference);
     }
 
+    /**
+     * Set the y reference of this UIForm.
+     *
+     * Also sets the y reference of the content.
+     *
+     * @param yReference: The desired yReference.
+     */
     @Override
     public void setyReference(int yReference) {
         super.setyReference(yReference);
         formContent.setyReference(yReference);
     }
 
+    /**
+     * Set the width of the parent of this UIForm.
+     *
+     * Also sets the width of the parent of the content.
+     *
+     * @param parentWidth: The desired width.
+     */
     @Override
     public void setParentWidth(int parentWidth) {
         super.setParentWidth(parentWidth);
         formContent.setParentWidth(parentWidth);
     }
 
+    /**
+     * Set the height of the parent of this UIForm.
+     *
+     * Also sets the height of the parent of the content.
+     *
+     * @param parentHeight: The desired height.
+     */    
     @Override
     public void setParentHeight(int parentHeight) {
         super.setParentHeight(parentHeight);

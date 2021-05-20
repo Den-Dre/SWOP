@@ -14,14 +14,14 @@ import java.util.ArrayList;
  */
 public class BookmarksBar extends AbstractFrame {
     /**
-     * Initialise this AbstractFrame with the given parameters.
+     * Initialize this {@code BookmarksBar} with the given parameters.
      *
-     * @param x      : The x coordinate of this AbstractFrame.
-     * @param y      : The y coordinate of this AbstractFrame.
-     * @param width  : The width of this AbstractFrame
-     * @param height : The height of this AbstractFrame
+     * @param x      : The x coordinate of this {@code BookmarksBar}.
+     * @param y      : The y coordinate of this {@code BookmarksBar}.
+     * @param width  : The width of this {@code BookmarksBar}
+     * @param height : The height of this {@code BookmarksBar}
      * @param offset : The distance that will be used as padding in-between saved bookmarks.
-     * @throws IllegalDimensionException: When one of the dimensions of this AbstractFrame is negative
+     * @throws IllegalDimensionException: When one of the dimensions of this {@code BookmarksBar} is negative
      */
     public BookmarksBar(int x, int y, int width, int height, int offset) throws IllegalDimensionException {
         super(x, y, width, height);
@@ -30,9 +30,18 @@ public class BookmarksBar extends AbstractFrame {
         this.offset = offset;
     }
 
+    public BookmarksBar(BookmarksBar bar) {
+        super(bar.getxPos(), bar.getyPos(), bar.getWidth(), bar.getHeight());
+        this.yCoordinate = bar.yCoordinate;
+        this.height = bar.height;
+        this.offset = bar.offset;
+        // Keep a reference to the same controller object
+        this.controller = bar.controller;
+    }
+
     /**
      * Set the {@link UIController} object associated
-     * to this {@code Bookmarksbar}.
+     * to this {@code BookmarksBar}.
      *
      * @param controller: The {@link UIController} to be set.
      */
@@ -77,6 +86,7 @@ public class BookmarksBar extends AbstractFrame {
 
     /**
      * render this {@code BookmarksBar}.
+     * 
      * @param g: The graphics to be rendered.
      */
     @Override
@@ -112,6 +122,14 @@ public class BookmarksBar extends AbstractFrame {
         }
     }
 
+    /**
+     * Handle key presses. This implementation is a stub.
+     *
+     * @param id          : The KeyEvent (Associated with type of KeyEvent)
+     * @param keyCode     : The KeyEvent code (Determines the involved key)
+     * @param keyChar     : The character representation of the involved key
+     * @param modifiersEx : Specifies other keys that were involved in the event
+     */
     @Override
     public void handleKey(int id, int keyCode, char keyChar, int modifiersEx) { }
 
@@ -141,7 +159,6 @@ public class BookmarksBar extends AbstractFrame {
      * @param linkName: the name of the link that needs to be loaded.
      */
     public void loadTextHyperlink(int id, String linkName) {
-        // TODO: This seems redundant. Maybe we should change our approach of storing bookmarks.
         String url = controller.getURLFromBookmark(linkName);
         controller.loadDocument(controller.getCurrentDocumentId(), url);
     }
@@ -198,6 +215,6 @@ public class BookmarksBar extends AbstractFrame {
      * The ID of the {@link Pane} that currently has focus.
      * Its value is initialised to 0 as this represents the root{@link Pane}.
      */
-    private int id = 0;
+    private final int id = 0;
 }
 

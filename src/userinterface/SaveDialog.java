@@ -147,7 +147,11 @@ public class SaveDialog extends GenericDialogScreen {
      * the user  wants to give to the URL being saved.
      */
     private final UITextInputField nameInput;
-
+    
+    /**
+     * A {@link UITextInputField} to denote the contents
+     * of input given the {@code nameInput} of this {@code SaveDialog}
+     */
     private final UITextInputField nameInputContents;
 
     /**

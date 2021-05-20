@@ -10,7 +10,8 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * A class to represent the portion of Broswr that renders the document
+ * A class to represent frames containing content to be displayed in browsr,
+ * extended from {@link AbstractFrame}.
  */
 public class ContentFrame extends AbstractFrame implements DocumentListener {
     /**
@@ -27,7 +28,7 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
     }
 
     /**
-     * Initialise a {@code ContentFrame} with the given {@code AbstractFrame} parameters
+     * Initialize a {@code ContentFrame} with the given {@code ContentFrame} parameters
      * and an {@code siblingId} as a reference for which page should be loaded.
      *
      * @param x        : The x coordinate of the {@code ContentFrame}.
@@ -42,7 +43,7 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
     }
 
     /**
-     * Translates the contentSpan from the domainmodel into the simplified UI-representation objects.
+     * Translates the contentSpan from the Domain-model into the simplified UI-representation objects.
      * Distinction is made between domain-classes Table, HyperLink, TextSpan, TextInputField, Form and SubmitButton
      *
      * @param contents: The contents to be translated to UI elements.
@@ -69,7 +70,7 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
     }
 
     /**
-     * Translates a Table from the domainmodel into the simplified UI-representation
+     * Translates a Table from the Domain-model into the simplified UI-representation
      *
      * @param content: The content to be translated to UI elements.
      * @return a UITable with the translated elements
@@ -92,7 +93,7 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
     }
     
     /**
-     * Translates a Cell from the domainmodel into the simplified UI-representation
+     * Translates a Cell from the Domain-model into the simplified UI-representation
      * 
      * @param content: The content to be translated to UI elements
      * @return a DocumentCell with translated elements
@@ -104,7 +105,7 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
     }
     
     /**
-     * Translates a Row from the domainmodel into the simplified UI-representation
+     * Translates a Row from the Domain-model into the simplified UI-representation
      * 
      * @param content: The content to be translated to UI elements
      * @return an ArrayList<DocumentCell> with translated elements
@@ -121,7 +122,7 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
     }
     
     /**
-     * Translates a HyperLink from the domainmodel into the simplified UI-representation
+     * Translates a HyperLink from the Domain-model into the simplified UI-representation
      * 
      * @param content: The content to be translated to UI elements
      * @return a UIHyperlink with translated elements
@@ -141,7 +142,7 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
     }
     
     /**
-     * Translates a TextSpan from the domainmodel into the simplified UI-representation
+     * Translates a TextSpan from the Domain-model into the simplified UI-representation
      *
      * @param content: The content to be translated to UI elements.
      * @return a UITextField with translated elements
@@ -158,7 +159,7 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
     }
     
     /**
-     * Translates a Form from the domainmodel into the simplified UI-representation
+     * Translates a Form from the Domain-model into the simplified UI-representation
      * 
      * @param content: The content to be translated to UI elements.
      * @return  a UIForm with translated elements
@@ -169,7 +170,7 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
     }
     
     /**
-     * Translates a {@link TextInputField} from the domainmodel into the simplified UI-representation
+     * Translates a {@link TextInputField} from the Domain-model into the simplified UI-representation
      * The created {@link UITextInputField} should also have a horizontal scroll bar and is decorated as such.
      * 
      * @param content: The content to be translated to UI elements.
@@ -180,7 +181,7 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
     }
     
     /**
-     * Translates a SubmitButton from the domainmodel into the simplified UI-representation
+     * Translates a SubmitButton from the Domain-model into the simplified UI-representation
      *  
      * @return a UIButton with translated elements
      */
@@ -189,7 +190,8 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
     }    
     
     /**
-     * Renders the content. The content renders its sub-content recursively if existent
+     * Renders the content. The content renders its sub-content recursively if existent.
+     * 
      * @param g: The graphics to be rendered
      */
     @Override
@@ -203,6 +205,9 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
     /**
      * If the new window dimensions are legal, the UserInterface.ContentFrame gets resized.
      * It also resizes its content.
+     * 
+     * @param newWindowWidth	: The new window width of this {@link LeafPane}
+     * @param newWindowHeight	: The new window height of this {@link LeafPane}
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
@@ -229,6 +234,13 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
      *       <li> => Handle the result accordingly </li>
      * </ul>
      * => If all yes, send the click to content. The result of this could be a href String or the Empty String.
+     * 
+     * @param id          : The type of mouse activity
+     * @param x           : The x coordinate of the mouse activity
+     * @param y           : The y coordinate of the mouse activity
+     * @param clickCount  : The number of clicks
+     * @param button      : The mouse button that was clicked
+     * @param modifiersEx : The control keys that were held on the click
      */
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
@@ -238,6 +250,14 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
         linkPressed(result);
     }
 
+    /**
+     * Handle key presses. This method does the right action when a key is pressed.
+     *
+     * @param id          : The KeyEvent (Associated with type of KeyEvent)
+     * @param keyCode     : The KeyEvent code (Determines the involved key)
+     * @param keyChar     : The character representation of the involved key
+     * @param modifiersEx : Specifies other keys that were involved in the event
+     */
     @Override
     public void handleKey(int id, int keyCode, char keyChar, int modifiersEx) {
         content.handleKey(id, keyCode, keyChar, modifiersEx);
@@ -264,7 +284,7 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
 
 
     /**
-     * Notify the LeafPane that the contents have been changed
+     * Notify the {@link LeafPane} that the contents have been changed
      */
     public void contentChanged() {
         try {
@@ -307,29 +327,28 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
     }
 
     /**
-     * Retrieve the contents of this ContentFrame.
+     * Retrieve the contents of this {@code ContentFrame}.
      *
      * @return contentSpan:
-     *              A {@link ContentSpan} that denotes the contents of this ContentFrame.
+     *              A {@link ContentSpan} that denotes the contents of this {@code ContentFrame}.
      */
     public DocumentCell getContent() {
         return this.content;
     }
 
     /**
-     * Retrieve the {@link UIController} object associated to this {@link ContentFrame}
+     * Retrieve the {@link UIController} object associated to this {@code ContentFrame}
      *
-     * @return controller: the {@link UIController} object associated to this {@link ContentFrame}.
+     * @return controller: the {@link UIController} object associated to this {@code ContentFrame}.
      */
     public UIController getController() {
         return controller;
     }
 
     /**
-     * Set the ContentFrame's controller to a given controller
+     * Set this {@code ContentFrame}'s controller to a given {@link domainlayer.UIController} object.
      *
-     * @param controller
-     *        The new controller
+     * @param controller : The new {@link domainlayer.UIController} object
      */
     public void setController(UIController controller) {
         this.controller = controller;
@@ -343,16 +362,21 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
     public int getId() {
         return this.id;
     }
-
+    
+    /**
+     * Set the id of this {@code ContentFrame}.
+     * 
+     * @param id : the new id of this {@code ContentFrame}.
+     */
     public void setId(int id) {
         this.id = id;
     }
 
     /**
-     * Set the x position of this ContentFrame and its contents to the given value
+     * Set the x position of this {@code ContentFrame} and its {@code content} to the given value (if existent).
      *
      * @param xPos :
-     *             The value this ContentFrame's and its content's x position should be set to.
+     *             The value this {@code ContentFrame}'s and its {@code content}'s x position should be set to.
      */
     @Override
     public void setxPos(int xPos) {
@@ -364,10 +388,10 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
     }
 
     /**
-     * Set the y position of this ContentFrame and its contents to the given value
+     * Set the y position of this {@code ContentFrame} and its {@code content} to the given value (if existent).
      *
      * @param yPos :
-     *             The value this ContentFrame's and its content's y position should be set to.
+     *             The value this {@code ContentFrame}'s and its {@code content}'s y position should be set to.
      */
     @Override
     public void setyPos(int yPos) {
@@ -378,6 +402,14 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
         }
     }
 
+    /**
+     * Set the width of the parent of this {@code ContentFrame} and the width of the parent of its {@code content}
+     * to the given value (if existent).
+     * 
+     * @param parentWidth :
+     * 						The value the parent of this {@code ContentFrame}'s and the parent of its 
+     * 						{@code content}'s width should be set to.
+     */
     @Override
     public void setParentWidth(int parentWidth) {
         super.setParentWidth(parentWidth);
@@ -385,6 +417,14 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
             content.setParentWidth(parentWidth);
     }
 
+    /**
+     * Set the height of the parent of this {@code ContentFrame} and the width of the parent of its {@code content}
+     * to the given value (if existent).
+     * 
+     * @param parentHeight :
+     * 						The value the parent of this {@code ContentFrame}'s and the parent of its 
+     * 						{@code content}'s height should be set to.
+     */
     @Override
     public void setParentHeight(int parentHeight) {
         super.setParentHeight(parentHeight);
@@ -393,23 +433,23 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
     }
 
     /**
-     * The {@link UIController} related to this ContentFrame
+     * The {@link UIController} related to this {@code ContentFrame}.
       */
     public UIController controller;
 
     /**
-     * The text size of the {@code Url} of this ContentFrame.
+     * The text size of the {@code Url} of this {@code ContentFrame}.
      */
     private final int textSize = 14;
 
     /**
-     * The content that is represented by this ContentFrame.
+     * The content of type {@link DocumentCell} that is represented by this {@code ContentFrame}.
      */
     private DocumentCell content;
 
     /**
      * The id of the {@link LeafPane} associated to this {@code ContentFrame}.
-     * Initialise the {@code id} with -1 to indicate it hasn't been assigned.
+     * Initialize the {@code id} with -1 to indicate it hasn't been assigned.
      */
     private int id = -1;
 }

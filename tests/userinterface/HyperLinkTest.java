@@ -86,7 +86,6 @@ class HyperLinkTest{
 		
 		// we traveled to this new url, hence the url in the bar has changed
 		assertEquals(bar.getURL(), "https://people.cs.kuleuven.be/bart.jacobs/browsrtest.html");
-		
 	}
 	
 	// 2.2
@@ -99,11 +98,10 @@ class HyperLinkTest{
 		// compose url with href and load the document
 		ctrl.loadDocumentFromHref(0, href);
 		
-		UITextField text = (UITextField) ((DocumentCellDecorator) doc.getContent().getContent()).getContentWithoutScrollbars();
+		UITable table = (UITable) ((LeafPane) doc).getContentWithoutScrollbars();
 		
 		// check if document has changed
-		assertTrue(text instanceof UITextField);
-        assertEquals(text.getText(),
+        assertEquals(((UITextField) table.getContent().get(0).get(0)).getText(),
 				"HTML elements partially supported by Browsr:");
 	}
 	
@@ -141,20 +139,4 @@ class HyperLinkTest{
         TextSpan textSpan = (TextSpan) contentSpan;
         assertEquals("Error: malformed URL.", textSpan.getText());
     }
-	
-//	// 2a.1.2
-//	@Test
-//	@DisplayName("Loading fails, shows error document")
-//	void loadingFailed() {
-//		fail("");
-//	}
-//	
-//	// 2a.1.3
-//	@Test
-//	@DisplayName("Parsing the document fails, shows error document")
-//	void docParsingFails() {
-//		fail("");
-//	}
-	
-	
 }
