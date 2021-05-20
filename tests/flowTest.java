@@ -165,4 +165,41 @@ public class flowTest {
         assertEquals(badLink, bar.getURL());
         assertEquals(badLink, controller.getUrlString(id));
     }
+
+    @Test
+    void loadForm() {
+        /////////////////////
+        // Load a good document with a hyperlink
+        //1. Click on addressBar to gain focus
+        assertFalse(bar.hasFocus);
+        bar.handleMouse(mouseClick, 5, 5, 1,leftMouse,0);
+        assertTrue(bar.hasFocus);
+        //2. Type in a correct url
+        String formUrl = "https://people.cs.kuleuven.be/bart.jacobs/swop/browsrformtest.html";
+        char[] chars = formUrl.toCharArray();
+        for (char ch : chars) {
+            bar.handleKey(keyPress, KeyEvent.getExtendedKeyCodeForChar(ch), ch, 0);
+        }
+        assertEquals(formUrl, bar.getURL());
+        //3. press enter
+        bar.handleKey(keyPress, KeyEvent.VK_ENTER, undefChar, 0);
+        assertFalse(bar.hasFocus);
+        assertEquals(formUrl, bar.getURL());
+        assertEquals(formUrl, controller.getUrlString(id));
+        ///////////////////////
+        assertTrue(((DocumentCellDecorator) area.getContent()).getContentWithoutScrollbars() instanceof UIForm);
+        UIForm form = (UIForm) ((DocumentCellDecorator) area.getContent()).getContentWithoutScrollbars();
+        //4. Trigger FormAction
+        UITable outerTable = (UITable) form.getFormContent();
+        UITable innerTable = (UITable) outerTable.getContent().get(1).get(0);
+        ((UITextInputField) innerTable.getContent().get(0).get(1)).setText("te");
+        ((UITextInputField) innerTable.getContent().get(1).get(1)).setText("1");
+        UIButton submitButton = ((UIButton) outerTable.getContent().get(2).get(0));
+        int submitX = submitButton.getxPos();
+        int submitY = submitButton.getyPos();
+        area.handleMouse(MouseEvent.MOUSE_PRESSED, submitX+1, submitY+1,1, leftMouse, 0);
+        area.handleMouse(MouseEvent.MOUSE_RELEASED, submitX+1, submitY+1,1, leftMouse, 0);
+        assertTrue(((DocumentCellDecorator) area.getContent()).getContentWithoutScrollbars() instanceof UITable);
+
+    }
 }
