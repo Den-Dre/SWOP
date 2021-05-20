@@ -14,40 +14,41 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@DisplayName("LeafPane:")
-class LeafPaneTest {
-    private LeafPane leafPane1;
-    private LeafPane leafPane2;
+@DisplayName("ContentFrame:")
+class ContentFrameTest {
+    private ContentFrame contentFrame1;
+    private ContentFrame contentFrame2;
     private final int doc2Xpos = 10;
     private final int doc2Ypos = 15;
 
     @BeforeEach
     void setUp() {
-        leafPane1 = new LeafPane(0,0,100,100);
-        leafPane2 = new LeafPane(doc2Xpos,doc2Ypos,150,500);
+        contentFrame1 = new ContentFrame(0,0,100,100);
+        contentFrame2 = new ContentFrame(doc2Xpos,doc2Ypos,150,500);
     }
 
     @Test
     @DisplayName("Handles resizes")
     void handleResize() {
-        // Make doc1 smaller
+        // Make cf1 smaller
         int newWidth1 = 20;
         int newHeight1 = 20;
-        leafPane1.handleResize(newWidth1,newHeight1);
-        assertEquals(newHeight1, leafPane1.getHeight());
-        assertEquals(newWidth1, leafPane1.getWidth());
-        // Make doc2 larger
+        contentFrame1.handleResize(newWidth1,newHeight1);
+        assertEquals(newHeight1, contentFrame1.getHeight());
+        assertEquals(newWidth1, contentFrame1.getWidth());
+        // Make cf2 larger
         int newWidth2 = 600;
         int newHeight2 = 1000;
-        leafPane2.handleResize(newWidth2,newHeight2);
-        assertEquals(newHeight2-doc2Ypos, leafPane2.getHeight());
-        assertEquals(newWidth2-doc2Xpos, leafPane2.getWidth());
-        // Make the window smaller than the xpos and ypos of doc2
-        int newWidth3 = 5;
-        int newHeight3 = 3;
-        leafPane2.handleResize(newWidth3,newHeight3);
-        assertEquals(newHeight2-doc2Ypos, leafPane2.getHeight());
-        assertEquals(newWidth2-doc2Xpos, leafPane2.getWidth());
+        contentFrame2.handleResize(newWidth2,newHeight2);
+        assertEquals(newHeight2-doc2Ypos + 15, contentFrame2.getHeight());
+        assertEquals(newWidth2-doc2Xpos + 10, contentFrame2.getWidth());
+        // Make the window smaller than the xpos and ypos of cf2
+//        int newWidth3 = 5;
+//        int newHeight3 = 3;
+//        contentFrame2.handleResize(newWidth3,newHeight3);
+//        assertEquals(newHeight2-doc2Ypos, contentFrame2.getHeight());
+//        assertEquals(newWidth2-doc2Xpos, contentFrame2.getWidth());
+        // -> makes no longer sense. 
     }
 
     @Test
@@ -62,7 +63,7 @@ class LeafPaneTest {
         String text2 = "aa";
         String href = "/wiki/Java";
         String hrefText = "Java";
-        LeafPane doc = new LeafPane(x,y,500,500);
+        ContentFrame doc = new ContentFrame(x,y,500,500);
 
         // Texfields and hyperlink
         UITextField textField3 = new UITextField(x, y, width, textSize, text);
@@ -89,7 +90,7 @@ class LeafPaneTest {
         // The width and height of the table should be the width and height of the cells combined.
         // The height of a cell is the size of the text. The width is the
         double ratio = doc.getContent().getHeightToWidthRatio();
-        DocumentCell content = ((DocumentCellDecorator) doc.getContent()).getContentWithoutScrollbars();
+        DocumentCell content = ((VerticalScrollBarDecorator) ((DocumentCellDecorator) doc.getContent()).getContent()).cellToBeDecorated;
         assertEquals(2*(textSize+ table.verticalOffset), content.getMaxHeight());
         assertEquals((int) ((Math.max(text.length(), hrefText.length())+text2.length())*textSize*ratio) + 2*table.horizontalOffset, content.getMaxWidth());
 
@@ -104,36 +105,45 @@ class LeafPaneTest {
     void handleTranslate() {
     	// ======== Setup ===========
     	UIController ctrl1 = new UIController(); 
-    	Document doc1 = new Document();
-    	UIController ctrl2 = new UIController(); 
-    	Document doc2 = new Document();
-    	UIController ctrl3 = new UIController(); 
-    	Document doc3 = new Document();
-    	UIController ctrl4 = new UIController(); 
-    	Document doc4 = new Document();
-    	
-    	// a valid userinterface.Browsr document
+    	int id1 = ctrl1.addPaneDocument();
+    	UIController ctrl2 = new UIController();
+		int id2 = ctrl2.addPaneDocument();
+		UIController ctrl3 = new UIController();
+		int id3 = ctrl3.addPaneDocument();
+		UIController ctrl4 = new UIController();
+		int id4 = ctrl4.addPaneDocument();
+		
+		// setup root of pane structure
+		Pane rootPane1 = new LeafPane(contentFrame1, ctrl4);
+		ctrl4.setCurrentDocument(rootPane1.getId());
+		
+		// a valid userinterface.Browsr document
     	ContentSpan content1 = ContentSpanBuilder.buildContentSpan("""
     			<a href="a.html">a</a>
     			"""); // only a HyperLink
-    	doc1.changeContentSpan(content1);
-    	leafPane1.setController(ctrl1);
-    	ctrl1.setDocument(doc1);
-    	leafPane1.contentChanged(); // would throw an exception if translation failed
-    	assertEquals(((DocumentCellDecorator) leafPane1.getContent()).getContentWithoutScrollbars().getClass(), UIHyperlink.class);
-    	assertEquals(((UIHyperlink) ((DocumentCellDecorator) leafPane1.getContent()).getContentWithoutScrollbars()).getText(), "a");
+    	ctrl1.getDocument(id1).changeContentSpan(content1);
+    	contentFrame1.setController(ctrl1);
+    	ctrl1.setCurrentDocument(id1);
+    	contentFrame1.setId(id1);
+    	contentFrame1.contentChanged(); // would throw an exception if translation failed
+    	
+    	System.out.println("celly: " + contentFrame1.getContent());
+    	
+    	assertTrue(((DocumentCellDecorator) contentFrame1.getContent()).getContentWithoutScrollbars() instanceof UIHyperlink);
+    	assertEquals(((UIHyperlink) ((DocumentCellDecorator) contentFrame1.getContent()).getContentWithoutScrollbars()).getText(), "a");
     	
 		ContentSpan content2 = ContentSpanBuilder.buildContentSpan("""
 				<table>
 				  <tr><td>HTML elements partially supported by UserInterface.Browsr:
 				</table>
 				"""); // only a Table
-    	doc2.changeContentSpan(content2);
-    	leafPane1.setController(ctrl2);
-    	ctrl2.setDocument(doc2);	
-    	leafPane1.contentChanged(); // would throw an exception if translation failed
-		assertTrue(((DocumentCellDecorator) leafPane1.getContent()).getContentWithoutScrollbars() instanceof UITable); // content is translated into a UITable
-		UITable table = (UITable) ((DocumentCellDecorator) leafPane1.getContent()).getContentWithoutScrollbars();
+    	ctrl2.getDocument(id2).changeContentSpan(content2);
+    	contentFrame1.setController(ctrl2);
+    	ctrl2.setCurrentDocument(id2);
+    	contentFrame1.contentChanged(); // would throw an exception if translation failed
+		// content is translated into a UITable, and text field is extracted
+		assertTrue(((VerticalScrollBarDecorator) (((HorizontalScrollBarDecorator) contentFrame1.getContent()).getContent())).getContent() instanceof UITable);
+		UITable table = (UITable) ((VerticalScrollBarDecorator) (((HorizontalScrollBarDecorator) contentFrame1.getContent()).getContent())).getContent();
     	assertEquals(table.getContent().size(), 1); // this table only contains one element
     	assertEquals(table.getContent().get(0).get(0).getClass(), UITextField.class); // and this is a UITextField
     	assertEquals(((UITextField) table.getContent().get(0).get(0)).getText(), "HTML elements partially supported by UserInterface.Browsr:");
@@ -142,12 +152,12 @@ class LeafPaneTest {
 		ContentSpan content3 = ContentSpanBuilder.buildContentSpan("""
 				  HTML elements partially supported by UserInterface.Browsr:
 				"""); // only a piece of Text
-    	doc3.changeContentSpan(content3);
-    	leafPane1.setController(ctrl3);
-    	ctrl3.setDocument(doc3);
-    	leafPane1.contentChanged(); // would throw an exception if translation failed
-		assertTrue(((DocumentCellDecorator) leafPane1.getContent()).getContentWithoutScrollbars() instanceof UITextField);
-		assertEquals(((UITextField) ((DocumentCellDecorator) leafPane1.getContent()).getContentWithoutScrollbars()).getText(), "HTML elements partially supported by UserInterface.Browsr:");
+    	ctrl3.getDocument(id3).changeContentSpan(content3);
+    	contentFrame1.setController(ctrl3);
+    	ctrl3.setCurrentDocument(id3);
+    	contentFrame1.contentChanged(); // would throw an exception if translation failed
+		assertTrue(((DocumentCellDecorator) contentFrame1.getContent()).getContentWithoutScrollbars() instanceof UITextField);
+		assertEquals(((UITextField) ((DocumentCellDecorator) contentFrame1.getContent()).getContentWithoutScrollbars()).getText(), "HTML elements partially supported by UserInterface.Browsr:");
     	
         // not a valid userinterface.Browsr document (yoinked from https://www.w3schools.com/html/tryit.asp?filename=tryhtml_basic_document)
 		assertThrows(Exception.class, () -> ContentSpanBuilder.buildContentSpan("""
@@ -181,12 +191,13 @@ class LeafPaneTest {
 				</form>
 				""");
 		
-		doc4.changeContentSpan(content4);
-		leafPane1.setController(ctrl4);
-		ctrl4.setDocument(doc4);
-		leafPane1.contentChanged();
-		assertTrue(((DocumentCellDecorator) leafPane1.getContent()).getContentWithoutScrollbars() instanceof UIActionForm);
-		UIActionForm form = (UIActionForm) ((DocumentCellDecorator) leafPane1.getContent()).getContentWithoutScrollbars();
+
+		ctrl4.getDocument(id4).changeContentSpan(content4);
+		contentFrame1.setController(ctrl4);
+		ctrl4.setCurrentDocument(id4);
+		contentFrame1.contentChanged();
+		assertTrue(((DocumentCellDecorator) contentFrame1.getContent()).getContentWithoutScrollbars() instanceof UIForm);
+		UIActionForm form = (UIActionForm) ((DocumentCellDecorator) contentFrame1.getContent()).getContentWithoutScrollbars();
 		assertEquals(form.getAction(), "browsrformactiontest.php");
 		assertTrue(form.getFormContent() instanceof UITable);
 		UITable table2 = (UITable) form.getFormContent();
@@ -197,13 +208,11 @@ class LeafPaneTest {
 		UITable table3 = (UITable) table2.getContent().get(1).get(0);
 		assertTrue(table3.getContent().get(0).get(0) instanceof UITextField);
 		assertEquals(((UITextField) table3.getContent().get(0).get(0)).getText(), "Starts with:");
-		assertTrue( ((DocumentCellDecorator) table3.getContent().get(0).get(1)).getContent() instanceof UITextInputField);
-		assertEquals(((DocumentCellDecorator) table3.getContent().get(0).get(1)).getContent().getNamesAndValues().get(0), "starts_with=");
+		assertTrue(table3.getContent().get(0).get(1) instanceof UITextInputField);
+		assertEquals(table3.getContent().get(0).get(1).getNamesAndValues().get(0), "starts_with=");
 		assertTrue(table3.getContent().get(1).get(0) instanceof UITextField);
 		assertEquals(((UITextField) table3.getContent().get(1).get(0)).getText(), "Max. results:");
-		assertTrue(((DocumentCellDecorator) table3.getContent().get(1).get(1)).getContent() instanceof UITextInputField);
-		assertEquals(((DocumentCellDecorator) table3.getContent().get(1).get(1)).getContent().getNamesAndValues().get(0), "max_nb_results=");
-
-		
+		assertTrue(table3.getContent().get(1).get(1) instanceof UITextInputField);
+		assertEquals(table3.getContent().get(1).get(1).getNamesAndValues().get(0), "max_nb_results=");
     }
 }

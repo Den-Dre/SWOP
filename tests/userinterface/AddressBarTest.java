@@ -28,7 +28,7 @@ class AddressBarTest {
     @DisplayName("Handles mouse events")
     void handleMouse() {
         assertFalse(bar.hasFocus);
-        // click inside UserInterface.Frame
+        // click inside UserInterface.AbstractFrame
         bar.handleMouse(mouseClick, 10,15,1, leftMouse,0);
         assertTrue(bar.hasFocus);
         // click outside addressbar

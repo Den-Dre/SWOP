@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class HyperLinkTest{
 	
     private AddressBar bar;
-    private LeafPane doc;
+    private Pane doc;
     private UIController ctrl;
 
     private UIHyperlink link1;
@@ -23,15 +23,16 @@ class HyperLinkTest{
     private final String href2 = "heeeel lange href!!!!!";
 
     @BeforeEach
-    void setUp() throws Exception {
+    void setUp() {
 
         Browsr browsr = new Browsr("browsr");
         
         bar = browsr.getAddressBar();
         doc = browsr.getDocumentArea();
         
-		ctrl = doc.controller;
+		ctrl = doc.getController();
 
+		
         int height1 = 10;
         String text1 = "klik hier voor swop";
         link1 = new UIHyperlink(0,0,0, height1, href1, text1);
@@ -78,13 +79,13 @@ class HyperLinkTest{
 	void composeFullURL() {
 		// browsr is already initialised with prof. Jacobs' index.html url
 		String href = "browsrtest.html";
-		ctrl.getDocument().setUrlString("https://people.cs.kuleuven.be/bart.jacobs/index.html");
+		ctrl.getCurrentDocument().setUrlString("https://people.cs.kuleuven.be/bart.jacobs/index.html");
 		// compose url with href and load the document
-		ctrl.loadDocumentFromHref(href);
+        // id should be 0 as there's only one pane loaded
+		ctrl.loadDocumentFromHref(0, href);
 		
 		// we traveled to this new url, hence the url in the bar has changed
-		assertEquals(bar.getURL().toString(), "https://people.cs.kuleuven.be/bart.jacobs/browsrtest.html");
-		
+		assertEquals(bar.getURL(), "https://people.cs.kuleuven.be/bart.jacobs/browsrtest.html");
 	}
 	
 	// 2.2
@@ -93,14 +94,14 @@ class HyperLinkTest{
 	void loadAndShowDoc() {
 		// browsr is already initialised with prof. Jacobs' index.html url
 		String href = "browsrtest.html";
-		ctrl.getDocument().setUrlString("https://people.cs.kuleuven.be/bart.jacobs/index.html");
+		ctrl.getCurrentDocument().setUrlString("https://people.cs.kuleuven.be/bart.jacobs/index.html");
 		// compose url with href and load the document
-		ctrl.loadDocumentFromHref(href);
+		ctrl.loadDocumentFromHref(0, href);
 		
+		UITable content = (UITable) ((DocumentCellDecorator) doc.getContent().getContent()).getContentWithoutScrollbars();
+        UITextField text = (UITextField) content.getContent().get(0).get(0);
 		// check if document has changed
-		assertTrue(((DocumentCellDecorator) doc.getContent()).getContentWithoutScrollbars() instanceof UITable);
-		UITable table = (UITable) ((DocumentCellDecorator) doc.getContent()).getContentWithoutScrollbars();
-        assertEquals(((UITextField) table.getContent().get(0).get(0)).getText(),
+        assertEquals(text.getText(),
 				"HTML elements partially supported by Browsr:");
 	}
 	
@@ -110,9 +111,9 @@ class HyperLinkTest{
 	void updateAddressBar() {
 		// browsr is already initialised with prof. Jacobs' index.html url
 		String href = "browsrtest.html";
-		ctrl.getDocument().setUrlString("https://people.cs.kuleuven.be/bart.jacobs/index.html");
+		ctrl.getCurrentDocument().setUrlString("https://people.cs.kuleuven.be/bart.jacobs/index.html");
 		// compose url with href and load the document
-		ctrl.loadDocumentFromHref(href);
+		ctrl.loadDocumentFromHref(0, href);
 		
 		// check Addressbar
 		assertEquals(bar.getURL(), 
@@ -127,27 +128,15 @@ class HyperLinkTest{
     void malformedURL() {
         String malformedURL = "ww.www.test.com";
         UIController controller = new UIController();
-        controller.loadDocument(malformedURL);
+        
+        // setup the pane tree
+        controller.addPaneDocument();
+        
+        controller.loadDocument(0, malformedURL);
 
         // Verify contents of returned URL
-        ContentSpan contentSpan = controller.getContentSpan();
+        ContentSpan contentSpan = controller.getContentSpan(0);
         TextSpan textSpan = (TextSpan) contentSpan;
         assertEquals("Error: malformed URL.", textSpan.getText());
     }
-	
-//	// 2a.1.2
-//	@Test
-//	@DisplayName("Loading fails, shows error document")
-//	void loadingFailed() {
-//		fail("");
-//	}
-//	
-//	// 2a.1.3
-//	@Test
-//	@DisplayName("Parsing the document fails, shows error document")
-//	void docParsingFails() {
-//		fail("");
-//	}
-	
-	
 }

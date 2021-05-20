@@ -171,4 +171,26 @@ class UITextInputFieldTest {
         assertEquals("", inputField.getText());
     }
 
+    @Test
+    void setxOffset() {
+        int xOffset = -6;
+        inputField.setxOffset(xOffset);
+        assertEquals(xOffset, inputField.getxOffset());
+        assertEquals(inputField.getxPos()+ inputField.getxOffset(),
+                inputField.getTextField().getxPos());
+        assertEquals(inputField.getxPos()+ inputField.getxOffset(),
+                inputField.getTextField().getxReference());
+    }
+
+    @Test
+    void setyOffset() {
+        int yOffset = -7;
+        inputField.setyOffset(yOffset);
+        assertEquals(yOffset, inputField.getyOffset());
+        assertEquals(inputField.getyPos()+ inputField.getyOffset(),
+                inputField.getTextField().getyPos());
+        assertEquals(inputField.getyPos()+ inputField.getyOffset(),
+                inputField.getTextField().getContentWithoutScrollbars().getyReference());
+    }
+
 }

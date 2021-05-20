@@ -5,7 +5,7 @@ import domainlayer.UIController;
 
 /**
  * A class to represent an address bar in the browsr,
- * as an extension of a Frame, in the UI layer.
+ * as an extension of a AbstractFrame, in the UI layer.
  */
 public class AddressBar extends UITextInputField implements DocumentListener {
 
@@ -17,12 +17,11 @@ public class AddressBar extends UITextInputField implements DocumentListener {
      * @param width: the width of this AddressBar
      * @param height: the height of this AddressBar
      * @param offset: distance between this AddressBar and left, right and top window edge
-     * @throws IllegalDimensionException: When one of the dimensions of the {@link Frame} of this AddressBar is negative
+     * @throws IllegalDimensionException: When one of the dimensions of the {@link AbstractFrame} of this AddressBar is negative
      */
     public AddressBar(int x, int y, int width, int height, int offset) throws IllegalDimensionException{
         super(x, y, width, height);
         this.offset = offset;
-        
     }
 
     /**
@@ -54,7 +53,7 @@ public class AddressBar extends UITextInputField implements DocumentListener {
         this.updateCopyUrl();
         this.moveCursor(this.getURL().length());
         if (uiController != null)
-            this.uiController.loadDocument(this.getURL());
+            this.uiController.loadDocument(uiController.getCurrentDocumentId(), this.getURL());
     }
 
     /**
@@ -63,7 +62,7 @@ public class AddressBar extends UITextInputField implements DocumentListener {
      */
     @Override
     public void contentChanged() {
-        String newUrl = uiController.getUrlString();
+        String newUrl = uiController.getUrlString(uiController.getCurrentDocumentId());
         this.changeURLto(newUrl);
     }
 
@@ -118,6 +117,15 @@ public class AddressBar extends UITextInputField implements DocumentListener {
      */
     public void setUiController(UIController uiController) {
         this.uiController = uiController;
+    }
+
+    /**
+     * Set the id of the associated Document.
+     *
+     * @param id: the id to be set
+     */
+    public void setId(int id) {
+        this.id = id;
     }
 
     /**

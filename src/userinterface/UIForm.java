@@ -1,6 +1,7 @@
 package userinterface;
 
 import java.awt.Graphics;
+import java.util.ArrayList;
 
 /**
  * A class to denote the graphical concept of a form.
@@ -23,10 +24,6 @@ public class UIForm extends DocumentCell{
         this.formContent.setyPos(y);
 	}
 	
-	/**
-	 * The content of this UIForm.
-	 */
-	protected final DocumentCell formContent;
 
 	/**
 	 * Renders this UIForm.
@@ -72,30 +69,125 @@ public class UIForm extends DocumentCell{
 	}
 
 	/**
-	 * Set the y-position of this UIForm.
-	 *
-	 * Also sets the y-position of the content.
-	 *
-	 * @param yPos: The desired y-position.
-	 */
-	@Override
-	public void setyPos(int yPos) {
-	    super.setyPos(yPos);
-	    formContent.setyPos(yPos);
-	}
+     * If the new window dimensions are legal, this UIForm gets resized.
+     * It also resizes its content.
+     * 
+     * @param newWindowWidth	: The new window width of this {@link LeafPane}
+     * @param newWindowHeight	: The new window height of this {@link LeafPane}
+     */
+    @Override
+    public void handleResize(int newWindowWidth, int newWindowHeight) {
+        formContent.handleResize(parentWidth, parentHeight);
+    }
 
-	/**
-	 * Set the x-position of this UIForm.
-	 *
-	 * Also sets the x-position of the content.
-	 *
-	 * @param xPos: The desired x-position.
-	 */
-	@Override
-	public void setxPos(int xPos) {
-	    super.setxPos(xPos);
-	    formContent.setxPos(xPos);
-	}
+    /**
+     * Set the y-position of this UIForm.
+     *
+     * Also sets the y-position of the content.
+     *
+     * @param yPos: The desired y-position.
+     */
+    @Override
+    public void setyPos(int yPos) {
+        super.setyPos(yPos);
+        formContent.setyPos(yPos);
+    }
+
+    /**
+     * Set the x-position of this UIForm.
+     *
+     * Also sets the x-position of the content.
+     *
+     * @param xPos: The desired x-position.
+     */
+    @Override
+    public void setxPos(int xPos) {
+        super.setxPos(xPos);
+        formContent.setxPos(xPos);
+    }
+
+    /**
+     * Set the x offset of this UIForm.
+     *
+     * Also sets the x offset of the content.
+     *
+     * @param xOffset: The desired xOffset.
+     */
+    @Override
+    public void setxOffset(int xOffset) {
+        super.setxOffset(xOffset);
+        formContent.setxOffset(xOffset);
+    }
+
+    /**
+     * Set the y offset of this UIForm.
+     *
+     * Also sets the y offset of the content.
+     *
+     * @param yOffset: The desired yOffset.
+     */
+    @Override
+    public void setyOffset(int yOffset) {
+        super.setyOffset(yOffset);
+        formContent.setyOffset(yOffset);
+    }
+
+    /**
+     * Set the x reference of this UIForm.
+     *
+     * Also sets the x reference of the content.
+     *
+     * @param xReference: The desired xReference.
+     */
+    @Override
+    public void setxReference(int xReference) {
+        super.setxReference(xReference);
+        formContent.setxReference(xReference);
+    }
+
+    /**
+     * Set the y reference of this UIForm.
+     *
+     * Also sets the y reference of the content.
+     *
+     * @param yReference: The desired yReference.
+     */
+    @Override
+    public void setyReference(int yReference) {
+        super.setyReference(yReference);
+        formContent.setyReference(yReference);
+    }
+
+    /**
+     * Set the width of the parent of this UIForm.
+     *
+     * Also sets the width of the parent of the content.
+     *
+     * @param parentWidth: The desired width.
+     */
+    @Override
+    public void setParentWidth(int parentWidth) {
+        super.setParentWidth(parentWidth);
+        formContent.setParentWidth(parentWidth);
+    }
+
+    /**
+     * Set the height of the parent of this UIForm.
+     *
+     * Also sets the height of the parent of the content.
+     *
+     * @param parentHeight: The desired height.
+     */    
+    @Override
+    public void setParentHeight(int parentHeight) {
+        super.setParentHeight(parentHeight);
+        formContent.setParentHeight(parentHeight);
+    }
+
+    /**
+     * The content of this UIForm.
+     */
+    private final DocumentCell formContent;
 
 	/**
 	 * Get the {@link DocumentCell} encapsulated in this {@code UIForm}.

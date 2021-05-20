@@ -9,16 +9,17 @@ import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.Transferable;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * A class to represent the UserInterface.Browsr window,
- * with an {@link AddressBar} and a {@link LeafPane}.
+ * with an {@link AddressBar} and a {@link ContentFrame}.
  */
 public class Browsr extends CanvasWindow {
     /**
      * Initializes this {@code Browsr} as CanvasWindow object:
      * the initial layout consists of: an {@link AddressBar},
-     * a {@link BookmarksBar} and a {@link LeafPane}
+     * a {@link BookmarksBar} and a {@link ContentFrame}
      *
      * @param title:
      *            The Window title
@@ -36,7 +37,7 @@ public class Browsr extends CanvasWindow {
      * <ul>
      *     <li>an {@link AddressBar} object where URL's are entered,</li>
      *     <li>a {@link BookmarksBar} object to display the bookmarks added by the user, and </li>
-     *     <li>a {@link LeafPane} object to display the content of the requested sites.</li>
+     *     <li>a {@link ContentFrame} object to display the content of the requested sites.</li>
      *     <li>a {@link UIController} which is linked to the above three objects. </li>
      * </ul>
      */
@@ -58,26 +59,30 @@ public class Browsr extends CanvasWindow {
             // that is linked to this UserInterface.Browsr.
             int bookmarksBarHeight = 20;
 
-            HorizontalScrollBarDecorator addressBar = new HorizontalScrollBarDecorator(new AddressBar(addressBarOffset, addressBarOffset, 100, addressBarHeight, addressBarOffset));
-            addressBarInput = (AddressBar) addressBar.getContent();
-            bookmarksBar = new BookmarksBar(bookmarksBarOffset, addressBarHeight + 2 * bookmarksBarOffset, 100, bookmarksBarHeight, bookmarksBarOffset);
-            leafPane = new LeafPane(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100);
-            controller = new UIController();
+            totalUpperBarHeight = addressBarHeight+bookmarksBarHeight+addressBarOffset+bookmarksBarOffset;
 
-            this.Frames.add(addressBar);
-            this.Frames.add(this.leafPane);
-            this.Frames.add(this.bookmarksBar);
+            AddressBar addressBar = new AddressBar(addressBarOffset, addressBarOffset, 100, addressBarHeight, addressBarOffset);
+            addressBar.setxReference(addressBarOffset);
+            addressBar.setyReference(addressBarOffset);
+            addressBarInput = addressBar;//(AddressBar) addressBar.getContent();
+            bookmarksBar = new BookmarksBar(bookmarksBarOffset, addressBarHeight + 2 * bookmarksBarOffset, 100, bookmarksBarHeight, bookmarksBarOffset);
+
+            controller = new UIController();
+            ContentFrame contentFrame = new ContentFrame(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 600-2*addressBarOffset, 600-totalUpperBarHeight);
+            rootPane = new LeafPane(contentFrame, controller);
+            controller.setCurrentDocument(rootPane.getId());
+
+            this.frames.add(addressBar);
+            this.frames.add(rootPane);
+            this.frames.add(bookmarksBar);
+
+            this.rootPaneIndex = frames.indexOf(rootPane);
 
             addressBarInput.setUiController(controller);
-            leafPane.setController(controller);
             bookmarksBar.setUIController(controller);
 
             controller.addUrlListener(addressBarInput);
-            controller.addDocumentListener(leafPane);
-
-//            leafPane.setContent(new VerticalScrollBarDecorator(new HorizontalScrollBarDecorator(new UITextInputField(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100))));
-            // For testing purposes
-//            AddressBar.changeTextTo("https://people.cs.kuleuven.be/bart.jacobs/browsrtest.html");
+            controller.addDocumentListener(rootPane.getId(), rootPane);
         }
         catch(IllegalDimensionException e){
             System.out.print("Dimension error in frame while making browser!");
@@ -107,7 +112,7 @@ public class Browsr extends CanvasWindow {
          *
          * @param g: the graphics to be rendered.
          */
-        abstract void Render(Graphics g);
+        abstract void render(Graphics g);
 
         /**
          * Handle mouseEvents. Determine which part of this
@@ -137,7 +142,7 @@ public class Browsr extends CanvasWindow {
     /**
      * A {@code Browsr Layout} that represents the
      * regular layout containing a an {@link AddressBar},
-     * a {@link BookmarksBar} and a {@link LeafPane}.
+     * a {@link BookmarksBar} and a {@link ContentFrame}.
      *
      * <p> This layout provides specialised implementations
      * for the {@code handleMouseEvent}, {@code handleKeyEvent}
@@ -153,8 +158,8 @@ public class Browsr extends CanvasWindow {
          *      The graphics used to render this {@code RegularLayout}.
          */
         @Override
-        void Render(Graphics g) {
-            Frames.forEach(f -> f.render(g));
+        void render(Graphics g) {
+            frames.forEach(f -> f.render(g));
         }
 
         /**
@@ -169,7 +174,7 @@ public class Browsr extends CanvasWindow {
          */
         @Override
         void handleMouseEvent(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-            Frames.forEach(f -> f.handleMouse(id, x, y, clickCount, button, modifiersEx));
+            frames.forEach(f -> f.handleMouse(id, x, y, clickCount, button, modifiersEx));
         }
 
         /**
@@ -183,7 +188,7 @@ public class Browsr extends CanvasWindow {
          */
         @Override
         void handleKeyEvent(int id, int keyCode, char keyChar, int modifiersEx) {
-            Frames.forEach(f -> f.handleKey(id, keyCode, keyChar, modifiersEx));
+            frames.forEach(f -> f.handleKey(id, keyCode, keyChar, modifiersEx));
         }
     }
 
@@ -207,7 +212,7 @@ public class Browsr extends CanvasWindow {
          *      The graphics used to render this {@code BookmarksDialogLayout}.
          */
         @Override
-        void Render(Graphics g) {
+        void render(Graphics g) {
             bookmarksDialog.render(g);
         }
 
@@ -263,7 +268,7 @@ public class Browsr extends CanvasWindow {
          *      The graphics used to render this {@code SaveDialogLayout}.
          */
         @Override
-        void Render(Graphics g) {
+        void render(Graphics g) {
             saveDialog.render(g);
         }
 
@@ -307,7 +312,7 @@ public class Browsr extends CanvasWindow {
      */
     @Override
     protected void paint(Graphics g) {
-        layout.Render(g);
+        layout.render(g);
     }
 
     /**
@@ -322,11 +327,10 @@ public class Browsr extends CanvasWindow {
      *</p>
      */
     @Override
-    protected void handleResize() {
+    public void handleResize() {
         //ook laten weten aan de frames om zichzelf intern aan te passen!
-        for (userinterface.Frame frame : Frames) {
-            frame.handleResize(this.getWidth(), this.getHeight());
-        }
+        for (AbstractFrame frame : frames)
+            frame.handleResize(this.getWidth(), this.getHeight()-totalUpperBarHeight-extraUpperOffset); //-(addressBarInput.getHeight()+ bookmarksBar.getHeight()+10)
         repaint();
     }
 
@@ -343,7 +347,7 @@ public class Browsr extends CanvasWindow {
      */
     @Override
     protected void handleMouseEvent(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-       layout.handleMouseEvent(id, x, y, clickCount, button, modifiersEx);
+        layout.handleMouseEvent(id, x, y, clickCount, button, modifiersEx);
         repaint();
     }
 
@@ -362,7 +366,13 @@ public class Browsr extends CanvasWindow {
                 handleBookmarksDialog();
             else if (keyCode == 83 && layout instanceof RegularLayout) // 83 == s
                 handleSaveDialog();
-            else if (keyCode == 86)
+            else if (keyCode == 72 && id == KeyEvent.KEY_PRESSED) // 72 == h
+                splitHorizontally();
+            else if (keyCode == 86 && id == KeyEvent.KEY_PRESSED) // 86 == v
+                splitVertically();
+            else if (keyCode == 88 && id == KeyEvent.KEY_PRESSED) // 88 == x
+                closeCurrentLeafPane();
+            else if (keyCode == 80) // 80 == p
                 handlePaste();
         }
         this.layout.handleKeyEvent(id, keyCode, keyChar, modifiersEx);
@@ -377,7 +387,7 @@ public class Browsr extends CanvasWindow {
     private void handleBookmarksDialog() {
         this.layout = new BookmarksDialogLayout();
         String currentUrl = this.getAddressBar().getURL();
-        this.bookmarksDialog = new BookmarksDialog(this.getWidth(), this.getHeight(), currentUrl, bookmarksBar, this);
+        this.bookmarksDialog = new BookmarksDialog(getWidth(), getHeight(), currentUrl, bookmarksBar, this);
     }
 
     /**
@@ -388,12 +398,72 @@ public class Browsr extends CanvasWindow {
     private void handleSaveDialog() {
         this.layout = new SaveDialogLayout();
         String currentUrl = this.getAddressBar().getURL();
-        this.saveDialog = new SaveDialog(this.getWidth(), this.getHeight(), currentUrl, this);
+        this.saveDialog = new SaveDialog(getWidth(), getHeight(), currentUrl, this);
+    }
+
+    /**
+     * Takes the necessary actions to horizontally
+     * split the {@link Pane} that currently
+     * has focus.
+     */
+    private void splitHorizontally() {
+        Pane focused = rootPane.getFocusedPane();
+        // Replace the currently focused Pane with a HorizontalSplitPane containing
+        // the originally focused Pane and a copy of it as its children.
+        rootPane.getRootPane().replacePaneWith(focused, focused.getHorizontalSplit());
+        updateRootPane(rootPane.getRootPane());
+    }
+
+    /**
+     * Takes the necessary actions to vertically
+     * split the {@link Pane} that currently
+     * has focus.
+     */
+    private void splitVertically() {
+        Pane focused = rootPane.getFocusedPane();
+        // Replace the currently focused Pane with a VerticalSplitPane containing
+        // the originally focused Pane and a copy of it as its children.
+        rootPane.getRootPane().replacePaneWith(focused, focused.getVerticalSplit());
+        updateRootPane(rootPane.getRootPane());
+    }
+
+    /**
+     * Print the call stack at the time the method is called.
+     * Useful for debugging purposes.
+     *
+     * <a href=https://stackoverflow.com/questions/45944793/how-to-print-java-method-call-stack>Source</a>.
+     */
+    private void printCallStack() {
+        Arrays.stream(Thread.currentThread().getStackTrace()).forEach(s -> System.out.println(
+                "\tat " + s.getClassName() + "." + s.getMethodName() + "(" + s.getFileName() + ":" + s
+                        .getLineNumber() + ")"));
+    }
+
+    /**
+     * Takes the necessary actions to close
+     * the {@link Pane} that currently
+     * has focus.
+     */
+    private void closeCurrentLeafPane() {
+        LeafPane focused = (LeafPane) rootPane.getFocusedPane();
+        Pane newParent = focused.closeLeafPane();
+        updateRootPane(newParent.getRootPane());
+    }
+
+    /**
+     * Update the {@code root}{@link Pane} attribute of this Browsr object.
+     * This updates the entry in {@code this.frames}, too.
+     *
+     * @param newRootPane: the new {@code root}{@link Pane} object to be set.
+     */
+    private void updateRootPane(Pane newRootPane) {
+        this.rootPane = newRootPane;
+        frames.set(rootPaneIndex, newRootPane);
     }
 
     /**
      * For testing purposes: paste contents
-     * in the {@link AddressBar} using CTRL+v.
+     * in the {@link AddressBar} using CTRL+p.
      */
     private void handlePaste() {
         Clipboard c = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -401,7 +471,8 @@ public class Browsr extends CanvasWindow {
         if (t == null)
             return;
         try {
-            this.addressBarInput.changeTextTo((String) t.getTransferData(DataFlavor.stringFlavor));
+            addressBarInput.changeTextTo((String) t.getTransferData(DataFlavor.stringFlavor));
+            addressBarInput.toggleFocus(true);
         } catch (Exception e){
             e.printStackTrace();
         }
@@ -472,10 +543,10 @@ public class Browsr extends CanvasWindow {
     private AddressBar addressBarInput;
 
     /**
-     * A variable that denotes the {@link LeafPane}
+     * A variable that denotes the {@link Pane}
      * associated to this UserInterface.Browsr.
      */
-    private LeafPane leafPane;
+    private Pane rootPane;
 
     /**
      * A variable that denotes the {@link UIController}
@@ -485,9 +556,9 @@ public class Browsr extends CanvasWindow {
 
     /**
      * An {@link ArrayList} to hold all the
-     * {@link Frame}'s associated to this UserInterface.Browsr.
+     * {@link AbstractFrame}'s associated to this UserInterface.Browsr.
      */
-    private final ArrayList<userinterface.Frame> Frames = new ArrayList<>();
+    private final ArrayList<AbstractFrame> frames = new ArrayList<>();
     
     /**
      * @return the {@link AddressBar} of this {@link Browsr}, for testing/debug purposes
@@ -497,10 +568,10 @@ public class Browsr extends CanvasWindow {
 	}
 	
     /**
-     * @return the {@link LeafPane} of this {@link Browsr}, for testing/debug purposes
+     * @return the {@link Pane} of this {@link Browsr}, for testing/debug purposes
      */
-	public LeafPane getDocumentArea() {
-		return this.leafPane;
+	public Pane getDocumentArea() {
+		return this.rootPane;
 	}
 
     /**
@@ -510,6 +581,41 @@ public class Browsr extends CanvasWindow {
      */
 	public UIController getController() {
 	    return this.controller;
+    }
+
+    /**
+     * Return the height of this {@code Browsr} window
+     * without needing to render it. This is necessary
+     * to execute tests on objects requesting these dimensions.
+     *
+     * @return height: the height of this {@code Browsr} window.
+     */
+    @Override
+    public int getHeight() {
+        return getDocumentArea().getHeight() + totalUpperBarHeight + extraUpperOffset;
+    }
+
+    /**
+     * Return the width of this {@code Browsr} window
+     * without needing to render it. This is necessary
+     * to execute tests on objects requesting these dimensions.
+     *
+     * @return width: the width of this {@code Browsr} window.
+     */
+    @Override
+    public int getWidth() {
+	    return getDocumentArea().getWidth();
+    }
+
+    /**
+     * Get the sum of the heights of the linked
+     * {@link AddressBar} and {@link BookmarksBar}
+     * objects and their respective offsets.
+     *
+     * @return totalUpperBarHeight: the sum of the described heights and offsets.
+     */
+    public int getTotalUpperBarHeight() {
+	    return totalUpperBarHeight;
     }
 
     /**
@@ -535,4 +641,22 @@ public class Browsr extends CanvasWindow {
      * associated to this UserInterface.Browsr.
      */
     private BookmarksBar bookmarksBar;
+
+    /**
+     * Keep the index of the rootPane in the frames list
+     */
+    private int rootPaneIndex;
+
+    /**
+     * A variable to denote the sum of the heights of the
+     * {@link AddressBar} and {@link BookmarksBar} and their
+     * respective offsets.
+     */
+    private int totalUpperBarHeight;
+
+    /**
+     * A variable to denote an extra offset
+     * that is added to {@link Browsr#totalUpperBarHeight}.
+     */
+    private final static int extraUpperOffset = 5;
 }

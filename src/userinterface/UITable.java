@@ -27,10 +27,49 @@ public class UITable extends DocumentCell{
         // => 2. Set the dimensions of the table contents
         setColumnWidths();
         setRowHeights();
+
+        setxReference(x);
+        setyReference(y);
+
+        setParentWidth(parentWidth);
+        setParentHeight(parentHeight);
+    }
+    
+    /**
+     * Sets the width of the parent of this {@code UITable} to the given value.
+     * The same is done for the parents of all {@link DocumentCell}s in this {@code UITable}.
+     * 
+     * @param parentWidth : the new {@code parentWidth} of this {@code UITable} and its contents.
+     */
+    @Override
+    public void setParentWidth(int parentWidth) {
+        System.out.println("resizing table: " + parentWidth);
+        super.setParentWidth(parentWidth);
+        for (ArrayList<DocumentCell> row : grid) {
+            for (DocumentCell cell : row) {
+                cell.setParentWidth(parentWidth);
+            }
+        }
     }
 
     /**
-     * render every cell in the grid.
+     * Sets the height of the parent of this {@code UITable} to the given value.
+     * The same is done for the parents of all {@link DocumentCell}s in this {@code UITable}.
+     * 
+     * @param parentHeight : the new {@code parentHeight} of this {@code UITable} and its contents.
+     */
+    @Override
+    public void setParentHeight(int parentHeight) {
+        super.setParentHeight(parentHeight);
+        for (ArrayList<DocumentCell> row : grid) {
+            for (DocumentCell cell : row) {
+                cell.setParentHeight(parentHeight);
+            }
+        }
+    }
+
+    /**
+     * Render every cell in the grid.
      *
      * @param g: The graphics to be updated.
      */
@@ -49,6 +88,7 @@ public class UITable extends DocumentCell{
         g.setColor(Color.BLACK);
         //g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
     }
+
 
     /**
      * Handle mouse events by forwarding the click to each cell.
@@ -78,6 +118,27 @@ public class UITable extends DocumentCell{
         return new ReturnMessage(ReturnMessage.Type.Empty);
     }
 
+
+    /**
+     * Handle mouse events by forwarding the click to each cell.
+     *
+     * @param id: The type of mouse action
+     * @param x: The x coordinate of the mouse action.
+     * @param y: The y coordinate of the mouse action.
+     * @param clickCount: The number of times the mouse has clicked.
+     * @param button: The mouse button that was clicked.
+     * @param modifier: Possible other keys that were pressed during this mouse action.
+     */
+    @Override
+    public void handleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
+//        grid.forEach(row -> row.forEach(cell -> cell.getHandleMouse(id, x, y, clickCount, button, modifier)));
+        for (ArrayList<DocumentCell> row : grid) {
+            for (DocumentCell cell : row)
+                // Let all the cells handle their click, and if the click ended up on a hyperlink, the href is passed into result
+                cell.getHandleMouse(id, x, y, clickCount, button, modifier);
+        }
+    }
+
     /**
      * Send the given KeyEvent to the {@code DocumentCells} of this {@code UITable}.
      *
@@ -100,8 +161,11 @@ public class UITable extends DocumentCell{
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
+        System.out.println("resizing");
         setColumnWidths();
         setRowHeights();
+        setParentHeight(newWindowHeight);
+        setParentWidth(newWindowWidth);
     }
 
     /**
@@ -207,6 +271,7 @@ public class UITable extends DocumentCell{
     public void setxPos(int xPos) {
         super.setxPos(xPos);
         setColumnWidths();
+        //setxReference(xPos);
     }
 
     /**
@@ -219,6 +284,99 @@ public class UITable extends DocumentCell{
     public void setyPos(int yPos) {
         super.setyPos(yPos);
         setRowHeights();
+        //setyReference(yPos);
+    }
+
+    /**
+     * Set the x reference of this {@code UITable} the given value.
+     * 
+     * Does the same for all {@link DocumentCell}s inside this {@code UITable}.
+     *
+     * @param xReference:
+     *            The new {@code xReference} of this {@code UITable} and its contents.
+     */
+    @Override
+    public void setxReference(int xReference) {
+        //super.setxReference(xReference);
+        for (ArrayList<DocumentCell> row : grid) {
+            for (DocumentCell cell : row) {
+                cell.setxReference(xReference);
+            }
+        }
+    }
+
+    /**
+     * Set the y reference of this {@code UITable} the given value.
+     * 
+     * Does the same for all {@link DocumentCell}s inside this {@code UITable}.
+     *
+     * @param yReference:
+     *            The new {@code yReference} of this {@code UITable} and its contents.
+     */   
+    @Override
+    public void setyReference(int yReference) {
+        //super.setyReference(yReference);
+        for (ArrayList<DocumentCell> row : grid) {
+            for (DocumentCell cell : row) {
+                cell.setyReference(yReference);
+            }
+        }
+    }
+
+    /**
+     * Set the width of this {@code UITable} to the given value
+     *
+     * @param newWidth:
+     *            The new width of this {@code UITable}.
+     */
+    @Override
+    public void setWidth(int newWidth) {
+        super.setWidth(newWidth);
+        //setParentWidth(parentWidth);
+    }
+
+    /**
+     * Set the height of this {@code UITable} to the given value
+     *
+     * @param newHeight:
+     *            The new height of this {@code UITable}.
+     */
+    @Override
+    public void setHeight(int newHeight) {
+        super.setHeight(newHeight);
+        //setParentHeight(parentHeight);
+    }
+
+    /**
+     * Set the x offset of this {@code UITable} to the given value
+     *
+     * @param xOffset:
+     *            The new {@code xOffset} of this {@code UITable}.
+     */
+    @Override
+    public void setxOffset(int xOffset) {
+        super.setxOffset(xOffset);
+        for (ArrayList<DocumentCell> row : grid) {
+            for (DocumentCell cell : row) {
+                cell.setxOffset(xOffset);
+            }
+        }
+    }
+
+    /**
+     * Set the y offset of this {@code UITable} to the given value
+     *
+     * @param yOffset:
+     *            The new {@code yOffset} of this {@code UITable}.
+     */
+    @Override
+    public void setyOffset(int yOffset) {
+        super.setyOffset(yOffset);
+        for (ArrayList<DocumentCell> row : grid) {
+            for (DocumentCell cell : row) {
+                cell.setyOffset(yOffset);
+            }
+        }
     }
 
     /**

@@ -4,17 +4,17 @@ package userinterface;
  * A class to represent an abstract dialog screen.
  * Examples of implementations are {@link BookmarksDialog} and {@code SaveDialog}.
  */
-public abstract class GenericDialogScreen extends Frame {
+public abstract class GenericDialogScreen extends AbstractFrame {
     /**
-     * Initialise this Frame with the given parameters.
+     * Initialize this {@code GenericDialogScreen} with the given parameters.
      *
-     * @param x          : The x coordinate of this Frame.
-     * @param y          : The y coordinate of this Frame.
-     * @param width      : The width of this Frame
-     * @param height     : The height of this Frame
+     * @param x          : The x coordinate of this {@code GenericDialogScreen}.
+     * @param y          : The y coordinate of this {@code GenericDialogScreen}.
+     * @param width      : The width of this {@code GenericDialogScreen}
+     * @param height     : The height of this {@code GenericDialogScreen}
      * @param browsr     : The {@link Browsr} object associated to this {@code GenericDialogScreen}.
      * @param currentUrl : The URL of the doucment currently displayed in the associated {@link Browsr} object.
-     * @throws IllegalDimensionException: When one of the dimensions of this Frame is negative
+     * @throws IllegalDimensionException: When one of the dimensions of this {@code GenericDialogScreen} is negative
      */
     public GenericDialogScreen(int x, int y, int width, int height, Browsr browsr, String currentUrl) throws IllegalDimensionException {
         super(x, y, width, height);

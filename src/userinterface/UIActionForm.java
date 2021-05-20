@@ -41,7 +41,7 @@ public class UIActionForm extends UIForm {
      */
     @Override
     public ReturnMessage getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
-        ReturnMessage response = this.formContent.getHandleMouse(id, x, y, clickCount, button, modifier);
+        ReturnMessage response = this.getFormContent().getHandleMouse(id, x, y, clickCount, button, modifier);
         if (response.getType() == ReturnMessage.Type.Button && response.getContent().equals("submit")) {
                 return handleSubmitPressed();
             }
@@ -57,7 +57,7 @@ public class UIActionForm extends UIForm {
      * @return String that represents the action and the state of this UIActionForm-object.
      */
     private ReturnMessage handleSubmitPressed() {
-        ArrayList<String> namesAndValues = formContent.getNamesAndValues();
+        ArrayList<String> namesAndValues = getFormContent().getNamesAndValues();
         return new ReturnMessage(ReturnMessage.Type.Form, action + "?", namesAndValues);
     }
 

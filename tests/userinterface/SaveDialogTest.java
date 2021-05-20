@@ -20,6 +20,7 @@ public class SaveDialogTest {
     private AddressBar bar;
     private BookmarksBar bookmarksBar;
     private UIController controller;
+    private final int id = 0;
 
     private final String tableUrl = "https://people.cs.kuleuven.be/bart.jacobs/browsrtest.html";
 
@@ -32,16 +33,18 @@ public class SaveDialogTest {
 
         bar = new AddressBar(addressBarOffset, addressBarOffset, 100, addressBarHeight, addressBarOffset);
         bookmarksBar = new BookmarksBar(bookmarksBarOffset, addressBarHeight + 2 * bookmarksBarOffset, 100, bookmarksBarHeight, bookmarksBarOffset);
-        LeafPane area = new LeafPane(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100);
+        ContentFrame area = new ContentFrame(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100);
 
         // Couple the uicontoller to the documentarea and addressbar
         controller = new UIController(); // The document is created within uicontroller
         area.setController(controller);
         bar.setUiController(controller);
         bookmarksBar.setUIController(controller);
-
+        // setup root of pane structure
+        Pane rootPane = new LeafPane(area, controller);
+        controller.setCurrentDocument(rootPane.getId());
         // Couple the document with the documentarea and addressbar
-        controller.addDocumentListener(area);
+        controller.addDocumentListener(id, area);
         controller.addUrlListener(bar);
         browsr = new Browsr("Browsr");
         bar = browsr.getAddressBar();
@@ -64,9 +67,9 @@ public class SaveDialogTest {
     void savePageTest() throws IOException {
         // Page should only be saved when it's loaded, not when only the URL is typed into the AddressBar
         bar.changeTextTo(tableUrl);
-        assertThrows(Exception.class, () -> controller.getDocument().saveDocument("test"));
+        assertThrows(Exception.class, () -> controller.getCurrentDocument().saveDocument("test"));
         // Simulate use case of pressing "Save Dialog" without creating a Browsr object
-        controller.loadDocument(tableUrl);
+        controller.loadDocument(id, tableUrl);
         // Now the document is loaded and it should be saved when pressing the save button
         String fileName = "test";
         controller.saveDocument(fileName);
@@ -112,7 +115,7 @@ public class SaveDialogTest {
     @DisplayName("Throws exception when trying to save Welcome document")
     void saveWelcomeDocumentTest() {
         // No URL is set, so the welcome document is loaded by default
-        assertThrows(Exception.class, () -> controller.getDocument().saveDocument("test"));
+        assertThrows(Exception.class, () -> controller.getCurrentDocument().saveDocument("test"));
     }
 
     @Test
@@ -120,12 +123,12 @@ public class SaveDialogTest {
     void canSavePageFromDialog() {
         String name = "TableURL";
         // Load in the document to be saved
-        controller.loadDocument(tableUrl);
+        controller.loadDocument(id, tableUrl);
         // Now the document is loaded and it should be saved when pressing the save button
         controller.saveDocument(name);
         // Simulate opening a BookmarkDialog
         SaveDialog dialog = new SaveDialog(100, 100, tableUrl, browsr);
-        UITextInputField nameInput = (UITextInputField) ((HorizontalScrollBarDecorator) ((UITable) ((UITable) dialog.getForm(tableUrl).getFormContent()).getContent().get(1).get(0)).getContent().get(0).get(1)).getContent();
+        UITextInputField nameInput = (UITextInputField) ((UITable) ((UITable) dialog.getForm(tableUrl).getFormContent()).getContent().get(1).get(0)).getContent().get(0).get(1);
         UIButton saveButton = (UIButton) ((UITable) dialog.getForm(tableUrl).getFormContent()).getContent().get(2).get(0);
 
         // Select the Name input field
@@ -154,7 +157,7 @@ public class SaveDialogTest {
     void canCancelDialog() {
         String name = "TableURL";
         // Load in the document to be saved
-        controller.loadDocument(tableUrl);
+        controller.loadDocument(id, tableUrl);
         // Now the document is loaded and it should be saved when pressing the save button
         controller.saveDocument(name);
         // Simulate opening a BookmarkDialog

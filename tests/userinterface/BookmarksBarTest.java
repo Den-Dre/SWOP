@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class BookmarksBarTest {
 
-    private LeafPane area;
+    private ContentFrame area;
     private AddressBar addressBar;
     private BookmarksBar bookmarksBar;
     private UIController controller;
@@ -33,18 +33,22 @@ public class BookmarksBarTest {
         int addressBarOffset = 5;
         int addressBarHeight = 20;
         int bookmarksBarHeight = 20;
+        int id = 0;
 
         // Make a total browsr without the gui class (=browsr.java)
         addressBar = new AddressBar(addressBarOffset, addressBarOffset, 100, addressBarHeight, addressBarOffset);
         bookmarksBar = new BookmarksBar(bookmarksBarOffset, addressBarHeight + 2 * bookmarksBarOffset, 100, bookmarksBarHeight, bookmarksBarOffset);
-        area = new LeafPane(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100);
+        area = new ContentFrame(addressBarOffset, 2 * (addressBarHeight + 2 * addressBarOffset), 100, 100);
         controller = new UIController(); // The document is created within uicontroller
         // Couple the uicontoller to the documentarea and addressbar
         area.setController(controller);
         addressBar.setUiController(controller);
         bookmarksBar.setUIController(controller);
+        // setup root of pane structure
+        Pane rootPane = new LeafPane(area, controller);
+        controller.setCurrentDocument(rootPane.getId());
         // Couple the document with the documentarea and addressbar
-        controller.addDocumentListener(area);
+        controller.addDocumentListener(id, area);
         controller.addUrlListener(addressBar);
     }
 
@@ -89,7 +93,10 @@ public class BookmarksBarTest {
     public void verifyUIContents(DocumentCell cell) {
 
         assertNotNull(cell);
-        UITable outerTable = (UITable) ((DocumentCellDecorator) cell).getContentWithoutScrollbars();
+        System.out.println("cell: "+ cell);
+        
+        
+        UITable outerTable = (UITable) ((VerticalScrollBarDecorator) ((DocumentCellDecorator) cell).cellToBeDecorated).cellToBeDecorated;
         List<DocumentCell> outerRow1 = outerTable.getContent().get(0);
         assertEquals("HTML elements partially supported by Browsr:", ((UITextField) outerRow1.get(0)).getText());
 

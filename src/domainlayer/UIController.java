@@ -1,5 +1,7 @@
 package domainlayer;
 
+import userinterface.ContentFrame;
+
 import java.util.ArrayList;
 
 /**
@@ -15,24 +17,13 @@ import java.util.ArrayList;
 public class UIController {
 
     /**
-     * The {@link Document} that is linked
-     * to this {@code Controller}.
-     */
-    private Document document;
-
-    /**
-     * The {@link BookmarksURLKeeper} that is
-     * linked to this {@code Controller}.
-     */
-    private final BookmarksURLKeeper bookmarksURLKeeper;
-
-    /**
      * Initialise this Controller
      * with the given {@link Document}.
      */
     public UIController() {
-        this.document = new Document();
         this.bookmarksURLKeeper = new BookmarksURLKeeper();
+        this.documentsKeeper = new DocumentKeeper();
+        // TODO replace calls to `document` field with calls to documentsKeeper (-> reduces chain of responsibilities?).
     }
 
 
@@ -41,8 +32,8 @@ public class UIController {
      *
      * @param hrefString: the String representation of the href.
      */
-    public void loadDocumentFromHref(String hrefString) {
-        document.loadFromHref(hrefString);
+    public void loadDocumentFromHref(int id, String hrefString) {
+        documentsKeeper.getDocument(id).loadFromHref(hrefString);
     }
 
     /**
@@ -51,8 +42,9 @@ public class UIController {
      * @param action The action associated with the form.
      * @param values An arraylist with the name-value pairs separated by "=".
      */
-    public void loadDocumentFromForm(String action, ArrayList<String> values) {
-        document.loadFromForm(action, values);
+    public void loadDocumentFromForm(int id, String action, ArrayList<String> values) {
+        Document doc = documentsKeeper.getDocument(id);
+        doc.loadFromForm(action, values);
     }
 
     /**
@@ -61,8 +53,8 @@ public class UIController {
      *
      * @param urlString: the String representation of the URL of the document to be loaded.
      */
-    public void loadDocument(String urlString) {
-        document.loadFromUrl(urlString);
+    public void loadDocument(int id, String urlString) {
+        documentsKeeper.loadFromUrl(id, urlString);
     }
 
     /**
@@ -73,19 +65,23 @@ public class UIController {
      * @return contentSpan:
      *                  The ContentSpan representation of the Document linked to this Controller.
      */
-    public ContentSpan getContentSpan() {
-        return this.document.getContentSpan();
+    public ContentSpan getContentSpan(int id) {
+        return documentsKeeper.getPaneContentSpan(id);
     }
-
 
     /**
      * Sets the document to a given document
      *
-     * @param doc
+     * @param id
      *        The document for this UIController
      */
-    public void setDocument(Document doc){
-        this.document = doc;
+    public void setCurrentDocument(int id) {
+        documentsKeeper.setCurrentDocumentId(id);
+//        System.out.println("[Current document set to: " + id + "]");
+    }
+
+    public int getCurrentDocumentId() {
+        return documentsKeeper.getCurrentDocumentId();
     }
 
     /**
@@ -95,10 +91,9 @@ public class UIController {
      *              The {@link Document} linked to this UIController.
      *
      */
-    public Document getDocument() {
-        return document;
+    public Document getCurrentDocument() {
+        return documentsKeeper.getCurrentDocument();
     }
-
 
     /**
      * Retrieve the URL (in String representation)
@@ -108,7 +103,9 @@ public class UIController {
      * @return urlString:
      *              The String representation of the URL of the Document linked to this Controller.
      */
-    public String getUrlString() { return this.document.getUrlString();}
+    public String getUrlString(int id) {
+        return documentsKeeper.getDocument(id).getUrlString();
+    }
 
     /**
      *Add a documentListener to the list of DocumentListeners of the controllers document
@@ -116,8 +113,12 @@ public class UIController {
      * @param d
      *        The new DocumentListener for the document
      */
-    public void addDocumentListener(DocumentListener d) {
-        this.document.addDocumentListener(d);
+    public void addDocumentListener(int id, DocumentListener d) {
+        documentsKeeper.addDocumentListener(id, d);
+    }
+
+    public void addDocumentListener(int id, DocumentListener d, int copyId) {
+        documentsKeeper.addDocumentListener(id, d, copyId);
     }
 
     /**
@@ -127,7 +128,7 @@ public class UIController {
      *        The new documentListener for the document
      */
     public void addUrlListener(DocumentListener d) {
-        this.document.addURLListener(d);
+        getCurrentDocument().addURLListener(d);
     }
 
     /**
@@ -138,11 +139,10 @@ public class UIController {
      * @return href: The href value of the requested {@code bookmarkName}.
      */
     public String getURLFromBookmark(String bookmarkName) {
-        return this.bookmarksURLKeeper.getHrefFromBookmark(bookmarkName);
+        return bookmarksURLKeeper.getHrefFromBookmark(bookmarkName);
     }
 
     // Temporary method for testing listeners
-
     /**
      * Set the URL of this {@code UIController}
      * to the given value.
@@ -150,7 +150,7 @@ public class UIController {
      * @param url: the URL to be set for this {@code UIController}.
      */
     public void changeURL(String url){
-        this.document.setUrlString(url);
+        getCurrentDocument().setUrlString(url);
     }
 
     /**
@@ -161,7 +161,23 @@ public class UIController {
      * @param href: The href of the bookmark that will be added to the domain layer.
      */
     public void addHref(String name, String href) {
-        this.bookmarksURLKeeper.addBookmarksHref(name, href);
+        bookmarksURLKeeper.addBookmarksHref(name, href);
+    }
+
+    public int addPaneDocument() {
+        return documentsKeeper.addPaneDocument();
+    }
+
+    public int duplicatePaneDocument(int siblingId) {
+        return documentsKeeper.addPaneDocument(siblingId);
+    }
+
+    public int removePaneDocument(int id) {
+        return documentsKeeper.removePaneDocument(id);
+    }
+
+    public Document getDocument(int id) {
+        return documentsKeeper.getDocument(id);
     }
 
     /**
@@ -173,9 +189,26 @@ public class UIController {
         if (fileName.equals(""))
             throw new IllegalArgumentException("Can't save page when no page is loaded");
         try {
-            this.document.saveDocument(fileName);
+            getCurrentDocument().saveDocument(fileName);
         } catch (Exception e) {
             System.out.println("Can't save this document!");
         }
     }
+
+    /**
+     * The {@link DocumentKeeper} that is linked
+     * to this {@code Controller}.
+     */
+    private final DocumentKeeper documentsKeeper;
+
+    /**
+     * The {@link BookmarksURLKeeper} that is
+     * linked to this {@code Controller}.
+     */
+    private final BookmarksURLKeeper bookmarksURLKeeper;
+
+    public void setWelcomeDocument(int id) {
+        documentsKeeper.setWelcomeDocument(id);
+    }
+
 }

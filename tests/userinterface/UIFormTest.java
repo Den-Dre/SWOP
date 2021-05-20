@@ -86,4 +86,20 @@ class UIFormTest {
         assertEquals(newX, form.getxPos());
         assertEquals(newX, form.getFormContent().getxPos());
     }
+
+    @Test
+    void setxOffset() {
+        int xOffset = -5;
+        form.setxOffset(xOffset);
+        assertEquals(xOffset, form.getxOffset());
+        assertEquals(xOffset, form.getFormContent().getxOffset());
+    }
+
+    @Test
+    void setyOffset() {
+        int yOffset = -4;
+        form.setyOffset(yOffset);
+        assertEquals(yOffset, form.getyOffset());
+        assertEquals(yOffset, form.getFormContent().getyOffset());
+    }
 }

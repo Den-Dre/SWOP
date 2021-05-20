@@ -1,6 +1,7 @@
 package userinterface;
 
 import java.awt.*;
+import java.awt.print.Book;
 import java.util.ArrayList;
 
 /**
@@ -18,14 +19,14 @@ import java.util.ArrayList;
  */
 public class BookmarksDialog extends GenericDialogScreen {
     /**
-     * Initialise this Frame with the given parameters.
+     * Initialize this {@code BookmarksDialog} with the given parameters.
      *
-     * @param width        : The width of this Frame.
-     * @param height       : The height of this Frame.
+     * @param width        : The width of this {@code BookmarksDialog}.
+     * @param height       : The height of this {@code BookmarksDialog}.
      * @param currentUrl   : The URL of the document currently loaded.
      * @param bookmarksBar : The {@link BookmarksBar} associated to this {@code BoomkarksDialog}.
      * @param browsr       : The {@link Browsr} associated to this {@code BoomkarksDialog}.
-     * @throws IllegalDimensionException: When one of the dimensions of this Frame is negative
+     * @throws IllegalDimensionException: When one of the dimensions of this {@code BookmarksDialog} is negative
      */
     public BookmarksDialog(int width, int height, String currentUrl, BookmarksBar bookmarksBar, Browsr browsr) throws IllegalDimensionException {
         // Must cover the entire screen:
@@ -34,17 +35,17 @@ public class BookmarksDialog extends GenericDialogScreen {
         int textSize = getTextSize();
 
         this.bookmarksBar = bookmarksBar;
-        this.nameInput = new HorizontalScrollBarDecorator(new UITextInputField(offset, offset,100,textSize, "Name"));
-        this.urlInput = new HorizontalScrollBarDecorator(new UITextInputField(offset, offset,100,textSize, "URL"));
+        this.nameInput = new UITextInputField(offset, offset,100,textSize, "Name");
+        this.urlInput = new UITextInputField(offset, offset,100,textSize, "URL");
 
-        this.nameInputContents = (UITextInputField) nameInput.getContent();
-        this.urlInputContents = (UITextInputField) urlInput.getContent();
+        this.nameInputContents = nameInput;
+        this.urlInputContents = urlInput;
 
         // URL input must be prefilled:
-        this.urlInputContents.changeTextTo(currentUrl);
-        this.form = new HorizontalScrollBarDecorator(new VerticalScrollBarDecorator(getForm(currentUrl)));
+        this.urlInput.changeTextTo(currentUrl);
+        this.form = getForm(currentUrl);
     }
-
+    
     /**
      * Construct the hardcoded layout of this {@code BookmarksDialog}.
      *
@@ -89,9 +90,11 @@ public class BookmarksDialog extends GenericDialogScreen {
         outerTableRows.add(outerTableRow3);
 
         UITable outerTable = new UITable(offset, offset,0,0, outerTableRows);
+        outerTable.handleResize(getBrowsr().getWidth(),getBrowsr().getHeight());
 
         return new UIActionForm(offset, offset, "bookmarksDialog", outerTable);
     }
+
 
     /**
      * render this {@code BookmarksDialog}.
@@ -103,7 +106,16 @@ public class BookmarksDialog extends GenericDialogScreen {
         this.form.render(g);
     }
 
-
+    /**
+     * Handle mouseEvents. Determine if this LeafPane was pressed and do the right actions.
+     *
+     * @param id          : The type of mouse activity
+     * @param x           : The x coordinate of the mouse activity
+     * @param y           : The y coordinate of the mouse activity
+     * @param clickCount  : The number of clicks
+     * @param button      : The mouse button that was clicked
+     * @param modifiersEx : The control keys that were held on the click
+     */
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
         ReturnMessage result = form.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
@@ -136,7 +148,7 @@ public class BookmarksDialog extends GenericDialogScreen {
     }
 
     /**
-     * Get the text contained in the 'Name' {@link UITextField} of the content of this {@link BookmarksDialog}.
+     * Get the text contained in the 'Name' {@link UITextField} of the content of this {@code BookmarksDialog}.
      *
      * @return text:
      *          The text contained in the "Name" {@link UITextInputField} of this {@code BookmarksDialog}.
@@ -146,7 +158,7 @@ public class BookmarksDialog extends GenericDialogScreen {
     }
 
     /**
-     * Get the text contained in the 'URL' {@link UITextField} of the content of this {@link BookmarksDialog}.
+     * Get the text contained in the 'URL' {@link UITextField} of the content of this {@code BookmarksDialog}.
      *
      * @return text:
      *          The text contained in the "Name" {@link UITextInputField} of this {@code BookmarksDialog}.
@@ -159,9 +171,9 @@ public class BookmarksDialog extends GenericDialogScreen {
      * A variable to represent the content
      * that this {@code BookmarksDialog}
      * displays. The content is contained
-     * in a {@link DocumentCell}.
+     * in a {@link UIForm}.
      */
-    private final DocumentCellDecorator form;
+    private final UIForm form;
 
     /**
      * The {@link BookmarksBar} associated
@@ -171,17 +183,26 @@ public class BookmarksDialog extends GenericDialogScreen {
 
     /**
      * The input field which takes a name for
-     * the to be created bookmark.
+     * the to be created bookmark. 
+     * Denoted by a {@link UITextInputField}.
      */
-    private final HorizontalScrollBarDecorator nameInput;
+    private final UITextInputField nameInput;
 
     /**
-     * The input field which takes an URL in
+     * The {@link UITextInputField} which takes an URL in
      * string form for the to be created bookmark.
      */
-    private final HorizontalScrollBarDecorator urlInput;
+    private final UITextInputField urlInput;
 
+    /**
+     * The {@link UITextInputField} denoting the name input contents
+     * of this {@code BookmarksDialog}.
+     */
     private final UITextInputField nameInputContents;
 
+    /**
+     * The {@link UITextInputField} denoting the url input contents
+     * of this {@code BookmarksDialog}.
+     */
     private final UITextInputField urlInputContents;
 }

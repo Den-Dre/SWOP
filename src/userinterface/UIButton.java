@@ -11,7 +11,7 @@ import java.awt.event.MouseEvent;
 public class UIButton extends DocumentCell{
 
     /**
-     * Initialise this {@code UIButton} with the given parameters.
+     * Initialize this {@code UIButton} with the given parameters.
      *
      * @param x          : The x coordinate of this {@code UIButton}
      * @param y          : The y coordinate of this {@code UIButton}
@@ -149,9 +149,9 @@ public class UIButton extends DocumentCell{
          */
         private void drawButton(Graphics g) {
             g.setColor(buttonColor);
-            g.fillRoundRect(getxPos(), getyPos(), getWidth(), getHeight(), 3,3);
+            g.fillRoundRect(getxPos()+getxOffset(), getyPos()+getyOffset(), getWidth(), getHeight(), 3,3);
             g.setColor(contourColor);
-            g.drawRoundRect(getxPos(), getyPos(), getWidth(), getHeight(), 3,3);
+            g.drawRoundRect(getxPos()+getxOffset(), getyPos()+getyOffset(), getWidth(), getHeight(), 3,3);
         }
 
         /**
@@ -212,11 +212,11 @@ public class UIButton extends DocumentCell{
          */
         void drawButton(Graphics g) {
             g.setColor(buttonColor);
-            g.fillRoundRect(getxPos(), getyPos(), getWidth(), getHeight(), 3,3);
+            g.fillRoundRect(getxPos()+getxOffset(), getyPos()+getyOffset(), getWidth(), getHeight(), 3,3);
             g.setColor(contourColor);
             Graphics2D g2 = (Graphics2D) g;
             g2.setStroke(new BasicStroke(2));
-            g.drawRoundRect(getxPos(), getyPos(), getWidth(), getHeight(), 3,3);
+            g.drawRoundRect(getxPos()+getxOffset(), getyPos()+getyOffset(), getWidth(), getHeight(), 3,3);
             g2.setStroke(new BasicStroke(1));
         }
 
@@ -250,7 +250,36 @@ public class UIButton extends DocumentCell{
     @Override
     public void render(Graphics g) {
         setWidth(g.getFontMetrics().stringWidth(displayText)*3/2);
+        if (outOfHorizontalBounds() | outOfVerticalBounds()) return;
         state.Render(g);
+    }
+
+    /**
+     * Handle a mouse click on this DocumentCell.
+     *
+     * @param id          : The id of the click
+     * @param x           : The x coordinate of the click
+     * @param y           : The y coordinate of the click
+     * @param clickCount  : The number of clicks that occured.
+     * @param button      : Which mouse button was clicked.
+     * @param modifiersEx : Extra control keys that were held during the click.
+     */
+    @Override
+    public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
+        getHandleMouse(id, x, y, clickCount, button, modifiersEx);
+    }
+
+    /**
+     * Handle key presses. This method does the right action when a key is pressed.
+     *
+     * @param id          : The KeyEvent (Associated with type of KeyEvent)
+     * @param keyCode     : The KeyEvent code (Determines the involved key)
+     * @param keyChar     : The character representation of the involved key
+     * @param modifiersEx : Specifies other keys that were involved in the event
+     */
+    @Override
+    public void handleKey(int id, int keyCode, char keyChar, int modifiersEx) {
+
     }
 
     /**
@@ -278,9 +307,9 @@ public class UIButton extends DocumentCell{
     void drawText(Graphics g) {
         g.setColor(textColor);
         g.setFont(font);
-        int centerY = getyPos()+textHeight;
+        int centerY = getyPos()+textHeight+getyOffset();
         int textWidth = g.getFontMetrics().stringWidth(displayText);
-        int centerX = getxPos() + (getWidth()-textWidth)/2;
+        int centerX = getxPos() + (getWidth()-textWidth)/2 +getxOffset();
         g.drawString(displayText, centerX, centerY);
     }
 
@@ -302,5 +331,17 @@ public class UIButton extends DocumentCell{
      */
     public String getDisplayText() {
         return displayText;
+    }
+
+    /**
+     * Get the text that is returned when
+     * this {@code UIButton} is clicked.
+     *
+     * @return returnText: the text that is
+     *                     returned when this {@code UIButton} is clicked.
+     *
+     */
+    public String getReturnText() {
+        return this.returnText;
     }
 }

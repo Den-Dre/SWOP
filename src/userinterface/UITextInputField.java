@@ -17,21 +17,18 @@ import java.util.ArrayList;
  *     moving the cursor and selecting text are supported.
  * </p>
  */
-public class UITextInputField extends DocumentCell{
+public class UITextInputField extends DocumentCell {
     /**
-     * Initialise this UITextInputField with the given parameters.
+     * Initialize this {@code UITextInputField} with the given parameters.
      *
-     * @param x      : The x coordinate of this UITextInputField
-     * @param y      : The y coordinate of this UITextInputField
-     * @param width  : The width of this UITextInputField
-     * @param height : The height of this UITextInputField
+     * @param x      : The x coordinate of this {@code UITextInputField}
+     * @param y      : The y coordinate of this {@code UITextInputField}
+     * @param width  : The width of this {@code UITextInputField}
+     * @param height : The height of this {@code UITextInputField}
      * @throws IllegalDimensionException: When the dimensions of {@code super} are illegal.
      */
     public UITextInputField(int x, int y, int width, int height) throws IllegalDimensionException {
         super(x, y, width, height);
-        // An inputfield has a fixed width as denoted in the assignment on page 7
-        //int inputFieldWidth = 50;
-        //setWidth(inputFieldWidth);
     }
 
     /**
@@ -60,12 +57,14 @@ public class UITextInputField extends DocumentCell{
      */
     @Override
     public void render(Graphics g) {
+        if ((outOfVerticalBounds() | outOfHorizontalBounds()) && !(this instanceof AddressBar) ) return;
         setFontMetrics(g);
+        drawBox(g);
+        calculateCursorPos();
         updateSelectStart();
         drawSelection(g);
-        drawBox(g);
-        printText(g);
         printCursor(g);
+        printText(g);
     }
 
     /**
@@ -80,16 +79,53 @@ public class UITextInputField extends DocumentCell{
     private void printText(Graphics g){
         g.setColor(textColor);
         g.setFont(font);
-        g.drawString(this.getText(), this.textStart+getxPos(), this.getyPos()+this.getHeight()-(this.getHeight()/5));
+        textField.render(g);
     }
 
     /**
      * Draws the cursor onto the right location on screen, only if the addressBar has focus.
+     * 
      * @param g: The graphics that contain the information to be printed
      */
     private void printCursor(Graphics g) {
         if (!this.hasFocus) return;
+        g.setColor(cursorColor);
         g.fillRect(this.cursorPos[0], this.cursorPos[1], this.cursorDimensions[0], this.cursorDimensions[1]);
+    }
+
+    private void calculateCursorPos() {
+        if (metrics == null) return;
+        int offset = 0;
+        if (getText().length() == 0) {
+            offset = cursorOffset;
+        }
+        UITextField text = ((UITextField) textField.getContentWithoutScrollbars());
+        String visibleText = text.visibleText();
+        int end = this.cursor-text.getFrontCut();
+        if (end > visibleText.length()) return;
+        if (end < 0) end = 0;
+        this.cursorPos = new int[] {metrics.stringWidth(visibleText.substring(0,end))+textField.getxPos()+
+                offset, getCursorYPos()+getyOffset()};
+    }
+
+    /**
+     * Updates the selectStart variable. This variable moves together with the cursor when the user is not selecting
+     * anything. When the user does, it stays in place to determine the characters that are selected.
+     */
+    private void updateSelectStart() {
+        if (this.doSelect) return;
+        this.selectStart = this.cursor;
+        if (metrics == null) return;
+//        int offset = 0;
+//        if (getText().length() == 0) offset = cursorOffset;
+        UITextField text = ((UITextField) textField.getContentWithoutScrollbars());
+        int textFieldOffset = text.getxOffset();
+        String visibleText = text.visibleText();
+        int end = selectStart-text.getFrontCut();
+        if (end > visibleText.length()) return;
+        if (end < 0) end = 0;
+        this.selectStartPos = new int[] {metrics.stringWidth(visibleText.substring(0,end))+
+                this.getxPos()+(textStart)+textFieldOffset, this.getyPos()+getyOffset()};
     }
 
     /**
@@ -101,25 +137,7 @@ public class UITextInputField extends DocumentCell{
      */
     private void setFontMetrics(Graphics g) {
         this.metrics = g.getFontMetrics(font);
-        int offset = 0;
-        if (getText().length() == 0) {
-        	offset = cursorOffset;
-        }
-        this.cursorPos = new int[] {metrics.stringWidth(this.getText().substring(0,this.cursor))+this.getxPos()+(textStart)+offset, getCursorYPos()};
         this.textHeight = metrics.getHeight();
-    }
-
-    /**
-     * Updates the selectStart variable. This variable moves together with the cursor when the user is not selecting
-     * anything. When the user does, it stays in place to determine the characters that are selected.
-     */
-    private void updateSelectStart() {
-        if (this.doSelect) return;
-        this.selectStart = this.cursor;
-        if (metrics == null) return;
-        int offset = 0;
-        if (getText().length() == 0) offset = cursorOffset;
-        this.selectStartPos = new int[] {metrics.stringWidth(this.getText().substring(0,this.selectStart))+this.getxPos()+(textStart), this.getyPos()};
     }
 
     /**
@@ -133,7 +151,7 @@ public class UITextInputField extends DocumentCell{
             g.setColor(this.highlightColor);
             int start = Math.min(this.cursorPos[0], this.selectStartPos[0]);
             int stop = Math.max(this.cursorPos[0], this.selectStartPos[0])-start;
-            g.fillRect(start, this.getyPos(), stop, textHeight);
+            g.fillRect(start, this.getyPos()+getyOffset(), stop, textHeight);
         }
     }
 
@@ -151,7 +169,7 @@ public class UITextInputField extends DocumentCell{
         }
         // Draw a normal rectangle or a rectangle with rounded corners
         //g.drawRect(this.getxPos(), this.getyPos(), this.getWidth(), this.getHeight());
-        g.drawRoundRect(this.getxPos(), this.getyPos(), this.getWidth(), this.getHeight(), 3,3);
+        g.drawRoundRect(this.getxPos()+getxOffset(), this.getyPos()+getyOffset(), this.getWidth(), this.getHeight(), 3,3);
         g2.setStroke(new BasicStroke(1));
     }
 
@@ -167,11 +185,15 @@ public class UITextInputField extends DocumentCell{
      */
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
+        if (!textField.wasClicked(x,y) && id != MouseEvent.MOUSE_DRAGGED)
+            textField.setFraction(1.0);
+        textField.handleMouse(id, x, y, clickCount, button, modifiersEx);
         if (button != MouseEvent.BUTTON1) return; // Button1 is left mouse button
         if (id != MouseEvent.MOUSE_RELEASED) return;
         if (this.wasClicked(x,y)) {
             if (!this.hasFocus) {
                 doSelect = true;
+                moveCursor(getText().length());
                 resetSelectStart();
             }
             this.toggleFocus(true);
@@ -199,7 +221,7 @@ public class UITextInputField extends DocumentCell{
      */
     @Override
     public ReturnMessage getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
-        handleMouse(id, x, y, clickCount, button, modifier);
+        this.handleMouse(id, x, y, clickCount, button, modifier);
         return new ReturnMessage(ReturnMessage.Type.Empty);
     }
 
@@ -210,7 +232,7 @@ public class UITextInputField extends DocumentCell{
         selectStart = 0;
         int offset = 0;
         if (getText().length() == 0) offset = cursorOffset;
-        selectStartPos = new int[] {this.getxPos() + textStart + offset, this.getyPos()};
+        selectStartPos = new int[] {this.getxPos() + textStart + offset+getxOffset(), this.getyPos()+getyOffset()+ textField.getyPos()};
     }
 
     /**
@@ -331,7 +353,7 @@ public class UITextInputField extends DocumentCell{
      * @return the url string of this AddressBar.
      */
     public String getText() {
-        return text;
+        return ((UITextField) textField.getContentWithoutScrollbars()).getText();
     }
 
     /**
@@ -340,7 +362,17 @@ public class UITextInputField extends DocumentCell{
      *        The new text for this Document
      */
     public void setText(String text) {
-        this.text = text;
+        UITextField field = (UITextField) textField.getContentWithoutScrollbars();
+        field.setText(text);
+    }
+
+    /**
+     * Get the textField of this UITextInputField.
+     *
+     * @return textField of this UITextInputField.
+     */
+    public DocumentCellDecorator getTextField() {
+        return textField;
     }
 
     /**
@@ -349,8 +381,8 @@ public class UITextInputField extends DocumentCell{
      *        The String representation of the url to be set
      */
     public void changeTextTo(String text) {
-        this.text = text;
-        moveCursor(this.getText().length());
+        setText(text);
+        moveCursor(((UITextField) textField.getContentWithoutScrollbars()).visibleText().length()-cursor);
         updateSelectStart();
         toggleFocus(false);
     }
@@ -367,6 +399,10 @@ public class UITextInputField extends DocumentCell{
         if (newCursor > textLength) newCursor = textLength;
         if (newCursor < 0) newCursor = 0;
         this.cursor = newCursor;
+        if (cursor == textLength)
+            textField.setFraction(1.0);
+        else
+            textField.setFraction((double) (cursor-1)/getText().length());
     }
 
     /**
@@ -384,12 +420,117 @@ public class UITextInputField extends DocumentCell{
     @Override
     public ArrayList<String> getNamesAndValues() {
         ArrayList<String> nameAndValue = new ArrayList<>();
-        nameAndValue.add(name + "=" + text);
+        nameAndValue.add(name + "=" + getText());
         return nameAndValue;
     }
 
     /**
-     * The name of this UITextInputField.
+     * Set the width of this {@code UITextInputField}.
+     *
+     * Also sets the width of the parent of the {@link UITextField} of this {@code UITextInputField}.
+     *
+     * @param newWidth: The desired new width.
+     */
+    @Override
+    public void setWidth(int newWidth) {
+        super.setWidth(newWidth);
+        textField.parentWidth = newWidth;
+    }
+
+    /**
+     * Set the height of this {@code UITextInputField}.
+     *
+     * Also sets the height of the parent of the {@link UITextField} of this {@code UITextInputField}.
+     *
+     * @param newHeight: The desired new height.
+     */
+    @Override
+    public void setHeight(int newHeight) {
+        super.setHeight(newHeight);
+    }
+
+    /**
+     * Set the x-position of this {@code UITextInputField}.
+     *
+     * Also sets the x-position of the {@link UITextField} of this {@code UITextInputField}.
+     *
+     * @param xPos: The desired x-position.
+     */
+    @Override
+    public void setxPos(int xPos) {
+        super.setxPos(xPos);
+        textField.setxPos(xPos);
+    }
+
+    /**
+     * Set the y-position of this {@code UITextInputField}.
+     *
+     * Also sets the y-position of the {@link UITextField} of this {@code UITextInputField}.
+     *
+     * @param yPos: The desired y-position.
+     */
+    @Override
+    public void setyPos(int yPos) {
+        super.setyPos(yPos);
+        textField.setyPos(yPos);
+    }
+
+    /**
+     * Set the x offset of this {@code UITextInputField}.
+     *
+     * Also sets the x offset of the {@link UITextField} of this {@code UITextInputField}.
+     *
+     * @param xOffset: The desired xOffset.
+     */
+    @Override
+    public void setxOffset(int xOffset) {
+        super.setxOffset(xOffset);
+        textField.setxPos(getxPos()+xOffset);
+        textField.setxReference(getxPos()+xOffset);
+    }
+
+    /**
+     * Set the y offset of this {@code UITextInputField}.
+     *
+     * Also sets the y offset of the {@link UITextField} of this {@code UITextInputField}.
+     *
+     * @param yOffset: The desired yOffset.
+     */
+    @Override
+    public void setyOffset(int yOffset) {
+        super.setyOffset(yOffset);
+        textField.setyPos(getyPos()+yOffset);
+        textField.setyReference(getyPos()+getyOffset());
+    }
+
+    /**
+     * Set the y reference of this {@code UITextInputField}.
+     *
+     * Also sets the y reference of the {@link UITextField} of this {@code UITextInputField}..
+     *
+     * @param yReference: The desired yReference.
+     */
+    @Override
+    public void setyReference(int yReference) {
+        super.setyReference(yReference);
+        textField.setyReference(getyPos()+getyOffset());
+    }
+
+    /**
+     * Set the x reference of this {@code UITextInputField}.
+     *
+     * Also sets the x reference of the {@link UITextField} of this {@code UITextInputField}..
+     *
+     * @param xReference: The desired xReference.
+     */
+    @Override
+    public void setxReference(int xReference) {
+        super.setxReference(xReference);
+        textField.setxReference(getxPos());
+    }
+
+    /**
+     * The name of this {@code UITextInputField}.
      */
     private String name = "";
 
@@ -398,6 +539,7 @@ public class UITextInputField extends DocumentCell{
      * current contents of this AddressBar
      */
     private String text = ""; // The url starts off empty
+
 
     /**
      * An integer variable to denote the position
@@ -501,9 +643,20 @@ public class UITextInputField extends DocumentCell{
     /**
      * A variable to denote the
      * {@link Color} of the box
-     * surrounding this UITextInputField
+     * surrounding this {@code UITextInputField}
      * when hasFocus is true
      */
     private final Color focusColor = Color.BLUE;
 
+    /**
+     * A variable to denote {@link UITextField} of this {@code UITextInputField}
+     * encapsulated into a {@link DocumentCellDecorator}.
+     */
+    private final DocumentCellDecorator textField = new HorizontalScrollBarDecorator(new UITextField(getxPos()+textStart, getyPos(), getWidth(), this.getHeight()*3/4, ""));
+
+    /**
+     * The ID of the {@link Pane} that currently has focus.
+     * Its value is initialised to 0 as this represents the root{@link Pane}.
+     */
+    protected int id = 0;
 }

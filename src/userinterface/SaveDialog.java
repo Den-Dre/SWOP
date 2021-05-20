@@ -19,23 +19,22 @@ public class SaveDialog extends GenericDialogScreen {
 
 
     /**
-     * Initialise this Frame with the given parameters.
+     * Initialise this AbstractFrame with the given parameters.
      *
-     * @param width     : The width of this Frame
-     * @param height    : The height of this Frame
+     * @param width     : The width of this AbstractFrame
+     * @param height    : The height of this AbstractFrame
      * @param currentUrl: The URL of the page currently displayed in the associated {@link Browsr} object.
      * @param browsr    : The {@link Browsr} object linked to this {@code SaveDialog}.
-     * @throws IllegalDimensionException: When one of the dimensions of this Frame is negative
+     * @throws IllegalDimensionException: When one of the dimensions of this AbstractFrame is negative
      */
     public SaveDialog(int width, int height, String currentUrl, Browsr browsr ) throws IllegalDimensionException {
         super(0, 0, width, height, browsr, currentUrl);
         int offset = getOffset();
 
-        this.nameInput = new HorizontalScrollBarDecorator(new UITextInputField(offset, offset, 100, getTextSize(), "Name"));
-        this.nameInputContents = (UITextInputField) nameInput.getContent();
-        this.form = new HorizontalScrollBarDecorator(new VerticalScrollBarDecorator(getForm(currentUrl)));
+        this.nameInput = new UITextInputField(offset, offset, 100, getTextSize(), "Name");
+        this.nameInputContents = nameInput;
+        this.form = getForm(currentUrl);
     }
-
 
     /**
      * Construct the hardcoded layout of this {@code SaveDialog}.
@@ -44,7 +43,6 @@ public class SaveDialog extends GenericDialogScreen {
      *           The {@link String} representation of the URL currently entered in the {@link AddressBar}.
      * @return new UIForm: a {@link UIActionForm} object that represents the form of this {@code SaveDialog}.
      */
-//    UIForm constructForm(String currentUrl) {
     public UIForm getForm(String currentUrl) {
 
         int offset = getOffset();
@@ -77,6 +75,7 @@ public class SaveDialog extends GenericDialogScreen {
         outerTableRows.add(outerTableRow3);
 
         UITable outerTable = new UITable(offset, offset,0,0, outerTableRows);
+        outerTable.handleResize(getBrowsr().getDocumentArea().getWidth(),getBrowsr().getDocumentArea().getHeight()+getBrowsr().getTotalUpperBarHeight()+5);
 
         return new UIActionForm(offset, offset, "bookmarksDialog", outerTable);
     }
@@ -147,8 +146,12 @@ public class SaveDialog extends GenericDialogScreen {
      * A {@link UITextInputField} to query the name
      * the user  wants to give to the URL being saved.
      */
-    private final HorizontalScrollBarDecorator nameInput;
-
+    private final UITextInputField nameInput;
+    
+    /**
+     * A {@link UITextInputField} to denote the contents
+     * of input given the {@code nameInput} of this {@code SaveDialog}
+     */
     private final UITextInputField nameInputContents;
 
     /**
@@ -157,6 +160,6 @@ public class SaveDialog extends GenericDialogScreen {
      * displays. The content is contained
      * in a {@link DocumentCell}.
      */
-    private final DocumentCellDecorator form;
+    private final UIForm form;
 }
 

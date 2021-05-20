@@ -1,5 +1,7 @@
 package userinterface;
 
+import java.util.ArrayList;
+
 /**
  * A class to represent a {@code ReturnMessage}.
  *
@@ -13,8 +15,6 @@ package userinterface;
  * action needs to be taken when a user clicks
  * a particular area of the application.</p>
  */
-import java.util.ArrayList;
-
 public class ReturnMessage {
     /**
      * Create a new ReturnMessage with the given parameters.
