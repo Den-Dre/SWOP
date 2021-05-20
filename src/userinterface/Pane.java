@@ -98,11 +98,17 @@ public abstract class Pane extends AbstractFrame implements DocumentListener {
 
     /**
      * Handle a horizontal split of the contents of this {@code Pane}.
+     *
+     * @return parent: The parent {@link HorizontalSplitPane}resulting of
+     * this horizontal split.
      */
     public abstract Pane getHorizontalSplit();
 
     /**
      * Handle a vertical split of the contents of this {@code Pane}.
+     *
+     * @return parent: The parent {@link VerticalSplitPane} resulting of
+     * this vertical split.
      */
     public abstract Pane getVerticalSplit();
 

@@ -58,19 +58,13 @@ public class UITextField extends DocumentCell {
     }
 
     /**
-<<<<<<< HEAD
-     * Return the visible part of the text of this {@code UITextField} based on 
+     * Return the visible part of the text of this {@code UITextField} based on
      * the size of the {@link LeafPane} where this {@code UITextField} belongs.
      * Only the text that fits into the {@link LeafPane} will be returned.
      * 
      * @return text : 
      * 				the visible part of the text of type {@link String}. A substring
      * 				of the text of this {@code UITextField}.
-=======
-     * Get the visible text of this UITextField.
-     *
-     * @return A sub-string of this UITextField's text.
->>>>>>> d515f34e881c7b1b27814af7a63f1044cb7b98de
      */
     public String visibleText() {
         String text = getText();
@@ -137,10 +131,23 @@ public class UITextField extends DocumentCell {
         textField = text;
     }
 
+    /**
+     * Set the {@link FontMetrics} for the text that will be
+     * shown in this {@code UITextField}.
+     *
+     * @param metrics: the {@link FontMetrics} to be set.
+     */
     public void setMetrics(FontMetrics metrics) {
         this.metrics = metrics;
     }
 
+    /**
+     * Get the amount of text that is
+     * cut from the front of this {@code UITextField}.
+     *
+     * @return the amount of text that is
+     *      cut from the front of this {@code UITextField}.
+     */
     public int getFrontCut() {
         return frontCut;
     }

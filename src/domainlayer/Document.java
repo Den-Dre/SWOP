@@ -286,10 +286,26 @@ public class Document {
         }
     }
 
+    /**
+     * Check whether the {@link Document#getWelcomeDocument()} is loaded
+     * in this {@code Document}.
+     *
+     * @return True iff. the {@link Document#getWelcomeDocument()} is loaded
+     *      * in this {@code Document}.
+     */
     public boolean isWelcomeDocumentLoaded() {
         return welcomeDocumentLoaded;
     }
 
+    /**
+     * Set the URL to be copied, or whether the WelcomePage
+     * should be displayed, if one of both is applicable in
+     * {@code Document} associated to the sibling {@code id}.
+     *
+     * @param urlString: The URL of the sibling that should be copied.
+     * @param welcome: True iff. the WelcomeDocument is loaded in the sibling and
+     *               thus should be loaded in this {@code Document}.
+     */
     public void setCopyInfo(String urlString, boolean welcome) {
         this.copyURL = urlString;
         this.copyWelcome = welcome;
