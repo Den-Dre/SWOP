@@ -51,10 +51,7 @@ class DocumentCellDecoratorTest {
         decorator.handleMouse(mousePress, decorator.getxPos()+1, decorator.getyPos()+decorator.getHorizontalBarYOffset()+1, 1, leftMouse, 0);
         decorator.handleMouse(mouseDrag, decorator.getxPos()+5, decorator.getyPos()+decorator.getHorizontalBarYOffset()+1, 1, leftMouse, 0);
         double afterFraction = decorator.getFraction();
-        System.out.println("afterfraction: "+ afterFraction);
-        System.out.println("max width: " + decorator.cellToBeDecorated.getMaxWidth());
-        System.out.println("offset: " + decorator.getxOffset());
-        assertTrue(decorator.getxOffset() < 0);
+        assertTrue(decorator.cellToBeDecorated.getxOffset() < 0);
         assertTrue(afterFraction > beforeFraction);
     }
 
