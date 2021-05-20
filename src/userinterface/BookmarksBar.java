@@ -159,7 +159,7 @@ public class BookmarksBar extends AbstractFrame {
     public void loadTextHyperlink(int id, String linkName) {
         // TODO: This seems redundant. Maybe we should change our approach of storing bookmarks.
         String url = controller.getURLFromBookmark(linkName);
-        controller.loadDocument(this.id, url);
+        controller.loadDocument(controller.getCurrentDocumentId(), url);
     }
 
     /**

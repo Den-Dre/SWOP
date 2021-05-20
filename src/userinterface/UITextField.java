@@ -46,7 +46,10 @@ public class UITextField extends DocumentCell{
         if (outOfVerticalBounds()) return;
         g.setColor(textFieldColor);
         g.setFont(textFieldFont);
-        g.drawString(visibleText(), getxPos(), getyPos()+textHeight+getyOffset());
+        if (getxPos() <= getxReference()+5)
+            g.drawString(visibleText(), getxPos(), getyPos()+textHeight+getyOffset());
+        else
+            g.drawString(visibleText(), Math.max(getxPos() + getxOffset(), getxReference()), getyPos() + textHeight + getyOffset());
         // Draw a rectangle around the text for debugging purposes
         //g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
     }
@@ -71,7 +74,12 @@ public class UITextField extends DocumentCell{
         String text = getText();
         if (metrics == null) return text;
         //if (metrics.stringWidth(text) < parentWidth) return text;
+        int deltaPosRef = Math.abs(getxPos()-getxReference());
         int frontCut = Math.abs(getxOffset());
+        if (frontCut <= deltaPosRef)
+            return text;
+        else
+            frontCut -= deltaPosRef;
         if (metrics.stringWidth(text) <= frontCut) return "";
         for (int i = 0; i <= text.length(); i++) {
             if (metrics.stringWidth(text.substring(0,i)) >= frontCut){
