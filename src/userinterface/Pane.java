@@ -1,5 +1,6 @@
 package userinterface;
 
+import domainlayer.Document;
 import domainlayer.DocumentListener;
 import domainlayer.UIController;
 

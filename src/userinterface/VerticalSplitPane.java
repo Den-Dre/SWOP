@@ -27,6 +27,7 @@ public class VerticalSplitPane extends GenericSplitPane {
         leftPane.setyReference(y);
         // Assign focus to one of the child `Pane`s
         leftPane.toggleFocus(true);
+        setFocusedPane(leftPane);
 
         rightPane.setxPos(x + width/2);
         rightPane.setyPos(y);
