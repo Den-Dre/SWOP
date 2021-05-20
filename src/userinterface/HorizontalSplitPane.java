@@ -67,7 +67,7 @@ public class HorizontalSplitPane extends GenericSplitPane {
      * @param g: The graphics to be rendered.
      */
     @Override
-    void drawSeparator(Graphics g) {
+    protected void drawSeparator(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(5));
         g2.setColor(Color.BLACK);
@@ -76,12 +76,12 @@ public class HorizontalSplitPane extends GenericSplitPane {
     }
 
     /**
-     * Retruns true if and only if the coordinates are in the separator
+     * Returns true if and only if the coordinates are in the separator
      * @param x : The x coordinate
      * @param y : The y coordinate
      * @return  : True iff the click was in the separator
      */
-    boolean isInSeperator(int x, int y) {
+    private boolean isInSeperator(int x, int y) {
         return ((y < lowerPane.getyPos() + SEPARATOR_THICKNESS / 2) && (y > lowerPane.getyPos() - SEPARATOR_THICKNESS) &&
                 (x >= this.getxPos() && x < this.getxPos() + this.getWidth()));
     }
@@ -98,11 +98,12 @@ public class HorizontalSplitPane extends GenericSplitPane {
      */
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-        if (id == MouseEvent.MOUSE_PRESSED && isInSeperator(x,y)) dragging = true;
-        else if((id == MouseEvent.MOUSE_DRAGGED) && dragging) {
+        if (id == MouseEvent.MOUSE_PRESSED && isInSeperator(x,y))
+            dragging = true;
+        else if ((id == MouseEvent.MOUSE_DRAGGED) && dragging) {
             int oldY = lowerPane.getyPos();
             int deltaY = Math.abs(oldY-y);
-            if(y < lowerPane.getyPos()) {
+            if (y < lowerPane.getyPos()) {
                 int newUpperHeight = upperPane.getHeight() - deltaY;
                 int newLowerHeight = lowerPane.getHeight() + deltaY;
                 lowerPane.setyPos(y);
@@ -119,8 +120,7 @@ public class HorizontalSplitPane extends GenericSplitPane {
                 lowerPane.handleResize(this.getWidth(),lowerPane.getHeight());
                 upperPane.handleResize(this.getWidth(),upperPane.getHeight());
             }
-        }
-        else
+        } else
             handleMouseNotDragged(id, x, y, clickCount, button, modifiersEx);
     }
 
@@ -156,20 +156,6 @@ public class HorizontalSplitPane extends GenericSplitPane {
         super.setyPos(yPos);
         upperPane.setyPos(yPos);
         lowerPane.setyPos((int) (yPos + getHeight()*upperFraction));
-    }
-
-    @Override
-    public void setParentWidth(int parentWidth) {
-        super.setParentWidth(parentWidth);
-        upperPane.setParentWidth(parentWidth);
-        lowerPane.setParentWidth(parentWidth);
-    }
-
-    @Override
-    public void setParentHeight(int parentHeight) {
-        super.setParentHeight(parentHeight);
-        upperPane.setParentHeight(parentHeight);
-        lowerPane.setParentHeight(parentHeight);
     }
 
     private Pane upperPane;

@@ -69,7 +69,7 @@ public class VerticalSplitPane extends GenericSplitPane {
      * @param g: The graphics to be rendered.
      */
     @Override
-    void drawSeparator(Graphics g) {
+    protected void drawSeparator(Graphics g) {
         Graphics2D g2 = (Graphics2D) g;
         g2.setStroke(new BasicStroke(5));
         g2.setColor(Color.black);
@@ -83,7 +83,7 @@ public class VerticalSplitPane extends GenericSplitPane {
      * @param y : The y coordinate
      * @return  : True iff the click was in the separator
      */
-    boolean isInSeperator(int x, int y) {
+    private boolean isInSeperator(int x, int y) {
         return ((x < rightPane.getxPos() + SEPARATOR_THICKNESS / 2) && (x > rightPane.getxPos() - SEPARATOR_THICKNESS) &&
                 (y >= this.getyPos() && y < this.getyPos() + this.getHeight()));
     }
@@ -101,9 +101,10 @@ public class VerticalSplitPane extends GenericSplitPane {
      */
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-        if (id == MouseEvent.MOUSE_PRESSED && isInSeperator(x,y)) dragging = true;
-        else if(id == MouseEvent.MOUSE_DRAGGED && dragging){
-            if(x < rightPane.getxPos()) {
+        if (id == MouseEvent.MOUSE_PRESSED && isInSeperator(x,y))
+            dragging = true;
+        else if (id == MouseEvent.MOUSE_DRAGGED && dragging){
+            if (x < rightPane.getxPos()) {
                 int oldX = rightPane.getxPos();
                 int deltaX = Math.abs(oldX - x);
                 rightPane.setxPos(x);
@@ -122,8 +123,7 @@ public class VerticalSplitPane extends GenericSplitPane {
                 rightPane.handleResize(rightPane.getWidth(),this.getHeight());
                 leftPane.handleResize(leftPane.getWidth(),this.getHeight());
             }
-        }
-        else
+        } else
             handleMouseNotDragged(id, x, y, clickCount, button, modifiersEx);
     }
 
@@ -160,34 +160,6 @@ public class VerticalSplitPane extends GenericSplitPane {
         super.setyPos(yPos);
         leftPane.setyPos(yPos);
         rightPane.setyPos(yPos);
-    }
-
-    //    @Override
-//    public void setxReference(int xReference) {
-//        super.setxReference(xReference);
-//        leftPane.setxReference(xReference);
-//        rightPane.setxReference(xReference+getHeight()/2);
-//    }
-//
-//    @Override
-//    public void setyReference(int yReference) {
-//        super.setyReference(yReference);
-//        leftPane.setyReference(yReference);
-//        rightPane.setyReference(yReference);
-//    }
-
-    @Override
-    public void setParentWidth(int parentWidth) {
-        super.setParentWidth(parentWidth);
-        leftPane.setParentWidth(parentWidth);
-        rightPane.setParentWidth(parentWidth);
-    }
-
-    @Override
-    public void setParentHeight(int parentHeight) {
-        super.setParentHeight(parentHeight);
-        leftPane.setParentHeight(parentHeight);
-        rightPane.setParentHeight(parentHeight);
     }
 
     private Pane leftPane;

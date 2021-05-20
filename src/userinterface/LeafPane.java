@@ -149,7 +149,7 @@ public class LeafPane extends Pane {
             contentFrame.handleMouse(id, x, y, clickCount, button, modifiersEx);
         }
         if (id == MouseEvent.MOUSE_PRESSED)
-            System.out.println("[Clicked on " + this + ": (" + x + ", " + y + "; " + getWidth() + ", " + getHeight() + ")]");
+            System.out.printf("[Clicked on %s: (%d, %d; %d, %d)]\n", this.toString(), x, y, getWidth(), getHeight());
     }
 
 //    /**

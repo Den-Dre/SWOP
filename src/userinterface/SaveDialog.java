@@ -32,19 +32,9 @@ public class SaveDialog extends GenericDialogScreen {
         int offset = getOffset();
 
         this.nameInput = new UITextInputField(offset, offset, 100, getTextSize(), "Name");
-        this.nameInputContents = (UITextInputField) nameInput;
+        this.nameInputContents = nameInput;
         this.form = getForm(currentUrl);
     }
-
-    public SaveDialog(SaveDialog dialog) {
-        super(0, 0, dialog.getWidth(), dialog.getHeight(), dialog.getBrowsr(), dialog.getCurrentUrl());
-        int offset = dialog.getOffset();
-
-        this.nameInput = new UITextInputField(offset, offset, 100, dialog.getTextSize(), "Name");
-        this.nameInputContents = nameInput;
-        this.form = getForm(dialog.getCurrentUrl());
-    }
-
 
     /**
      * Construct the hardcoded layout of this {@code SaveDialog}.
@@ -53,7 +43,6 @@ public class SaveDialog extends GenericDialogScreen {
      *           The {@link String} representation of the URL currently entered in the {@link AddressBar}.
      * @return new UIForm: a {@link UIForm} object that represents the form of this {@code SaveDialog}.
      */
-//    UIForm constructForm(String currentUrl) {
     public UIForm getForm(String currentUrl) {
 
         int offset = getOffset();
@@ -86,7 +75,7 @@ public class SaveDialog extends GenericDialogScreen {
         outerTableRows.add(outerTableRow3);
 
         UITable outerTable = new UITable(offset, offset,0,0, outerTableRows);
-        outerTable.handleResize(getBrowsr().getWidth(),getBrowsr().getHeight());
+        outerTable.handleResize(getBrowsr().getDocumentArea().getWidth(),getBrowsr().getDocumentArea().getHeight()+getBrowsr().getTotalUpperBarHeight()+5);
 
         return new UIForm(offset, offset, "bookmarksDialog", outerTable);
     }
