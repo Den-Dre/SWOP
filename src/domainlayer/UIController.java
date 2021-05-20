@@ -176,8 +176,8 @@ public class UIController {
         return documentsKeeper.removePaneDocument(id);
     }
 
-    public ContentSpan getPaneDocument(int id) {
-        return documentsKeeper.getPaneContentSpan(id);
+    public Document getDocument(int id) {
+        return documentsKeeper.getDocument(id);
     }
 
     /**

@@ -120,6 +120,15 @@ public class AddressBar extends UITextInputField implements DocumentListener {
     }
 
     /**
+     * Set the id of the associated Document.
+     *
+     * @param id: the id to be set
+     */
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    /**
      * Retrurn the old URL of the adressBar
      *
      * @return url:
