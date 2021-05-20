@@ -22,10 +22,7 @@ public class UITextHyperlink extends DocumentCell {
     public UITextHyperlink(int x, int y, int width, int link_size, String text) throws IllegalDimensionException {
         super(x, y, width, link_size);
         this.textField = new UITextField(x, y, width, link_size, text);
-        //this.text = text;
         textHeight = link_size;
-
-        // TODO: Decide whether the following two calls can be omitted in this class's constructor:
         updateSizes();
         setWidth(getMaxWidth());
     }
@@ -133,23 +130,11 @@ public class UITextHyperlink extends DocumentCell {
         textField.setxOffset(xOffset);
     }
 
-//    @Override
-//    public void setyOffset(int yOffset) {
-//        super.setyOffset(yOffset);
-//        textField.setyOffset(yOffset);
-//    }
-
     @Override
     public void setxReference(int xReference) {
         super.setxReference(xReference);
         textField.setxReference(xReference);
     }
-
-//    @Override
-//    public void setyReference(int yReference) {
-//        super.setyReference(yReference);
-//        textField.setyReference(yReference);
-//    }
 
     @Override
     public void setParentWidth(int parentWidth) {
@@ -157,37 +142,28 @@ public class UITextHyperlink extends DocumentCell {
         textField.setParentWidth(parentWidth);
     }
 
-//    @Override
-//    public void setParentHeight(int parentHeight) {
-//        super.setParentHeight(parentHeight);
-//        textField.setParentHeight(parentHeight);
-//    }
-
-    // =========== Contents of this UIHyperlink =============
-//    /**
-//     * A string variable to denote the text value of this UIHyperlink.
-//     */
-//    private final String text;
-
+    /**
+     * A textField to keep the text of this {@link UITextHyperlink}.
+     */
     private final UITextField textField;
 
     // ============== Dimension variables ====================
     /**
-     * An integer variable to denote the height of the text of this UIHyperlink.
+     * An integer variable to denote the height of the text of this {@link UITextHyperlink}.
      */
     private final int textHeight;
     /**
-     * An integer variable to denote the width of the text of this UIHyperlink.
+     * An integer variable to denote the width of the text of this {@link UITextHyperlink}.
      */
     private int textWidth;
 
     // ============== Font variables ===========================
     /**
-     * A variable to denote the {@link Font} of the text of this UIHyperlink
+     * A variable to denote the {@link Font} of the text of this {@link UITextHyperlink}
      */
     private final Font hyperlinkFont = new Font(Font.SANS_SERIF, Font.PLAIN, getHeight());
     /**
-     * A variable to denote the {@link FontMetrics} of the text of this UIHyperlink.
+     * A variable to denote the {@link FontMetrics} of the text of this {@link UITextHyperlink}.
      */
     private FontMetrics metrics;
 }

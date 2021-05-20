@@ -43,7 +43,6 @@ public class UITable extends DocumentCell{
      */
     @Override
     public void setParentWidth(int parentWidth) {
-        System.out.println("resizing table: " + parentWidth);
         super.setParentWidth(parentWidth);
         for (ArrayList<DocumentCell> row : grid) {
             for (DocumentCell cell : row) {
@@ -84,9 +83,6 @@ public class UITable extends DocumentCell{
             setColumnWidths();
             setRowHeights();
         }
-        // Draw a rectangle around the table for debugging purposes
-        g.setColor(Color.BLACK);
-        //g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
     }
 
 
@@ -271,7 +267,6 @@ public class UITable extends DocumentCell{
     public void setxPos(int xPos) {
         super.setxPos(xPos);
         setColumnWidths();
-        //setxReference(xPos);
     }
 
     /**
@@ -284,7 +279,6 @@ public class UITable extends DocumentCell{
     public void setyPos(int yPos) {
         super.setyPos(yPos);
         setRowHeights();
-        //setyReference(yPos);
     }
 
     /**
@@ -297,7 +291,6 @@ public class UITable extends DocumentCell{
      */
     @Override
     public void setxReference(int xReference) {
-        //super.setxReference(xReference);
         for (ArrayList<DocumentCell> row : grid) {
             for (DocumentCell cell : row) {
                 cell.setxReference(xReference);
@@ -332,7 +325,6 @@ public class UITable extends DocumentCell{
     @Override
     public void setWidth(int newWidth) {
         super.setWidth(newWidth);
-        //setParentWidth(parentWidth);
     }
 
     /**
@@ -344,7 +336,6 @@ public class UITable extends DocumentCell{
     @Override
     public void setHeight(int newHeight) {
         super.setHeight(newHeight);
-        //setParentHeight(parentHeight);
     }
 
     /**

@@ -333,15 +333,15 @@ public class UIButton extends DocumentCell{
         return displayText;
     }
 
-    /**
-     * Get the text that is returned when
-     * this {@code UIButton} is clicked.
-     *
-     * @return returnText: the text that is
-     *                     returned when this {@code UIButton} is clicked.
-     *
-     */
-    public String getReturnText() {
-        return this.returnText;
-    }
+//    /**
+//     * Get the text that is returned when
+//     * this {@code UIButton} is clicked.
+//     *
+//     * @return returnText: the text that is
+//     *                     returned when this {@code UIButton} is clicked.
+//     *
+//     */
+//    public String getReturnText() {
+//        return this.returnText;
+//    }
 }

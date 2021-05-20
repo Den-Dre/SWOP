@@ -59,15 +59,15 @@ public abstract class GenericDialogScreen extends AbstractFrame {
         return this.browsr;
     }
 
-    /**
-     * Get the URL associated to the currently
-     * loaded page.
-     *
-     * @return url: The URL associated to the currently loaded page.
-     */
-    public String getCurrentUrl() {
-        return this.currentUrl;
-    }
+//    /**
+//     * Get the URL associated to the currently
+//     * loaded page.
+//     *
+//     * @return url: The URL associated to the currently loaded page.
+//     */
+//    public String getCurrentUrl() {
+//        return this.currentUrl;
+//    }
 
     /**
      * Get the contents of this dialog screen.

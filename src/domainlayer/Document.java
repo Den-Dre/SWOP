@@ -38,21 +38,21 @@ public class Document {
      */
     public Document() { }
 
-    /**
-     * Initialize a new Document given a url, and two DocumentListeners representing the ContentFrame and AddressBar
-     *
-     * @param url
-     *        The url for this document
-     * @param doc
-     *        The DocumentListener for this document
-     * @param bar
-     *        The addressbar listener for this document
-     */
-    public Document(String url, DocumentListener doc, DocumentListener bar) {
-        this.urlString = url;
-        this.urlListeners.add(bar);
-        this.documentListeners.add(doc);
-    }
+//    /**
+//     * Initialize a new Document given a url, and two DocumentListeners representing the ContentFrame and AddressBar
+//     *
+//     * @param url
+//     *        The url for this document
+//     * @param doc
+//     *        The DocumentListener for this document
+//     * @param bar
+//     *        The addressbar listener for this document
+//     */
+//    public Document(String url, DocumentListener doc, DocumentListener bar) {
+//        this.urlString = url;
+//        this.urlListeners.add(bar);
+//        this.documentListeners.add(doc);
+//    }
 
     /**
      * Combine the current url with the given href

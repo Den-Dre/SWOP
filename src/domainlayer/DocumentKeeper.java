@@ -28,28 +28,28 @@ public class DocumentKeeper {
         return documentCounter;
     }
 
-    public int addPaneDocument(int siblingId) {
-        // Create a new Document based on that of the sibling
-        Document doc = new Document();
-        doc.loadFromUrl(panesToDocuments.get(siblingId).getUrlString());
-
-        panesToDocuments.put(++documentCounter, doc);
-        System.out.println(panesToDocuments.toString());
-        return documentCounter;
-    }
-
-    public int removePaneDocument(int id) {
-        panesToDocuments.remove(id);
-        return --documentCounter;
-    }
+//    public int addPaneDocument(int siblingId) {
+//        // Create a new Document based on that of the sibling
+//        Document doc = new Document();
+//        doc.loadFromUrl(panesToDocuments.get(siblingId).getUrlString());
+//
+//        panesToDocuments.put(++documentCounter, doc);
+//        System.out.println(panesToDocuments.toString());
+//        return documentCounter;
+//    }
+//
+//    public int removePaneDocument(int id) {
+//        panesToDocuments.remove(id);
+//        return --documentCounter;
+//    }
 
     public ContentSpan getPaneContentSpan(int id) {
         return panesToDocuments.get(id).getContentSpan();
     }
 
-    public int getDocumentCounter() {
-        return documentCounter;
-    }
+//    public int getDocumentCounter() {
+//        return documentCounter;
+//    }
 
     public Document getDocument(int id) {
         return panesToDocuments.get(id);

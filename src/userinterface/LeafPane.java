@@ -13,21 +13,21 @@ import java.util.Arrays;
  * (as defined in the assignment)
  */
 public class LeafPane extends Pane {
-    /**
-     * Construct a {@code ContentFrame} with the given parameters.
-     * The coordinates and dimensions are copied from the given {@link ContentFrame}.
-     *
-     * @param contentFrame: The contents of this {@code LeafPane} in a {@link ContentFrame} object.
-     * @param parentPane: The parent {@link Pane} of this {@code LeafPane}.
-     * @throws IllegalDimensionException : When one of the dimensions is negative.
-     */
-    public LeafPane(ContentFrame contentFrame, Pane parentPane) throws IllegalDimensionException {
-        super(contentFrame.getxPos(), contentFrame.getyPos(), contentFrame.getWidth(), contentFrame.getHeight());
-        this.contentFrame = contentFrame;
-        this.parentPane = parentPane;
-        this.id = getController().addPaneDocument();
-        System.out.println("made a leaf pane! " +  this);
-    }
+//    /**
+//     * Construct a {@code ContentFrame} with the given parameters.
+//     * The coordinates and dimensions are copied from the given {@link ContentFrame}.
+//     *
+//     * @param contentFrame: The contents of this {@code LeafPane} in a {@link ContentFrame} object.
+//     * @param parentPane: The parent {@link Pane} of this {@code LeafPane}.
+//     * @throws IllegalDimensionException : When one of the dimensions is negative.
+//     */
+//    public LeafPane(ContentFrame contentFrame, Pane parentPane) throws IllegalDimensionException {
+//        super(contentFrame.getxPos(), contentFrame.getyPos(), contentFrame.getWidth(), contentFrame.getHeight());
+//        this.contentFrame = contentFrame;
+//        this.parentPane = parentPane;
+//        this.id = getController().addPaneDocument();
+//        System.out.println("made a leaf pane! " +  this);
+//    }
 
     /**
      * Construct a {@code ContentFrame} with the given parameters.
@@ -273,7 +273,6 @@ public class LeafPane extends Pane {
     public void setHeight(int newHeight) {
         super.setHeight(newHeight);
         contentFrame.setHeight(newHeight);
-        //contentFrame.handleResize(getWidth(),newHeight);
     }
 
     /**

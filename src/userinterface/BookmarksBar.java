@@ -30,14 +30,14 @@ public class BookmarksBar extends AbstractFrame {
         this.offset = offset;
     }
 
-    public BookmarksBar(BookmarksBar bar) {
-        super(bar.getxPos(), bar.getyPos(), bar.getWidth(), bar.getHeight());
-        this.yCoordinate = bar.yCoordinate;
-        this.height = bar.height;
-        this.offset = bar.offset;
-        // Keep a reference to the same controller object
-        this.controller = bar.controller;
-    }
+//    public BookmarksBar(BookmarksBar bar) {
+//        super(bar.getxPos(), bar.getyPos(), bar.getWidth(), bar.getHeight());
+//        this.yCoordinate = bar.yCoordinate;
+//        this.height = bar.height;
+//        this.offset = bar.offset;
+//        // Keep a reference to the same controller object
+//        this.controller = bar.controller;
+//    }
 
     /**
      * Set the {@link UIController} object associated

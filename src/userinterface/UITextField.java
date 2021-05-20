@@ -42,8 +42,6 @@ public class UITextField extends DocumentCell {
             g.drawString(visibleText(), getxPos(), getyPos()+textHeight+getyOffset());
         else
             g.drawString(visibleText(), Math.max(getxPos() + getxOffset(), getxReference()), getyPos() + textHeight + getyOffset());
-        // Draw a rectangle around the text for debugging purposes
-        //g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
     }
 
     /**
@@ -58,7 +56,6 @@ public class UITextField extends DocumentCell {
     }
 
     /**
-<<<<<<< HEAD
      * Return the visible part of the text of this {@code UITextField} based on 
      * the size of the {@link LeafPane} where this {@code UITextField} belongs.
      * Only the text that fits into the {@link LeafPane} will be returned.
@@ -66,11 +63,6 @@ public class UITextField extends DocumentCell {
      * @return text : 
      * 				the visible part of the text of type {@link String}. A substring
      * 				of the text of this {@code UITextField}.
-=======
-     * Get the visible text of this UITextField.
-     *
-     * @return A sub-string of this UITextField's text.
->>>>>>> d515f34e881c7b1b27814af7a63f1044cb7b98de
      */
     public String visibleText() {
         String text = getText();

@@ -584,26 +584,20 @@ public class Browsr extends CanvasWindow {
     }
 
     /**
-     * Return the height of this {@code Browsr} window
-     * without needing to render it. This is necessary
-     * to execute tests on objects requesting these dimensions.
+     * Return the height of this {@code Browsr} documentArea.
      *
      * @return height: the height of this {@code Browsr} window.
      */
-    @Override
-    public int getHeight() {
-        return getDocumentArea().getHeight() + totalUpperBarHeight + extraUpperOffset;
+    public int getAreaHeight() {
+        return getDocumentArea().getHeight();
     }
 
     /**
-     * Return the width of this {@code Browsr} window
-     * without needing to render it. This is necessary
-     * to execute tests on objects requesting these dimensions.
+     * Return the width of this {@code Browsr} documentArea.
      *
-     * @return width: the width of this {@code Browsr} window.
+     * @return width: the width of this {@code Browsr} documentArea.
      */
-    @Override
-    public int getWidth() {
+    public int getAreaWidth() {
 	    return getDocumentArea().getWidth();
     }
 

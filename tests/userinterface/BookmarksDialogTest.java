@@ -25,6 +25,8 @@ public class BookmarksDialogTest {
     private BookmarksBar bookmarksBar;
     private UIController controller;
     private int id = 0;
+    private int browsrWidth = 600;
+    private int browsrHeight = 550;
 
     private final String tableUrl = "https://people.cs.kuleuven.be/bart.jacobs/browsrtest.html";
 

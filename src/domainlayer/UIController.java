@@ -142,16 +142,6 @@ public class UIController {
         return bookmarksURLKeeper.getHrefFromBookmark(bookmarkName);
     }
 
-    // Temporary method for testing listeners
-    /**
-     * Set the URL of this {@code UIController}
-     * to the given value.
-     *
-     * @param url: the URL to be set for this {@code UIController}.
-     */
-    public void changeURL(String url){
-        getCurrentDocument().setUrlString(url);
-    }
 
     /**
      * Add a {@code href} value associated to a bookmark
@@ -168,13 +158,13 @@ public class UIController {
         return documentsKeeper.addPaneDocument();
     }
 
-    public int duplicatePaneDocument(int siblingId) {
-        return documentsKeeper.addPaneDocument(siblingId);
-    }
-
-    public int removePaneDocument(int id) {
-        return documentsKeeper.removePaneDocument(id);
-    }
+//    public int duplicatePaneDocument(int siblingId) {
+//        return documentsKeeper.addPaneDocument(siblingId);
+//    }
+//
+//    public int removePaneDocument(int id) {
+//        return documentsKeeper.removePaneDocument(id);
+//    }
 
     public Document getDocument(int id) {
         return documentsKeeper.getDocument(id);

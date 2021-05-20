@@ -53,26 +53,6 @@ public class UIHyperlink extends UITextHyperlink{
         return new ReturnMessage(ReturnMessage.Type.Empty);
     }
 
-//    /**
-//     * Return the text width of this {@code UIHyperlink}
-//     *
-//     * @return textWidth: the width of this {@code UIHyperlink}.
-//     */
-//    @Override
-//    public int getMaxWidth() {
-//        return this.textWidth;
-//    }
-//
-//    /**
-//     * Return the text height of this {@code UIHyperlink}
-//     *
-//     * @return textHeight: the height of this {@code UIHyperlink}.
-//     */
-//    @Override
-//    public int getMaxHeight() {
-//        return this.textHeight;
-//    }
-
     /**
      * Get the {@code href} value of this {@code UITextHyperlink}.
      *
@@ -88,30 +68,4 @@ public class UIHyperlink extends UITextHyperlink{
      * A string variable to denote the href value of this UIHyperlink.
      */
     private final String href;
-
-//    // ============== Dimension variables ====================
-//
-//    /**
-//     * An integer variable to denote the text height of this {@code UIHyperlink}.
-//     */
-//    private int textWidth;
-//
-//    /**
-//     * An integer variable to denote the text height of this {@code UIHyperlink}.
-//     */
-//    private int textHeight;
-//
-//    // ============== Font variables ===========================
-//    /**
-//     * A variable to denote the {@link Font} of the text of this UIHyperlink
-//     */
-//    private final Font hyperlinkFont = new Font(Font.SANS_SERIF, Font.PLAIN, getHeight());
-//    /**
-//     * A variable to denote the {@link Color} of the text of this UIHyperlink
-//     */
-//    private final Color hyperlinkColor = Color.BLUE;
-//    /**
-//     * A variable to denote the {@link FontMetrics} of the text of this UIHyperlink.
-//     */
-//    private FontMetrics metrics;
 }

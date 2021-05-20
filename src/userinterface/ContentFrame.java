@@ -27,20 +27,20 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
         super(x, y, width, height);
     }
 
-    /**
-     * Initialize a {@code ContentFrame} with the given {@code ContentFrame} parameters
-     * and an {@code siblingId} as a reference for which page should be loaded.
-     *
-     * @param x        : The x coordinate of the {@code ContentFrame}.
-     * @param y        : The y coordinate of the {@code ContentFrame}.
-     * @param width    : The width of the {@code ContentFrame}.
-     * @param height   : The height of the {@code ContentFrame}.
-     * @param siblingId: The id of another {@code Pane} object whose page should be copied.
-     */
-    public ContentFrame(int x, int y, int width, int height, int siblingId) {
-        super(x, y, width, height);
-        this.id = controller.duplicatePaneDocument(siblingId);
-    }
+//    /**
+//     * Initialize a {@code ContentFrame} with the given {@code ContentFrame} parameters
+//     * and an {@code siblingId} as a reference for which page should be loaded.
+//     *
+//     * @param x        : The x coordinate of the {@code ContentFrame}.
+//     * @param y        : The y coordinate of the {@code ContentFrame}.
+//     * @param width    : The width of the {@code ContentFrame}.
+//     * @param height   : The height of the {@code ContentFrame}.
+//     * @param siblingId: The id of another {@code Pane} object whose page should be copied.
+//     */
+//    public ContentFrame(int x, int y, int width, int height, int siblingId) {
+//        super(x, y, width, height);
+//        this.id = controller.duplicatePaneDocument(siblingId);
+//    }
 
     /**
      * Translates the contentSpan from the Domain-model into the simplified UI-representation objects.
@@ -354,14 +354,14 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
         this.controller = controller;
     }
 
-    /**
-     * Get the id associated to the {@link LeafPane} of this {@code ContentFrame}.
-     *
-     * @return id: the id associated to the {@link LeafPane} of this {@code ContentFrame}.
-     */
-    public int getId() {
-        return this.id;
-    }
+//    /**
+//     * Get the id associated to the {@link LeafPane} of this {@code ContentFrame}.
+//     *
+//     * @return id: the id associated to the {@link LeafPane} of this {@code ContentFrame}.
+//     */
+//    public int getId() {
+//        return this.id;
+//    }
     
     /**
      * Set the id of this {@code ContentFrame}.
