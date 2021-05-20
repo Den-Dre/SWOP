@@ -441,6 +441,7 @@ public class UITextInputField extends DocumentCell {
     public void setxOffset(int xOffset) {
         super.setxOffset(xOffset);
         textField.setxPos(getxPos()+xOffset);
+        textField.setxReference(getxPos()+xOffset);
     }
 
     @Override
