@@ -83,6 +83,7 @@ public class UITextField extends DocumentCell{
         if (metrics.stringWidth(text) <= frontCut) return "";
         for (int i = 0; i <= text.length(); i++) {
             if (metrics.stringWidth(text.substring(0,i)) >= frontCut){
+                this.frontCut = i;
                 text = text.substring(i);
                 break;
             }
@@ -133,6 +134,10 @@ public class UITextField extends DocumentCell{
         this.metrics = metrics;
     }
 
+    public int getFrontCut() {
+        return frontCut;
+    }
+
     /**
      * A string variable to represent the contents of this UITextField.
      */
@@ -164,4 +169,6 @@ public class UITextField extends DocumentCell{
      * A variable to denote the {@link FontMetrics} used for the text of this UITextField.
      */
     private FontMetrics metrics;
+
+    private int frontCut = 0;
 }

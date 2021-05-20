@@ -59,11 +59,12 @@ public class UITextInputField extends DocumentCell {
     public void render(Graphics g) {
         if ((outOfVerticalBounds() | outOfHorizontalBounds()) && !(this instanceof AddressBar) ) return;
         setFontMetrics(g);
+        drawBox(g);
+        calculateCursorPos();
         updateSelectStart();
         drawSelection(g);
-        drawBox(g);
-        printText(g);
         printCursor(g);
+        printText(g);
     }
 
     /**
@@ -78,7 +79,6 @@ public class UITextInputField extends DocumentCell {
     private void printText(Graphics g){
         g.setColor(textColor);
         g.setFont(font);
-        //g.drawString(this.getText(), this.textStart+getxPos(), this.getyPos()+this.getHeight()-(this.getHeight()/5));
         textField.render(g);
     }
 
@@ -88,7 +88,43 @@ public class UITextInputField extends DocumentCell {
      */
     private void printCursor(Graphics g) {
         if (!this.hasFocus) return;
+        g.setColor(cursorColor);
         g.fillRect(this.cursorPos[0], this.cursorPos[1], this.cursorDimensions[0], this.cursorDimensions[1]);
+    }
+
+    private void calculateCursorPos() {
+        if (metrics == null) return;
+        int offset = 0;
+        if (getText().length() == 0) {
+            offset = cursorOffset;
+        }
+        UITextField text = ((UITextField) textField.getContentWithoutScrollbars());
+        String visibleText = text.visibleText();
+        int end = this.cursor-text.getFrontCut();
+        if (end > visibleText.length()) return;
+        if (end < 0) end = 0;
+        this.cursorPos = new int[] {metrics.stringWidth(visibleText.substring(0,end))+textField.getxPos()+
+                offset, getCursorYPos()+getyOffset()};
+    }
+
+    /**
+     * Updates the selectStart variable. This variable moves together with the cursor when the user is not selecting
+     * anything. When the user does, it stays in place to determine the characters that are selected.
+     */
+    private void updateSelectStart() {
+        if (this.doSelect) return;
+        this.selectStart = this.cursor;
+        if (metrics == null) return;
+//        int offset = 0;
+//        if (getText().length() == 0) offset = cursorOffset;
+        UITextField text = ((UITextField) textField.getContentWithoutScrollbars());
+        int textFieldOffset = text.getxOffset();
+        String visibleText = text.visibleText();
+        int end = selectStart-text.getFrontCut();
+        if (end > visibleText.length()) return;
+        if (end < 0) end = 0;
+        this.selectStartPos = new int[] {metrics.stringWidth(visibleText.substring(0,end))+
+                this.getxPos()+(textStart)+textFieldOffset, this.getyPos()+getyOffset()};
     }
 
     /**
@@ -100,31 +136,7 @@ public class UITextInputField extends DocumentCell {
      */
     private void setFontMetrics(Graphics g) {
         this.metrics = g.getFontMetrics(font);
-        int offset = 0;
-        if (getText().length() == 0) {
-        	offset = cursorOffset;
-        }
-        int textFieldOffset = (textField.getContentWithoutScrollbars()).getxOffset();
-        String visibleText = ((UITextField) textField.getContentWithoutScrollbars()).getText();
-        this.cursorPos = new int[] {metrics.stringWidth(visibleText.substring(0,this.cursor))+textField.getxPos()+
-                (textStart)+offset+ textFieldOffset, getCursorYPos()+getyOffset()};
         this.textHeight = metrics.getHeight();
-    }
-
-    /**
-     * Updates the selectStart variable. This variable moves together with the cursor when the user is not selecting
-     * anything. When the user does, it stays in place to determine the characters that are selected.
-     */
-    private void updateSelectStart() {
-        if (this.doSelect) return;
-        this.selectStart = this.cursor;
-        if (metrics == null) return;
-        int offset = 0;
-        if (getText().length() == 0) offset = cursorOffset;
-        int textFieldOffset = (textField.getContentWithoutScrollbars()).getxOffset();
-        String visibleText = ((UITextField) textField.getContentWithoutScrollbars()).getText();
-        this.selectStartPos = new int[] {metrics.stringWidth(visibleText.substring(0,this.selectStart))+
-                this.getxPos()+(textStart)+textFieldOffset, this.getyPos()+getyOffset()};
     }
 
     /**
@@ -172,14 +184,15 @@ public class UITextInputField extends DocumentCell {
      */
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-        textField.handleMouse(id, x, y, clickCount, button, modifiersEx);
         if (!textField.wasClicked(x,y) && id != MouseEvent.MOUSE_DRAGGED)
             textField.setFraction(1.0);
+        textField.handleMouse(id, x, y, clickCount, button, modifiersEx);
         if (button != MouseEvent.BUTTON1) return; // Button1 is left mouse button
         if (id != MouseEvent.MOUSE_RELEASED) return;
         if (this.wasClicked(x,y)) {
             if (!this.hasFocus) {
                 doSelect = true;
+                moveCursor(getText().length());
                 resetSelectStart();
             }
             this.toggleFocus(true);
@@ -359,7 +372,7 @@ public class UITextInputField extends DocumentCell {
      */
     public void changeTextTo(String text) {
         setText(text);
-        moveCursor(this.getText().length());
+        moveCursor(((UITextField) textField.getContentWithoutScrollbars()).visibleText().length()-cursor);
         updateSelectStart();
         toggleFocus(false);
     }
@@ -376,7 +389,10 @@ public class UITextInputField extends DocumentCell {
         if (newCursor > textLength) newCursor = textLength;
         if (newCursor < 0) newCursor = 0;
         this.cursor = newCursor;
-        textField.setFraction((double) (cursor-1)/getText().length());
+        if (cursor == textLength)
+            textField.setFraction(1.0);
+        else
+            textField.setFraction((double) (cursor-1)/getText().length());
     }
 
     /**
