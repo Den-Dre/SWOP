@@ -98,7 +98,8 @@ public class HorizontalSplitPane extends GenericSplitPane {
      */
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-        if((id == MouseEvent.MOUSE_DRAGGED) && isInSeperator(x,y)){
+        if (id == MouseEvent.MOUSE_PRESSED && isInSeperator(x,y)) dragging = true;
+        else if((id == MouseEvent.MOUSE_DRAGGED) && dragging) {
             int oldY = lowerPane.getyPos();
             int deltaY = Math.abs(oldY-y);
             if(y < lowerPane.getyPos()) {
@@ -107,9 +108,6 @@ public class HorizontalSplitPane extends GenericSplitPane {
                 lowerPane.setyPos(y);
                 lowerPane.setHeight(newLowerHeight);
                 upperPane.setHeight(newUpperHeight);
-//                lowerPane.setParentHeight(lowerPane.getHeight());
-//                upperPane.setParentHeight(upperPane.getHeight());
-//                lowerPane.setyReference(y);
                 upperFraction = (double) (newUpperHeight)/getHeight();
                 lowerPane.handleResize(this.getWidth(),newLowerHeight);
                 upperPane.handleResize(this.getWidth(),newUpperHeight);
@@ -117,23 +115,13 @@ public class HorizontalSplitPane extends GenericSplitPane {
                 lowerPane.setyPos(y);
                 lowerPane.setHeight(lowerPane.getHeight() - deltaY);
                 upperPane.setHeight(upperPane.getHeight() + deltaY);
-//                lowerPane.setParentHeight(lowerPane.getHeight());
-//                upperPane.setParentHeight(upperPane.getHeight());
-//                lowerPane.setyReference(y);
                 upperFraction = (double) (upperPane.getHeight())/getHeight();
                 lowerPane.handleResize(this.getWidth(),lowerPane.getHeight());
                 upperPane.handleResize(this.getWidth(),upperPane.getHeight());
             }
-            System.out.println("upperFraction:" + upperFraction);
-            System.out.println("upperWidth: " + upperPane.getWidth());
-            System.out.println("upperHeight: " + upperPane.getHeight());
-            //System.out.println("MouseEvent " + id + " " + x + " " + y + " " + clickCount + " " + button + " " + modifiersEx);
         }
-        else{
-            getFirstChild().handleMouse(id, x, y, clickCount, button, modifiersEx);
-            getSecondChild().handleMouse(id, x, y, clickCount, button, modifiersEx);
-        }
-
+        else
+            handleMouseNotDragged(id, x, y, clickCount, button, modifiersEx);
     }
 
     @Override
@@ -169,20 +157,6 @@ public class HorizontalSplitPane extends GenericSplitPane {
         upperPane.setyPos(yPos);
         lowerPane.setyPos((int) (yPos + getHeight()*upperFraction));
     }
-
-//    @Override
-//    public void setxReference(int xReference) {
-//        super.setxReference(xReference);
-//        leftPane.setxReference(xReference);
-//        rightPane.setxReference(xReference+getHeight()/2);
-//    }
-//
-//    @Override
-//    public void setyReference(int yReference) {
-//        super.setyReference(yReference);
-//        leftPane.setyReference(yReference);
-//        rightPane.setyReference(yReference);
-//    }
 
     @Override
     public void setParentWidth(int parentWidth) {

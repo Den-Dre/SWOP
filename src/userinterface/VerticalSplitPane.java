@@ -101,18 +101,15 @@ public class VerticalSplitPane extends GenericSplitPane {
      */
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-        if((id == MouseEvent.MOUSE_DRAGGED) && isInSeperator(x,y)){
+        if (id == MouseEvent.MOUSE_PRESSED && isInSeperator(x,y)) dragging = true;
+        else if(id == MouseEvent.MOUSE_DRAGGED && dragging){
             if(x < rightPane.getxPos()) {
                 int oldX = rightPane.getxPos();
                 int deltaX = Math.abs(oldX - x);
                 rightPane.setxPos(x);
                 rightPane.setWidth(rightPane.getWidth() + deltaX);
                 leftPane.setWidth(leftPane.getWidth() - deltaX);
-//                rightPane.setParentWidth(rightPane.getWidth());
-//                leftPane.setParentWidth(leftPane.getWidth());
-//                rightPane.setxReference(x);
                 leftFraction = (double) (leftPane.getWidth())/getWidth();
-                System.out.println("leftFraction:" + leftFraction);
                 rightPane.handleResize(rightPane.getWidth(),this.getHeight());
                 leftPane.handleResize(leftPane.getWidth(),this.getHeight());
             } else {
@@ -121,21 +118,13 @@ public class VerticalSplitPane extends GenericSplitPane {
                 rightPane.setxPos(x);
                 rightPane.setWidth(rightPane.getWidth() - deltaX);
                 leftPane.setWidth(leftPane.getWidth() + deltaX);
-//                rightPane.setParentWidth(rightPane.getWidth());
-//                leftPane.setParentWidth(leftPane.getWidth());
-//                rightPane.setxReference(x);
                 leftFraction = (double) (leftPane.getWidth())/getWidth();
                 rightPane.handleResize(rightPane.getWidth(),this.getHeight());
                 leftPane.handleResize(leftPane.getWidth(),this.getHeight());
-                System.out.println("leftFraction:" + leftFraction);
             }
-            //System.out.println("MouseEvent " + id + " " + x + " " + y + " " + clickCount + " " + button + " " + modifiersEx);
         }
-        else{
-            getFirstChild().handleMouse(id, x, y, clickCount, button, modifiersEx);
-            getSecondChild().handleMouse(id, x, y, clickCount, button, modifiersEx);
-        }
-
+        else
+            handleMouseNotDragged(id, x, y, clickCount, button, modifiersEx);
     }
 
 

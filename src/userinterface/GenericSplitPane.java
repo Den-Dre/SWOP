@@ -3,6 +3,7 @@ package userinterface;
 import domainlayer.UIController;
 
 import java.awt.*;
+import java.awt.event.MouseEvent;
 
 public abstract class GenericSplitPane extends Pane {
     /**
@@ -131,6 +132,29 @@ public abstract class GenericSplitPane extends Pane {
     }
 
     /**
+     * Handle a MouseEvent in a SplitPane when no dragging action was performed.
+     *
+     * @param id          : The type of mouse activity
+     * @param x           : The x coordinate of the mouse activity
+     * @param y           : The y coordinate of the mouse activity
+     * @param clickCount  : The number of clicks
+     * @param button      : The mouse button that was clicked
+     * @param modifiersEx : The control keys that were held on the click
+     */
+    public void handleMouseNotDragged(int id, int x, int y, int clickCount, int button, int modifiersEx) {
+        if (id == MouseEvent.MOUSE_RELEASED && dragging){
+            dragging = false;
+            getFocusedPane().handleMouse(id, x, y, clickCount, button, modifiersEx);
+        }
+        else {
+            dragging = false;
+            getFirstChild().handleMouse(id, x, y, clickCount, button, modifiersEx);
+            getSecondChild().handleMouse(id, x, y, clickCount, button, modifiersEx);
+        }
+
+    }
+
+    /**
      * Check whether this {@code Pane} currently has focus.
      *
      * @return focus: True iff. this {@code Pane} currently has focus.
@@ -159,4 +183,6 @@ public abstract class GenericSplitPane extends Pane {
      * of the separator drawn between split windows.
      */
     protected final int SEPARATOR_THICKNESS = 10;
+
+    public boolean dragging = false;
 }
