@@ -235,9 +235,8 @@ public abstract class AbstractFrame {
      */
     public void setWidth(int newWidth){
         this.width = newWidth;
-        if (newWidth > parentWidth) {
+        if (newWidth > parentWidth)
             parentWidth = newWidth;
-        }
     }
 
      /**
@@ -258,9 +257,8 @@ public abstract class AbstractFrame {
      */
     public void setHeight(int newHeight){
         this.height = newHeight;
-        if (newHeight > parentHeight) {
+        if (newHeight > parentHeight)
             parentHeight = newHeight;
-        }
     }
 
     /**

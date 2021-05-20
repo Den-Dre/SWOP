@@ -331,7 +331,7 @@ public class Browsr extends CanvasWindow {
     public void handleResize() {
         //ook laten weten aan de frames om zichzelf intern aan te passen!
         for (AbstractFrame frame : frames)
-            frame.handleResize(this.getWidth(), this.getHeight()-totalUpperBarHeight-5); //-(addressBarInput.getHeight()+ bookmarksBar.getHeight()+10)
+            frame.handleResize(this.getWidth(), this.getHeight()-totalUpperBarHeight-extraUpperOffset); //-(addressBarInput.getHeight()+ bookmarksBar.getHeight()+10)
         repaint();
     }
 
@@ -585,6 +585,41 @@ public class Browsr extends CanvasWindow {
     }
 
     /**
+     * Return the height of this {@code Browsr} window
+     * without needing to render it. This is necessary
+     * to execute tests on objects requesting these dimensions.
+     *
+     * @return height: the height of this {@code Browsr} window.
+     */
+    @Override
+    public int getHeight() {
+        return getDocumentArea().getHeight() + totalUpperBarHeight + extraUpperOffset;
+    }
+
+    /**
+     * Return the width of this {@code Browsr} window
+     * without needing to render it. This is necessary
+     * to execute tests on objects requesting these dimensions.
+     *
+     * @return width: the width of this {@code Browsr} window.
+     */
+    @Override
+    public int getWidth() {
+	    return getDocumentArea().getWidth();
+    }
+
+    /**
+     * Get the sum of the heights of the linked
+     * {@link AddressBar} and {@link BookmarksBar}
+     * objects and their respective offsets.
+     *
+     * @return totalUpperBarHeight: the sum of the described heights and offsets.
+     */
+    public int getTotalUpperBarHeight() {
+	    return totalUpperBarHeight;
+    }
+
+    /**
      * A variable that denotes the current
      * {@link Layout} of this {@code UserInterface.Browsr}.
      */
@@ -613,5 +648,16 @@ public class Browsr extends CanvasWindow {
      */
     private int rootPaneIndex;
 
+    /**
+     * A variable to denote the sum of the heights of the
+     * {@link AddressBar} and {@link BookmarksBar} and their
+     * respective offsets.
+     */
     private int totalUpperBarHeight;
+
+    /**
+     * A variable to denote an extra offset
+     * that is added to {@link Browsr#totalUpperBarHeight}.
+     */
+    private final static int extraUpperOffset = 5;
 }

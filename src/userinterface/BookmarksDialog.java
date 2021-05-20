@@ -38,8 +38,8 @@ public class BookmarksDialog extends GenericDialogScreen {
         this.nameInput = new UITextInputField(offset, offset,100,textSize, "Name");
         this.urlInput = new UITextInputField(offset, offset,100,textSize, "URL");
 
-        this.nameInputContents = (UITextInputField) nameInput;
-        this.urlInputContents = (UITextInputField) urlInput;
+        this.nameInputContents = nameInput;
+        this.urlInputContents = urlInput;
 
         // URL input must be prefilled:
         this.urlInput.changeTextTo(currentUrl);
