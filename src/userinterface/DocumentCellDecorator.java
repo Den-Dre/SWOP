@@ -6,18 +6,6 @@ import java.util.Arrays;
 
 public abstract class DocumentCellDecorator extends DocumentCell {
 
-    final static int thicknessOuterBar = 8;
-    final static int thicknessInnerBar = 4;
-    double fraction = 0.0;
-    int innerBarLength;
-    int length;
-    final int offset = 2;
-    int[] prevMouse;
-
-    final Color innerColorNormal = Color.gray;
-    final Color innerColorDragging = Color.blue;
-    Color currentColor = innerColorNormal;
-
     /**
      * Initialise this decorator with the given parameters.
      *
@@ -28,7 +16,6 @@ public abstract class DocumentCellDecorator extends DocumentCell {
         super(cell.getxPos(), cell.getyPos(), cell.getWidth(), cell.getHeight());
         this.cellToBeDecorated = cell;
     }
-
 
     /**
      * Set the length of this scrollbar.
@@ -85,7 +72,6 @@ public abstract class DocumentCellDecorator extends DocumentCell {
             newRatio = 1.0;
         innerBarLength = (int) Math.round(length/newRatio);
     }
-
 
     /**
      * render the graphics {@code g} of this DocumentCell.
@@ -328,4 +314,25 @@ public abstract class DocumentCellDecorator extends DocumentCell {
      * A variable to denote the {@link DocumentCell} that will be decorated.
      */
     protected final DocumentCell cellToBeDecorated;
+
+    final static int thicknessOuterBar = 8;
+    final static int thicknessInnerBar = 4;
+    double fraction = 0.0;
+    int innerBarLength;
+    int length;
+
+    /**
+     * An integer used for the graphical side of scrollBars.
+     * e.g.: To create some distance with the edges.
+     */
+    final int offset = 2;
+
+    /**
+     * A list potentially containing clicks off a previous MouseEvent.
+     */
+    int[] prevMouse;
+
+    final Color innerColorNormal = Color.gray;
+    final Color innerColorDragging = Color.blue;
+    Color currentColor = innerColorNormal;
 }
