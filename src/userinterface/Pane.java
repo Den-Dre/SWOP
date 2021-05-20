@@ -1,5 +1,6 @@
 package userinterface;
 
+import domainlayer.Document;
 import domainlayer.DocumentListener;
 import domainlayer.UIController;
 
@@ -62,8 +63,10 @@ public abstract class Pane extends AbstractFrame implements DocumentListener {
         return getFirstChild().getController();
     }
 
-    public DocumentCell getContent() {
-        return this.subPane.getContent();
+    public ContentFrame getContent() {
+    	if (this instanceof LeafPane)
+    		return ((LeafPane) this).getContentFrame();
+        return this.getFirstChild().getContent();
     }
 
     public Pane getRootPane() {

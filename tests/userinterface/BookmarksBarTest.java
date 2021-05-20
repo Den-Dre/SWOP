@@ -44,6 +44,9 @@ public class BookmarksBarTest {
         area.setController(controller);
         addressBar.setUiController(controller);
         bookmarksBar.setUIController(controller);
+        // setup root of pane structure
+        Pane rootPane = new LeafPane(area, controller);
+        controller.setCurrentDocument(rootPane.getId());
         // Couple the document with the documentarea and addressbar
         controller.addDocumentListener(id, area);
         controller.addUrlListener(addressBar);
@@ -90,7 +93,10 @@ public class BookmarksBarTest {
     public void verifyUIContents(DocumentCell cell) {
 
         assertNotNull(cell);
-        UITable outerTable = (UITable) ((DocumentCellDecorator) cell).getContentWithoutScrollbars();
+        System.out.println("cell: "+ cell);
+        
+        
+        UITable outerTable = (UITable) ((VerticalScrollBarDecorator) ((DocumentCellDecorator) cell).cellToBeDecorated).cellToBeDecorated;
         List<DocumentCell> outerRow1 = outerTable.getContent().get(0);
         assertEquals("HTML elements partially supported by Browsr:", ((UITextField) outerRow1.get(0)).getText());
 

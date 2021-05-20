@@ -220,9 +220,9 @@ class UrlScenTest {
 		browsr.handleKeyEvent(keyPress, KeyEvent.VK_ENTER, undefChar, 0);
 		
 		// something must be visible, contents have changed!
-        DocumentCell table = ((DocumentCellDecorator) doc.getContent()).getContentWithoutScrollbars();
-        assertTrue(table instanceof UITable);
-		assertEquals(((UITextField) ((UITable) table).getContent().get(0).get(0)).getText(),
+        DocumentCell contents = ((DocumentCellDecorator) ((LeafPane) doc).getContentFrame().getContent()).getContentWithoutScrollbars();
+        assertTrue(contents instanceof UITextField);
+		assertEquals(((UITextField) contents).getText(),
 				"HTML elements partially supported by Browsr:");
 	}
 	
@@ -272,11 +272,10 @@ class UrlScenTest {
 	@DisplayName("URL is malformed, shows error document")
     void malformedURL() {
         String malformedURL = "ww.www.test.com";
-        UIController controller = new UIController();
-        controller.loadDocument(id, malformedURL);
+        ctrl.loadDocument(id, malformedURL);
 
         // Verify contents of returned URL
-        ContentSpan contentSpan = controller.getContentSpan(id);
+        ContentSpan contentSpan = ctrl.getContentSpan(id);
         TextSpan textSpan = (TextSpan) contentSpan;
         assertEquals("Error: malformed URL.", textSpan.getText());
     }

@@ -34,8 +34,11 @@ public class flowTest {
         // Couple the uicontoller to the documentarea and addressbar
         area.setController(controller);
         bar.setUiController(controller);
+        // setup root of pane structure
+        Pane rootPane = new LeafPane(area, controller);
+        controller.setCurrentDocument(rootPane.getId());
         // Couple the document with the documentarea and addressbar
-        controller.addDocumentListener(id, area);
+        controller.addDocumentListener(rootPane.getId(), area);
         controller.addUrlListener(bar);
     }
 

@@ -1,5 +1,6 @@
 package userinterface;
 
+import domainlayer.Document;
 import domainlayer.DocumentListener;
 import domainlayer.UIController;
 
@@ -24,6 +25,7 @@ public class LeafPane extends Pane {
         this.contentFrame = contentFrame;
         this.parentPane = parentPane;
         this.id = getController().addPaneDocument();
+        System.out.println("made a leaf pane! " +  this);
     }
 
     /**
@@ -374,6 +376,10 @@ public class LeafPane extends Pane {
 
     @Override
     public void replacePaneWith(Pane oldPane, Pane newPane) { }
+
+    public DocumentCell getContentWithoutScrollbars() {
+        return ((DocumentCellDecorator) contentFrame.getContent()).getContentWithoutScrollbars();
+    }
 
     /**
      * The content that is represented by this ContentFrame.

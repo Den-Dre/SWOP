@@ -54,6 +54,8 @@ public class HorizontalScrollBarDecorator extends DocumentCellDecorator {
 
     @Override
     void dragged(int dx, int dy) {
+    	System.out.println("length: " + length);
+    	System.out.println("innerBarLength: " + innerBarLength);
         setFraction((double) dx / (length-innerBarLength) + fraction);
     }
 

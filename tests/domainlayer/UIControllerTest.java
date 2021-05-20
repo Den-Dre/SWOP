@@ -10,11 +10,15 @@ public class UIControllerTest {
     private ContentFrame cf;
     private UIController controller;
     private final int id = 0;
+    private Pane rootPane;
 
     @BeforeEach
     void setUp() {
         cf = new ContentFrame(0, 0, 100, 100);
         controller = new UIController();
+        
+        rootPane = new LeafPane(cf, controller);
+        controller.setCurrentDocument(rootPane.getId());
         controller.addDocumentListener(id, cf);
     }
 
@@ -61,20 +65,25 @@ public class UIControllerTest {
         assertEquals("https://people.cs.kuleuven.be/~bart.jacobs/fout.html", controller.getUrlString(id));
     }
 
-    @Test
-    void newDocument() {
-        AddressBar bar = new AddressBar(0,0,10,10,0);
-        ContentFrame area = new ContentFrame(0,10,10,10);
-//        Document document = new Document();
-//        document.setUrlString("www.test.be");
-//        document.addDocumentListener(area);
-//        document.addURLListener(bar);
-        Document document = new Document("www.test.be", area, bar);
-
-        // set the document of controller to be the new document
-        controller.setCurrentDocument(id);
-        assertEquals(document, controller.getCurrentDocument());
-    }
+//    @Test
+//    void newDocument() {		// there is no longer a method to add a document directly to our controller
+//        AddressBar bar = new AddressBar(0,0,10,10,0);
+//        ContentFrame area = new ContentFrame(0,10,10,10);
+////        Document document = new Document();
+////        document.setUrlString("www.test.be");
+////        document.addDocumentListener(area);
+////        document.addURLListener(bar);
+//        
+//        
+//        Document document = new Document("www.test.be", area, bar);
+//        controller.setCurrentDocument(id, document);
+//        
+//        // set the document of controller to be the new document
+//        
+//        
+//        
+//        assertEquals(document, controller.getCurrentDocument());
+//    }
 
     @Test
     void newDocument2() {
@@ -83,16 +92,20 @@ public class UIControllerTest {
         ContentFrame area = new ContentFrame(0,10,10,10);
         bar.setUiController(controller);
         area.setController(controller);
-        Document document = new Document();
+        int id = controller.addPaneDocument();
+        // Normally the id gets set in the LeafPane constructor.
+        // Since we only use a ContentFrame, we set it manually.
+        area.setId(id);
 
         // set the document of controller to be the new document
         controller.setCurrentDocument(id);
-        assertEquals(document, controller.getCurrentDocument());
+        assertEquals(controller.getDocument(id), controller.getCurrentDocument());
 
         controller.addDocumentListener(id, area);
         controller.addUrlListener(bar);
 
         String link = "www.test.be";
+        bar.setId(id);
         controller.loadDocument(id, "www.test.be");
         assertEquals(link, bar.getURL());
 
