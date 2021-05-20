@@ -73,6 +73,10 @@ public class BookmarksBar extends AbstractFrame {
         	throw new IllegalArgumentException("name or url of new bookmark cannot be empty");
     	int[] coordinates = getNextPosition();
         UITextHyperlink textHyperlink = new UITextHyperlink(coordinates[0], coordinates[1], 0, 10, name);
+        textHyperlink.setParentWidth(getWidth());
+        textHyperlink.setParentHeight(getHeight());
+        textHyperlink.setxReference(getxPos());
+        textHyperlink.setyReference(getyPos());
         textHyperLinks.add(textHyperlink);
         this.controller.addHref(name, url);
         handleResize(getWidth(), height);

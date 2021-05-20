@@ -52,7 +52,7 @@ public class UITextHyperlink extends DocumentCell {
         metrics = g.getFontMetrics(hyperlinkFont);
         textField.setMetrics(metrics);
         updateSizes();
-        if (outOfVerticalBounds() && this instanceof UIHyperlink) return;
+        if (outOfVerticalBounds()) return;
         String visibleText = textField.visibleText();
         if (visibleText.length() == 0) return;
         AttributedString link = new AttributedString(visibleText);
