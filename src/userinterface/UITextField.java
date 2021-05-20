@@ -5,7 +5,7 @@ import java.awt.*;
 /**
  * A class to represent text fields in the UI layer.
  */
-public class UITextField extends DocumentCell{
+public class UITextField extends DocumentCell {
     /**
      * Create a {@code UITextField} based on the given parameters.
      *
@@ -20,14 +20,6 @@ public class UITextField extends DocumentCell{
         super(x, y, width, text_size);
         textField = text;
         textHeight = text_size;
-        updateSizes();
-        setWidth(getMaxWidth());
-    }
-
-    public UITextField(UITextField textField) {
-        super(textField.getxPos(), textField.getyPos(), textField.getMaxWidth(), textField.getMaxHeight());
-        this.textField = textField.getText();
-        this.textHeight = textField.getMaxHeight();
         updateSizes();
         setWidth(getMaxWidth());
     }

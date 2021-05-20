@@ -30,10 +30,6 @@ public abstract class GenericSplitPane extends Pane {
         controller.addDocumentListener(getSecondChild().getId(), getSecondChild(), getFirstChild().getId());
     }
 
-    public GenericSplitPane(GenericSplitPane pane) {
-        super(pane.getxPos(), pane.getyPos(), pane.getWidth(), pane.getHeight());
-    }
-
     /**
      * render the contents of this AbstractFrame.
      *

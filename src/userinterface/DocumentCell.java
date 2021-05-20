@@ -1,6 +1,5 @@
 package userinterface;
 
-import javax.print.Doc;
 import java.awt.*;
 import java.util.ArrayList;
 
@@ -44,6 +43,14 @@ public class DocumentCell extends AbstractFrame {
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) { }
 
+    /**
+     * Handle key presses. This method does the right action when a key is pressed.
+     *
+     * @param id: The KeyEvent (Associated with type of KeyEvent)
+     * @param keyCode: The KeyEvent code (Determines the involved key)
+     * @param keyChar: The character representation of the involved key
+     * @param modifiersEx: Specifies other keys that were involved in the event
+     */
     @Override
     public void handleKey(int id, int keyCode, char keyChar, int modifiersEx) { }
 
@@ -66,9 +73,6 @@ public class DocumentCell extends AbstractFrame {
      * @return True iff the given point lies in this DocumentCells area including the edges
      */
     public boolean wasClicked(int x, int y) {
-//    	System.out.println("docCell: on: "+x+","+y);
-//    	System.out.println("getX: "+this.getxPos()+", getY: "+this.getyPos());
-//    	System.out.println("width: "+this.getWidth()+", height: "+this.getHeight());
         return (x >= this.getxPos()+getxOffset()) &&
                 x <= (this.getxPos() + this.getWidth()+getxOffset()) &&
                 y >= this.getyPos()+getyOffset() &&

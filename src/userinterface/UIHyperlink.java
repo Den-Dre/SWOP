@@ -28,26 +28,6 @@ public class UIHyperlink extends UITextHyperlink{
         setWidth(getMaxWidth());
     }
 
-    public UIHyperlink(UIHyperlink hyperlink) {
-        super(hyperlink.getxPos(), hyperlink.getyPos(), hyperlink.getMaxWidth(), hyperlink.getMaxHeight(), hyperlink.getText());
-//        this.textHeight = hyperlink.getMaxHeight();
-//        this.textWidth = hyperlink.getMaxWidth();
-        this.href = hyperlink.getHref();
-        //updateSizes();
-        setWidth(getMaxWidth());
-    }
-
-//    /**
-//     * Update the {@code textWidth} based on this {@code UIHyperlink} {@code href} attribute.
-//     */
-//    private void updateSizes() {
-//        if (!isCalculateActualWidth()) textWidth =  (int) (super.getMaxHeight()*getText().length()*heightToWidthRatio);
-//        else {
-//            if (metrics == null) return;
-//            textWidth = metrics.stringWidth(getText());
-//        }
-//    }
-
     /**
      * Input: a mouse click
      * Output: String

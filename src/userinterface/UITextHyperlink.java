@@ -30,15 +30,6 @@ public class UITextHyperlink extends DocumentCell {
         setWidth(getMaxWidth());
     }
 
-    public UITextHyperlink(UITextHyperlink hyperlink) {
-        super(hyperlink.getxPos(), hyperlink.getyPos(), hyperlink.getMaxWidth(), hyperlink.getMaxHeight());
-        textField = new UITextField(hyperlink.getxPos(), hyperlink.getyPos(), hyperlink.getMaxWidth(), hyperlink.getMaxHeight(), hyperlink.getText());
-        // this.text = hyperlink.getText();
-        this.textHeight = hyperlink.getMaxHeight();
-        updateSizes();
-        setWidth(getMaxWidth());
-    }
-
     /**
      * Renders the link onto the window.
      * -> Update information about the dimensions of the string
@@ -93,10 +84,8 @@ public class UITextHyperlink extends DocumentCell {
      */
     @Override
     public ReturnMessage getHandleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
-        if (id == MouseEvent.MOUSE_RELEASED) {
-            if (wasClicked(x, y))
+        if (id == MouseEvent.MOUSE_RELEASED && wasClicked(x, y))
                 return new ReturnMessage(ReturnMessage.Type.Hyperlink, getText());
-        }
         return new ReturnMessage(ReturnMessage.Type.Empty);
     }
 
