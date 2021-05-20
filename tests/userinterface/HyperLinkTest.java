@@ -32,6 +32,7 @@ class HyperLinkTest{
         
 		ctrl = doc.getController();
 
+		
         int height1 = 10;
         String text1 = "klik hier voor swop";
         link1 = new UIHyperlink(0,0,0, height1, href1, text1);
@@ -98,10 +99,11 @@ class HyperLinkTest{
 		// compose url with href and load the document
 		ctrl.loadDocumentFromHref(0, href);
 		
+		UITextField text = (UITextField) ((DocumentCellDecorator) doc.getContent().getContent()).getContentWithoutScrollbars();
+		
 		// check if document has changed
-		assertTrue(((DocumentCellDecorator) doc.getContent()).getContentWithoutScrollbars() instanceof UITable);
-		UITable table = (UITable) ((DocumentCellDecorator) doc.getContent()).getContentWithoutScrollbars();
-        assertEquals(((UITextField) table.getContent().get(0).get(0)).getText(),
+		assertTrue(text instanceof UITextField);
+        assertEquals(text.getText(),
 				"HTML elements partially supported by Browsr:");
 	}
 	
@@ -128,6 +130,10 @@ class HyperLinkTest{
     void malformedURL() {
         String malformedURL = "ww.www.test.com";
         UIController controller = new UIController();
+        
+        // setup the pane tree
+        controller.addPaneDocument();
+        
         controller.loadDocument(0, malformedURL);
 
         // Verify contents of returned URL

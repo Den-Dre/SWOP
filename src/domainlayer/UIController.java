@@ -210,4 +210,5 @@ public class UIController {
     public void setWelcomeDocument(int id) {
         documentsKeeper.setWelcomeDocument(id);
     }
+
 }

@@ -25,6 +25,7 @@ public class LeafPane extends Pane {
         this.contentFrame = contentFrame;
         this.parentPane = parentPane;
         this.id = getController().addPaneDocument();
+        System.out.println("made a leaf pane! " +  this);
     }
 
     /**
