@@ -142,7 +142,6 @@ public class VerticalSplitPane extends GenericSplitPane {
                 rightPane.handleResize(rightPane.getWidth(),this.getHeight());
                 leftPane.handleResize(leftPane.getWidth(),this.getHeight());
             }
-            //System.out.println("MouseEvent " + id + " " + x + " " + y + " " + clickCount + " " + button + " " + modifiersEx);
         }
         else
             handleMouseNotDragged(id, x, y, clickCount, button, modifiersEx);
