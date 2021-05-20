@@ -166,7 +166,7 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
      */
     private DocumentCell translateForm(Form content) {
     	DocumentCell formContentsTranslated = translateToUIElements(content.getContent());
-    	return new UIForm(getxPos(), getyPos(), content.getAction(), formContentsTranslated);
+    	return new UIActionForm(getxPos(), getyPos(), content.getAction(), formContentsTranslated);
     }
     
     /**

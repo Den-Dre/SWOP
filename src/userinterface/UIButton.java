@@ -6,7 +6,7 @@ import java.awt.event.MouseEvent;
 /**
  * A class to represent a graphical
  * button that can be clicked and is
- * contained within a {@link UIForm}.
+ * contained within a {@link UIActionForm}.
  */
 public class UIButton extends DocumentCell{
 
