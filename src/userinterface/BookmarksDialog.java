@@ -95,36 +95,6 @@ public class BookmarksDialog extends GenericDialogScreen {
         return new UIForm(offset, offset, "bookmarksDialog", outerTable);
     }
 
-    public BookmarksDialog(BookmarksDialog dialog) {
-        // We can reference the same Browsr obejct as there will always only be one instantiation
-        super(dialog.getxPos(), dialog.getyPos(), dialog.getWidth(), dialog.getHeight(), dialog.getBrowsr(), dialog.getCurrentUrl());
-
-        int offset = getOffset();
-        int textSize = getTextSize();
-
-        this.bookmarksBar = dialog.bookmarksBar.deepCopy();
-        this.nameInput = new UITextInputField(offset, offset,100,textSize, "Name");
-        this.urlInput = new UITextInputField(offset, offset,100,textSize, "URL");
-
-        this.nameInputContents = nameInput;
-        this.urlInputContents = urlInput;
-
-        // URL input must be prefilled:
-        this.urlInputContents.changeTextTo(dialog.getCurrentUrl());
-        this.form = getForm(getCurrentUrl());
-    }
-
-    /**
-     * Create a deep copy of this {@code AbstractFrame} object.
-     *
-     * @return copy: a deep copied version of this {@code AbstractFrame}
-     * object which thus does not point to the original object.
-     */
-    @Override
-    protected AbstractFrame deepCopy() {
-        return new BookmarksDialog(this);
-    }
-
     /**
      * render this {@code BookmarksDialog}.
      *

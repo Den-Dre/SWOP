@@ -16,31 +16,6 @@ public class VerticalScrollBarDecorator extends DocumentCellDecorator {
         innerBarLength = (int) Math.round(length/ratio);
     }
 
-//    /**
-//     * Initialise this AbstractFrame with the given parameters.
-//     *
-//     * @param frame: The {@link ContentFrame} to be decorated.
-//     * @throws IllegalDimensionException: When one of the dimensions of this AbstractFrame is negative
-//     */
-//    public VerticalScrollBarDecorator(ContentFrame frame) throws IllegalDimensionException {
-//        super(frame);
-//    }
-
-    public VerticalScrollBarDecorator(VerticalScrollBarDecorator decorator) {
-        super(decorator.getContent().deepCopy());
-    }
-
-    /**
-     * Create a deep copy of this {@code VerticalScrollBarDecorator} object.
-     *
-     * @return copy: a deep copied version of this {@code VerticalScrollBarDecorator}
-     * object which thus does not point to the original object.
-     */
-    @Override
-    protected VerticalScrollBarDecorator deepCopy() {
-        return new VerticalScrollBarDecorator(this);
-    }
-
     /**
      * render the contents of this AbstractFrame.
      *

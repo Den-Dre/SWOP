@@ -43,27 +43,6 @@ public class VerticalSplitPane extends GenericSplitPane {
     }
 
     /**
-     * Copy constructor: creates a deep copy
-     * of this {@code VerticalSplitPane}.
-     *
-     * @param pane: the {@code VerticalSplitPane} to be deep copied.
-     */
-    public VerticalSplitPane(VerticalSplitPane pane) {
-        super(pane);
-    }
-
-    /**
-     * Create a deep copy of this {@code VerticalSplitPane}
-     * object using the copy constructor.
-     *
-     * @return copy: a deep copy of the given {@code VerticalSplitPane}.
-     */
-    @Override
-    public Pane deepCopy() {
-        return new VerticalSplitPane(this);
-    }
-
-    /**
      * This method handles resizes.
      * It makes sure the AbstractFrame is adjusted in width when the window shrinks or grows.
      * It does not change its height (e.g. look at Firefox).

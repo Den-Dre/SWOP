@@ -122,17 +122,6 @@ public class SaveDialog extends GenericDialogScreen {
     }
 
     /**
-     * Create a deep copy of this {@code AbstractFrame} object.
-     *
-     * @return copy: a deep copied version of this {@code AbstractFrame}
-     * object which thus does not point to the original object.
-     */
-    @Override
-    protected SaveDialog deepCopy() {
-        return new SaveDialog(this);
-    }
-
-    /**
      * Help method to handle mouse clicks on this {@code SaveDialog}.
      *
      * @param result:

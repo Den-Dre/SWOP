@@ -274,14 +274,6 @@ public abstract class AbstractFrame {
     }
 
     /**
-     * Create a deep copy of this {@code AbstractFrame} object.
-     *
-     * @return copy: a deep copied version of this {@code AbstractFrame}
-     *               object which thus does not point to the original object.
-     */
-    protected abstract AbstractFrame deepCopy();
-
-    /**
      * Method to determine if the click was in this DocumentCells area
      * @param x: the x-position of the click
      * @param y: the y-position of the click

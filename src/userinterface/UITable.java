@@ -59,26 +59,8 @@ public class UITable extends DocumentCell{
         }
     }
 
-    public UITable(UITable table) {
-        super(table.getxPos(), table.getyPos(), table.getMaxWidth(), table.getMaxHeight());
-        this.grid = gridDeepCopy(table.grid);
-        setColumnWidths();
-        setRowHeights();
-    }
-
-    private ArrayList<ArrayList<DocumentCell>> gridDeepCopy(ArrayList<ArrayList<DocumentCell>> grid) {
-        ArrayList<ArrayList<DocumentCell>> result = new ArrayList<>();
-        for (ArrayList<DocumentCell> row : grid) {
-            ArrayList<DocumentCell> newRow = new ArrayList<>();
-            for (DocumentCell cell : row)
-                newRow.add(cell.deepCopy());
-            result.add(newRow);
-        }
-        return result;
-    }
-
     /**
-     * render every cell in the grid.
+     * Render every cell in the grid.
      *
      * @param g: The graphics to be updated.
      */

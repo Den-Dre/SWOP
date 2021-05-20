@@ -75,24 +75,6 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
         this.id = controller.duplicatePaneDocument(siblingId);
     }
 
-    public ContentFrame(ContentFrame frame) {
-        super(frame.getxPos(), frame.getyPos(), frame.getWidth(), frame.getHeight());
-        this.content = frame.content.deepCopy();
-        this.controller = frame.controller;
-        this.id = frame.id;
-    }
-
-    /**
-     * Create a deep copy of this {@code ContentFrame} object.
-     *
-     * @return copy: a deep copied version of this {@code AbstractFrame}
-     * object which thus does not point to the original object.
-     */
-    @Override
-    protected ContentFrame deepCopy() {
-        return new ContentFrame(this);
-    }
-
     /**
      * Translates the contentSpan from the domainmodel into the simplified UI-representation objects.
      * Distinction is made between domain-classes Table, HyperLink, TextSpan, TextInputField, Form and SubmitButton

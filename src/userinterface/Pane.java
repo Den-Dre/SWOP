@@ -19,22 +19,6 @@ public abstract class Pane extends AbstractFrame implements DocumentListener {
     }
 
     /**
-     * A copy constructor in order
-     * to create a deep copy of
-     * {@code Pane} objects.
-     *
-     * @param p: the {@code Pane} to be copied.
-     */
-    public Pane(Pane p) {
-        super(p.getxPos(), p.getyPos(), p.getWidth(), p.getHeight());
-        this.parentPane = p.parentPane.deepCopy();
-        this.subPane = p.subPane.deepCopy();
-        this.focusedPane = p.focusedPane.deepCopy();
-    }
-
-    public abstract Pane deepCopy();
-
-    /**
      * Set the {@link ContentFrame} object that currently has focus.
      *
      * @param pane: The {@code ContentFrame} object to be set.
