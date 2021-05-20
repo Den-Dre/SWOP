@@ -102,14 +102,14 @@ public class VerticalSplitTest {
         assertTrue(rootPane.getRootPane() instanceof VerticalSplitPane);
         assertTrue(leftPane.hasFocus());
         // 1. The user presses Ctrl+X.
-        // This closes the bottom pane, and should promote the ex-upperPane to rootPane
+        // This closes the bottom pane, and should promote the ex-rightPane to rootPane
         closeCurrentPane();
         // 2. The system replaces the parent pane of the leaf pane containing the
         // focused frame by the latter pane’s sibling pane. It sets some remaining
         // frame as the new focused frame.
         assertTrue(rootPane.getRootPane() instanceof LeafPane);
-        assertSame(rootPane.getFocusedPane(), rootPane.getRootPane());
-        assertSame(leftPane.getRootPane(), leftPane);
+        assertSame(rightPane.getFocusedPane(), rightPane.getRootPane());
+        assertSame(rightPane.getRootPane(), rightPane);
     }
 
     // 4.8 Use Case: Close Frame

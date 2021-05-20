@@ -98,6 +98,8 @@ public class LeafPane extends Pane {
     public Pane closeLeafPane() {
         if (this == getRootPane()) {
             contentFrame.setWelcomeDocument();
+            toggleFocus(true);
+            setFocusedPane(this);
             return this;
         }
         Pane sibling = parentPane.getFirstChild() == this ?
@@ -111,6 +113,8 @@ public class LeafPane extends Pane {
         sibling.setParentPane(parentPane.getParentPane());
         setFocusedPane(sibling);
         setParentPane(null);
+        setFocusedPane(sibling);
+        sibling.toggleFocus(true);
         return sibling;
     }
 
