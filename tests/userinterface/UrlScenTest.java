@@ -221,8 +221,9 @@ class UrlScenTest {
 		
 		// something must be visible, contents have changed!
         DocumentCell contents = ((DocumentCellDecorator) ((LeafPane) doc).getContentFrame().getContent()).getContentWithoutScrollbars();
-        assertTrue(contents instanceof UITextField);
-		assertEquals(((UITextField) contents).getText(),
+        assertTrue(contents instanceof UITable);
+        UITextField firstText = (UITextField) ((UITable) contents).getContent().get(0).get(0);
+		assertEquals(firstText.getText(),
 				"HTML elements partially supported by Browsr:");
 	}
 	
