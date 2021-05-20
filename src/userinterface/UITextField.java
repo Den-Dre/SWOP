@@ -48,11 +48,8 @@ public class UITextField extends DocumentCell{
         g.setFont(textFieldFont);
         if (getxPos() <= getxReference()+5)
             g.drawString(visibleText(), getxPos(), getyPos()+textHeight+getyOffset());
-        else if (getxPos()+getxOffset() > getxReference()) {
-            g.drawString(visibleText(), getxPos()+getxOffset(), getyPos()+textHeight+getyOffset());
-        }
         else
-            g.drawString(visibleText(), getxReference(), getyPos()+textHeight+getyOffset());
+            g.drawString(visibleText(), Math.max(getxPos() + getxOffset(), getxReference()), getyPos() + textHeight + getyOffset());
         // Draw a rectangle around the text for debugging purposes
         //g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
     }
