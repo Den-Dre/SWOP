@@ -24,40 +24,6 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
      */
     public ContentFrame(int x, int y, int width, int height) throws IllegalDimensionException {
         super(x, y, width, height);
-//        DocumentCellDecorator decoratedDocCell = new HorizontalScrollBarDecorator(new VerticalScrollBarDecorator(getContent()));
-//        setContent(decoratedDocCell);
-
-//        // hard-coded Welcome document (for now!)
-//        ArrayList<ArrayList<DocumentCell>> rows = new ArrayList<>();
-//
-//        UITextField title = new UITextField(x, y, "Welcome to UserInterface.Browsr!".length(), 50, "Welcome to UserInterface.Browsr!");
-//        UITextField authors = new UITextField(x, y, width, 20,
-//	  		"By yours truly: Andreas Hinderyckx, Martijn Leplae, Thibault Van Win and Jakob Heirwegh");
-//        UITextField swopper = new UITextField(x, y, width, 20, "1st iteration Software-Ontwerp 2020-2021");
-//        UITextField empty = new UITextField(x, y, width, 20, " ");
-//
-//        String href = "browsrtest.html";
-//        String text = "Click here to see what we can do!";
-//
-//        UIHyperlink hyperLink = new UIHyperlink(x, y, width, 20, href, text);
-//
-//        ArrayList<DocumentCell> row1 = new ArrayList<>();
-//        ArrayList<DocumentCell> row2 = new ArrayList<>();
-//        ArrayList<DocumentCell> row3 = new ArrayList<>();
-//        ArrayList<DocumentCell> row4 = new ArrayList<>();
-//        ArrayList<DocumentCell> row5 = new ArrayList<>();
-//
-//	    row1.add(title);
-//	    row2.add(authors);
-//	    row3.add(empty);
-//	    row4.add(hyperLink);
-//	    row5.add(swopper);
-//
-//	    rows.add(row1);
-//	    rows.add(row2);
-//	    rows.add(row3);
-//	    rows.add(row4);
-//	    rows.add(row5);
     }
 
     /**
