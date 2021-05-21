@@ -29,6 +29,7 @@ public abstract class Pane extends AbstractFrame implements DocumentListener {
      * @param pane: The {@code Pane} object to be set.
      */
     public void setFocusedPane(Pane pane) {
+        getController().setCurrentDocument(pane.getId());
         if (getParentPane() != null)
             getParentPane().setFocusedPane(pane);
         else

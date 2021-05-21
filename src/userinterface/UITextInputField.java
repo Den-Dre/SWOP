@@ -393,6 +393,7 @@ public class UITextInputField extends DocumentCell {
         if (newCursor > textLength) newCursor = textLength;
         if (newCursor < 0) newCursor = 0;
         this.cursor = newCursor;
+        if (!hasFocus) return;
         if (cursor == textLength)
             textField.setFraction(1.0);
         else
