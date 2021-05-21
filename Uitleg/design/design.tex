@@ -175,9 +175,10 @@ Daarnaast hebben we ook overwogen om het \textit{memento} design pattern te impl
 	\item \texttt{DocumentCellDecorator}-klasse:\\
 	Deze klasse past het \textbf{Decorator-pattern} toe zodat er op een elegante manier \textit{scrollBars} aan \textit{DocumentCells} kan worden toegevoegd worden. Deze klasse implementeert gemeenschappelijke zaken tussen de klassen: \texttt{VerticalScrollBarDecorator} en \texttt{HorizontalScrollBarDecorator}.
 	\item \texttt{VerticalScrollBarDecorator} en \texttt{HorizontalScrollBarDecorator} kunnen dus gebruikt worden om respectievelijk verticale en/of horizontale scrollBars toe te voegen. Beide houden een \textit{fraction} bij (i.e. een variabele die bijhoudt hoe ver de scrollBar is gescrold). Wanneer deze \textit{fraction} wordt aangepast (door bijvoorbeeld een \texttt{MouseEvent.DRAGGING}), zorgen deze klassen ervoor dat de \textit{xOffset} of \textit{yOffset} van de \texttt{DocumentCell} die ze decoreren, worden aangepast.
+	\item \texttt{UIForm} werd als volgt gerefactored om de feedback van de vorige iteratie toe te passen:\\
+	Het \textit{action} attribuut werd doorgeschoven naar een nieuwe subklasse van \texttt{UIForm} genaamd \texttt{UIActionForm}. Deze laatste voegt alleen de functionaliteit om aan te geven hoe de URL gevormd moet worden voor de domein-laag. De \texttt{BookmarksDialog} en \texttt{SaveDialog} maken ook gebruik van een \texttt{UIForm} maar hebben nood aan een deze functionaliteit.\\
+	 
 \end{itemize}
-
-
 
 
 \end{document}
