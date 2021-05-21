@@ -186,7 +186,7 @@ public class UITextInputField extends DocumentCell {
             textField.setFraction(1.0);
         textField.handleMouse(id, x, y, clickCount, button, modifiersEx);
         if (button != MouseEvent.BUTTON1) return; // Button1 is left mouse button
-        if (id != MouseEvent.MOUSE_RELEASED) return;
+        if (id != MouseEvent.MOUSE_RELEASED || textField.wasClicked(x,y)) return;
         if (this.wasClicked(x,y)) {
             if (!this.hasFocus) {
                 doSelect = true;

@@ -208,7 +208,7 @@ class UrlScenTest {
         bar.handleMouse(mouseClick, 6,500,1,leftMouse,0);
         assertFalse(bar.hasFocus);
         // click on the edge
-        bar.handleMouse(mouseClick, 105,20,1,leftMouse,0);
+        bar.handleMouse(mouseClick, 105,15,1,leftMouse,0);
         assertTrue(bar.hasFocus);	}
 	
 	// 6

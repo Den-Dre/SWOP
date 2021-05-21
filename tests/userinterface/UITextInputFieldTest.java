@@ -66,7 +66,7 @@ class UITextInputFieldTest {
         String text = "browsr";
         inputField.changeTextTo(text);
         // Click on inputField and check if it has focus
-        inputField.handleMouse(mouseClick, 10,10, 1,leftMouse,0);
+        inputField.handleMouse(mouseClick, 1,1, 1,leftMouse,0);
         assertTrue(inputField.hasFocus);
         // Press Right (all the text is selected when clicking to gain focus, we want no text to be selected for this test)
         inputField.handleKey(keyPress, KeyEvent.VK_RIGHT, undefChar, 0);
@@ -90,7 +90,7 @@ class UITextInputFieldTest {
         String text = "textcontent";
         inputField.changeTextTo(text);
         // Click on inputField and check if it has focus
-        inputField.handleMouse(mouseClick, 10,10, 1,leftMouse,0);
+        inputField.handleMouse(mouseClick, 1,1, 1,leftMouse,0);
         assertTrue(inputField.hasFocus);
         // Press backspace
         inputField.handleKey(keyPress, KeyEvent.VK_BACK_SPACE, undefChar, 0);
@@ -103,7 +103,7 @@ class UITextInputFieldTest {
         String Text = "helloworld.com";
         inputField.changeTextTo(Text);
         // Click on inputField and check if it has focus
-        inputField.handleMouse(mouseClick, 10,10, 1,leftMouse,0);
+        inputField.handleMouse(mouseClick, 1,1, 1,leftMouse,0);
         assertTrue(inputField.hasFocus);
         // Press delete
         inputField.handleKey(keyPress, KeyEvent.VK_DELETE, undefChar, 0);
@@ -116,7 +116,7 @@ class UITextInputFieldTest {
         String Text = "helloworld.com";
         inputField.changeTextTo(Text);
         // Click on inputField and check if it has focus
-        inputField.handleMouse(mouseClick, 10,10, 1,leftMouse,0);
+        inputField.handleMouse(mouseClick, 1,1, 1,leftMouse,0);
         assertTrue(inputField.hasFocus);
 
         // => Press Home + enter letter
