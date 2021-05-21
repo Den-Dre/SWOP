@@ -64,7 +64,6 @@ public class VerticalSplitPane extends GenericSplitPane {
         getFirstChild().handleResize((int) (newWindowWidth* leftFraction), newWindowHeight);
         getSecondChild().setxPos((int) (getxPos() + newWindowWidth* leftFraction));
         getSecondChild().handleResize((int) (newWindowWidth*(1- leftFraction)),newWindowHeight);
-        //super.handleResize(newWindowWidth, newWindowHeight);
     }
 
     /**

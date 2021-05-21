@@ -308,7 +308,6 @@ public class UITable extends DocumentCell{
      */   
     @Override
     public void setyReference(int yReference) {
-        //super.setyReference(yReference);
         for (ArrayList<DocumentCell> row : grid) {
             for (DocumentCell cell : row) {
                 cell.setyReference(yReference);

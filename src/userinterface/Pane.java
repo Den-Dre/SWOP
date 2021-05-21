@@ -49,7 +49,6 @@ public abstract class Pane extends AbstractFrame implements DocumentListener {
         else if (oldPane == getSecondChild())
             setSecondChild(newPane);
         else {
-            //getFocusedPane().replacePaneWith(oldPane, newPane);
             getFirstChild().replacePaneWith(oldPane, newPane);
             getSecondChild().replacePaneWith(oldPane, newPane);
         }
@@ -234,29 +233,6 @@ public abstract class Pane extends AbstractFrame implements DocumentListener {
     public int getId() {
         return this.id;
     }
-
-//    /**
-//     * Gets the x-position of the root {@code Pane}
-//     *
-//     * @return xpos : the x-position of the root {@code Pane}
-//     */
-//    protected int getBasexPos() {
-//        return getRootPane().getxPos();
-//    }
-//
-//    /**
-//     * Gets the y-position of the root {@code Pane}
-//     *
-//     * @return ypos : the y-position of the root {@code Pane}
-//     */
-//    protected int getBaseyPos() {
-//        return getRootPane().getyPos();
-//    }
-    
-//    /**
-//     * A variable of type {@code Pane} containing the sub pane of this {@code Pane}
-//     */
-//    private Pane subPane;
 
     /**
      * A variable of type {@code Pane} containing the focused pane of this {@code Pane}
