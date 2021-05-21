@@ -177,7 +177,6 @@ public class LeafPane extends Pane {
     @Override
     public void contentChanged() {
         this.contentFrame.contentChanged();
-        this.contentFrame.setyReference(getyPos());
     }
     
     /**
