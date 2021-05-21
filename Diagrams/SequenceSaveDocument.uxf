@@ -5,7 +5,7 @@
     <id>UMLGeneric</id>
     <coordinates>
       <x>133</x>
-      <y>91</y>
+      <y>63</y>
       <w>70</w>
       <h>21</h>
     </coordinates>
@@ -17,7 +17,7 @@ bg=yellow</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>161</x>
-      <y>133</y>
+      <y>105</y>
       <w>14</w>
       <h>273</h>
     </coordinates>
@@ -29,7 +29,7 @@ bg=yellow</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>161</x>
-      <y>105</y>
+      <y>77</y>
       <w>21</w>
       <h>42</h>
     </coordinates>
@@ -40,7 +40,7 @@ bg=yellow</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>0</x>
-      <y>133</y>
+      <y>105</y>
       <w>175</w>
       <h>28</h>
     </coordinates>
@@ -52,7 +52,7 @@ handleKeyEvent</panel_attributes>
     <id>UMLFrame</id>
     <coordinates>
       <x>112</x>
-      <y>175</y>
+      <y>147</y>
       <w>1239</w>
       <h>665</h>
     </coordinates>
@@ -63,7 +63,7 @@ handleKeyEvent</panel_attributes>
     <id>Text</id>
     <coordinates>
       <x>182</x>
-      <y>175</y>
+      <y>147</y>
       <w>105</w>
       <h>21</h>
     </coordinates>
@@ -74,7 +74,7 @@ handleKeyEvent</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>168</x>
-      <y>210</y>
+      <y>182</y>
       <w>14</w>
       <h>175</h>
     </coordinates>
@@ -86,7 +86,7 @@ bg=yellow</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>168</x>
-      <y>189</y>
+      <y>161</y>
       <w>161</w>
       <h>63</h>
     </coordinates>
@@ -98,7 +98,7 @@ handleSaveDialog()</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>329</x>
-      <y>91</y>
+      <y>63</y>
       <w>112</w>
       <h>21</h>
     </coordinates>
@@ -110,7 +110,7 @@ bg=blue</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>371</x>
-      <y>245</y>
+      <y>217</y>
       <w>14</w>
       <h>28</h>
     </coordinates>
@@ -122,7 +122,7 @@ bg=blue</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>371</x>
-      <y>105</y>
+      <y>77</y>
       <w>21</w>
       <h>154</h>
     </coordinates>
@@ -133,7 +133,7 @@ bg=blue</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>175</x>
-      <y>245</y>
+      <y>217</y>
       <w>210</w>
       <h>28</h>
     </coordinates>
@@ -145,7 +145,7 @@ create(layout)</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>462</x>
-      <y>91</y>
+      <y>63</y>
       <w>126</w>
       <h>21</h>
     </coordinates>
@@ -157,7 +157,7 @@ bg=red</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>518</x>
-      <y>294</y>
+      <y>266</y>
       <w>14</w>
       <h>35</h>
     </coordinates>
@@ -169,7 +169,7 @@ bg=red</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>518</x>
-      <y>105</y>
+      <y>77</y>
       <w>21</w>
       <h>203</h>
     </coordinates>
@@ -180,7 +180,7 @@ bg=red</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>175</x>
-      <y>287</y>
+      <y>259</y>
       <w>357</w>
       <h>28</h>
     </coordinates>
@@ -192,7 +192,7 @@ currentUrl = getUrl()</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>161</x>
-      <y>399</y>
+      <y>371</y>
       <w>21</w>
       <h>154</h>
     </coordinates>
@@ -203,7 +203,7 @@ currentUrl = getUrl()</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>161</x>
-      <y>735</y>
+      <y>707</y>
       <w>14</w>
       <h>42</h>
     </coordinates>
@@ -215,7 +215,7 @@ bg=yellow</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>217</x>
-      <y>91</y>
+      <y>63</y>
       <w>98</w>
       <h>21</h>
     </coordinates>
@@ -227,7 +227,7 @@ bg=blue</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>259</x>
-      <y>105</y>
+      <y>77</y>
       <w>21</w>
       <h>595</h>
     </coordinates>
@@ -238,7 +238,7 @@ bg=blue</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>259</x>
-      <y>686</y>
+      <y>658</y>
       <w>14</w>
       <h>28</h>
     </coordinates>
@@ -250,7 +250,7 @@ bg=blue</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>266</x>
-      <y>679</y>
+      <y>651</y>
       <w>413</w>
       <h>28</h>
     </coordinates>
@@ -262,7 +262,7 @@ create(regularLayout)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>168</x>
-      <y>728</y>
+      <y>700</y>
       <w>511</w>
       <h>28</h>
     </coordinates>
@@ -274,7 +274,7 @@ setBrowsrLayout(regularLayout)</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>630</x>
-      <y>91</y>
+      <y>63</y>
       <w>77</w>
       <h>21</h>
     </coordinates>
@@ -286,7 +286,7 @@ bg=orange</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>658</x>
-      <y>105</y>
+      <y>77</y>
       <w>21</w>
       <h>252</h>
     </coordinates>
@@ -297,7 +297,7 @@ bg=orange</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>658</x>
-      <y>343</y>
+      <y>315</y>
       <w>14</w>
       <h>448</h>
     </coordinates>
@@ -309,7 +309,7 @@ bg=orange</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>175</x>
-      <y>336</y>
+      <y>308</y>
       <w>497</w>
       <h>28</h>
     </coordinates>
@@ -321,7 +321,7 @@ create(saveDialog)</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>749</x>
-      <y>91</y>
+      <y>63</y>
       <w>112</w>
       <h>21</h>
     </coordinates>
@@ -333,7 +333,7 @@ bg=green</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>798</x>
-      <y>105</y>
+      <y>77</y>
       <w>21</w>
       <h>259</h>
     </coordinates>
@@ -344,7 +344,7 @@ bg=green</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>798</x>
-      <y>350</y>
+      <y>322</y>
       <w>14</w>
       <h>21</h>
     </coordinates>
@@ -356,7 +356,7 @@ bg=green</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>665</x>
-      <y>343</y>
+      <y>315</y>
       <w>147</w>
       <h>28</h>
     </coordinates>
@@ -368,7 +368,7 @@ create(nameInput)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>798</x>
-      <y>364</y>
+      <y>336</y>
       <w>21</w>
       <h>504</h>
     </coordinates>
@@ -379,7 +379,7 @@ create(nameInput)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>665</x>
-      <y>371</y>
+      <y>343</y>
       <w>105</w>
       <h>49</h>
     </coordinates>
@@ -391,7 +391,7 @@ getForm()</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>665</x>
-      <y>392</y>
+      <y>364</y>
       <w>14</w>
       <h>49</h>
     </coordinates>
@@ -403,7 +403,7 @@ bg=orange</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>665</x>
-      <y>476</y>
+      <y>448</y>
       <w>14</w>
       <h>301</h>
     </coordinates>
@@ -415,7 +415,7 @@ bg=orange</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>665</x>
-      <y>455</y>
+      <y>427</y>
       <w>175</w>
       <h>49</h>
     </coordinates>
@@ -427,7 +427,7 @@ handleClickResult(result)</panel_attributes>
     <id>UMLFrame</id>
     <coordinates>
       <x>609</x>
-      <y>511</y>
+      <y>483</y>
       <w>700</w>
       <h>168</h>
     </coordinates>
@@ -438,7 +438,7 @@ handleClickResult(result)</panel_attributes>
     <id>Text</id>
     <coordinates>
       <x>686</x>
-      <y>511</y>
+      <y>483</y>
       <w>105</w>
       <h>21</h>
     </coordinates>
@@ -449,7 +449,7 @@ handleClickResult(result)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>168</x>
-      <y>532</y>
+      <y>504</y>
       <w>511</w>
       <h>28</h>
     </coordinates>
@@ -461,7 +461,7 @@ getController()</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>161</x>
-      <y>539</y>
+      <y>511</y>
       <w>14</w>
       <h>21</h>
     </coordinates>
@@ -473,7 +473,7 @@ bg=yellow</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>161</x>
-      <y>553</y>
+      <y>525</y>
       <w>21</w>
       <h>196</h>
     </coordinates>
@@ -484,7 +484,7 @@ bg=yellow</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>910</x>
-      <y>91</y>
+      <y>63</y>
       <w>70</w>
       <h>21</h>
     </coordinates>
@@ -496,7 +496,7 @@ bg=red</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>938</x>
-      <y>567</y>
+      <y>539</y>
       <w>14</w>
       <h>105</h>
     </coordinates>
@@ -508,7 +508,7 @@ bg=red</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>938</x>
-      <y>105</y>
+      <y>77</y>
       <w>21</w>
       <h>476</h>
     </coordinates>
@@ -519,7 +519,7 @@ bg=red</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>672</x>
-      <y>560</y>
+      <y>532</y>
       <w>280</w>
       <h>28</h>
     </coordinates>
@@ -530,32 +530,8 @@ saveDocument(name)</panel_attributes>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>945</x>
-      <y>581</y>
-      <w>14</w>
-      <h>63</h>
-    </coordinates>
-    <panel_attributes>layer=2
-bg=red</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>945</x>
-      <y>567</y>
-      <w>168</w>
-      <h>49</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-
-getCurrentDocument()</panel_attributes>
-    <additional_attributes>20.0;50.0;60.0;50.0;60.0;10.0;10.0;10.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLGeneric</id>
-    <coordinates>
       <x>1092</x>
-      <y>91</y>
+      <y>63</y>
       <w>98</w>
       <h>21</h>
     </coordinates>
@@ -567,9 +543,9 @@ bg=pink</panel_attributes>
     <id>UMLGeneric</id>
     <coordinates>
       <x>1134</x>
-      <y>609</y>
+      <y>553</y>
       <w>14</w>
-      <h>28</h>
+      <h>91</h>
     </coordinates>
     <panel_attributes>
 bg=pink</panel_attributes>
@@ -579,30 +555,18 @@ bg=pink</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1134</x>
-      <y>105</y>
+      <y>77</y>
       <w>21</w>
-      <h>518</h>
+      <h>490</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;720.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>952</x>
-      <y>602</y>
-      <w>196</w>
-      <h>28</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;&lt;-
-getCurrentDocument()</panel_attributes>
-    <additional_attributes>260.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;680.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1232</x>
-      <y>91</y>
+      <x>1260</x>
+      <y>63</y>
       <w>70</w>
       <h>21</h>
     </coordinates>
@@ -613,21 +577,21 @@ bg=blue</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1260</x>
-      <y>105</y>
+      <x>1288</x>
+      <y>77</y>
       <w>21</w>
-      <h>553</h>
+      <h>539</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;770.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;750.0</additional_attributes>
   </element>
   <element>
     <id>UMLGeneric</id>
     <coordinates>
-      <x>1260</x>
-      <y>644</y>
+      <x>1288</x>
+      <y>602</y>
       <w>14</w>
-      <h>21</h>
+      <h>42</h>
     </coordinates>
     <panel_attributes>
 bg=blue</panel_attributes>
@@ -637,19 +601,19 @@ bg=blue</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>945</x>
-      <y>637</y>
-      <w>329</w>
+      <y>546</y>
+      <w>203</w>
       <h>28</h>
     </coordinates>
     <panel_attributes>lt=&lt;&lt;-
 saveDocument(fileName)</panel_attributes>
-    <additional_attributes>450.0;20.0;10.0;20.0</additional_attributes>
+    <additional_attributes>270.0;20.0;10.0;20.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
       <x>161</x>
-      <y>770</y>
+      <y>742</y>
       <w>21</w>
       <h>98</h>
     </coordinates>
@@ -660,7 +624,7 @@ saveDocument(fileName)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>259</x>
-      <y>707</y>
+      <y>679</y>
       <w>21</w>
       <h>161</h>
     </coordinates>
@@ -671,7 +635,7 @@ saveDocument(fileName)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>371</x>
-      <y>266</y>
+      <y>238</y>
       <w>21</w>
       <h>602</h>
     </coordinates>
@@ -682,7 +646,7 @@ saveDocument(fileName)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>518</x>
-      <y>322</y>
+      <y>294</y>
       <w>21</w>
       <h>546</h>
     </coordinates>
@@ -693,7 +657,7 @@ saveDocument(fileName)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>658</x>
-      <y>784</y>
+      <y>756</y>
       <w>21</w>
       <h>84</h>
     </coordinates>
@@ -704,7 +668,7 @@ saveDocument(fileName)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>938</x>
-      <y>665</y>
+      <y>637</y>
       <w>21</w>
       <h>203</h>
     </coordinates>
@@ -715,22 +679,58 @@ saveDocument(fileName)</panel_attributes>
     <id>Relation</id>
     <coordinates>
       <x>1134</x>
-      <y>630</y>
+      <y>637</y>
       <w>21</w>
-      <h>238</h>
+      <h>203</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;320.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;270.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1260</x>
-      <y>658</y>
+      <x>1288</x>
+      <y>644</y>
       <w>21</w>
-      <h>210</h>
+      <h>196</h>
     </coordinates>
     <panel_attributes>lt=.</panel_attributes>
-    <additional_attributes>10.0;10.0;10.0;280.0</additional_attributes>
+    <additional_attributes>10.0;10.0;10.0;260.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLGeneric</id>
+    <coordinates>
+      <x>1141</x>
+      <y>574</y>
+      <w>14</w>
+      <h>42</h>
+    </coordinates>
+    <panel_attributes>layer=2
+bg=pink</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1141</x>
+      <y>560</y>
+      <w>161</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+getCurrentDocument()</panel_attributes>
+    <additional_attributes>20.0;50.0;50.0;50.0;50.0;10.0;10.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1148</x>
+      <y>595</y>
+      <w>154</w>
+      <h>28</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-
+saveDocument(filename)</panel_attributes>
+    <additional_attributes>200.0;20.0;10.0;20.0</additional_attributes>
   </element>
 </diagram>
