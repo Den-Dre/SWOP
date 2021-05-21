@@ -85,6 +85,7 @@ public class BookmarksBarTest {
         assertEquals(badUrl, controller.getURLFromBookmark(name));
         // Click on newly added bookmark
         bookmarksBar.handleMouse(mouseClick, bookmark.getxPos()+1, bookmark.getyPos()+1, 1, leftMouse, 0);
+        System.out.println("loc " + bookmark.getHeight() + "," + bookmark.getWidth());
         // Error document should be loaded
         assertEquals(badUrl, addressBar.getText());
         errorDocumentIsLoaded();

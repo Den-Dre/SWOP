@@ -250,7 +250,9 @@ public class Document {
             while((line = buffer.readLine()) != null)
                 lines.append(line);
             String document = lines.toString();
-
+            
+            System.out.println(document);
+            
             // Check whether the downloaded document only consists of HTML-code
             // that our Browsr can parse.
 

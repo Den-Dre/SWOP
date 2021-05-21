@@ -31,7 +31,8 @@ class UITextFieldTest {
         int height1 = textField1.getHeight();
         double ratio1 = textField1.getHeightToWidthRatio();
         int width1 = (int) (textField1.getText().length() * height1 * ratio1);
-        assertEquals(width1, textField1.getMaxWidth());
+        System.out.println(width1);
+        assertEquals(width1, textField1.getWidth());
 
         assertFalse(textField2.isCalculateActualWidth());
         int height2 = textField2.getHeight();

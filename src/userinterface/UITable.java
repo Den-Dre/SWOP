@@ -75,9 +75,8 @@ public class UITable extends DocumentCell{
     @Override
     public void render(Graphics g) {
         for (ArrayList<DocumentCell> row : grid) {
-            for (DocumentCell cell : row) {
+            for (DocumentCell cell : row)
                 cell.render(g);
-            }
         }
         if (isCalculateActualWidth()) {
             setColumnWidths();

@@ -2,8 +2,16 @@ package userinterface;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
+import java.awt.font.FontRenderContext;
+import java.awt.font.GlyphVector;
 import java.awt.font.TextAttribute;
+import java.awt.font.TextLayout;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.Rectangle2D;
+import java.text.AttributedCharacterIterator;
 import java.text.AttributedString;
+
+import javax.swing.SwingUtilities;
 
 /**
  * A class to represent a hyperlink in the UI layer.
@@ -23,8 +31,17 @@ public class UITextHyperlink extends DocumentCell {
         super(x, y, width, link_size);
         this.textField = new UITextField(x, y, width, link_size, text);
         textHeight = link_size;
+
+        // initialize the text attribute
+//        this.text = text;
+        
+        // initialize the text attribute as an AttributedString
+        this.attributedText = new AttributedString(text);
+        this.attributedText.addAttribute(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+
+        // TODO: Decide whether the following two calls can be omitted in this class's constructor:
         updateSizes();
-        setWidth(getMaxWidth());
+        setWidth(getWidth());
     }
 
     /**
@@ -50,17 +67,40 @@ public class UITextHyperlink extends DocumentCell {
             g.drawString(link.getIterator(), getxPos(), getyPos()+textHeight+getyOffset());
         else
             g.drawString(link.getIterator(), Math.max(getxPos() + getxOffset(), getxReference()), getyPos() + textHeight + getyOffset());
+//    	Graphics2D g2d = (Graphics2D) g;
+//        metrics = g2d.getFontMetrics(hyperlinkFont);
+//
+//        updateSizes();
+//
+//        g2d.setColor(Color.BLUE);
+//        g2d.drawString(attributedText.getIterator(), getxPos(), getyPos() + textHeight);
     }
-
+        
+    
     /**
      * Update the {@code textWidth} based on this {@code UIHyperlink} {@code href} attribute.
      */
     private void updateSizes() {
-        if (!isCalculateActualWidth()) textWidth =  (int) (textHeight*getText().length()*heightToWidthRatio);
-        else {
-            if (metrics == null) return;
-            textWidth = metrics.stringWidth(getText());
-        }
+//        if (!isCalculateActualWidth()) textWidth =  (int) (textHeight*getText().length()*heightToWidthRatio);
+//        else {
+//            if (metrics == null) return;
+//            textWidth = metrics.stringWidth(getText());
+//        }
+    	// still use the old method when metrics is yet to be defined
+    	if (metrics == null) {
+    		textWidth = (int) (textHeight*(getText().length())*heightToWidthRatio);
+    		return;
+    	}
+    	
+    	// width is calculated based on the AttributedString variant of 
+    	// the text attribute to account for being underlined!
+        TextLayout textLayout = new TextLayout( 
+                attributedText.getIterator(), 
+                metrics.getFontRenderContext() 
+        );
+        Rectangle2D.Float textBounds = ( Rectangle2D.Float ) textLayout.getBounds();
+        
+        textWidth = (int) textBounds.getWidth();
     }
 
     /**
@@ -95,13 +135,13 @@ public class UITextHyperlink extends DocumentCell {
     }
 
     /**
-     * Returns the max width of this {@code UIHyperlink}, which is the height of the string
+     * Returns the max width of this {@code UIHyperlink}, which is the width of the string
      */
     @Override
-    public int getMaxWidth() {
+    public int getWidth() {
         return textWidth;
     }
-
+  
     /**
      * Retrieve the text displayed in this UIHyperlink
      *
@@ -147,6 +187,13 @@ public class UITextHyperlink extends DocumentCell {
      */
     private final UITextField textField;
 
+//    /**
+//     * A AttributedString variable to denote the text value of this UIHyperlink.
+//     */
+//    private final String text;
+    
+    private final AttributedString attributedText;
+
     // ============== Dimension variables ====================
     /**
      * An integer variable to denote the height of the text of this {@link UITextHyperlink}.
@@ -166,5 +213,10 @@ public class UITextHyperlink extends DocumentCell {
      * A variable to denote the {@link FontMetrics} of the text of this {@link UITextHyperlink}.
      */
     private FontMetrics metrics;
+    
+    /**
+     * A variable to denote a magic multiplier to return a more accurate textWidth of the text of this UIHyperlink
+     */
+    private final double magicMultiplier = 1.256;
 }
 
