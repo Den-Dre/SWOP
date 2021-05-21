@@ -1,12 +1,10 @@
 package userinterface;
 
-import domainlayer.Document;
 import domainlayer.DocumentListener;
 import domainlayer.UIController;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
-import java.util.Arrays;
 
 /**
  * A class to represent the portion of Browsr that renders the document extending from {@link Pane}
@@ -394,7 +392,7 @@ public class LeafPane extends Pane {
     /**
      * Get the content of this {@code LeafPane} without the
      * surrounding scrollbar decorators.
-     * @return: content: the content of this {@code LeafPane} without the
+     * @return content: the content of this {@code LeafPane} without the
      *      surrounding scrollbar decorators.
      */
     public DocumentCell getContentWithoutScrollbars() {

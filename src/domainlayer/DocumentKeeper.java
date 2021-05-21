@@ -31,26 +31,6 @@ public class DocumentKeeper {
         panesToDocuments.put(++documentCounter, doc);
         return documentCounter;
     }
-//
-//
-//    /**
-//     * Generate and add a new {@link Document} to this {@code DocumentsKeeper}.
-//     * The newly created {@code Document} has the same {@link ContentSpan} loaded
-//     * as that {@code Document} object associated to the given id.
-//     *
-//     * @param siblingId: the id of the {@link Document} which the newly added {@code Document}
-//     * will be based on.
-//     * @return id: the id of the newly created {@code Document}.
-//     */
-//    public int addPaneDocument(int siblingId) {
-//        // Create a new Document based on that of the sibling
-//        Document doc = new Document();
-//        doc.loadFromUrl(panesToDocuments.get(siblingId).getUrlString());
-//
-//        panesToDocuments.put(++documentCounter, doc);
-//        System.out.println(panesToDocuments.toString());
-//        return documentCounter;
-//    }
 
     /**
      * Get the {@link ContentSpan} object associated to
@@ -62,17 +42,6 @@ public class DocumentKeeper {
     public ContentSpan getPaneContentSpan(int id) {
         return panesToDocuments.get(id).getContentSpan();
     }
-
-//    /**
-//     * Get the number of {@link Document} objects that is
-//     * currently added to this {@code DocumentKeeper}.
-//     *
-//     * @return documentCounter: the number of {@link Document} objects that is
-//     *      currently added to this {@code DocumentKeeper}.
-//     */
-//    public int getDocumentCounter() {
-//        return documentCounter;
-//    }
 
     /**
      * Get the {@link Document} object associated to

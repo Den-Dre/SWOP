@@ -1,7 +1,6 @@
 package userinterface;
 
-import java.awt.Graphics;
-import java.util.ArrayList;
+import java.awt.*;
 
 /**
  * A class to denote the graphical concept of a form.

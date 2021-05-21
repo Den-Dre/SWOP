@@ -428,18 +428,6 @@ public class Browsr extends CanvasWindow {
     }
 
     /**
-     * Print the call stack at the time the method is called.
-     * Useful for debugging purposes.
-     *
-     * <a href=https://stackoverflow.com/questions/45944793/how-to-print-java-method-call-stack>Source</a>.
-     */
-    private void printCallStack() {
-        Arrays.stream(Thread.currentThread().getStackTrace()).forEach(s -> System.out.println(
-                "\tat " + s.getClassName() + "." + s.getMethodName() + "(" + s.getFileName() + ":" + s
-                        .getLineNumber() + ")"));
-    }
-
-    /**
      * Takes the necessary actions to close
      * the {@link Pane} that currently
      * has focus.

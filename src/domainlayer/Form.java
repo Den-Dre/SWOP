@@ -7,12 +7,12 @@ public class Form extends ContentSpan {
 	/**
 	 * A {@link String} to hold the action of this Form
 	 */
-	private String action;
+	private final String action;
 	
 	/**
 	 * A {@link ContentSpan} to hold the content of this Form
 	 */
-	private ContentSpan content;
+	private final ContentSpan content;
 	
     /**
      * Initialize a new Form given an action and content

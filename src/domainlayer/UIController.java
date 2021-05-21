@@ -170,19 +170,6 @@ public class UIController {
     public int addPaneDocument() {
         return documentsKeeper.addPaneDocument();
     }
-//
-//    /**
-//     * Generate and add a new {@link Document} to this {@code DocumentsKeeper}.
-//     * The newly created {@code Document} has the same {@link ContentSpan} loaded
-//     * as that {@code Document} object associated to the given id.
-//     *
-//     * @param siblingId: the id of the {@link Document} which the newly added {@code Document}
-//     * will be based on.
-//     * @return id: the id of the newly created {@code Document}.
-//     */
-//    public int duplicatePaneDocument(int siblingId) {
-//        return documentsKeeper.addPaneDocument(siblingId);
-//    }
 
     /**
      * Get the {@link Document} object associated to

@@ -152,7 +152,7 @@ public class UITextField extends DocumentCell {
     /**
      * A string variable to represent the contents of this {@code UITextField}.
      */
-    private String textField = "";
+    private String textField;
 
     // ============== Dimension parameters ====================
     /**
