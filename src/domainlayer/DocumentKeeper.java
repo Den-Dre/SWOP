@@ -106,6 +106,21 @@ public class DocumentKeeper {
     }
 
     /**
+     * Method to save a document to a file.
+     *
+     * @param fileName: the name to be given to the document to be saved.
+     */
+    public void saveDocument(String fileName) {
+        if (fileName.equals(""))
+            throw new IllegalArgumentException("Can't save page when no page is loaded");
+        try {
+            getCurrentDocument().saveDocument(fileName);
+        } catch (Exception e) {
+            System.out.println("Can't save this document!");
+        }
+    }
+
+    /**
      * Load a {@link Document} from a given URL
      * in the pane with the given {@code id}.
      *
@@ -191,5 +206,6 @@ public class DocumentKeeper {
      * The Id of the {@link Pane} that is currently selected.
      */
     private int currentDocumentId;
+
 }
 

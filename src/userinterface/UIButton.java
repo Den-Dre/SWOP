@@ -255,19 +255,6 @@ public class UIButton extends DocumentCell{
     }
 
     /**
-     * Handle key presses. This method does the right action when a key is pressed.
-     *
-     * @param id          : The KeyEvent (Associated with type of KeyEvent)
-     * @param keyCode     : The KeyEvent code (Determines the involved key)
-     * @param keyChar     : The character representation of the involved key
-     * @param modifiersEx : Specifies other keys that were involved in the event
-     */
-    @Override
-    public void handleKey(int id, int keyCode, char keyChar, int modifiersEx) {
-
-    }
-
-    /**
      * Get the appropriate {@link ReturnMessage} when a click occurs on this {@code UIButton}.
      *
      * @param id: The id of the click

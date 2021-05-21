@@ -192,5 +192,4 @@ class UITextInputFieldTest {
         assertEquals(inputField.getyPos()+ inputField.getyOffset(),
                 inputField.getTextField().getContentWithoutScrollbars().getyReference());
     }
-
 }
