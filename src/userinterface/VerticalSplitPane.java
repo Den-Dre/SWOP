@@ -112,6 +112,7 @@ public class VerticalSplitPane extends GenericSplitPane {
             if (x < rightPane.getxPos()) {
                 int oldX = rightPane.getxPos();
                 int deltaX = Math.abs(oldX - x);
+                if (leftPane.getWidth()-deltaX <= SEPARATOR_THICKNESS) return;
                 rightPane.setxPos(x);
                 rightPane.setWidth(rightPane.getWidth() + deltaX);
                 leftPane.setWidth(leftPane.getWidth() - deltaX);
@@ -121,6 +122,7 @@ public class VerticalSplitPane extends GenericSplitPane {
             } else {
                 int oldX = rightPane.getxPos();
                 int deltaX = Math.abs(oldX - x);
+                if (rightPane.getWidth()-deltaX <= SEPARATOR_THICKNESS) return;
                 rightPane.setxPos(x);
                 rightPane.setWidth(rightPane.getWidth() - deltaX);
                 leftPane.setWidth(leftPane.getWidth() + deltaX);
