@@ -215,6 +215,12 @@ public class flowTest {
         //2.Simulate HorizontalSplit
         splitHorizontally();
         assertTrue(rootPane.getFocusedPane().getParentPane() instanceof HorizontalSplitPane);
+        //3. New HorizontalSplit
+        splitHorizontally();
+        assertTrue(rootPane.getFocusedPane().getParentPane() instanceof HorizontalSplitPane);
+        //4. New VerticalSplit
+        splitVertically();
+        assertTrue(rootPane instanceof VerticalSplitPane);
     }
 
     /**
@@ -223,10 +229,9 @@ public class flowTest {
      * has focus.
      */
     private void splitHorizontally() {
-        Pane focused = rootPane.getFocusedPane();
         // Replace the currently focused Pane with a HorizontalSplitPane containing
         // the originally focused Pane and a copy of it as its children.
-        rootPane.getRootPane().replacePaneWith(focused, focused.getHorizontalSplit());
+        rootPane.getRootPane().replacePaneWith(rootPane.getFocusedPane(), rootPane.getHorizontalSplit());
         rootPane = rootPane.getRootPane();
     }
 
@@ -236,10 +241,9 @@ public class flowTest {
      * has focus.
      */
     private void splitVertically() {
-        Pane focused = rootPane.getFocusedPane();
         // Replace the currently focused Pane with a VerticalSplitPane containing
         // the originally focused Pane and a copy of it as its children.
-        rootPane.getRootPane().replacePaneWith(focused, focused.getVerticalSplit());
+        rootPane.getRootPane().replacePaneWith(rootPane.getFocusedPane(), rootPane.getVerticalSplit());
         rootPane = rootPane.getRootPane();
     }
 

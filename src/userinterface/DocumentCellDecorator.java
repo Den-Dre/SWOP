@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
+
 /**
  * A class of decorators that decorate a visualization of a {@link DocumentCell} in 
  * browsr with a scroll bar.
@@ -30,7 +30,6 @@ public abstract class DocumentCellDecorator extends DocumentCell {
      */
     public void setLength(int newLength) {
         length = newLength;
-//        innerBarLength = (int) Math.round(length/getRatio());
     }
 
     /**
@@ -389,8 +388,6 @@ public abstract class DocumentCellDecorator extends DocumentCell {
             return ((VerticalScrollBarDecorator) this.cellToBeDecorated).getContentWithoutScrollbars();
         else if (this.cellToBeDecorated instanceof HorizontalScrollBarDecorator)
             return ((HorizontalScrollBarDecorator) this.cellToBeDecorated).getContentWithoutScrollbars();
-//        if (cellToBeDecorated instanceof UITable)
-//            return ((UITable) cellToBeDecorated).getContent().get(0).get(0);
         return cellToBeDecorated;
     }
     

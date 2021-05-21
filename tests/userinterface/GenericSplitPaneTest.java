@@ -106,5 +106,4 @@ public class GenericSplitPaneTest {
         assertEquals(hsp.getWidth(), newWidth);
         assertEquals(hsp.getHeight(), newHeight);
     }
-
 }

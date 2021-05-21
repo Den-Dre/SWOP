@@ -64,27 +64,6 @@ public class UIControllerTest {
         // check if url changed
         assertEquals("https://people.cs.kuleuven.be/~bart.jacobs/fout.html", controller.getUrlString(id));
     }
-
-//    @Test
-//    void newDocument() {		// there is no longer a method to add a document directly to our controller
-//        AddressBar bar = new AddressBar(0,0,10,10,0);
-//        ContentFrame area = new ContentFrame(0,10,10,10);
-////        Document document = new Document();
-////        document.setUrlString("www.test.be");
-////        document.addDocumentListener(area);
-////        document.addURLListener(bar);
-//        
-//        
-//        Document document = new Document("www.test.be", area, bar);
-//        controller.setCurrentDocument(id, document);
-//        
-//        // set the document of controller to be the new document
-//        
-//        
-//        
-//        assertEquals(document, controller.getCurrentDocument());
-//    }
-
     @Test
     void newDocument2() {
         // Setup

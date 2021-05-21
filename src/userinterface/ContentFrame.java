@@ -27,21 +27,6 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
         super(x, y, width, height);
     }
 
-//    /**
-//     * Initialize a {@code ContentFrame} with the given {@code ContentFrame} parameters
-//     * and an {@code siblingId} as a reference for which page should be loaded.
-//     *
-//     * @param x        : The x coordinate of the {@code ContentFrame}.
-//     * @param y        : The y coordinate of the {@code ContentFrame}.
-//     * @param width    : The width of the {@code ContentFrame}.
-//     * @param height   : The height of the {@code ContentFrame}.
-//     * @param siblingId: The id of another {@code Pane} object whose page should be copied.
-//     */
-//    public ContentFrame(int x, int y, int width, int height, int siblingId) {
-//        super(x, y, width, height);
-//        this.id = controller.duplicatePaneDocument(siblingId);
-//    }
-
     /**
      * Translates the contentSpan from the Domain-model into the simplified UI-representation objects.
      * Distinction is made between domain-classes Table, HyperLink, TextSpan, TextInputField, Form and SubmitButton
@@ -149,7 +134,6 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
      */
     private DocumentCell translateTextSpan(TextSpan content)  {
         try {
-//            System.out.println("TEXT: " + content.getText());
             return new UITextField(getxPos(), getyPos(), getWidth(), textSize, content.getText());
         }
         catch(IllegalDimensionException e){
@@ -197,9 +181,6 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
     @Override
     public void render(Graphics g) {
         content.render(g);
-        System.out.println("[" + content + " Rendered content at: (" + getxPos() + ", " + getyPos() + ")]");
-//        g.setColor(Color.green);
-        //g.drawRect(getxPos(), getyPos(), getWidth(), getHeight());
     }
 
     /**
@@ -245,7 +226,6 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
         if (button != MouseEvent.BUTTON1 && id != MouseEvent.MOUSE_DRAGGED) return;
-        // if (id != MouseEvent.MOUSE_CLICKED) return;
         ReturnMessage result = content.getHandleMouse(id, x, y, clickCount, button, modifiersEx);
         linkPressed(result);
     }
@@ -354,15 +334,6 @@ public class ContentFrame extends AbstractFrame implements DocumentListener {
         this.controller = controller;
     }
 
-//    /**
-//     * Get the id associated to the {@link LeafPane} of this {@code ContentFrame}.
-//     *
-//     * @return id: the id associated to the {@link LeafPane} of this {@code ContentFrame}.
-//     */
-//    public int getId() {
-//        return this.id;
-//    }
-    
     /**
      * Set the id of this {@code ContentFrame}.
      * 

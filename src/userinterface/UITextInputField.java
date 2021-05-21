@@ -116,8 +116,6 @@ public class UITextInputField extends DocumentCell {
         if (this.doSelect) return;
         this.selectStart = this.cursor;
         if (metrics == null) return;
-//        int offset = 0;
-//        if (getText().length() == 0) offset = cursorOffset;
         UITextField text = ((UITextField) textField.getContentWithoutScrollbars());
         int textFieldOffset = text.getxOffset();
         String visibleText = text.visibleText();
@@ -168,7 +166,6 @@ public class UITextInputField extends DocumentCell {
             g2.setStroke(new BasicStroke(2));
         }
         // Draw a normal rectangle or a rectangle with rounded corners
-        //g.drawRect(this.getxPos(), this.getyPos(), this.getWidth(), this.getHeight());
         g.drawRoundRect(this.getxPos()+getxOffset(), this.getyPos()+getyOffset(), this.getWidth(), this.getHeight(), 3,3);
         g2.setStroke(new BasicStroke(1));
     }
@@ -251,7 +248,6 @@ public class UITextInputField extends DocumentCell {
     public void handleKey(int id, int keyCode, char keyChar, int modifiersEx) {
         if (!this.hasFocus) return;
         if (id != KeyEvent.KEY_PRESSED) return;
-        // System.out.println(Arrays.toString(new int[]{id, keyCode, modifiersEx}) + keyChar);
         if (keyCode == 0) {
             keyCode = KeyEvent.getExtendedKeyCodeForChar(keyChar);
         }
@@ -296,7 +292,6 @@ public class UITextInputField extends DocumentCell {
         int start = Math.min(this.cursor, this.selectStart);
         int stop = Math.max(this.cursor, this.selectStart);
         if (doSelect) {
-            //if (start != 0) start += 1;
             newText.delete(start, stop);
             if (cursor < selectStart) moveCursor(0);
             else moveCursor(start-stop);

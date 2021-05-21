@@ -255,21 +255,6 @@ public class UIButton extends DocumentCell{
     }
 
     /**
-     * Handle a mouse click on this DocumentCell.
-     *
-     * @param id          : The id of the click
-     * @param x           : The x coordinate of the click
-     * @param y           : The y coordinate of the click
-     * @param clickCount  : The number of clicks that occured.
-     * @param button      : Which mouse button was clicked.
-     * @param modifiersEx : Extra control keys that were held during the click.
-     */
-    @Override
-    public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-        getHandleMouse(id, x, y, clickCount, button, modifiersEx);
-    }
-
-    /**
      * Handle key presses. This method does the right action when a key is pressed.
      *
      * @param id          : The KeyEvent (Associated with type of KeyEvent)
@@ -332,16 +317,4 @@ public class UIButton extends DocumentCell{
     public String getDisplayText() {
         return displayText;
     }
-
-//    /**
-//     * Get the text that is returned when
-//     * this {@code UIButton} is clicked.
-//     *
-//     * @return returnText: the text that is
-//     *                     returned when this {@code UIButton} is clicked.
-//     *
-//     */
-//    public String getReturnText() {
-//        return this.returnText;
-//    }
 }
