@@ -162,14 +162,14 @@ public class UIController {
         bookmarksURLKeeper.addBookmarksHref(name, href);
     }
 
-//    /**
-//     * Generate and add a new {@link Document} to this {@code DocumentsKeeper}.
-//     *
-//     * @return id: the id of the newly added {@link Document}.
-//     */
-//    public int addPaneDocument() {
-//        return documentsKeeper.addPaneDocument();
-//    }
+    /**
+     * Generate and add a new {@link Document} to this {@code DocumentsKeeper}.
+     *
+     * @return id: the id of the newly added {@link Document}.
+     */
+    public int addPaneDocument() {
+        return documentsKeeper.addPaneDocument();
+    }
 //
 //    /**
 //     * Generate and add a new {@link Document} to this {@code DocumentsKeeper}.
@@ -196,18 +196,12 @@ public class UIController {
     }
 
     /**
-     * Method to save a document
+     * Method to save a document to a file.
      *
      * @param fileName: the name to be given to the document to be saved.
      */
     public void saveDocument(String fileName) throws IllegalArgumentException {
-        if (fileName.equals(""))
-            throw new IllegalArgumentException("Can't save page when no page is loaded");
-        try {
-            getCurrentDocument().saveDocument(fileName);
-        } catch (Exception e) {
-            System.out.println("Can't save this document!");
-        }
+        documentsKeeper.saveDocument(fileName);
     }
 
     /**

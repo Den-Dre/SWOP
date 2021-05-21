@@ -4,25 +4,18 @@ import domainlayer.UIController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GenericSplitPaneTest {
 
     private Browsr browsr;
-    private Pane rootPane;
     private UIController controller;
-    private Pane lowerPane;
-    private Pane upperPane;
-    private final char undefChar = KeyEvent.CHAR_UNDEFINED;
-    private final String formUrl = "https://people.cs.kuleuven.be/~bart.jacobs/swop/browsrformtest.html";
 
     @BeforeEach
     public void init() {
         browsr = new Browsr("browsr");
-        rootPane = browsr.getDocumentArea();
+        Pane rootPane = browsr.getDocumentArea();
         controller = rootPane.getController();
     }
 
@@ -30,38 +23,24 @@ public class GenericSplitPaneTest {
     @DisplayName("Get horizontal split")
     public void getHorizontalSplit() {
         Pane hsp = browsr.getDocumentArea().getHorizontalSplit();
+        Pane hsp2 = hsp.getHorizontalSplit();
         assertTrue(hsp instanceof HorizontalSplitPane);
-        assertTrue(hsp.getFirstChild().hasFocus());
-        assertFalse(hsp.getSecondChild().hasFocus());
+        assertTrue(hsp2 instanceof HorizontalSplitPane);
+        assertTrue(hsp2.hasFocus());
+        assertTrue(hsp2.getFirstChild().hasFocus());
+        assertFalse(hsp2.getSecondChild().hasFocus());
     }
 
     @Test
     @DisplayName("Get vertical split")
     public void getVerticalSplit() {
         Pane vsp = browsr.getDocumentArea().getVerticalSplit();
+        Pane vsp2 = vsp.getVerticalSplit();
         assertTrue(vsp instanceof VerticalSplitPane);
-        assertTrue(vsp.getFirstChild().hasFocus());
-        assertFalse(vsp.getSecondChild().hasFocus());
-    }
-
-    @Test
-    @DisplayName("Can handle mouse after horizontal split")
-    public void handleMouseHorizontalSplit() {
-        Pane hsp = browsr.getDocumentArea().getHorizontalSplit();
-        Pane secondChild = hsp.getSecondChild();
-        assertFalse(secondChild.hasFocus());
-        hsp.handleMouse(MouseEvent.MOUSE_CLICKED, secondChild.getxPos()+5, secondChild.getyPos()+5, 1, MouseEvent.BUTTON1, 0);
-        assertTrue(secondChild.hasFocus());
-    }
-
-    @Test
-    @DisplayName("Can handle mouse after vertical split")
-    public void handleMouseVerticalSplit() {
-        Pane vsp = browsr.getDocumentArea().getVerticalSplit();
-        Pane secondChild = vsp.getSecondChild();
-        assertFalse(secondChild.hasFocus());
-        vsp.handleMouse(MouseEvent.MOUSE_CLICKED, secondChild.getxPos()+5, secondChild.getyPos()+5, 1, MouseEvent.BUTTON1, 0);
-        assertTrue(secondChild.hasFocus());
+        assertTrue(vsp2 instanceof VerticalSplitPane);
+        assertTrue(vsp2.hasFocus());
+        assertTrue(vsp2.getFirstChild().hasFocus());
+        assertFalse(vsp2.getSecondChild().hasFocus());
     }
 
     @Test
@@ -92,19 +71,14 @@ public class GenericSplitPaneTest {
     }
 
     @Test
-    @DisplayName("Can handles resizes")
-    public void canHandleResizes() {
-        int newWidth = 10;
-        int newHeight = 10;
-
+    @DisplayName("Can handle contentChanged")
+    public void canChangeContents() {
         Pane hsp = browsr.getDocumentArea().getHorizontalSplit();
-        hsp.handleResize(10, 10);
-        assertEquals(hsp.getFirstChild().getWidth(), newWidth);
-        assertEquals(hsp.getFirstChild().getHeight(), newHeight/2);
-        assertEquals(hsp.getSecondChild().getWidth(), newWidth);
-        assertEquals(hsp.getSecondChild().getHeight(), newHeight/2);
-        assertEquals(hsp.getWidth(), newWidth);
-        assertEquals(hsp.getHeight(), newHeight);
+        String url = "https://people.cs.kuleuven.be/~bart.jacobs/swop/browsrformtest.html";
+        controller.loadDocument(hsp.getFirstChild().getId(), url);
+        hsp.contentChanged();
+        UITable table = (UITable) ((UIActionForm) ((DocumentCellDecorator) hsp.getFirstChild().getContent().getContent()).getContentWithoutScrollbars()).getFormContent();
+        assertEquals(((UITextField) table.getContent().get(0).get(0)).getText(), "List words from the Woordenlijst Nederlandse Taal");
+//        System.out.println(form);
     }
-
 }

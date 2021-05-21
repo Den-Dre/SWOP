@@ -79,21 +79,6 @@ public abstract class GenericSplitPane extends Pane {
         throw new UnsupportedOperationException("Can't split a Pane that doesn't have focus.");
     }
 
-    /**
-     * Handle mouseEvents. Determine if this GenericSplitPane was pressed and do the right actions.
-     *
-     * @param id          : The type of mouse activity
-     * @param x           : The x coordinate of the mouse activity
-     * @param y           : The y coordinate of the mouse activity
-     * @param clickCount  : The number of clicks
-     * @param button      : The mouse button that was clicked
-     * @param modifiersEx : The control keys that were held on the click
-     */
-    @Override
-    public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
-        getFirstChild().handleMouse(id, x, y, clickCount, button, modifiersEx);
-        getSecondChild().handleMouse(id, x, y, clickCount, button, modifiersEx);
-    }
 
     /**
      * Handle key presses. This method does the right action when a key is pressed.
@@ -109,20 +94,6 @@ public abstract class GenericSplitPane extends Pane {
             getFirstChild().handleKey(id, keyCode, keyChar, modifiersEx);
         else if (getSecondChild().hasFocus())
             getSecondChild().handleKey(id, keyCode, keyChar, modifiersEx);
-    }
-
-    /**
-     * This method handles resizes of this {@code GenericSplitPane}.
-     * It makes sure the GenericSplitPane is adjusted in width when the window shrinks or grows.
-     * It does not change its height (e.g. look at Firefox).
-     *
-     * @param newWindowWidth  : parameter containing the new window-width of this GenericSplitPane.
-     * @param newWindowHeight : parameter containing the new window-height of this GenericSplitPane.
-     */
-    @Override
-    public void handleResize(int newWindowWidth, int newWindowHeight) {
-        setWidth(getFirstChild().getWidth() + getSecondChild().getWidth());
-        setHeight(getFirstChild().getHeight() + getSecondChild().getHeight());
     }
 
     /**

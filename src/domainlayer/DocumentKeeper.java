@@ -21,16 +21,16 @@ public class DocumentKeeper {
         this.panesToDocuments = new HashMap<>();
     }
 
-//    /**
-//     * Generate and add a new {@link Document} to this {@code DocumentsKeeper}.
-//     *
-//     * @return id: the id of the newly added {@link Document}.
-//     */
-//    public int addPaneDocument() {
-//        Document doc = new Document();
-//        panesToDocuments.put(++documentCounter, doc);
-//        return documentCounter;
-//    }
+    /**
+     * Generate and add a new {@link Document} to this {@code DocumentsKeeper}.
+     *
+     * @return id: the id of the newly added {@link Document}.
+     */
+    public int addPaneDocument() {
+        Document doc = new Document();
+        panesToDocuments.put(++documentCounter, doc);
+        return documentCounter;
+    }
 //
 //
 //    /**
@@ -103,6 +103,21 @@ public class DocumentKeeper {
      */
     public void setCurrentDocumentId(int currentDocumentId) {
         this.currentDocumentId = currentDocumentId;
+    }
+
+    /**
+     * Method to save a document to a file.
+     *
+     * @param fileName: the name to be given to the document to be saved.
+     */
+    public void saveDocument(String fileName) {
+        if (fileName.equals(""))
+            throw new IllegalArgumentException("Can't save page when no page is loaded");
+        try {
+            getCurrentDocument().saveDocument(fileName);
+        } catch (Exception e) {
+            System.out.println("Can't save this document!");
+        }
     }
 
     /**
@@ -191,5 +206,6 @@ public class DocumentKeeper {
      * The Id of the {@link Pane} that is currently selected.
      */
     private int currentDocumentId;
+
 }
 
