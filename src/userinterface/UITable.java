@@ -157,7 +157,6 @@ public class UITable extends DocumentCell{
      */
     @Override
     public void handleResize(int newWindowWidth, int newWindowHeight) {
-        System.out.println("resizing");
         setColumnWidths();
         setRowHeights();
         setParentHeight(newWindowHeight);
