@@ -112,6 +112,7 @@ public class HorizontalSplitPane extends GenericSplitPane {
             if (y < lowerPane.getyPos()) {
                 int newUpperHeight = upperPane.getHeight() - deltaY;
                 int newLowerHeight = lowerPane.getHeight() + deltaY;
+                if (newUpperHeight <= SEPARATOR_THICKNESS) return;
                 lowerPane.setyPos(y);
                 lowerPane.setHeight(newLowerHeight);
                 upperPane.setHeight(newUpperHeight);
@@ -119,6 +120,7 @@ public class HorizontalSplitPane extends GenericSplitPane {
                 lowerPane.handleResize(this.getWidth(),newLowerHeight);
                 upperPane.handleResize(this.getWidth(),newUpperHeight);
             } else {
+                if (lowerPane.getHeight() - deltaY <= SEPARATOR_THICKNESS) return;
                 lowerPane.setyPos(y);
                 lowerPane.setHeight(lowerPane.getHeight() - deltaY);
                 upperPane.setHeight(upperPane.getHeight() + deltaY);
