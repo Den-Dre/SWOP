@@ -260,7 +260,7 @@ public class UITextInputField extends DocumentCell {
             case 36 -> moveCursor(-this.getText().length());
             case 37 -> moveCursor(-1);
             case 39 -> moveCursor(1);
-            default -> handleNoSpecialKey(id, keyCode, keyChar, modifiersEx);
+            default -> handleNoSpecialKey(keyCode, keyChar);
         }
         this.doSelect = (keyCode == 39 || keyCode == 37 || keyCode == 35 || keyCode == 36) && modifiersEx == 64;
         updateSelectStart();
@@ -325,11 +325,10 @@ public class UITextInputField extends DocumentCell {
      *
      * Based on: https://stackoverflow.com/questions/15313469/java-keyboard-keycodes-list
      *
-     * @param id: the KeyEvent id associated with the type of KeyEvent
      * @param keyCode: the KeyEvent code associated with the key
      * @param keyChar: the character representation of the pressed key
      */
-    private void handleNoSpecialKey(int id, int keyCode, char keyChar, int modifier) {
+    private void handleNoSpecialKey(int keyCode, char keyChar) {
         if ((keyCode >= 44 && keyCode <= 111) || (keyCode >= 512 && keyCode <= 523) ||
                 (keyCode == KeyEvent.VK_SPACE) || (keyCode >= 128 && keyCode <= 143) ||
                 (keyCode >= 150 && keyCode <= 153) || (keyCode >= 160 && keyCode <= 162) ||
@@ -533,7 +532,7 @@ public class UITextInputField extends DocumentCell {
      * A string variable to hold the
      * current contents of this AddressBar
      */
-    private String text = ""; // The url starts off empty
+    private final String text = ""; // The url starts off empty
 
 
     /**

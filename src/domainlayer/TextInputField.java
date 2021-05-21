@@ -7,7 +7,7 @@ public class TextInputField extends ContentSpan {
 	/**
 	 * A {@link String} to hold the name of this TextInputField
 	 */
-	private String name;
+	private final String name;
 	
     /**
      * Initialize a new TextInputField given a name

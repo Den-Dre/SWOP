@@ -30,29 +30,11 @@ public class Document {
 
     // Example of a hyperlink that can be clicked
 //    private String urlString = "https://people.cs.kuleuven.be/bart.jacobs/index.html";
-//    private ContentSpan contentSpan; //= new HyperLink("browsrtest.html", new TextSpan("Welcome to UserInterface.Browsr! Click here to see our features!"));//new TextSpan("Welkom in UserInterface.Browsr!");
-    
 
     /**
      * Initialize a new Document
      */
     public Document() { }
-
-//    /**
-//     * Initialize a new Document given a url, and two DocumentListeners representing the ContentFrame and AddressBar
-//     *
-//     * @param url
-//     *        The url for this document
-//     * @param doc
-//     *        The DocumentListener for this document
-//     * @param bar
-//     *        The addressbar listener for this document
-//     */
-//    public Document(String url, DocumentListener doc, DocumentListener bar) {
-//        this.urlString = url;
-//        this.urlListeners.add(bar);
-//        this.documentListeners.add(doc);
-//    }
 
     /**
      * Combine the current url with the given href
@@ -320,9 +302,22 @@ public class Document {
             loadFromUrl(copyURL);
     }
 
+    /**
+     * A boolean to indicate whether the WelcomeDocument
+     * is loaded in this {@code Document}.
+     */
     private boolean welcomeDocumentLoaded = true;
 
+    /**
+     * A boolean to indicate whether this {@code Document}
+     * should copy the WelcomeDocument (iff. it's loaded
+     * in the {@code Document} it's based on.
+     */
     private boolean copyWelcome = false;
 
+    /**
+     * A boolean to indicate whether this {@code Document}
+     * should copy the {@code Document} given by the {@code copyId}.
+     */
     private String copyURL;
 }

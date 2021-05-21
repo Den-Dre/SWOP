@@ -1,6 +1,5 @@
 package userinterface;
 
-import domainlayer.Document;
 import domainlayer.DocumentListener;
 import domainlayer.UIController;
 
@@ -195,7 +194,7 @@ public abstract class Pane extends AbstractFrame implements DocumentListener {
         if (parentPane != null)
             return parentPane.getFocusedPane();
         return focusedPane;
-    };
+    }
 
     /**
      * Abstract method returning the first child (of type {@code Pane}) of this {@code Pane}

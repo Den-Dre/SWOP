@@ -127,7 +127,6 @@ public class UITable extends DocumentCell{
      */
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifier) {
-//        grid.forEach(row -> row.forEach(cell -> cell.getHandleMouse(id, x, y, clickCount, button, modifier)));
         for (ArrayList<DocumentCell> row : grid) {
             for (DocumentCell cell : row)
                 // Let all the cells handle their click, and if the click ended up on a hyperlink, the href is passed into result
@@ -409,7 +408,7 @@ public class UITable extends DocumentCell{
      * a {@link BookmarksDialog}.
      * </p>
      */
-    int verticalOffset = 3;
+    protected final int verticalOffset = 3;
 
     /**
      * An integer variable to denote a vertical
@@ -423,7 +422,7 @@ public class UITable extends DocumentCell{
      * a {@link BookmarksDialog}.
      * </p>
      */
-    int horizontalOffset = 3;
+    protected final int horizontalOffset = 3;
 
     /**
      * An {@link ArrayList} that contains {@link ArrayList}'s
