@@ -170,18 +170,21 @@ public class HorizontalSplitTest {
         int mousePressed = MouseEvent.MOUSE_PRESSED;
         int leftMouse = MouseEvent.BUTTON1;
 
+        //1. Make a split
         splitHorizontally();
         int separatorX = lowerPane.getxPos();
         int separatorY = lowerPane.getyPos();
 
         int y1 = 1;
         int y2 = 5;
+        //2. Drag up
         browsr.handleMouseEvent(mousePressed, separatorX+1, separatorY+y1, 1, leftMouse, 0);
         browsr.handleMouseEvent(mouseDragged, separatorX+1, separatorY+y2, 1, leftMouse, 0);
         assertEquals(separatorY + y2 ,lowerPane.getyPos());
 
         separatorX = lowerPane.getxPos();
         separatorY = lowerPane.getyPos();
+        //3. Drag down
         browsr.handleMouseEvent(mousePressed, separatorX+1, separatorY+y1, 1, leftMouse, 0);
         browsr.handleMouseEvent(mouseDragged, separatorX+1, separatorY-y2, 1, leftMouse, 0);
         assertEquals(separatorY - y2 ,lowerPane.getyPos());

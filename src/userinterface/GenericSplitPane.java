@@ -56,18 +56,6 @@ public abstract class GenericSplitPane extends Pane {
     }
 
     /**
-     * Handle a horizontal split of the contents of this {@code GenericSplitPane}.
-     */
-    @Override
-    public Pane getHorizontalSplit() {
-        if (getFirstChild().hasFocus())
-            return getFirstChild().getHorizontalSplit();
-        else if (getSecondChild().hasFocus())
-            return getSecondChild().getHorizontalSplit();
-        throw new UnsupportedOperationException("Can't split a Pane that doesn't have focus.");
-    }
-
-    /**
      * Handle a vertical split of the contents of this {@code GenericSplitPane}.
      */
     @Override
@@ -76,6 +64,17 @@ public abstract class GenericSplitPane extends Pane {
             return getFirstChild().getVerticalSplit();
         else if (getSecondChild().hasFocus())
             return getSecondChild().getVerticalSplit();
+        throw new UnsupportedOperationException("Can't split a Pane that doesn't have focus.");
+    }
+    /**
+     * Handle a horizontal split of the contents of this {@code GenericSplitPane}.
+     */
+    @Override
+    public Pane getHorizontalSplit() {
+        if (getFirstChild().hasFocus())
+            return getFirstChild().getHorizontalSplit();
+        else if (getSecondChild().hasFocus())
+            return getSecondChild().getHorizontalSplit();
         throw new UnsupportedOperationException("Can't split a Pane that doesn't have focus.");
     }
 
@@ -111,19 +110,19 @@ public abstract class GenericSplitPane extends Pane {
             getSecondChild().handleKey(id, keyCode, keyChar, modifiersEx);
     }
 
-    /**
-     * This method handles resizes of this {@code GenericSplitPane}.
-     * It makes sure the GenericSplitPane is adjusted in width when the window shrinks or grows.
-     * It does not change its height (e.g. look at Firefox).
-     *
-     * @param newWindowWidth  : parameter containing the new window-width of this GenericSplitPane.
-     * @param newWindowHeight : parameter containing the new window-height of this GenericSplitPane.
-     */
-    @Override
-    public void handleResize(int newWindowWidth, int newWindowHeight) {
-        setWidth(getFirstChild().getWidth() + getSecondChild().getWidth());
-        setHeight(getFirstChild().getHeight() + getSecondChild().getHeight());
-    }
+//    /**
+//     * This method handles resizes of this {@code GenericSplitPane}.
+//     * It makes sure the GenericSplitPane is adjusted in width when the window shrinks or grows.
+//     * It does not change its height (e.g. look at Firefox).
+//     *
+//     * @param newWindowWidth  : parameter containing the new window-width of this GenericSplitPane.
+//     * @param newWindowHeight : parameter containing the new window-height of this GenericSplitPane.
+//     */
+//    @Override
+//    public void handleResize(int newWindowWidth, int newWindowHeight) {
+//        setWidth(getFirstChild().getWidth() + getSecondChild().getWidth());
+//        setHeight(getFirstChild().getHeight() + getSecondChild().getHeight());
+//    }
 
     /**
      * Sets the {@link domainlayer.UIController} for this {@code GenericSplitPane} which relays 
