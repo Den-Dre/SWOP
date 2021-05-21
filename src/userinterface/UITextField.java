@@ -67,7 +67,6 @@ public class UITextField extends DocumentCell {
     public String visibleText() {
         String text = getText();
         if (metrics == null) return text;
-        //if (metrics.stringWidth(text) < parentWidth) return text;
         int deltaPosRef = Math.abs(getxPos()-getxReference());
         int frontCut = Math.abs(getxOffset());
         if (frontCut <= deltaPosRef)

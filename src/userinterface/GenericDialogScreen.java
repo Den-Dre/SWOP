@@ -59,16 +59,6 @@ public abstract class GenericDialogScreen extends AbstractFrame {
         return this.browsr;
     }
 
-//    /**
-//     * Get the URL associated to the currently
-//     * loaded page.
-//     *
-//     * @return url: The URL associated to the currently loaded page.
-//     */
-//    public String getCurrentUrl() {
-//        return this.currentUrl;
-//    }
-
     /**
      * Get the contents of this dialog screen.
      *
@@ -76,15 +66,6 @@ public abstract class GenericDialogScreen extends AbstractFrame {
      * @return form: The {@link UIActionForm} that contains the contents of this dialog screen.
      */
     public abstract UIForm getForm(String currentUrl);
-
-//    /**
-//     * Return the form that should be displayed in the dialog screen.
-//     *
-//     * @param currentUrl: The url associated to the currently loaded webpage
-//     *                  in the associated {@link Browsr} object.
-//     * @return form: The UIForm that should be displayed in this dialog screen.
-//     */
-//    abstract UIForm constructForm(String currentUrl);
 
     /**
      * Get the offset for the input, text fields and buttons

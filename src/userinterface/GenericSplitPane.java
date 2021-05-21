@@ -56,18 +56,6 @@ public abstract class GenericSplitPane extends Pane {
     }
 
     /**
-     * Handle a horizontal split of the contents of this {@code GenericSplitPane}.
-     */
-    @Override
-    public Pane getHorizontalSplit() {
-        if (getFirstChild().hasFocus())
-            return getFirstChild().getHorizontalSplit();
-        else if (getSecondChild().hasFocus())
-            return getSecondChild().getHorizontalSplit();
-        throw new UnsupportedOperationException("Can't split a Pane that doesn't have focus.");
-    }
-
-    /**
      * Handle a vertical split of the contents of this {@code GenericSplitPane}.
      */
     @Override
@@ -76,6 +64,17 @@ public abstract class GenericSplitPane extends Pane {
             return getFirstChild().getVerticalSplit();
         else if (getSecondChild().hasFocus())
             return getSecondChild().getVerticalSplit();
+        throw new UnsupportedOperationException("Can't split a Pane that doesn't have focus.");
+    }
+    /**
+     * Handle a horizontal split of the contents of this {@code GenericSplitPane}.
+     */
+    @Override
+    public Pane getHorizontalSplit() {
+        if (getFirstChild().hasFocus())
+            return getFirstChild().getHorizontalSplit();
+        else if (getSecondChild().hasFocus())
+            return getSecondChild().getHorizontalSplit();
         throw new UnsupportedOperationException("Can't split a Pane that doesn't have focus.");
     }
 

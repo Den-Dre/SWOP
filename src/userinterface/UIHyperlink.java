@@ -21,10 +21,7 @@ public class UIHyperlink extends UITextHyperlink{
      */
     public UIHyperlink(int x, int y, int width, int link_size, String href, String text) throws IllegalDimensionException {
         super(x, y, width, link_size, text);
-//        this.textHeight = link_size;
-//        this.textWidth = width;
         this.href = href;
-        //updateSizes();
         setWidth(getMaxWidth());
     }
 
