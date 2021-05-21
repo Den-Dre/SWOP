@@ -101,9 +101,11 @@ public abstract class DocumentCellDecorator extends DocumentCell {
     @Override
     public void handleMouse(int id, int x, int y, int clickCount, int button, int modifiersEx) {
         this.cellToBeDecorated.handleMouse(id, x, y, clickCount, button, modifiersEx);
-        init();
         int[] currentMouse;
+        if (cellToBeDecorated instanceof UITextField)
+            init();
         if (id == MouseEvent.MOUSE_PRESSED && (wasClicked(x, y))) {
+            init();
             prevMouse = new int[] {x, y};
             currentColor = innerColorDragging;
         }
